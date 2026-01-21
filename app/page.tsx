@@ -12,7 +12,10 @@ import { MediaObject } from "@/model/bloc/MediaObject";
 import HeaderEdit from "@/components/contextView/edition/header/HeaderEdit";
 import { updateObjectBySetter } from "@/lib/utils/functions";
 import HeaderView from "@/components/contextView/showcase/header/HeaderView";
-import { deleteItemAndReorder } from "@/helpers/changeComponentPosition";
+import {
+  deleteItemAndReorder,
+  reorderArray,
+} from "@/helpers/changeComponentPosition";
 import { BlocObject } from "@/model/Bloc";
 import PicturesLinkEdit from "@/components/contextView/edition/grid/picturesLink/PicturesLinkEdit";
 import PicturesLinkView from "@/components/contextView/showcase/grid/picturesLink/PicturesLinkView";
@@ -27,7 +30,63 @@ export default function Page() {
   };
   const bloc = createNewBloc(options_image_group);
   const [imageGroupData, setImageGroupData] = useState<BlocObject | null>(null);
+  const [dragged, setDragged] = useState<MediaObject | null>(null);
 
+  const onDragStart = (media: MediaObject) => {
+    setDragged(media);
+  };
+
+  const onDrop = (target: MediaObject) => {
+    if (!dragged) return;
+
+    if (
+      imageGroupData?.image_medias !== undefined &&
+      imageGroupData?.image_medias !== null
+    ) {
+      const res = reorderArray(imageGroupData.image_medias, dragged, target);
+
+      setImageGroupData((prev) => {
+        if (!prev) return prev;
+
+        // Recréer des MediaObject propres avec les bonnes positions
+        const cleanMedias = res.map((media, index) => {
+          return new MediaObject({
+            id: media.number_id,
+            bloc_id: media.number_bloc_id,
+            titre: media.text_titre ?? undefined,
+            image_lien: media.text_image_lien ?? undefined,
+            image_url: media.image_image_url ?? undefined,
+            position_image: index, // Position correcte
+          });
+        });
+
+        const updatedBloc = new BlocObject(
+          {
+            id: prev.number_id ?? undefined,
+            nom_bloc: prev.text_nom_bloc ?? undefined,
+            page_id: prev.number_page_id ?? undefined,
+            titre: prev.text_titre ?? undefined,
+            type: prev.text_type ?? undefined,
+            bloc_position: prev.number_bloc_position ?? undefined,
+            langue_bloc: prev.text_langue_bloc ?? undefined,
+            is_full_width: prev.number_is_full_width,
+            width: prev.number_width ?? undefined,
+            height: prev.number_height ?? undefined,
+            gap: prev.number_gap ?? undefined,
+            createdAt: prev.number_createdAt ?? undefined,
+            updatedAt: new Date(),
+            image_medias: cleanMedias, // Utiliser les médias nettoyés
+            articles: prev.articles,
+          },
+          prev.mode,
+        );
+
+        return updatedBloc;
+      });
+
+      setDragged(null);
+    }
+  };
   // Initialiser les données côté client uniquement
   useEffect(() => {
     setImageGroupData(bloc);
@@ -155,6 +214,8 @@ export default function Page() {
           onChange={updateMediaObject}
           addElement={handleAdd}
           removeElement={handleRemove}
+          onDrop={onDrop}
+          onDragStart={onDragStart}
         />
       </div>
 

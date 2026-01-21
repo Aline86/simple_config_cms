@@ -11,6 +11,8 @@ interface PicturesLinkEditorProps<T> {
   onChange: (fieldName: string, newValue: any) => void;
   addElement: () => void;
   removeElement: (images_group: T) => void;
+  onDragStart: (page: MediaObject) => void;
+  onDrop: (page: MediaObject) => void;
 }
 
 export default function PicturesLinkEdit<T>({
@@ -18,6 +20,8 @@ export default function PicturesLinkEdit<T>({
   onChange,
   addElement,
   removeElement,
+  onDragStart,
+  onDrop,
 }: PicturesLinkEditorProps<T>) {
   const debug = true;
   return (
@@ -64,9 +68,11 @@ export default function PicturesLinkEdit<T>({
             return (
               <PictureEditor
                 key={(media as MediaObject).number_id}
-                imageGroup={media as MediaObject}
+                media={media as MediaObject}
                 onChange={onChange}
                 removeElement={removeElement}
+                onDragStart={onDragStart}
+                onDrop={onDrop}
               />
             );
           })}
