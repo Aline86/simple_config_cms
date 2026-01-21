@@ -1,0 +1,155 @@
+// schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ==================== ENUMS ====================
+
+enum TypeMedia {
+  RESEAU_SOCIAL
+  LOGO
+  FAVICON
+  IMAGE_BLOC
+  IMAGE_ARTICLE
+}
+
+enum TypeBloc {
+  CAROUSEL
+  IMAGE_GROUPE
+  TEXTE
+  SCREEN
+  VIDEO
+}
+
+// ==================== PAGE ====================
+
+model Page {
+  id            Int       @id @default(autoincrement())
+  parent_id     Int?
+  published     Boolean   @default(false)
+  titre         String    @db.VarChar(150)
+  page_position Int
+  langue        String    @db.VarChar(4)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  // Relations
+  parent        Page?     @relation("PageHierarchy", fields: [parent_id], references: [id], onDelete: Cascade)
+  children      Page[]    @relation("PageHierarchy")
+  header        Header?
+  footer        Footer?
+  blocs         Bloc[]
+  
+  @@index([parent_id])
+}
+
+// ==================== HEADER ====================
+
+model Header {
+  id          Int      @id @default(autoincrement())
+  page_id     Int      @unique
+  logo        Media?   @relation("HeaderLogo")
+  favicon     Media?   @relation("HeaderFavicon")
+  nom_site    String   @db.VarChar(55)
+  description String   @db.VarChar(255)
+  
+  // Relations
+  page        Page     @relation(fields: [page_id], references: [id], onDelete: Cascade)
+  reseaux     Media[]  @relation("HeaderReseaux")
+}
+
+// ==================== FOOTER ====================
+
+model Footer {
+  id                Int      @id @default(autoincrement())
+  page_id           Int      @unique
+  nom_site_adresse  String   @db.VarChar(50)
+  adresse_footer    String   @db.VarChar(255)
+  code_postal       String   @db.VarChar(50)
+  
+  // Relations
+  page              Page     @relation(fields: [page_id], references: [id], onDelete: Cascade)
+  reseaux           Media[]  @relation("FooterReseaux")
+}
+
+// ==================== BLOC ====================
+
+model Bloc {
+  id            Int       @id @default(autoincrement())
+  page_id       Int
+  type          TypeBloc
+  bloc_position Int
+  titre         String    @db.VarChar(255)
+  langue_bloc   String    @db.VarChar(4)
+  is_full_width Boolean   @default(false)
+  width         Int?
+  height        Int?
+  gap           Int?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  // Relations
+  page          Page      @relation(fields: [page_id], references: [id], onDelete: Cascade)
+  medias        Media[]   @relation("BlocMedias")
+  articles      Article[]
+  
+  @@index([page_id])
+  @@index([type])
+}
+
+// ==================== ARTICLE ====================
+
+model Article {
+  id           Int      @id @default(autoincrement())
+  bloc_id      Int
+  text_article String   @db.Text
+  couleur_article        String?    @db.VarChar(15)
+  text_width   Int?
+  text_height  Int?
+  text_margins Int?
+  
+  // Relations
+  bloc         Bloc     @relation(fields: [bloc_id], references: [id], onDelete: Cascade)
+  images       Media[]  @relation("ArticleImages")
+  
+  @@index([bloc_id])
+}
+
+// ==================== MEDIA ====================
+
+model Media {
+  id             Int        @id @default(autoincrement())
+  type           TypeMedia
+  titre          String?    @db.VarChar(255)
+  couleur_bg     String?    @db.VarChar(15)
+  image_lien     String?    @db.Text
+  position_image Int?
+  image_url      String     @db.Text
+  
+  // Relations polymorphes
+  header_logo_id    Int?     @unique
+  header_favicon_id Int?     @unique
+  header_reseaux_id Int?
+  footer_id         Int?
+  bloc_id           Int?
+  article_id        Int?
+  
+  headerLogo        Header?  @relation("HeaderLogo", fields: [header_logo_id], references: [id], onDelete: Cascade)
+  headerFavicon     Header?  @relation("HeaderFavicon", fields: [header_favicon_id], references: [id], onDelete: Cascade)
+  headerReseaux     Header?  @relation("HeaderReseaux", fields: [header_reseaux_id], references: [id], onDelete: Cascade)
+  footer            Footer?  @relation("FooterReseaux", fields: [footer_id], references: [id], onDelete: Cascade)
+  bloc              Bloc?    @relation("BlocMedias", fields: [bloc_id], references: [id], onDelete: Cascade)
+  article           Article? @relation("ArticleImages", fields: [article_id], references: [id], onDelete: Cascade)
+  
+  @@index([header_reseaux_id])
+  @@index([footer_id])
+  @@index([bloc_id])
+  @@index([article_id])
+  @@index([type])
+}
