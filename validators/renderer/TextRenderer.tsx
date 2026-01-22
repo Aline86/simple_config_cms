@@ -81,9 +81,6 @@ export function FieldRenderer<T>({
   const currentValue = model[fieldNameToInvestigate];
   console.log("currentValue", currentValue);
   const validator = createValidator(fieldNameToInvestigate, currentValue);
-  console.log("config", validator.getParams());
-  const validationResult = validator.validate(currentValue);
-
   const prefix = extractPrefix(fieldNameToInvestigate);
 
   const renderInput = () => {
@@ -152,19 +149,5 @@ export function FieldRenderer<T>({
     }
   };
 
-  return (
-    <div className="field-group">
-      {renderInput()}
-
-      {/*hasErrors && (
-        <div className="error-messages mt-1">
-          {errors.map((error: string, idx: number) => (
-            <p key={idx} className="error-text text-red-600 text-sm">
-              {error}
-            </p>
-          ))}
-        </div>
-      )*/}
-    </div>
-  );
+  return <div className="field-group">{renderInput()}</div>;
 }

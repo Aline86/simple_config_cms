@@ -252,24 +252,28 @@
 }
 /* header */
 .logo-site {
-  height: 50px !important;
-  width: auto !important;
+  display: block;
+  width: 50px;
+  height: 50px;
   object-fit: contain;
 }
-
+img.logo-site {
+  z-index: -1 !important;
+}
 header {
   overflow: hidden;
 }
 .nav-dynamique {
   transition: transform 0.3s ease-in-out;
   position: fixed;
+  z-index: 1;
   top: 0px;
-  right: 0px;
+  right: -250px;
   width: 250px;
   height: 100vh;
   background-color: #ffffff;
   box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
-
+  transform: translate(-250px);
   z-index: 40;
   overflow-y: auto;
   padding-top: 4rem;
@@ -277,7 +281,7 @@ header {
   flex-direction: column;
 }
 .nav-dynamique .nav-dynamique--open {
-  transform: translate(250px);
+  transform: translate(250px) !important;
 }
 .nav-dynamique a {
   display: block;
@@ -298,13 +302,9 @@ header {
   border-top: 1px solid #f3f4f6;
 }
 
-.logo-site {
-  display: block;
-  width: 50px;
-  height: 50px;
-  object-fit: contain;
+.social-media {
+  z-index: -100 !important;
 }
-
 /* TIP TAP */
 h2.tiptap_heading {
   font-size: 45px !important;

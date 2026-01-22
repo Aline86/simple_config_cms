@@ -2,9 +2,8 @@
 
 import { useEffect, useState, useMemo } from "react";
 import { TextParameter, TextValidator } from "@/validators/TextValidator";
-import {
+import CloudinaryValidator, {
   CloudinaryParameter,
-  CloudinaryValidator,
 } from "@/validators/MediaValidator";
 import { NumberValidator, Parameter } from "@/validators/NumberValidator";
 import MediaUploaderView from "@/components/ui/Uploader/MediaUploaderView";
@@ -79,12 +78,12 @@ export function FieldRenderer<T extends Record<string, any>>({
   model,
   setField,
 }: FieldRendererProps<T>) {
-  const [currentValue, setCurrentValue] = useState<MediaObject | T>(
-    model[fieldName],
+  const [currentValue, setCurrentValue] = useState<string>(
+    (model[fieldName as keyof typeof model] as string) || "",
   );
 
   useEffect(() => {
-    setCurrentValue(model[fieldName]);
+    setCurrentValue((model[fieldName as keyof typeof model] as string) || "");
   }, [model, fieldName]);
 
   const validator = useMemo(

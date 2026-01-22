@@ -7,97 +7,40 @@ import HeaderEdit from "@/components/contextView/edition/header/HeaderEdit";
 import { updateObjectBySetter } from "@/lib/utils/functions";
 import HeaderView from "@/components/contextView/showcase/header/HeaderView";
 import { deleteItemAndReorder } from "@/helpers/changeComponentPosition";
+import { cloneMediaWithPosition, createMedia } from "@/helpers/media.helper";
+import {
+  cloneHeaderWithReseau,
+  cloneHeaderWithReseaux,
+  mockHeader,
+} from "@/helpers/header.helper";
 
 export default function HeaderContextEdition() {
   const [headerData, setHeader] = useState<HeaderObject | null>(null);
-
+  const idBloc = crypto.randomUUID();
   // Initialiser les données côté client uniquement
   useEffect(() => {
-    setHeader(
-      new HeaderObject({
-        id: 1,
-        bloc_id: 1,
-        nom_site: "test nom site",
-        favicon: new MediaObject({
-          id: crypto.randomUUID(),
-          bloc_id: 1,
-          titre: "biche",
-          image_lien: "#",
-          image_url:
-            "https://res.cloudinary.com/demo/image/upload/w_400,h_300,c_fill/kitten.jpg",
-        }),
-        logo: new MediaObject({
-          id: crypto.randomUUID(),
-          bloc_id: 1,
-          titre: "biche",
-          image_lien: "#",
-          image_url:
-            "https://res.cloudinary.com/demo/image/upload/w_400,h_300,c_fill/kitten.jpg",
-        }),
-        description: "",
-        reseaux: [
-          new MediaObject({
-            id: crypto.randomUUID(),
-            bloc_id: 1,
-            titre: "biche",
-            image_lien: "#",
-            position_image: 0,
-            image_url:
-              "https://res.cloudinary.com/demo/image/upload/w_400,h_300,c_fill/kitten.jpg",
-          }),
-          new MediaObject({
-            id: crypto.randomUUID(),
-            bloc_id: 1,
-            titre: "biche",
-            image_lien: "#",
-            position_image: 1,
-            image_url:
-              "https://res.cloudinary.com/demo/image/upload/w_400,h_300,c_fill/kitten.jpg",
-          }),
-        ],
-      }),
-    );
+    setHeader(mockHeader(idBloc));
   }, []);
   useEffect(() => {}, [headerData]);
   const updateMediaObject = (fieldName: string, newValue: any) => {
     if (!headerData) return;
     const newObj = updateObjectBySetter(headerData, fieldName, newValue);
+    console.log("newObj.data", newObj.data);
     setHeader(newObj.data);
   };
 
   const handleRemove = (model: MediaObject) => {
     setHeader((prev) => {
       if (!prev) return prev;
-
       const res = deleteItemAndReorder(
         prev.image_reseaux,
         model,
         "number_position_image",
       );
-
-      // S'assurer que res est un tableau d'objets MediaObject valides
       const cleanReseaux = res.map((reseau, index) => {
-        // Si ce n'est pas une instance, en créer une nouvelle
-        return new MediaObject({
-          id: reseau.number_id,
-          bloc_id: reseau.number_bloc_id,
-          titre: reseau.text_titre ?? undefined,
-          image_lien: reseau.text_image_lien ?? undefined,
-          position_image: index,
-          image_url: reseau.image_image_url ?? undefined,
-        });
+        return cloneMediaWithPosition(reseau, index);
       });
-
-      const updatedHeader = new HeaderObject({
-        id: prev.number_id ?? undefined,
-        bloc_id: prev.number_bloc_id ?? undefined,
-        nom_site: prev.text_nom_site ?? undefined,
-        favicon: prev.image_favicon ?? undefined,
-        logo: prev.image_logo ?? undefined,
-
-        background_url: prev.text_background_url ?? undefined,
-        reseaux: cleanReseaux,
-      });
+      const updatedHeader = cloneHeaderWithReseaux(prev, cleanReseaux);
 
       return updatedHeader;
     });
@@ -105,26 +48,8 @@ export default function HeaderContextEdition() {
   const handleAdd = () => {
     setHeader((prev) => {
       if (!prev) return prev;
-
-      const newMedia = new MediaObject({
-        id: crypto.randomUUID(),
-        bloc_id: 1,
-        titre: "nouveau réseau",
-        image_lien: "#",
-        position_image: prev.image_reseaux.length,
-        image_url:
-          "https://res.cloudinary.com/demo/image/upload/w_400,h_300,c_fill/kitten.jpg",
-      });
-
-      const updatedHeader = new HeaderObject({
-        id: prev.number_id ?? undefined,
-        bloc_id: prev.number_bloc_id ?? undefined,
-        nom_site: prev.text_nom_site ?? undefined,
-        favicon: prev.image_favicon ?? undefined,
-        logo: prev.image_logo ?? undefined,
-        background_url: prev.text_background_url ?? undefined,
-        reseaux: [...prev.image_reseaux, newMedia],
-      });
+      const newMedia = createMedia(prev.image_reseaux.length, prev.number_id);
+      const updatedHeader = cloneHeaderWithReseau(prev, newMedia);
 
       return updatedHeader;
     });

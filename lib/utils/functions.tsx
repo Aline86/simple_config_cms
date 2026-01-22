@@ -17,25 +17,32 @@ export function updateObjectBySetter<T>(
 
   const result = produce(obj, (draft: any) => {
     let current = draft;
-    console.log("current", current, path, value);
-    for (let i = 0; i < keys.length - 1; i++) {
-      console.log("keys[i]", keys[i], path, value);
-      if (current == null) return;
 
-      current = current[keys[i]];
+    for (let i = 0; i < keys.length - 1; i++) {
+      const key = keys[i];
+
+      if (
+        current[key] === undefined ||
+        current[key] === null ||
+        typeof current[key] !== "object"
+      ) {
+        current[key] = {};
+      }
+
+      current = current[key];
     }
 
     const lastKey = keys[keys.length - 1];
-
-    if (current?.[lastKey] !== value) {
+    console.log("value", value);
+    if (current[lastKey] !== value) {
       current[lastKey] = value;
       updated = true;
     }
   });
-
+  console.log("result", result);
   return {
     updated,
-    data: updated ? result : obj,
+    data: result,
   };
 }
 

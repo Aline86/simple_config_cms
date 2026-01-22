@@ -54,7 +54,9 @@ export default function HeaderEdit<T>({
           <FieldRenderer
             fieldName="image_favicon.image_image_url"
             model={
-              header.image_logo !== null ? header.image_logo : new MediaObject()
+              header.image_favicon !== null
+                ? header.image_favicon
+                : new MediaObject()
             }
             setField={onChange}
             label={"Favicon du site"}

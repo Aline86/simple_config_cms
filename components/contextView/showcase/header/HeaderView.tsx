@@ -119,7 +119,7 @@ export default function HeaderView({ header }: MediaViewProps) {
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
-        className={`shadow ${isSticky ? "sticky" : "relative"} top-0 left-0 right-0 z-0`}
+        className={`shadow ${isSticky ? "sticky" : "relative"} top-0 left-0 right-0 z-20`}
       >
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-between h-16 ">
@@ -139,11 +139,11 @@ export default function HeaderView({ header }: MediaViewProps) {
 
             <nav
               ref={navRef}
-              className={`flex flex-shrink space-x-8 whitespace-nowrap ${
+              className={`cursor-pointer flex flex-shrink space-x-8 whitespace-nowrap ${
                 isBurger && isOpen
                   ? "nav-dynamique nav-dynamique--open"
                   : isBurger
-                    ? "absolute invisible pointer-events-none"
+                    ? "absolute invisible"
                     : ""
               }`}
             >
@@ -160,7 +160,7 @@ export default function HeaderView({ header }: MediaViewProps) {
             {isBurger && (
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="relative z-50"
+                className="relative z-50  cursor-pointer"
               >
                 {!isOpen ? (
                   <svg
@@ -198,11 +198,13 @@ export default function HeaderView({ header }: MediaViewProps) {
       </header>
       {header?.image_reseaux !== null ? (
         <div
-          className={` ${isSticky ? "fixed w-fit h-fit mt-5 right-[30px] z-0" : "relative w-fit h-fit mt-20 right-[30px] z-0"}`}
+          className={` ${isSticky ? "fixed w-fit h-fit mt-5 right-[30px] z-0" : "absolute w-fit h-fit mt-20 right-[30px] z-0"}`}
         >
-          {header.image_reseaux.map((network, index) => {
-            return <SocialTab key={index} network={network} />;
-          })}
+          <div className="social-media absolute mb-2 right-[0px]">
+            {header.image_reseaux.map((network, index) => {
+              return <SocialTab key={index} network={network} />;
+            })}
+          </div>
         </div>
       ) : (
         <></>

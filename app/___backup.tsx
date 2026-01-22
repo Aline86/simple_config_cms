@@ -9,7 +9,7 @@ import { MediaObject } from "@/model/bloc/TestMediaObject";
 export default function Home() {
   const [media, setMedia] = useState<MediaObject>(
     new MediaObject({
-      id: 1,
+      id: crypto,
       bloc_id: 2,
       titre: "Titre test",
       image_lien: "fefe",

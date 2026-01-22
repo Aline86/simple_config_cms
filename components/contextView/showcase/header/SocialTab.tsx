@@ -7,12 +7,12 @@ export default function SocialTab({ network }: { network: MediaObject }) {
 
   return (
     <div
-      className="relative mb-2 z-0"
+      className="relative mb-2 flex flex-col gap-2"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <div
-        className={`flex items-center transition-transform duration-700 ease-in-out ${
+        className={`relative flex items-center transition-transform duration-700 ease-in-out ${
           isHovered ? "translate-x-0" : "translate-x-[150px]"
         }`}
       >
@@ -22,7 +22,7 @@ export default function SocialTab({ network }: { network: MediaObject }) {
           }
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center  bg-white rounded-l-lg shadow-lg overflow-hidden h-16 w-[200px]"
+          className="flex items-center bg-white rounded-l-lg shadow-lg overflow-hidden h-16 w-[200px]"
         >
           <div className="items-center justify-center">
             {network?.image_image_url !== null &&

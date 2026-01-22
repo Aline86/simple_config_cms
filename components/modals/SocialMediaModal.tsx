@@ -1,7 +1,7 @@
 import { Modal } from "./Modal";
 import { useEffect, useState } from "react";
 import { MediaObject } from "@/model/bloc/MediaObject";
-import { Heart } from "lucide-react";
+import { Heart, PlusIcon } from "lucide-react";
 import { MediaEditor } from "../contextView/edition/media/Media";
 
 interface MediaEditorProps<T> {
@@ -75,18 +75,10 @@ export const SocialMediaModal = <T,>({
         <Modal open={open} onOpenChange={setOpen}>
           <button
             onClick={addElement}
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-black text-white hover:bg-gray-800"
+            className="group flex h-10 w-10 items-center justify-center rounded-full bg-slate-900 text-white transition-all hover:bg-slate-700 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2"
+            aria-label="Ajouter une image"
           >
-            <svg
-              className="h-5 w-5"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <line x1="12" y1="5" x2="12" y2="19" />
-              <line x1="5" y1="12" x2="19" y2="12" />
-            </svg>
+            <PlusIcon className="h-5 w-5 transition-transform group-hover:rotate-90" />
           </button>
           {socialMedia.map((reseau) => {
             return (

@@ -20,7 +20,7 @@ export default function Page() {
     favicon: new MediaObject({
       id: 1,
       bloc_id: 1,
-      titre: "biche",
+      titre: "paysage",
       image_lien: "#",
       image_url:
         "https://res.cloudinary.com/demo/image/upload/w_400,h_300,c_fill/kitten.jpg",
@@ -28,7 +28,7 @@ export default function Page() {
     logo: new MediaObject({
       id: 1,
       bloc_id: 1,
-      titre: "biche",
+      titre: "paysage",
       image_lien: "#",
       image_url:
         "https://res.cloudinary.com/demo/image/upload/w_400,h_300,c_fill/kitten.jpg",
@@ -39,7 +39,7 @@ export default function Page() {
       new MediaObject({
         id: 1,
         bloc_id: 1,
-        titre: "biche",
+        titre: "paysage",
         image_lien: "#",
         position_image: 0,
         image_url:
@@ -48,7 +48,7 @@ export default function Page() {
       new MediaObject({
         id: 1,
         bloc_id: 1,
-        titre: "biche",
+        titre: "paysage",
         image_lien: "#",
         position_image: 1,
         image_url:

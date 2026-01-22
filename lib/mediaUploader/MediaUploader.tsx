@@ -79,7 +79,6 @@ export default function MediaUploader<T>({
 
       setImages((prev) => [...prev, ...newImages]);
       const firstFileName = newImages[0].file.name;
-      console.log("value", newImages);
       onChange(field, firstFileName);
     }
   };
@@ -142,6 +141,7 @@ export default function MediaUploader<T>({
     images.forEach((img) => URL.revokeObjectURL(img.preview));
     setImages([]);
     setErrors([]);
+    onChange(field, "");
   };
 
   return {

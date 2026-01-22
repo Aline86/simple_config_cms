@@ -35,7 +35,10 @@ export const Tiptap = ({ bloc, updateComponent }: TiptapProps) => {
   return (
     <div className="ml-5">
       <EditorToolbar editor={editor} onSetLink={setLink} />
-      <EditorContent editor={editor} />
+      <EditorContent
+        editor={editor}
+        className="border border-gray-300 rounded-md"
+      />
     </div>
   );
 };
