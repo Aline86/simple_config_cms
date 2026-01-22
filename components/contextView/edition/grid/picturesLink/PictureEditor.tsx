@@ -10,10 +10,13 @@ interface MediaEditorProps<T> {
   removeElement: (media: T) => void;
   onDragStart: (page: MediaObject) => void;
   onDrop: (page: MediaObject) => void;
+  context?: string;
 }
 export function PictureEditor<T>({ ...props }: MediaEditorProps<T>) {
   const debug = false;
   const [isOpen, setIsOpen] = useState(false);
+  const context_medias =
+    props.context === "article" ? `articles.0.images.` : `image_medias.`;
   return (
     <div
       className={
@@ -96,19 +99,28 @@ export function PictureEditor<T>({ ...props }: MediaEditorProps<T>) {
               <div className="space-y-6">
                 <FieldRenderer
                   label="Titre de la carte"
-                  fieldName={`image_medias.${(props.media as MediaObject).number_position_image}.text_titre`}
+                  fieldName={
+                    context_medias +
+                    `${(props.media as MediaObject).number_position_image}.text_titre`
+                  }
                   model={props.media as Record<string, any>}
                   setField={props.onChange}
                 />
                 <FieldRenderer
                   label="Lien de la carte"
-                  fieldName={`image_medias.${(props.media as MediaObject).number_position_image}.text_image_lien`}
+                  fieldName={
+                    context_medias +
+                    `${(props.media as MediaObject).number_position_image}.text_image_lien`
+                  }
                   model={props.media as Record<string, any>}
                   setField={props.onChange}
                 />
                 <FieldRenderer
                   label="Image associée à la carte"
-                  fieldName={`image_medias.${(props.media as MediaObject).number_position_image}.image_image_url`}
+                  fieldName={
+                    context_medias +
+                    `${(props.media as MediaObject).number_position_image}.image_image_url`
+                  }
                   model={props.media as Record<string, any>}
                   setField={props.onChange}
                 />

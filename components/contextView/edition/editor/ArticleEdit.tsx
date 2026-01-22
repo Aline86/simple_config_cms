@@ -1,28 +1,29 @@
 "use client";
 
-import { MediaObject } from "@/model/bloc/MediaObject";
 import { BlocObject } from "@/model/Bloc";
-import { MediaEditor } from "../../media/Media";
-import { PictureEditor } from "./PictureEditor";
+import { ArticleObject } from "@/model/bloc/Article";
+import { MediaObject } from "@/model/bloc/MediaObject";
 import { FieldRenderer } from "@/validators/renderer/TextRenderer";
+import { useState } from "react";
+import { PictureEditor } from "../grid/picturesLink/PictureEditor";
+import { Tiptap } from "./TipTapEditor";
 
-interface PicturesLinkEditorProps<T> {
-  images_group: BlocObject;
+interface ArticleEditorProps<T> {
+  article: ArticleObject;
   onChange: (fieldName: string, newValue: any) => void;
   addElement: () => void;
-  removeElement: (images_group: T) => void;
+  removeElement: (media: T) => void;
   onDragStart: (page: MediaObject) => void;
   onDrop: (page: MediaObject) => void;
 }
-
-export default function PicturesLinkEdit<T>({
-  images_group,
+export function ArticleEditor<T>({
+  article,
   onChange,
   addElement,
   removeElement,
   onDragStart,
   onDrop,
-}: PicturesLinkEditorProps<T>) {
+}: ArticleEditorProps<T>) {
   const debug = false;
   return (
     <div className="mx-auto max-w-2xl space-y-6 p-6">
@@ -52,19 +53,19 @@ export default function PicturesLinkEdit<T>({
           </svg>
         </button>
         <FieldRenderer
-          label="Titre du bloc d'images avec lien de redirection"
-          fieldName={`text_titre`}
-          model={images_group as Record<string, any>}
+          label="Titre de l'article"
+          fieldName={`text_text_article`}
+          model={article as Record<string, any>}
           setField={onChange}
         />
         <FieldRenderer
           label="Nombre de colonnes par ligne"
-          fieldName={`number_columns`}
-          model={images_group as Record<string, any>}
+          fieldName={`number_text_width`}
+          model={article as Record<string, any>}
           setField={onChange}
         />
         <div className="grid grid-cols-2 gap-6">
-          {images_group.image_medias.map((media) => {
+          {article.images.map((media) => {
             return (
               <PictureEditor
                 key={(media as MediaObject).number_id}
@@ -86,7 +87,7 @@ export default function PicturesLinkEdit<T>({
             Props reçues (HeaderEdit)
           </h3>
           <pre className="text-xs overflow-auto">
-            {JSON.stringify(images_group, null, 2)}
+            {JSON.stringify(article, null, 2)}
           </pre>
         </div>
       ) : (

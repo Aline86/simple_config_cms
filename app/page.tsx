@@ -1,35 +1,30 @@
 "use client";
 
-import * as React from "react";
-import { PageObject, TypeBloc } from "@/model/Page";
-import { Modal } from "@/components/modals/Modal";
+import { TypeBloc } from "@/model/Page";
 import { CreateBlocOptions, createNewBloc } from "@/lib/factories/Bloc.factory";
-import PageComponent from "./pageComponent";
 import { useEffect, useState } from "react";
-import PageCrud from "./pageComponent";
-import { HeaderObject } from "@/model/bloc/Header";
 import { MediaObject } from "@/model/bloc/MediaObject";
-import HeaderEdit from "@/components/contextView/edition/header/HeaderEdit";
 import { updateObjectBySetter } from "@/lib/utils/functions";
-import HeaderView from "@/components/contextView/showcase/header/HeaderView";
-import {
-  deleteItemAndReorder,
-  reorderArray,
-} from "@/helpers/changeComponentPosition";
+import { reorderArray } from "@/helpers/changeComponentPosition";
 import { BlocObject } from "@/model/Bloc";
-import PicturesLinkEdit from "@/components/contextView/edition/grid/picturesLink/PicturesLinkEdit";
-import PicturesLinkView from "@/components/contextView/showcase/grid/picturesLink/PicturesLinkView";
+import TextEditor from "@/components/contextView/edition/editor/TextEdit";
+import TextView from "@/components/contextView/showcase/editor/TextView";
+import { ArticleObject } from "@/model/bloc/Article";
+import { cloneMediaWithPosition, createMedia } from "@/helpers/media.helper";
+import { updateArticleImages } from "@/helpers/article.media.helper";
+import { cloneBlocWithArticles } from "@/helpers/bloc.helper";
 
 export default function Page() {
-  const options_image_group: CreateBlocOptions = {
+  const options_text: CreateBlocOptions = {
     page_id: crypto.randomUUID(),
     bloc_position: 0,
-    nom_bloc: "image_group",
-    type: TypeBloc.IMAGE_GROUPE,
-    mediaCount: 2,
+    nom_bloc: "texte",
+    type: TypeBloc.TEXTE,
+    articleCount: 1,
+    mediaPerArticle: 4,
   };
-  const bloc = createNewBloc(options_image_group);
-  const [imageGroupData, setImageGroupData] = useState<BlocObject | null>(null);
+  const bloc = createNewBloc(options_text);
+  const [text, setText] = useState<BlocObject | null>(null);
   const [dragged, setDragged] = useState<MediaObject | null>(null);
 
   const onDragStart = (media: MediaObject) => {
@@ -39,152 +34,82 @@ export default function Page() {
   const onDrop = (target: MediaObject) => {
     if (!dragged) return;
 
-    if (
-      imageGroupData?.image_medias !== undefined &&
-      imageGroupData?.image_medias !== null
-    ) {
-      const res = reorderArray(imageGroupData.image_medias, dragged, target);
+    setText((prev) => {
+      if (!prev || !prev.articles?.length) return prev;
 
-      setImageGroupData((prev) => {
-        if (!prev) return prev;
+      const article = prev.articles[0];
 
-        // Recréer des MediaObject propres avec les bonnes positions
-        const cleanMedias = res.map((media, index) => {
-          return new MediaObject({
-            id: media.number_id,
-            bloc_id: media.number_bloc_id,
-            titre: media.text_titre ?? undefined,
-            image_lien: media.text_image_lien ?? undefined,
-            image_url: media.image_image_url ?? undefined,
-            position_image: index, // Position correcte
-          });
-        });
+      const reordered = reorderArray(article.images, dragged, target);
 
-        const updatedBloc = new BlocObject(
-          {
-            id: prev.number_id ?? undefined,
-            nom_bloc: prev.text_nom_bloc ?? undefined,
-            page_id: prev.number_page_id ?? undefined,
-            titre: prev.text_titre ?? undefined,
-            type: prev.text_type ?? undefined,
-            bloc_position: prev.number_bloc_position ?? undefined,
-            langue_bloc: prev.text_langue_bloc ?? undefined,
-            is_full_width: prev.number_is_full_width,
-            width: prev.number_width ?? undefined,
-            height: prev.number_height ?? undefined,
-            gap: prev.number_gap ?? undefined,
-            createdAt: prev.number_createdAt ?? undefined,
-            updatedAt: new Date(),
-            image_medias: cleanMedias, // Utiliser les médias nettoyés
-            articles: prev.articles,
-          },
-          prev.mode,
-        );
+      const cleanImages = reordered.map(cloneMediaWithPosition);
 
-        return updatedBloc;
-      });
-
-      setDragged(null);
-    }
-  };
-  // Initialiser les données côté client uniquement
-  useEffect(() => {
-    setImageGroupData(bloc);
-  }, []);
-  useEffect(() => {}, [imageGroupData]);
-  const updateMediaObject = (fieldName: string, newValue: any) => {
-    if (!imageGroupData) return;
-    const newObj = updateObjectBySetter(imageGroupData, fieldName, newValue);
-    setImageGroupData(newObj.data);
-  };
-  const handleAdd = () => {
-    setImageGroupData((prev) => {
-      if (!prev) return prev;
-
-      const newMedia = new MediaObject({
-        id: crypto.randomUUID(),
-        bloc_id: prev.number_id ?? undefined,
-        titre: "nouveau média",
-        image_lien: "#",
-        position_image: prev.image_medias.length,
-        image_url:
-          "https://res.cloudinary.com/demo/image/upload/w_400,h_300,c_fill/kitten.jpg",
-      });
-
-      const updatedBloc = new BlocObject(
-        {
-          id: prev.number_id ?? undefined,
-          nom_bloc: prev.text_nom_bloc ?? undefined,
-          page_id: prev.number_page_id ?? undefined,
-          titre: prev.text_titre ?? undefined,
-          type: prev.text_type ?? undefined,
-          bloc_position: prev.number_bloc_position ?? undefined,
-          langue_bloc: prev.text_langue_bloc ?? undefined,
-          is_full_width: prev.number_is_full_width,
-          width: prev.number_width ?? undefined,
-          height: prev.number_height ?? undefined,
-          gap: prev.number_gap ?? undefined,
-          createdAt: prev.number_createdAt ?? undefined,
-          updatedAt: new Date(),
-          image_medias: [...prev.image_medias, newMedia],
-          articles: prev.articles,
-        },
-        prev.mode,
+      const updatedArticles = updateArticleImages(
+        prev.articles,
+        0,
+        cleanImages,
       );
 
-      return updatedBloc;
+      return cloneBlocWithArticles(prev, updatedArticles);
+    });
+
+    setDragged(null);
+  };
+
+  const updateObject = (fieldName: string, newValue: any) => {
+    if (!text) return;
+    const newObj = updateObjectBySetter(text, fieldName, newValue);
+    setText(newObj.data);
+  };
+  const handleAdd = () => {
+    setText((prev) => {
+      if (!prev || !prev.articles?.length) return prev;
+
+      const newMedia = createMedia(
+        prev.articles[0].images.length,
+        prev.number_id,
+      );
+
+      const updatedArticles: ArticleObject[] = prev.articles.map(
+        (article, index) =>
+          index === 0
+            ? new ArticleObject({
+                ...article,
+                images: [...article.images, newMedia],
+              })
+            : article,
+      );
+      return cloneBlocWithArticles(prev, updatedArticles);
     });
   };
 
   const handleRemove = (model: MediaObject) => {
-    setImageGroupData((prev) => {
-      if (!prev) return prev;
+    setText((prev) => {
+      if (!prev || !prev.articles?.length) return prev;
 
-      const res = deleteItemAndReorder(
-        prev.image_medias,
-        model,
-        "number_position_image",
-      );
+      const updatedArticles = prev.articles.map((article, articleIndex) => {
+        if (articleIndex !== 0) return article;
 
-      // Recréer des MediaObject propres et réordonner
-      const cleanMedias = res.map((media, index) => {
-        return new MediaObject({
-          id: media.number_id,
-          bloc_id: media.number_bloc_id,
-          titre: media.text_titre ?? undefined,
-          image_lien: media.text_image_lien ?? undefined,
-          image_url: media.image_image_url ?? undefined,
-          position_image: index,
+        const filteredImages = article.images.filter(
+          (img) => img.number_id !== model.number_id,
+        );
+
+        const cleanImages = filteredImages.map(cloneMediaWithPosition);
+
+        return new ArticleObject({
+          ...article,
+          images: cleanImages,
         });
       });
 
-      const updatedBloc = new BlocObject(
-        {
-          id: prev.number_id ?? undefined,
-          nom_bloc: prev.text_nom_bloc ?? undefined,
-          page_id: prev.number_page_id ?? undefined,
-          titre: prev.text_titre ?? undefined,
-          type: prev.text_type ?? undefined,
-          bloc_position: prev.number_bloc_position ?? undefined,
-          langue_bloc: prev.text_langue_bloc ?? undefined,
-          is_full_width: prev.number_is_full_width,
-          width: prev.number_width ?? undefined,
-          height: prev.number_height ?? undefined,
-          gap: prev.number_gap ?? undefined,
-          createdAt: prev.number_createdAt ?? undefined,
-          updatedAt: new Date(),
-          image_medias: cleanMedias,
-          articles: prev.articles,
-        },
-        prev.mode,
-      );
-
-      return updatedBloc;
+      return cloneBlocWithArticles(prev, updatedArticles);
     });
   };
 
-  // Afficher un placeholder pendant le chargement
-  if (!imageGroupData) {
+  useEffect(() => {
+    setText(bloc);
+  }, []);
+
+  if (!text) {
     return (
       <div className="flex flex-col lg:flex-row gap-6">
         <div className="flex-1 rounded-lg border p-4 bg-background shadow-sm">
@@ -209,9 +134,9 @@ export default function Page() {
     <div className="flex flex-col lg:flex-row gap-6">
       <div className="flex-1 rounded-lg border p-4 bg-background shadow-sm">
         <h2 className="text-lg font-semibold mb-4">Éditeur</h2>
-        <PicturesLinkEdit
-          images_group={imageGroupData}
-          onChange={updateMediaObject}
+        <TextEditor
+          text={text}
+          onChange={updateObject}
           addElement={handleAdd}
           removeElement={handleRemove}
           onDrop={onDrop}
@@ -221,7 +146,7 @@ export default function Page() {
 
       <div className="flex-1 rounded-lg border p-4 bg-background shadow-sm">
         <h2 className="text-lg font-semibold mb-4">Aperçu</h2>
-        <PicturesLinkView imageGroupData={imageGroupData} />
+        <TextView index={0} bloc={text} />
       </div>
     </div>
   );
