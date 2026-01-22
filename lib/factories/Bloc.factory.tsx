@@ -117,27 +117,13 @@ function createEmptyArticle(
   return new ArticleObject({
     id: crypto.randomUUID(),
     bloc_id: id_bloc,
-    text_article: "",
+    text_images_position: "left",
+    text_article: {},
     text_width: 100,
     text_height: 100,
     text_margins: 30,
     images,
   });
-}
-
-/**
- * Retourne un nom par défaut selon le type de bloc
- */
-function getDefaultBlocName(type: TypeBloc): string {
-  const names: Record<TypeBloc, string> = {
-    [TypeBloc.CAROUSEL]: "Carrousel",
-    [TypeBloc.IMAGE_GROUPE]: "Groupe d'images",
-    [TypeBloc.TEXTE]: "Zone de texte",
-    [TypeBloc.SCREEN]: "Écran",
-    [TypeBloc.VIDEO]: "Vidéo",
-  };
-
-  return names[type] || "Nouveau bloc";
 }
 
 /**

@@ -13,6 +13,7 @@ import { ArticleObject } from "@/model/bloc/Article";
 import { cloneMediaWithPosition, createMedia } from "@/helpers/media.helper";
 import { updateArticleImages } from "@/helpers/article.media.helper";
 import { cloneBlocWithArticles } from "@/helpers/bloc.helper";
+import { cloneArticleWithImages } from "@/helpers/article.helper";
 
 export default function Page() {
   const options_text: CreateBlocOptions = {
@@ -26,7 +27,7 @@ export default function Page() {
   const bloc = createNewBloc(options_text);
   const [text, setText] = useState<BlocObject | null>(null);
   const [dragged, setDragged] = useState<MediaObject | null>(null);
-
+  const debug = true;
   const onDragStart = (media: MediaObject) => {
     setDragged(media);
   };
@@ -36,13 +37,9 @@ export default function Page() {
 
     setText((prev) => {
       if (!prev || !prev.articles?.length) return prev;
-
       const article = prev.articles[0];
-
       const reordered = reorderArray(article.images, dragged, target);
-
       const cleanImages = reordered.map(cloneMediaWithPosition);
-
       const updatedArticles = updateArticleImages(
         prev.articles,
         0,
@@ -63,21 +60,12 @@ export default function Page() {
   const handleAdd = () => {
     setText((prev) => {
       if (!prev || !prev.articles?.length) return prev;
+      const article = prev.articles[0];
+      const newMedia = createMedia(article.images.length, prev.number_id);
+      const updatedArticles = [
+        cloneArticleWithImages(article, [...article.images, newMedia]),
+      ];
 
-      const newMedia = createMedia(
-        prev.articles[0].images.length,
-        prev.number_id,
-      );
-
-      const updatedArticles: ArticleObject[] = prev.articles.map(
-        (article, index) =>
-          index === 0
-            ? new ArticleObject({
-                ...article,
-                images: [...article.images, newMedia],
-              })
-            : article,
-      );
       return cloneBlocWithArticles(prev, updatedArticles);
     });
   };
@@ -85,20 +73,14 @@ export default function Page() {
   const handleRemove = (model: MediaObject) => {
     setText((prev) => {
       if (!prev || !prev.articles?.length) return prev;
-
       const updatedArticles = prev.articles.map((article, articleIndex) => {
         if (articleIndex !== 0) return article;
-
         const filteredImages = article.images.filter(
           (img) => img.number_id !== model.number_id,
         );
-
         const cleanImages = filteredImages.map(cloneMediaWithPosition);
 
-        return new ArticleObject({
-          ...article,
-          images: cleanImages,
-        });
+        return cloneArticleWithImages(article, cleanImages);
       });
 
       return cloneBlocWithArticles(prev, updatedArticles);
@@ -132,7 +114,7 @@ export default function Page() {
 
   return (
     <div className="flex flex-col lg:flex-row gap-6">
-      <div className="flex-1 rounded-lg border p-4 bg-background shadow-sm">
+      <div className="flex-1 rounded-lg border p-4 bg-background shadow-sm max-w-[48vw]">
         <h2 className="text-lg font-semibold mb-4">Éditeur</h2>
         <TextEditor
           text={text}
@@ -141,6 +123,7 @@ export default function Page() {
           removeElement={handleRemove}
           onDrop={onDrop}
           onDragStart={onDragStart}
+          debug={debug}
         />
       </div>
 

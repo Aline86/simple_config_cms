@@ -8,6 +8,7 @@ interface MediaEditorProps<T> {
   socialMedia: MediaObject;
   onChange: (fieldName: string, newValue: any) => void;
   removeElement: (socialMedia: T) => void;
+  isLink?: boolean;
 }
 export function MediaEditor<T>({ ...props }: MediaEditorProps<T>) {
   const debug = false;

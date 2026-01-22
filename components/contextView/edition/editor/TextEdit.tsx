@@ -6,6 +6,7 @@ import { FieldRenderer } from "@/validators/renderer/TextRenderer";
 import { PictureEditor } from "../../edition/grid/picturesLink/PictureEditor";
 import { Tiptap } from "./TipTapEditor";
 import { PlusIcon } from "lucide-react";
+import { useState } from "react";
 
 interface TextEditorProps {
   text: BlocObject;
@@ -27,9 +28,24 @@ export default function TextEditor({
   debug = false,
 }: TextEditorProps) {
   // Vérification de sécurité
+
   const hasArticles = text?.articles?.[0];
   const images = hasArticles?.images || [];
+  const [selectedValidatorKey, setSelectedValidatorKey] = useState<string>(
+    hasArticles?.text_images_position,
+  );
+  const availableValidators = {
+    left: "Gauche",
+    right: "Droite",
+    top: "En haut",
+  };
 
+  const handleValidatorChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newValidatorKey = e.target.value;
+    setSelectedValidatorKey(newValidatorKey);
+
+    onChange(`articles.0.text_images_position` as string, newValidatorKey);
+  };
   return (
     <div className="mx-auto max-w-4xl space-y-6 p-6">
       {/* Header Section */}
@@ -64,12 +80,47 @@ export default function TextEditor({
             setField={onChange}
           />
 
-          <FieldRenderer
-            label="Nombre de colonnes par ligne"
-            fieldName="number_columns"
-            model={text as Record<string, any>}
-            setField={onChange}
-          />
+          <label className="input-label">
+            Position des images par raport au texte
+          </label>
+
+          <select
+            value={selectedValidatorKey}
+            onChange={handleValidatorChange}
+            className="flex h-10 w-full items-center justify-between rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 ring-offset-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-950 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-50 dark:ring-offset-slate-950 dark:placeholder:text-slate-400 dark:focus:ring-slate-300"
+          >
+            {Object.entries(availableValidators).map(
+              ([validatorKey, value]) => (
+                <option
+                  key={validatorKey}
+                  value={validatorKey}
+                  className="text-slate-900 dark:text-slate-50"
+                >
+                  {value}
+                </option>
+              ),
+            )}
+          </select>
+          {selectedValidatorKey === "top" && (
+            <>
+              <label className="input-label">
+                Réglette pour déterminer le nombre de colonnes des images : 4
+                max
+              </label>
+              <div className="flex justify-between">
+                <div>1</div>
+                <div>2</div>
+                <div>3</div>
+                <div>4</div>
+              </div>
+              <FieldRenderer
+                label="Nombre de colonnes par ligne"
+                fieldName="number_columns"
+                model={text as Record<string, any>}
+                setField={onChange}
+              />
+            </>
+          )}
         </div>
 
         {/* Images Grid */}

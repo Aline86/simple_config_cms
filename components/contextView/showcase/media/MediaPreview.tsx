@@ -6,6 +6,7 @@ import { MediaObject } from "@/model/bloc/TestMediaObject";
 
 type MediaPreviewProps = {
   media: MediaObject;
+  isLink?: boolean;
 };
 /*<Image
               src={media.image_image_url!}
@@ -14,7 +15,7 @@ type MediaPreviewProps = {
               className="object-cover"
               unoptimized
             />*/
-export function MediaPreview({ media }: MediaPreviewProps) {
+export function MediaPreview({ media, isLink }: MediaPreviewProps) {
   const hasImage = Boolean(media.image_image_url);
   const hasLink = Boolean(media.text_image_lien);
 

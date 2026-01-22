@@ -18,38 +18,55 @@ import PicturesLinkItemView from "../grid/picturesLink/PictureLinkItemView";
 import { BlocObject } from "@/model/Bloc";
 import ArticleView from "./ArtcleView";
 import clsx from "clsx";
+import ContentLayout from "./ContentLayout";
+import { MediaObject } from "@/model/bloc/MediaObject";
 
 interface BlocParams {
   index: number;
   bloc: BlocObject;
 }
+type ImagePosition = "top" | "left" | "right";
 
-function TextView({ bloc }: BlocParams) {
-  return (
-    <section className="min-h-screen bg-slate-100 p-8">
-      <h2 className="text-2xl font-bold text-slate-800 mb-6  text-center ">
-        {bloc.text_titre}
-      </h2>
-      <div
-        className={clsx(
-          "w-full grid gap-4",
-          getGridClasses(bloc.number_columns),
-        )}
-      >
-        {bloc.articles[0].images.map((media) => {
-          return (
-            <PicturesLinkItemView key={media.number_id} mediaObject={media} />
-          );
-        })}
-      </div>
-      {bloc.articles[0].text_text_article !== undefined && (
-        <ArticleView
-          index={0}
-          bloc={bloc.articles[0].text_text_article as JSONContent}
-        />
+// Version refactorisée du composant
+export default function TextView({ index, bloc }: BlocParams) {
+  const article = bloc.articles?.[0];
+  const hasImages = article?.images?.length > 0;
+  const hasText = article?.text_text_article !== null;
+  const imagePosition = (article.text_images_position ||
+    "top") as ImagePosition;
+
+  if (!article) return null;
+
+  const imagesNode = hasImages ? (
+    <div
+      className={clsx(
+        "grid gap-4",
+        imagePosition === "top"
+          ? getGridClasses(bloc.number_columns || 3)
+          : "grid-cols-1",
       )}
-    </section>
+    >
+      {article.images.map((media: MediaObject) => (
+        <PicturesLinkItemView key={media.number_id} mediaObject={media} />
+      ))}
+    </div>
+  ) : null;
+
+  const textNode = hasText ? (
+    <ArticleView
+      index={index}
+      bloc={article.text_text_article as JSONContent}
+    />
+  ) : null;
+
+  return (
+    <ContentLayout
+      position={imagePosition}
+      title={bloc.text_titre}
+      images={imagesNode}
+      text={textNode}
+      hasImages={hasImages}
+      hasText={hasText}
+    />
   );
 }
-
-export default TextView;

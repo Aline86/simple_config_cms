@@ -12,6 +12,7 @@ export class ArticleObject {
   public number_text_height: number | null;
   public number_text_margins: number | null;
   public images: MediaObject[];
+  public text_images_position: string;
 
   constructor(
     data: {
@@ -22,6 +23,7 @@ export class ArticleObject {
       text_height?: number;
       text_margins?: number;
       images?: MediaObject[];
+      text_images_position?: string;
     } = {},
   ) {
     this.number_id = data.id ?? null;
@@ -31,6 +33,7 @@ export class ArticleObject {
     this.number_text_height = data.text_height ?? null;
     this.number_text_margins = data.text_margins ?? null;
     this.images = data.images ?? [];
+    this.text_images_position = data.text_images_position ?? "top";
   }
 
   addImage(media: MediaObject): void {
@@ -46,6 +49,7 @@ export class ArticleObject {
       id: this.number_id,
       bloc_id: this.number_bloc_id,
       text_article: this.text_text_article,
+      text_images_position: this.text_images_position,
       text_width: this.number_text_width,
       text_height: this.number_text_height,
       text_margins: this.number_text_margins,

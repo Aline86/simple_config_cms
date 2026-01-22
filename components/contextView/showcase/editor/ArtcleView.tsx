@@ -2,17 +2,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import {
-  useEffect,
-  useState,
-  Suspense,
-  CSSProperties,
-  useCallback,
-} from "react";
-
-import { ArticleObject } from "@/model/bloc/Article";
+import { useEffect, useState, Suspense } from "react";
 import { JSONContent } from "@tiptap/core";
-import DOMPurify from "dompurify";
 import { output } from "@/lib/utils/functions";
 
 interface BlocParams {

@@ -10,8 +10,10 @@ import CloudinaryValidator, {
 
 export default function PicturesLinkItemView({
   mediaObject,
+  isLink,
 }: {
   mediaObject: MediaObject;
+  isLink?: boolean;
 }) {
   const isValid = new CloudinaryValidator(
     mediaObject.image_image_url,
@@ -42,34 +44,38 @@ export default function PicturesLinkItemView({
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             />
           )}
-          <button className="absolute top-3 right-3 p-2 bg-white/90 hover:bg-white rounded-full shadow-md transition-colors">
-            <Heart className="w-4 h-4 text-slate-700" />
-          </button>
+          {isLink && (
+            <button className="absolute top-3 right-3 p-2 bg-white/90 hover:bg-white rounded-full shadow-md transition-colors">
+              <Heart className="w-4 h-4 text-slate-700" />
+            </button>
+          )}
         </div>
 
         {/* Contenu */}
-        <div className="p-6 flex-1 flex flex-col">
-          <div className="mb-4 flex-1">
-            <h3 className="text-lg font-semibold text-slate-800 mb-2">
-              {mediaObject.text_titre}
-            </h3>
-          </div>
+        {isLink && (
+          <div className="p-6 flex-1 flex flex-col">
+            <div className="mb-4 flex-1">
+              <h3 className="text-lg font-semibold text-slate-800 mb-2">
+                {mediaObject.text_titre}
+              </h3>
+            </div>
 
-          <div className="pt-4 border-t border-slate-100">
-            <a
-              href={
-                mediaObject.text_image_lien !== undefined &&
-                mediaObject.text_image_lien !== null
-                  ? mediaObject.text_image_lien
-                  : "#"
-              }
-              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-slate-700 hover:bg-slate-800 text-white rounded-md transition-colors duration-200 font-medium"
-            >
-              <span>Voir</span>
-              <ArrowRight className="w-4 h-4" />
-            </a>
+            <div className="pt-4 border-t border-slate-100">
+              <a
+                href={
+                  mediaObject.text_image_lien !== undefined &&
+                  mediaObject.text_image_lien !== null
+                    ? mediaObject.text_image_lien
+                    : "#"
+                }
+                className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-slate-700 hover:bg-slate-800 text-white rounded-md transition-colors duration-200 font-medium"
+              >
+                <span>Voir</span>
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

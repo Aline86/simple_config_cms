@@ -169,6 +169,9 @@
     overflow-x: hidden;
   }
 }
+.tiptap {
+  margin-bottom: 20px;
+}
 .validated-input-wrapper .input {
   border: 1px solid #d1d5db;
   border-radius: 6px;
@@ -300,4 +303,9 @@ header {
   width: 50px;
   height: 50px;
   object-fit: contain;
+}
+
+/* TIP TAP */
+h2.tiptap_heading {
+  font-size: 45px !important;
 }

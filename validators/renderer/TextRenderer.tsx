@@ -83,8 +83,6 @@ export function FieldRenderer<T>({
   const validator = createValidator(fieldNameToInvestigate, currentValue);
   console.log("config", validator.getParams());
   const validationResult = validator.validate(currentValue);
-  const hasErrors = !validationResult.valid;
-  const errors = validationResult.errors || [];
 
   const prefix = extractPrefix(fieldNameToInvestigate);
 
