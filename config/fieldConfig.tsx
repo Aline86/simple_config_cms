@@ -20,15 +20,29 @@ const FIELD_CONFIGS: Record<string, FieldParameter> = {
   }),
 
   number_width: new Parameter({
-    type: "number",
-    min: 20,
-    max: 100,
+    type: "range",
+    min: 75,
+    max: 250,
     step: 10,
+    defaultValue: 150,
     integer: true,
     positive: true,
     errorMessages: {
-      min: "La largeur minimale est 20% du container",
-      max: "La largeur maximale est 100% du container",
+      min: "La largeur minimale est 75px",
+      max: "La largeur maximale est 250px",
+    },
+  }),
+  number_height: new Parameter({
+    type: "range",
+    min: 75,
+    max: 250,
+    step: 10,
+    defaultValue: 150,
+    integer: true,
+    positive: true,
+    errorMessages: {
+      min: "La largeur minimale est 75px",
+      max: "La largeur maximale est 250px",
     },
   }),
   number_bloc_id: new Parameter({

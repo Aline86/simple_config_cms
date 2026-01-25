@@ -23,7 +23,7 @@ export default function PicturesLinkEdit<T>({
   onDragStart,
   onDrop,
 }: PicturesLinkEditorProps<T>) {
-  const debug = false;
+  const debug = true;
   return (
     <div className="mx-auto max-w-2xl space-y-6 p-6">
       <div className="space-y-2">

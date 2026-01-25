@@ -76,7 +76,7 @@ export default function TextInput<T>({
   };
 
   return (
-    <div className={`validated-input-wrapper ${className}`}>
+    <div className={`validated-input-wrapper ${className}   mb-4`}>
       {label && (
         <label className="input-label">
           {label}

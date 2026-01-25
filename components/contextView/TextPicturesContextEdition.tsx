@@ -9,7 +9,6 @@ import { reorderArray } from "@/helpers/changeComponentPosition";
 import { BlocObject } from "@/model/Bloc";
 import TextEditor from "@/components/contextView/edition/editor/TextEdit";
 import TextView from "@/components/contextView/showcase/editor/TextView";
-import { ArticleObject } from "@/model/bloc/Article";
 import { cloneMediaWithPosition, createMedia } from "@/helpers/media.helper";
 import { updateArticleImages } from "@/helpers/article.media.helper";
 import { cloneBlocWithArticles } from "@/helpers/bloc.helper";

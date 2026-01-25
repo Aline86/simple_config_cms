@@ -124,6 +124,7 @@ export function FieldRenderer<T>({
       case "video":
         return (
           <NumberInput
+            label={label}
             validator={validator as NumberValidator}
             value={currentValue}
             field={""}
@@ -136,6 +137,7 @@ export function FieldRenderer<T>({
       case "number": {
         return (
           <NumberInput
+            label={label}
             value={currentValue}
             field={fieldName}
             onChangeValue={setField}

@@ -65,7 +65,6 @@ export default class CloudinaryValidator {
         const allowedFormats =
           this.params.allowedFormats?.join("|") || "jpg|jpeg|png|webp";
 
-        // Regex plus permissive
         const cloudinaryRegex = new RegExp(
           `^https?:\\/\\/res\\.cloudinary\\.com\\/[^/]+\\/(${resourceTypes})\\/upload(?:\\/[^/]+)*\\/[^/]+\\.(${allowedFormats})(\\?.*)?$`,
           "i",

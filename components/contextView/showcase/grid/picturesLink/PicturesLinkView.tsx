@@ -7,8 +7,10 @@ import { getGridClasses } from "@/lib/utils/functions";
 
 export default function PicturesLinkView({
   imageGroupData,
+  isLink,
 }: {
   imageGroupData: BlocObject;
+  isLink: boolean;
 }) {
   return (
     <section className="min-h-screen bg-slate-100 text-center p-8">
@@ -23,7 +25,11 @@ export default function PicturesLinkView({
       >
         {imageGroupData.image_medias.map((media) => {
           return (
-            <PicturesLinkItemView key={media.number_id} mediaObject={media} />
+            <PicturesLinkItemView
+              key={media.number_id}
+              mediaObject={media}
+              isLink={isLink}
+            />
           );
         })}
       </div>

@@ -96,7 +96,7 @@ function createEmptyMedia(position: number, id_bloc: string): MediaObject {
     titre: "",
     image_lien: "",
     position_image: position,
-    image_url: "",
+    image_url: `https://picsum.photos/300/200?random=${Date.now()}-${position}`,
   });
 }
 

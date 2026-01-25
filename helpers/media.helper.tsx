@@ -17,8 +17,7 @@ export function createMedia(position: number, bloc_id: string | null) {
     bloc_id: bloc_id,
     titre: "",
     image_lien: "#",
-    image_url:
-      "https://res.cloudinary.com/demo/image/upload/w_400,h_300,c_fill/kitten.jpg",
+    image_url: `https://picsum.photos/300/200?random=${Date.now()}-${position}`,
     position_image: position,
   });
 }

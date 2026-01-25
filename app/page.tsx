@@ -7,27 +7,24 @@ import { MediaObject } from "@/model/bloc/MediaObject";
 import { updateObjectBySetter } from "@/lib/utils/functions";
 import { reorderArray } from "@/helpers/changeComponentPosition";
 import { BlocObject } from "@/model/Bloc";
-import TextEditor from "@/components/contextView/edition/editor/TextEdit";
-import TextView from "@/components/contextView/showcase/editor/TextView";
-import { ArticleObject } from "@/model/bloc/Article";
+import { cloneBlocWithMedias } from "@/helpers/bloc.helper";
 import { cloneMediaWithPosition, createMedia } from "@/helpers/media.helper";
-import { updateArticleImages } from "@/helpers/article.media.helper";
-import { cloneBlocWithArticles } from "@/helpers/bloc.helper";
-import { cloneArticleWithImages } from "@/helpers/article.helper";
+import { updateBlocImages } from "@/helpers/bloc.media.helper";
+import CarouselThumbnailsView from "@/components/contextView/showcase/carousel/thumbnails/CarouselThumbnailsView";
+import CarouselThumbnailsEdit from "@/components/contextView/edition/carousel/thumbnails/CarouselThumbnailsEdit";
 
 export default function Page() {
-  const options_text: CreateBlocOptions = {
+  const options_image_group: CreateBlocOptions = {
     page_id: crypto.randomUUID(),
     bloc_position: 0,
-    nom_bloc: "texte",
-    type: TypeBloc.TEXTE,
-    articleCount: 1,
-    mediaPerArticle: 4,
+    nom_bloc: "image_group",
+    type: TypeBloc.IMAGE_GROUPE,
+    mediaCount: 5,
   };
-  const bloc = createNewBloc(options_text);
-  const [text, setText] = useState<BlocObject | null>(null);
+  const bloc = createNewBloc(options_image_group);
+  const [imageGroupData, setImageGroupData] = useState<BlocObject | null>(null);
   const [dragged, setDragged] = useState<MediaObject | null>(null);
-  const debug = false;
+
   const onDragStart = (media: MediaObject) => {
     setDragged(media);
   };
@@ -35,65 +32,72 @@ export default function Page() {
   const onDrop = (target: MediaObject) => {
     if (!dragged) return;
 
-    setText((prev) => {
-      if (!prev || !prev.articles?.length) return prev;
-      const article = prev.articles[0];
-      const reordered = reorderArray(article.images, dragged, target);
-      const cleanImages = reordered.map(cloneMediaWithPosition);
-      const updatedArticles = updateArticleImages(
-        prev.articles,
-        0,
-        cleanImages,
-      );
+    if (
+      imageGroupData?.image_medias !== undefined &&
+      imageGroupData?.image_medias !== null
+    ) {
+      setImageGroupData((prev) => {
+        if (!prev) return prev;
 
-      return cloneBlocWithArticles(prev, updatedArticles);
-    });
+        // Recréer des MediaObject propres avec les bonnes positions
+        const reordered = reorderArray(
+          imageGroupData.image_medias,
+          dragged,
+          target,
+        );
 
-    setDragged(null);
+        const updatedBloc = cloneBlocWithMedias(prev, reordered);
+
+        return updatedBloc;
+      });
+
+      setDragged(null);
+    }
   };
 
-  const updateObject = (fieldName: string, newValue: any) => {
-    if (!text) return;
-    const newObj = updateObjectBySetter(text, fieldName, newValue);
-    setText(newObj.data);
+  const updateMediaObject = (fieldName: string, newValue: any) => {
+    if (!imageGroupData) return;
+    const newObj = updateObjectBySetter(imageGroupData, fieldName, newValue);
+    setImageGroupData(newObj.data);
   };
   const handleAdd = () => {
-    setText((prev) => {
-      if (!prev || !prev.articles?.length) return prev;
-      const article = prev.articles[0];
-      const newMedia = createMedia(article.images.length, prev.number_id);
-      const updatedArticles = [
-        cloneArticleWithImages(article, [...article.images, newMedia]),
-      ];
+    setImageGroupData((prev) => {
+      if (!prev) return prev;
 
-      return cloneBlocWithArticles(prev, updatedArticles);
+      const newMedia = createMedia(prev.image_medias.length, prev.number_id);
+
+      const updatedBloc = updateBlocImages(
+        prev,
+        prev.image_medias.length,
+        newMedia,
+      );
+
+      return updatedBloc;
     });
   };
 
   const handleRemove = (model: MediaObject) => {
-    setText((prev) => {
-      if (!prev || !prev.articles?.length) return prev;
-      const updatedArticles = prev.articles.map((article, articleIndex) => {
-        if (articleIndex !== 0) return article;
-        const filteredImages = article.images.filter(
-          (img) => img.number_id !== model.number_id,
-        );
-        const cleanImages = filteredImages.map(cloneMediaWithPosition);
+    setImageGroupData((prev) => {
+      if (!prev || !prev.image_medias?.length) return prev;
+      const filteredImages = prev.image_medias.filter(
+        (img) => img.number_id !== model.number_id,
+      );
 
-        return cloneArticleWithImages(article, cleanImages);
-      });
-
-      return cloneBlocWithArticles(prev, updatedArticles);
+      return cloneBlocWithMedias(
+        prev,
+        filteredImages.map(cloneMediaWithPosition),
+      );
     });
   };
-
+  // Initialiser les données côté client uniquement
   useEffect(() => {
-    setText(bloc);
+    setImageGroupData(bloc);
   }, []);
-
-  if (!text) {
+  useEffect(() => {}, [imageGroupData]);
+  // Afficher un placeholder pendant le chargement
+  if (!imageGroupData) {
     return (
-      <div className="flex flex-col lg:flex-row gap-6">
+      <div className="flex flex-col lg:flex-row gap-6 w-full">
         <div className="flex-1 rounded-lg border p-4 bg-background shadow-sm">
           <h2 className="text-lg font-semibold mb-4">Éditeur</h2>
           <div className="animate-pulse space-y-4">
@@ -113,23 +117,34 @@ export default function Page() {
   }
 
   return (
-    <div className="flex flex-col lg:flex-row gap-6">
-      <div className="flex-1 rounded-lg border p-4 bg-background shadow-sm max-w-[48vw]">
+    <div className="flex flex-col lg:flex-row gap-6 w-full">
+      <div className="w-full lg:w-1/2 rounded-lg border p-4 bg-background shadow-sm">
         <h2 className="text-lg font-semibold mb-4">Éditeur</h2>
-        <TextEditor
-          text={text}
-          onChange={updateObject}
+        <CarouselThumbnailsEdit
+          images_group={imageGroupData}
+          onChange={updateMediaObject}
           addElement={handleAdd}
           removeElement={handleRemove}
           onDrop={onDrop}
           onDragStart={onDragStart}
-          debug={debug}
         />
       </div>
 
       <div className="flex-1 rounded-lg border p-4 bg-background shadow-sm">
         <h2 className="text-lg font-semibold mb-4">Aperçu</h2>
-        <TextView index={0} bloc={text} />
+        {imageGroupData !== undefined && (
+          <CarouselThumbnailsView
+            bloc={imageGroupData}
+            width={
+              imageGroupData.number_width ? imageGroupData.number_width : 150
+            }
+            height={
+              imageGroupData.number_height ? imageGroupData.number_height : 150
+            }
+            gap={30}
+            cardNumber={imageGroupData.image_medias.length}
+          />
+        )}
       </div>
     </div>
   );

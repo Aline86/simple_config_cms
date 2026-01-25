@@ -12,6 +12,9 @@ import {
 import { BlocObject } from "@/model/Bloc";
 import PicturesLinkEdit from "@/components/contextView/edition/grid/picturesLink/PicturesLinkEdit";
 import PicturesLinkView from "@/components/contextView/showcase/grid/picturesLink/PicturesLinkView";
+import { cloneBlocWithMedias } from "@/helpers/bloc.helper";
+import { cloneMediaWithPosition, createMedia } from "@/helpers/media.helper";
+import { updateBlocImages } from "@/helpers/bloc.media.helper";
 
 export default function Page() {
   const options_image_group: CreateBlocOptions = {
@@ -19,7 +22,7 @@ export default function Page() {
     bloc_position: 0,
     nom_bloc: "image_group",
     type: TypeBloc.IMAGE_GROUPE,
-    mediaCount: 2,
+    mediaCount: 5,
   };
   const bloc = createNewBloc(options_image_group);
   const [imageGroupData, setImageGroupData] = useState<BlocObject | null>(null);
@@ -36,43 +39,17 @@ export default function Page() {
       imageGroupData?.image_medias !== undefined &&
       imageGroupData?.image_medias !== null
     ) {
-      const res = reorderArray(imageGroupData.image_medias, dragged, target);
-
       setImageGroupData((prev) => {
         if (!prev) return prev;
 
         // Recréer des MediaObject propres avec les bonnes positions
-        const cleanMedias = res.map((media, index) => {
-          return new MediaObject({
-            id: media.number_id,
-            bloc_id: media.number_bloc_id,
-            titre: media.text_titre ?? undefined,
-            image_lien: media.text_image_lien ?? undefined,
-            image_url: media.image_image_url ?? undefined,
-            position_image: index, // Position correcte
-          });
-        });
-
-        const updatedBloc = new BlocObject(
-          {
-            id: prev.number_id ?? undefined,
-            nom_bloc: prev.text_nom_bloc ?? undefined,
-            page_id: prev.number_page_id ?? undefined,
-            titre: prev.text_titre ?? undefined,
-            type: prev.text_type ?? undefined,
-            bloc_position: prev.number_bloc_position ?? undefined,
-            langue_bloc: prev.text_langue_bloc ?? undefined,
-            is_full_width: prev.number_is_full_width,
-            width: prev.number_width ?? undefined,
-            height: prev.number_height ?? undefined,
-            gap: prev.number_gap ?? undefined,
-            createdAt: prev.number_createdAt ?? undefined,
-            updatedAt: new Date(),
-            image_medias: cleanMedias, // Utiliser les médias nettoyés
-            articles: prev.articles,
-          },
-          prev.mode,
+        const reordered = reorderArray(
+          imageGroupData.image_medias,
+          dragged,
+          target,
         );
+
+        const updatedBloc = cloneBlocWithMedias(prev, reordered);
 
         return updatedBloc;
       });
@@ -90,35 +67,12 @@ export default function Page() {
     setImageGroupData((prev) => {
       if (!prev) return prev;
 
-      const newMedia = new MediaObject({
-        id: crypto.randomUUID(),
-        bloc_id: prev.number_id ?? undefined,
-        titre: "nouveau média",
-        image_lien: "#",
-        position_image: prev.image_medias.length,
-        image_url:
-          "https://res.cloudinary.com/demo/image/upload/w_400,h_300,c_fill/kitten.jpg",
-      });
+      const newMedia = createMedia(prev.image_medias.length, prev.number_id);
 
-      const updatedBloc = new BlocObject(
-        {
-          id: prev.number_id ?? undefined,
-          nom_bloc: prev.text_nom_bloc ?? undefined,
-          page_id: prev.number_page_id ?? undefined,
-          titre: prev.text_titre ?? undefined,
-          type: prev.text_type ?? undefined,
-          bloc_position: prev.number_bloc_position ?? undefined,
-          langue_bloc: prev.text_langue_bloc ?? undefined,
-          is_full_width: prev.number_is_full_width,
-          width: prev.number_width ?? undefined,
-          height: prev.number_height ?? undefined,
-          gap: prev.number_gap ?? undefined,
-          createdAt: prev.number_createdAt ?? undefined,
-          updatedAt: new Date(),
-          image_medias: [...prev.image_medias, newMedia],
-          articles: prev.articles,
-        },
-        prev.mode,
+      const updatedBloc = updateBlocImages(
+        prev,
+        prev.image_medias.length,
+        newMedia,
       );
 
       return updatedBloc;
@@ -127,48 +81,15 @@ export default function Page() {
 
   const handleRemove = (model: MediaObject) => {
     setImageGroupData((prev) => {
-      if (!prev) return prev;
-
-      const res = deleteItemAndReorder(
-        prev.image_medias,
-        model,
-        "number_position_image",
+      if (!prev || !prev.image_medias?.length) return prev;
+      const filteredImages = prev.image_medias.filter(
+        (img) => img.number_id !== model.number_id,
       );
 
-      // Recréer des MediaObject propres et réordonner
-      const cleanMedias = res.map((media, index) => {
-        return new MediaObject({
-          id: media.number_id,
-          bloc_id: media.number_bloc_id,
-          titre: media.text_titre ?? undefined,
-          image_lien: media.text_image_lien ?? undefined,
-          image_url: media.image_image_url ?? undefined,
-          position_image: index,
-        });
-      });
-
-      const updatedBloc = new BlocObject(
-        {
-          id: prev.number_id ?? undefined,
-          nom_bloc: prev.text_nom_bloc ?? undefined,
-          page_id: prev.number_page_id ?? undefined,
-          titre: prev.text_titre ?? undefined,
-          type: prev.text_type ?? undefined,
-          bloc_position: prev.number_bloc_position ?? undefined,
-          langue_bloc: prev.text_langue_bloc ?? undefined,
-          is_full_width: prev.number_is_full_width,
-          width: prev.number_width ?? undefined,
-          height: prev.number_height ?? undefined,
-          gap: prev.number_gap ?? undefined,
-          createdAt: prev.number_createdAt ?? undefined,
-          updatedAt: new Date(),
-          image_medias: cleanMedias,
-          articles: prev.articles,
-        },
-        prev.mode,
+      return cloneBlocWithMedias(
+        prev,
+        filteredImages.map(cloneMediaWithPosition),
       );
-
-      return updatedBloc;
     });
   };
   // Initialiser les données côté client uniquement
@@ -214,7 +135,7 @@ export default function Page() {
 
       <div className="flex-1 rounded-lg border p-4 bg-background shadow-sm">
         <h2 className="text-lg font-semibold mb-4">Aperçu</h2>
-        <PicturesLinkView imageGroupData={imageGroupData} />
+        <PicturesLinkView imageGroupData={imageGroupData} isLink={false} />
       </div>
     </div>
   );
