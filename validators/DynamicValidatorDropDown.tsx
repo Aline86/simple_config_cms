@@ -1,10 +1,18 @@
 import React, { useState } from "react";
 import { FieldRenderer } from "./renderer/ValidatorRenderer";
 
-const LABEL = {
+const LABEL_HEADER = {
   image_image_url: "URL de l'image",
   text_empty: "Fond vide",
   color_background_color: "Choisir une couleur de fond",
+};
+
+const LABEL_LINKS = {
+  // à faire
+  text_url_interne: "Lien vers une url interne",
+  text_url: "Lien vers une url externe",
+  // à faire
+  text_mailto: "Lien vers un mailto",
 };
 interface DynamicValidatorDropDownProps<T> {
   label?: string;
@@ -84,8 +92,11 @@ export function DynamicValidatorDropDown<T extends Record<keyof T, any>>({
             value={validatorKey}
             className="text-slate-900 dark:text-slate-50"
           >
-            {typeof validatorKey === "string" && validatorKey in LABEL
-              ? LABEL[validatorKey as keyof typeof LABEL]
+            {typeof validatorKey === "string" && validatorKey in LABEL_HEADER
+              ? LABEL_HEADER[validatorKey as keyof typeof LABEL_HEADER]
+              : ""}
+            {typeof validatorKey === "string" && validatorKey in LABEL_LINKS
+              ? LABEL_LINKS[validatorKey as keyof typeof LABEL_LINKS]
               : ""}
           </option>
         ))}

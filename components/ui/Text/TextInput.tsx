@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { JSX, useEffect, useState } from "react";
 import { TextValidator } from "@/validators/TextValidator";
 import { ColorInput } from "./ColorInput";
 
@@ -34,7 +34,7 @@ export default function TextInput<T>({
 }: ValidatedTextInputProps<T>) {
   const [touched, setTouched] = useState(false);
   const [localValue, setLocalValue] = useState(value);
-
+  console.log("value", validator);
   const params = validator.getParams();
 
   // Sync localValue si le modèle change depuis l'extérieur
@@ -74,6 +74,32 @@ export default function TextInput<T>({
     required: params.required,
     placeholder: params.placeholder,
   };
+  let InputComponent: JSX.Element;
+
+  switch (true) {
+    case multiline:
+      // Texte multiligne
+      InputComponent = <textarea {...commonProps} rows={rows ?? 4} />;
+      break;
+
+    case params.type === "color":
+      // ColorInput
+      InputComponent = (
+        <ColorInput
+          model={model}
+          validator={validator}
+          value={validator.value as string}
+          field={field}
+          onChange={onChangeValue}
+          name={""}
+        />
+      );
+      break;
+
+    default:
+      // Texte classique
+      InputComponent = <input {...commonProps} type={params.type || "text"} />;
+  }
 
   return (
     <div className={`validated-input-wrapper ${className}   mb-4`}>
@@ -84,20 +110,7 @@ export default function TextInput<T>({
         </label>
       )}
 
-      {multiline && commonProps !== undefined ? (
-        <textarea {...commonProps} rows={rows ?? 1} />
-      ) : params.type !== "color" ? (
-        <input {...commonProps} type={params.type || "text"} />
-      ) : (
-        <ColorInput
-          model={model}
-          validator={validator}
-          value={validator.value as string}
-          field={field}
-          onChange={onChangeValue}
-          name={""}
-        />
-      )}
+      {InputComponent}
 
       {showError && validation.errors && validation.errors.length > 0 && (
         <div className="error-messages">

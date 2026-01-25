@@ -76,16 +76,15 @@ const FIELD_CONFIGS: Record<string, FieldParameter> = {
       required: "Le titre est obligatoire",
     },
   }),
-
-  color_background_color: new TextParameter({
-    required: true,
-    maxLength: 7,
-    minLength: 7,
-    type: "color",
+  // à faire
+  text_url_interne: new TextParameter({
+    maxLength: 0,
+    isInternUrl: true,
+    trim: true,
+    type: "hidden",
     errorMessages: {
-      required: "La couleur est obligatoire",
-      minLength: "La couleur hexadécimale doit être hexadécimale",
-      maxLength: "La couleur hexadécimale doit être hexadécimale",
+      maxLength: "Le titre ne peut pas dépasser 255 caractères",
+      required: "Le titre est obligatoire",
     },
   }),
 

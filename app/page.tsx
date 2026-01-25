@@ -1,105 +1,64 @@
 "use client";
 
-import { TypeBloc } from "@/model/Page";
-import { CreateBlocOptions, createNewBloc } from "@/lib/factories/Bloc.factory";
 import { useEffect, useState } from "react";
+import { HeaderObject } from "@/model/bloc/Header";
 import { MediaObject } from "@/model/bloc/MediaObject";
+import HeaderEdit from "@/components/contextView/edition/header/HeaderEdit";
 import { updateObjectBySetter } from "@/lib/utils/functions";
-import { reorderArray } from "@/helpers/changeComponentPosition";
-import { BlocObject } from "@/model/Bloc";
-import { cloneBlocWithMedias } from "@/helpers/bloc.helper";
+import HeaderView from "@/components/contextView/showcase/header/HeaderView";
+import { deleteItemAndReorder } from "@/helpers/changeComponentPosition";
 import { cloneMediaWithPosition, createMedia } from "@/helpers/media.helper";
-import { updateBlocImages } from "@/helpers/bloc.media.helper";
-import CarouselThumbnailsView from "@/components/contextView/showcase/carousel/thumbnails/CarouselThumbnailsView";
-import CarouselThumbnailsEdit from "@/components/contextView/edition/carousel/thumbnails/CarouselThumbnailsEdit";
-import CarouselSimple from "@/components/contextView/showcase/carousel/simple/Carousel";
-import CarouselAutoView from "@/components/contextView/showcase/carousel/automatic/CarouselAutoView";
+import {
+  cloneHeaderWithReseau,
+  cloneHeaderWithReseaux,
+  mockHeader,
+} from "@/helpers/header.helper";
 
-export default function Page() {
-  const options_image_group: CreateBlocOptions = {
-    page_id: crypto.randomUUID(),
-    bloc_position: 0,
-    nom_bloc: "image_group",
-    type: TypeBloc.IMAGE_GROUPE,
-    mediaCount: 5,
-  };
-  const bloc = createNewBloc(options_image_group);
-  const [imageGroupData, setImageGroupData] = useState<BlocObject | null>(null);
-  const [dragged, setDragged] = useState<MediaObject | null>(null);
-
-  const onDragStart = (media: MediaObject) => {
-    setDragged(media);
-  };
-
-  const onDrop = (target: MediaObject) => {
-    if (!dragged) return;
-
-    if (
-      imageGroupData?.image_medias !== undefined &&
-      imageGroupData?.image_medias !== null
-    ) {
-      setImageGroupData((prev) => {
-        if (!prev) return prev;
-
-        // Recréer des MediaObject propres avec les bonnes positions
-        const reordered = reorderArray(
-          imageGroupData.image_medias,
-          dragged,
-          target,
-        );
-
-        const updatedBloc = cloneBlocWithMedias(prev, reordered);
-
-        return updatedBloc;
-      });
-
-      setDragged(null);
-    }
-  };
-
+export default function HeaderContextEdition() {
+  const [headerData, setHeader] = useState<HeaderObject | null>(null);
+  const idBloc = crypto.randomUUID();
+  // Initialiser les données côté client uniquement
+  useEffect(() => {
+    setHeader(mockHeader(idBloc));
+  }, []);
+  useEffect(() => {}, [headerData]);
   const updateMediaObject = (fieldName: string, newValue: any) => {
-    if (!imageGroupData) return;
-    const newObj = updateObjectBySetter(imageGroupData, fieldName, newValue);
-    setImageGroupData(newObj.data);
-  };
-  const handleAdd = () => {
-    setImageGroupData((prev) => {
-      if (!prev) return prev;
-
-      const newMedia = createMedia(prev.image_medias.length, prev.number_id);
-
-      const updatedBloc = updateBlocImages(
-        prev,
-        prev.image_medias.length,
-        newMedia,
-      );
-
-      return updatedBloc;
-    });
+    if (!headerData) return;
+    const newObj = updateObjectBySetter(headerData, fieldName, newValue);
+    console.log("newObj.data", newObj.data);
+    setHeader(newObj.data);
   };
 
   const handleRemove = (model: MediaObject) => {
-    setImageGroupData((prev) => {
-      if (!prev || !prev.image_medias?.length) return prev;
-      const filteredImages = prev.image_medias.filter(
-        (img) => img.number_id !== model.number_id,
+    setHeader((prev) => {
+      if (!prev) return prev;
+      const res = deleteItemAndReorder(
+        prev.image_reseaux,
+        model,
+        "number_position_image",
       );
+      const cleanReseaux = res.map((reseau, index) => {
+        return cloneMediaWithPosition(reseau, index);
+      });
+      const updatedHeader = cloneHeaderWithReseaux(prev, cleanReseaux);
 
-      return cloneBlocWithMedias(
-        prev,
-        filteredImages.map(cloneMediaWithPosition),
-      );
+      return updatedHeader;
     });
   };
-  // Initialiser les données côté client uniquement
-  useEffect(() => {
-    setImageGroupData(bloc);
-  }, []);
-  useEffect(() => {}, [imageGroupData]);
+  const handleAdd = () => {
+    setHeader((prev) => {
+      if (!prev) return prev;
+      const newMedia = createMedia(prev.image_reseaux.length, prev.number_id);
+      const updatedHeader = cloneHeaderWithReseau(prev, newMedia);
+
+      return updatedHeader;
+    });
+  };
+
   // Afficher un placeholder pendant le chargement
-  if (!imageGroupData) {
+  if (!headerData) {
     return (
-      <div className="flex flex-col lg:flex-row gap-6 w-full">
+      <div className="flex flex-col lg:flex-row gap-6">
         <div className="flex-1 rounded-lg border p-4 bg-background shadow-sm">
           <h2 className="text-lg font-semibold mb-4">Éditeur</h2>
           <div className="animate-pulse space-y-4">
@@ -119,26 +78,20 @@ export default function Page() {
   }
 
   return (
-    <div className="flex flex-col lg:flex-row gap-6 w-full">
-      <div className="w-full lg:w-1/2 rounded-lg border p-4 bg-background shadow-sm">
+    <div className="flex flex-col lg:flex-row gap-6">
+      <div className="flex-1 rounded-lg border p-4 bg-background shadow-sm">
         <h2 className="text-lg font-semibold mb-4">Éditeur</h2>
-        <CarouselThumbnailsEdit
-          images_group={imageGroupData}
+        <HeaderEdit
+          header={headerData}
           onChange={updateMediaObject}
           addElement={handleAdd}
           removeElement={handleRemove}
-          onDrop={onDrop}
-          onDragStart={onDragStart}
-          isLink={true}
-          showWidth={false}
         />
       </div>
 
       <div className="flex-1 rounded-lg border p-4 bg-background shadow-sm">
         <h2 className="text-lg font-semibold mb-4">Aperçu</h2>
-        {imageGroupData !== undefined && (
-          <CarouselAutoView slides={imageGroupData} />
-        )}
+        <HeaderView header={headerData} />
       </div>
     </div>
   );

@@ -14,7 +14,7 @@ export class TextParameter {
   placeholder?: string;
   type?: string;
   multiline?: number;
-
+  isInternUrl?: boolean;
   errorMessages?: {
     multiline?: string;
     minLength?: string;

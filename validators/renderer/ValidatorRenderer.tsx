@@ -11,6 +11,7 @@ import { ColorInput } from "@/components/ui/Text/ColorInput";
 import TextInput from "@/components/ui/Text/TextInput";
 import FIELD_CONFIGS from "@/config/fieldConfig";
 import { MediaObject } from "@/model/bloc/MediaObject";
+import InternUrlInput from "@/components/ui/Text/InternUrlInput";
 
 // Types
 export type FieldPrefix = "text" | "image" | "video" | "number" | "color";
@@ -54,9 +55,27 @@ const createValidator = (
   const prefix = extractPrefix(fieldName);
   const ValidatorClass = VALIDATOR_MAP[prefix];
   const config = FIELD_CONFIGS[fieldName];
+
+  let safeValue: unknown;
+  switch (prefix) {
+    case "text":
+    case "color":
+      safeValue = typeof value === "string" ? value : "";
+      break;
+    case "image":
+    case "video":
+      safeValue = value === "string" ? value : null;
+      break;
+    case "number":
+      safeValue = typeof value === "number" ? value : 0;
+      break;
+    default:
+      safeValue = "";
+  }
+
   if (!config) {
     console.warn(
-      `No config found for field: ${fieldName}, using default config`,
+      `[FieldRenderer] No config found for field: ${fieldName}, using default config`,
     );
     const defaultConfig =
       prefix === "text" || prefix === "color"
@@ -64,14 +83,12 @@ const createValidator = (
         : prefix === "image" || prefix === "video"
           ? new CloudinaryParameter({})
           : new Parameter({});
-    return new ValidatorClass(value, defaultConfig);
+    return new ValidatorClass(safeValue, defaultConfig);
   }
-  return new ValidatorClass(value, config);
+
+  return new ValidatorClass(safeValue, config);
 };
 
-// --------------------
-// COMPONENT
-// --------------------
 export function FieldRenderer<T extends Record<string, any>>({
   fieldName,
   selectedValidatorKey,
@@ -100,7 +117,14 @@ export function FieldRenderer<T extends Record<string, any>>({
   const renderInput = () => {
     switch (prefix) {
       case "text":
-        return (
+        return selectedValidatorKey.includes("url_interne") ? (
+          <InternUrlInput
+            model={model}
+            value={currentValue}
+            field={fieldName as string}
+            onChangeValue={setField}
+          />
+        ) : (
           <TextInput
             value={currentValue}
             model={model}
