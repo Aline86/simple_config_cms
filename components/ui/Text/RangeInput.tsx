@@ -65,7 +65,7 @@ export default function NumberInput<T>({
   return (
     <div className={`validated-input-wrapper ${className}`}>
       {label && (
-        <label className="input-label flex justify-between items-center">
+        <label className="input-label flex justify-between items-center cursor-pointer">
           <span className="mr-4">{label} :</span>
           {showValue && (
             <span className="text-sm text-gray-500">{localValue}</span>
@@ -78,22 +78,20 @@ export default function NumberInput<T>({
         type={params.type || "number"}
         onChange={handleChange}
         className="
-    w-full
-    rounded-md
-    border
-    border-gray-300
-    px-3
-    py-2
-    text-gray-900
-    placeholder-gray-400
-    focus:outline-none
-    focus:ring-2
-    focus:ring-blue-500
-    focus:border-transparent
-    cursor-text
-    appearance-none
-    mb-4
-  "
+      w-full
+      rounded-md
+      border
+      border-gray-300
+      text-gray-900
+      placeholder-gray-400
+      focus:outline-none
+      focus:ring-2
+      focus:ring-blue-500
+      focus:border-transparent
+      cursor-pointer
+      appearance-none
+      mb-4
+    "
       />
     </div>
   );

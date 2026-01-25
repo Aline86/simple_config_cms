@@ -18,7 +18,19 @@ const FIELD_CONFIGS: Record<string, FieldParameter> = {
       integer: "La largeur doit être un nombre entier",
     },
   }),
-
+  number_gap: new Parameter({
+    type: "range",
+    min: 0,
+    max: 30,
+    step: 1,
+    defaultValue: 15,
+    integer: true,
+    positive: true,
+    errorMessages: {
+      min: "La largeur minimale est 75px",
+      max: "La largeur maximale est 250px",
+    },
+  }),
   number_width: new Parameter({
     type: "range",
     min: 75,

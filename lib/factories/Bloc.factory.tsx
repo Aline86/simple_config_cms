@@ -90,13 +90,21 @@ export function createNewBloc(options: CreateBlocOptions): BlocObject {
  * Crée un média vide
  */
 function createEmptyMedia(position: number, id_bloc: string): MediaObject {
+  const minW = 200;
+  const maxW = 600;
+  const minH = 150;
+  const maxH = 400;
+
+  const width = Math.floor(Math.random() * (maxW - minW + 1)) + minW;
+  const height = Math.floor(Math.random() * (maxH - minH + 1)) + minH;
+  const image_url = `https://picsum.photos/${width}/${height}?random=${Date.now()}-${position}`;
   return new MediaObject({
     id: crypto.randomUUID(),
     bloc_id: id_bloc,
-    titre: "",
+    titre: "test",
     image_lien: "",
     position_image: position,
-    image_url: `https://picsum.photos/300/200?random=${Date.now()}-${position}`,
+    image_url: image_url,
   });
 }
 

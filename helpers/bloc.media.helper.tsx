@@ -25,6 +25,7 @@ export function updateBlocImages(
       gap: bloc.number_gap ?? undefined,
       createdAt: bloc.number_createdAt ?? undefined,
       updatedAt: new Date(),
+      columns: bloc.number_columns ?? undefined,
       image_medias: newImageMedias,
       articles: bloc.articles,
     },

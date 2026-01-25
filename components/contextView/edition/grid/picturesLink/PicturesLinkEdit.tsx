@@ -13,6 +13,7 @@ interface PicturesLinkEditorProps<T> {
   removeElement: (images_group: T) => void;
   onDragStart: (page: MediaObject) => void;
   onDrop: (page: MediaObject) => void;
+  isLink: boolean;
 }
 
 export default function PicturesLinkEdit<T>({
@@ -22,6 +23,7 @@ export default function PicturesLinkEdit<T>({
   removeElement,
   onDragStart,
   onDrop,
+  isLink,
 }: PicturesLinkEditorProps<T>) {
   const debug = true;
   return (
@@ -63,6 +65,12 @@ export default function PicturesLinkEdit<T>({
           model={images_group as Record<string, any>}
           setField={onChange}
         />
+        <FieldRenderer
+          label="Espacement entre les images"
+          fieldName={`number_gap`}
+          model={images_group as Record<string, any>}
+          setField={onChange}
+        />
         <div className="grid grid-cols-2 gap-6">
           {images_group.image_medias.map((media) => {
             return (
@@ -73,6 +81,7 @@ export default function PicturesLinkEdit<T>({
                 removeElement={removeElement}
                 onDragStart={onDragStart}
                 onDrop={onDrop}
+                isLink={isLink}
               />
             );
           })}

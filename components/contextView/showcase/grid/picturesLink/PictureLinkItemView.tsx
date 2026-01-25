@@ -29,8 +29,8 @@ export default function PicturesLinkItemView({
         <div className="relative h-48 bg-gradient-to-br from-slate-300 to-slate-400 overflow-hidden">
           {mediaObject?.image_image_url !== undefined &&
           mediaObject?.image_image_url !== null &&
-          mediaObject.text_titre !== null &&
-          isValid.valid ? (
+          mediaObject.text_titre !== null /*&&
+          isValid.valid*/ ? (
             <Image
               className="object-cover group-hover:scale-105 transition-transform duration-300"
               src={mediaObject.image_image_url}

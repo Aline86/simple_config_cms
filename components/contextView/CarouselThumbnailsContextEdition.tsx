@@ -5,16 +5,13 @@ import { CreateBlocOptions, createNewBloc } from "@/lib/factories/Bloc.factory";
 import { useEffect, useState } from "react";
 import { MediaObject } from "@/model/bloc/MediaObject";
 import { updateObjectBySetter } from "@/lib/utils/functions";
-import {
-  deleteItemAndReorder,
-  reorderArray,
-} from "@/helpers/changeComponentPosition";
+import { reorderArray } from "@/helpers/changeComponentPosition";
 import { BlocObject } from "@/model/Bloc";
-import PicturesLinkEdit from "@/components/contextView/edition/grid/picturesLink/PicturesLinkEdit";
-import PicturesLinkView from "@/components/contextView/showcase/grid/picturesLink/PicturesLinkView";
 import { cloneBlocWithMedias } from "@/helpers/bloc.helper";
 import { cloneMediaWithPosition, createMedia } from "@/helpers/media.helper";
 import { updateBlocImages } from "@/helpers/bloc.media.helper";
+import CarouselThumbnailsView from "@/components/contextView/showcase/carousel/thumbnails/CarouselThumbnailsView";
+import CarouselThumbnailsEdit from "@/components/contextView/edition/carousel/thumbnails/CarouselThumbnailsEdit";
 
 export default function Page() {
   const options_image_group: CreateBlocOptions = {
@@ -35,16 +32,27 @@ export default function Page() {
   const onDrop = (target: MediaObject) => {
     if (!dragged) return;
 
-    setImageGroupData((prev) => {
-      if (!prev) return prev;
+    if (
+      imageGroupData?.image_medias !== undefined &&
+      imageGroupData?.image_medias !== null
+    ) {
+      setImageGroupData((prev) => {
+        if (!prev) return prev;
 
-      // Recréer des MediaObject propres avec les bonnes positions
-      const reordered = reorderArray(prev.image_medias, dragged, target);
+        // Recréer des MediaObject propres avec les bonnes positions
+        const reordered = reorderArray(
+          imageGroupData.image_medias,
+          dragged,
+          target,
+        );
 
-      return cloneBlocWithMedias(prev, reordered.map(cloneMediaWithPosition));
-    });
+        const updatedBloc = cloneBlocWithMedias(prev, reordered);
 
-    setDragged(null);
+        return updatedBloc;
+      });
+
+      setDragged(null);
+    }
   };
 
   const updateMediaObject = (fieldName: string, newValue: any) => {
@@ -89,7 +97,7 @@ export default function Page() {
   // Afficher un placeholder pendant le chargement
   if (!imageGroupData) {
     return (
-      <div className="flex flex-col lg:flex-row gap-6">
+      <div className="flex flex-col lg:flex-row gap-6 w-full">
         <div className="flex-1 rounded-lg border p-4 bg-background shadow-sm">
           <h2 className="text-lg font-semibold mb-4">Éditeur</h2>
           <div className="animate-pulse space-y-4">
@@ -109,23 +117,34 @@ export default function Page() {
   }
 
   return (
-    <div className="flex flex-col lg:flex-row gap-6">
-      <div className="flex-1 rounded-lg border p-4 bg-background shadow-sm">
+    <div className="flex flex-col lg:flex-row gap-6 w-full">
+      <div className="w-full lg:w-1/2 rounded-lg border p-4 bg-background shadow-sm">
         <h2 className="text-lg font-semibold mb-4">Éditeur</h2>
-        <PicturesLinkEdit
+        <CarouselThumbnailsEdit
           images_group={imageGroupData}
           onChange={updateMediaObject}
           addElement={handleAdd}
           removeElement={handleRemove}
           onDrop={onDrop}
           onDragStart={onDragStart}
-          isLink={true}
         />
       </div>
 
       <div className="flex-1 rounded-lg border p-4 bg-background shadow-sm">
         <h2 className="text-lg font-semibold mb-4">Aperçu</h2>
-        <PicturesLinkView imageGroupData={imageGroupData} isLink={true} />
+        {imageGroupData !== undefined && (
+          <CarouselThumbnailsView
+            bloc={imageGroupData}
+            width={
+              imageGroupData.number_width ? imageGroupData.number_width : 150
+            }
+            height={
+              imageGroupData.number_height ? imageGroupData.number_height : 150
+            }
+            gap={30}
+            cardNumber={imageGroupData.image_medias.length}
+          />
+        )}
       </div>
     </div>
   );
