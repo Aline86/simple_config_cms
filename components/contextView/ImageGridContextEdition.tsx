@@ -5,15 +5,17 @@ import { CreateBlocOptions, createNewBloc } from "@/lib/factories/Bloc.factory";
 import { useEffect, useState } from "react";
 import { MediaObject } from "@/model/bloc/MediaObject";
 import { updateObjectBySetter } from "@/lib/utils/functions";
-import { reorderArray } from "@/helpers/changeComponentPosition";
+import {
+  deleteItemAndReorder,
+  reorderArray,
+} from "@/helpers/changeComponentPosition";
 import { BlocObject } from "@/model/Bloc";
+
 import { cloneBlocWithMedias } from "@/helpers/bloc.helper";
 import { cloneMediaWithPosition, createMedia } from "@/helpers/media.helper";
 import { updateBlocImages } from "@/helpers/bloc.media.helper";
-import CarouselThumbnailsView from "@/components/contextView/showcase/carousel/thumbnails/CarouselThumbnailsView";
-import CarouselThumbnailsEdit from "@/components/contextView/edition/carousel/thumbnails/CarouselThumbnailsEdit";
-import CarouselSimple from "@/components/contextView/showcase/carousel/simple/Carousel";
-import CarouselAutoView from "@/components/contextView/showcase/carousel/automatic/CarouselAutoView";
+import PicturesGridView from "@/components/contextView/showcase/grid/picturesView/PicturesGridView";
+import PicturesLinkEdit from "./edition/grid/PicturesLinkEdit";
 
 export default function Page() {
   const options_image_group: CreateBlocOptions = {
@@ -34,27 +36,16 @@ export default function Page() {
   const onDrop = (target: MediaObject) => {
     if (!dragged) return;
 
-    if (
-      imageGroupData?.image_medias !== undefined &&
-      imageGroupData?.image_medias !== null
-    ) {
-      setImageGroupData((prev) => {
-        if (!prev) return prev;
+    setImageGroupData((prev) => {
+      if (!prev) return prev;
 
-        // Recréer des MediaObject propres avec les bonnes positions
-        const reordered = reorderArray(
-          imageGroupData.image_medias,
-          dragged,
-          target,
-        );
+      // Recréer des MediaObject propres avec les bonnes positions
+      const reordered = reorderArray(prev.image_medias, dragged, target);
 
-        const updatedBloc = cloneBlocWithMedias(prev, reordered);
+      return cloneBlocWithMedias(prev, reordered.map(cloneMediaWithPosition));
+    });
 
-        return updatedBloc;
-      });
-
-      setDragged(null);
-    }
+    setDragged(null);
   };
 
   const updateMediaObject = (fieldName: string, newValue: any) => {
@@ -99,7 +90,7 @@ export default function Page() {
   // Afficher un placeholder pendant le chargement
   if (!imageGroupData) {
     return (
-      <div className="flex flex-col lg:flex-row gap-6 w-full">
+      <div className="flex flex-col lg:flex-row gap-6">
         <div className="flex-1 rounded-lg border p-4 bg-background shadow-sm">
           <h2 className="text-lg font-semibold mb-4">Éditeur</h2>
           <div className="animate-pulse space-y-4">
@@ -119,10 +110,10 @@ export default function Page() {
   }
 
   return (
-    <div className="flex flex-col lg:flex-row gap-6 w-full">
-      <div className="w-full lg:w-1/2 rounded-lg border p-4 bg-background shadow-sm">
+    <div className="flex flex-col lg:flex-row gap-6">
+      <div className="flex-1 rounded-lg border p-4 bg-background shadow-sm">
         <h2 className="text-lg font-semibold mb-4">Éditeur</h2>
-        <CarouselThumbnailsEdit
+        <PicturesLinkEdit
           images_group={imageGroupData}
           onChange={updateMediaObject}
           addElement={handleAdd}
@@ -130,15 +121,12 @@ export default function Page() {
           onDrop={onDrop}
           onDragStart={onDragStart}
           isLink={true}
-          showWidth={false}
         />
       </div>
 
       <div className="flex-1 rounded-lg border p-4 bg-background shadow-sm">
         <h2 className="text-lg font-semibold mb-4">Aperçu</h2>
-        {imageGroupData !== undefined && (
-          <CarouselAutoView slides={imageGroupData} />
-        )}
+        <PicturesGridView imageGroupData={imageGroupData} />
       </div>
     </div>
   );

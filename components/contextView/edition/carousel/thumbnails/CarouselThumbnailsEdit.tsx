@@ -4,7 +4,7 @@ import { MediaObject } from "@/model/bloc/MediaObject";
 import { BlocObject } from "@/model/Bloc";
 
 import { FieldRenderer } from "@/validators/renderer/TextRenderer";
-import { PictureEditor } from "../../grid/picturesLink/PictureEditor";
+import { PictureEditor } from "../../grid/PictureEditor";
 
 interface CarouselThumbnailsProps<T> {
   images_group: BlocObject;
@@ -13,6 +13,8 @@ interface CarouselThumbnailsProps<T> {
   removeElement: (images_group: T) => void;
   onDragStart: (page: MediaObject) => void;
   onDrop: (page: MediaObject) => void;
+  isLink?: boolean;
+  showWidth?: boolean;
 }
 
 export default function CarouselThumbnailsEdit<T>({
@@ -22,8 +24,10 @@ export default function CarouselThumbnailsEdit<T>({
   removeElement,
   onDragStart,
   onDrop,
+  isLink,
+  showWidth,
 }: CarouselThumbnailsProps<T>) {
-  const debug = false;
+  const debug = true;
   return (
     <div className="mx-auto max-w-2xl space-y-6 p-6">
       <div className="space-y-2">
@@ -52,17 +56,19 @@ export default function CarouselThumbnailsEdit<T>({
           </svg>
         </button>
         <FieldRenderer
-          label="Titre du bloc d'images avec lien de redirection"
+          label="Titre du bloc carousel d'images"
           fieldName={`text_titre`}
           model={images_group as Record<string, any>}
           setField={onChange}
         />
-        <FieldRenderer
-          label="Largeur de l'image sur grand écran"
-          fieldName={`number_width`}
-          model={images_group as Record<string, any>}
-          setField={onChange}
-        />
+        {showWidth && (
+          <FieldRenderer
+            label="Largeur de l'image sur grand écran"
+            fieldName={`number_width`}
+            model={images_group as Record<string, any>}
+            setField={onChange}
+          />
+        )}
         <FieldRenderer
           label="Hauteur de l'image sur grand écran"
           fieldName={`number_height`}
@@ -79,6 +85,7 @@ export default function CarouselThumbnailsEdit<T>({
                 removeElement={removeElement}
                 onDragStart={onDragStart}
                 onDrop={onDrop}
+                isLink={isLink}
               />
             );
           })}

@@ -2,7 +2,6 @@
 
 import { MediaObject } from "@/model/bloc/MediaObject";
 import { BlocObject } from "@/model/Bloc";
-import { MediaEditor } from "../../media/Media";
 import { PictureEditor } from "./PictureEditor";
 import { FieldRenderer } from "@/validators/renderer/TextRenderer";
 
@@ -25,7 +24,7 @@ export default function PicturesLinkEdit<T>({
   onDrop,
   isLink,
 }: PicturesLinkEditorProps<T>) {
-  const debug = true;
+  const debug = false;
   return (
     <div className="mx-auto max-w-2xl space-y-6 p-6">
       <div className="space-y-2">

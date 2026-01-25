@@ -17,7 +17,7 @@ export default function CarouselThumbnailsView({
   cardNumber: number;
   bloc: BlocObject;
 }) {
-  const [colors, setColors] = useState<MediaObject[]>([
+  const [medias, setMedias] = useState<MediaObject[]>([
     ...bloc.image_medias,
     ...bloc.image_medias,
     ...bloc.image_medias,
@@ -32,10 +32,10 @@ export default function CarouselThumbnailsView({
   const isSm = useIsSmScreen();
 
   function updateCardEnd() {
-    if (colors.length === cardNumber * 3 && cardValue > 0) {
-      const copy = [...colors];
+    if (medias.length === cardNumber * 3 && cardValue > 0) {
+      const copy = [...medias];
       const res = copy.splice(0, cardValue + 1);
-      setColors(copy.concat(res));
+      setMedias(copy.concat(res));
       setIsClic(false);
       setCardValue(cardValue + 1);
     }
@@ -50,22 +50,28 @@ export default function CarouselThumbnailsView({
     setTransitionFinished(state);
   }
 
-  function updateColors(newColors: MediaObject[]) {
-    setColors([...newColors]);
+  function updatemedias(newmedias: MediaObject[]) {
+    setMedias([...newmedias]);
   }
-
+  useEffect(() => {
+    updatemedias([
+      ...bloc.image_medias,
+      ...bloc.image_medias,
+      ...bloc.image_medias,
+    ]);
+  }, [cardNumber]);
   return (
     <section className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
       <h2 className="text-2xl text-center font-bold text-slate-800 mb-6">
         {bloc.text_titre}
       </h2>
-      {colors && (
+      {medias && (
         <CarouselContainer
           width={!isSm ? width * 0.5 : width}
           height={!isSm ? height * 0.5 : height}
           gap={gap}
-          updateColors={updateColors}
-          colors={colors}
+          updatemedias={updatemedias}
+          medias={medias}
           transitionFinished={transitionFinished}
           updateTransitionState={updateTransitionState}
           cardWidth={cardWidth}
@@ -87,10 +93,10 @@ export default function CarouselThumbnailsView({
             Props reçues (HeaderEdit)
           </h3>
           <h2 className="mb-2 text-sm font-semibold">
-            Nb d&apos;images : {colors.length}
+            Nb d&apos;images : {medias.length}
           </h2>
           <pre className="max-h-64 overflow-auto text-xs">
-            {JSON.stringify(colors, null, 2)}
+            {JSON.stringify(medias, null, 2)}
           </pre>
         </div>
       )}

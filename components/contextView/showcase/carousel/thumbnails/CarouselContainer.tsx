@@ -4,13 +4,13 @@ import BigCard from "./BigCard";
 import Card from "./Card";
 
 export default function CarouselContainer({
-  colors,
+  medias,
   transitionFinished,
   cardWidth,
   updateCardRef,
   cardRef,
   updateTransitionState,
-  updateColors,
+  updatemedias,
   width,
   gap,
   height,
@@ -51,20 +51,20 @@ export default function CarouselContainer({
   }
 
   function updateTransitionLeft() {
-    const newColors = [...colors];
-    const popItem = newColors.pop();
+    const newmedias = [...medias];
+    const popItem = newmedias.pop();
     if (popItem !== undefined) {
-      newColors.unshift(popItem);
-      updateColors(newColors);
+      newmedias.unshift(popItem);
+      updatemedias(newmedias);
     }
   }
 
   function updateTransitionRight() {
-    const newColors = [...colors];
-    const shiftItem = newColors.shift();
+    const newmedias = [...medias];
+    const shiftItem = newmedias.shift();
     if (shiftItem !== undefined) {
-      newColors.push(shiftItem);
-      updateColors(newColors);
+      newmedias.push(shiftItem);
+      updatemedias(newmedias);
     }
   }
 
@@ -86,7 +86,7 @@ export default function CarouselContainer({
 
   useEffect(() => {
     updateCardRef();
-  }, [width]);
+  }, [width, height]);
   useEffect(() => {
     if (trigger === 0) return;
     if (!isLeft) {
@@ -127,7 +127,7 @@ export default function CarouselContainer({
               transform: `translateX(${-((cardWidth * 1.5 + gap) * cardNumber)}px)`,
             }}
           >
-            {colors.map((value: MediaObject, index: number) => (
+            {medias.map((value: MediaObject, index: number) => (
               <BigCard
                 key={index}
                 index={index}
@@ -189,7 +189,7 @@ export default function CarouselContainer({
               transform: `translateX(${-((cardWidth + gap) * cardNumber)}px)`,
             }}
           >
-            {colors.map((value: MediaObject, index: number) => (
+            {medias.map((value: MediaObject, index: number) => (
               <Card
                 key={index}
                 index={index}
