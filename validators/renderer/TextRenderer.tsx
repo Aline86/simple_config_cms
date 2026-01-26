@@ -5,7 +5,7 @@ import { TextParameter, TextValidator } from "@/validators/TextValidator";
 
 import { NumberValidator } from "@/validators/NumberValidator";
 import { useEffect, useState } from "react";
-import MediaUploaderView from "@/components/ui/Uploader/MediaUploaderView";
+import ImageUploaderView from "@/components/ui/Uploader/ImageUploaderView";
 import { ColorInput } from "@/components/ui/Text/ColorInput";
 import TextInput from "@/components/ui/Text/TextInput";
 import FIELD_CONFIGS from "@/config/fieldConfig";
@@ -13,6 +13,7 @@ import firstLetterToUperCase from "@/helpers/firstLetterToUpperCase";
 import { MediaObject } from "@/model/bloc/MediaObject";
 import CloudinaryValidator from "../MediaValidator";
 import NumberInput from "@/components/ui/Text/RangeInput";
+import VideoUploaderView from "@/components/ui/Uploader/VideoUploaderView";
 
 // Types
 type FieldPrefix = "text" | "image" | "video" | "number" | "color";
@@ -24,6 +25,7 @@ type FieldRendererProps<T> = {
   fieldName: string;
   model: Record<string, any>;
   setField: (fieldName: string, value: any) => void;
+  isVideo?: boolean;
 };
 
 // Map des classes de validators par préfixe
@@ -37,7 +39,7 @@ const VALIDATOR_MAP: Record<FieldPrefix, any> = {
 
 // Helper pour extraire le préfixe
 const extractPrefix = (fieldName: string): FieldPrefix => {
-  const match = fieldName.match(/^(text|image|video|number)_/);
+  const match = fieldName.match(/^(text|image|video|number|color)_/);
   if (!match) {
     throw new Error(
       `Invalid field name format: ${fieldName}. Expected format: "prefix_fieldname"`,
@@ -74,12 +76,12 @@ export function FieldRenderer<T>({
   fieldName,
   model,
   setField,
+  isVideo,
 }: FieldRendererProps<T>) {
   const fieldNameToInvestigate =
     fieldName.split(".")[fieldName.split(".").length - 1];
 
   const currentValue = model[fieldNameToInvestigate];
-  console.log("currentValue", currentValue);
   const validator = createValidator(fieldNameToInvestigate, currentValue);
   const prefix = extractPrefix(fieldNameToInvestigate);
 
@@ -111,8 +113,16 @@ export function FieldRenderer<T>({
         );
 
       case "image":
-        return (
-          <MediaUploaderView
+        return !isVideo ? (
+          <ImageUploaderView
+            label={label}
+            value={currentValue}
+            model={model[fieldNameToInvestigate] as MediaObject}
+            field={fieldName}
+            onChangeValue={setField}
+          />
+        ) : (
+          <VideoUploaderView
             label={label}
             value={currentValue}
             model={model[fieldNameToInvestigate] as MediaObject}

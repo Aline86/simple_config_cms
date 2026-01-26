@@ -6,7 +6,7 @@ import CloudinaryValidator, {
   CloudinaryParameter,
 } from "@/validators/MediaValidator";
 import { NumberValidator, Parameter } from "@/validators/NumberValidator";
-import MediaUploaderView from "@/components/ui/Uploader/MediaUploaderView";
+import ImageUploaderView from "@/components/ui/Uploader/ImageUploaderView";
 import { ColorInput } from "@/components/ui/Text/ColorInput";
 import TextInput from "@/components/ui/Text/TextInput";
 import FIELD_CONFIGS from "@/config/fieldConfig";
@@ -137,7 +137,7 @@ export function FieldRenderer<T extends Record<string, any>>({
       case "image":
       case "video":
         return (
-          <MediaUploaderView
+          <ImageUploaderView
             value={currentValue}
             model={model as MediaObject}
             field={fieldName as string}

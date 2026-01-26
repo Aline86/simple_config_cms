@@ -16,6 +16,8 @@ export function updateBlocImages(
       nom_bloc: bloc.text_nom_bloc ?? undefined,
       page_id: bloc.number_page_id ?? undefined,
       titre: bloc.text_titre ?? undefined,
+      description: bloc.text_description ?? undefined,
+      color_background_color: bloc.color_background_color ?? undefined,
       type: bloc.text_type ?? undefined,
       bloc_position: bloc.number_bloc_position ?? undefined,
       langue_bloc: bloc.text_langue_bloc ?? undefined,

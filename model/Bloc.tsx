@@ -10,6 +10,8 @@ export class BlocObject {
   public text_nom_bloc: string | null;
   public number_page_id: string | null;
   public text_titre: string | null;
+  public text_description: string | null;
+  public color_background_color: string | null;
   public text_type: TypeBloc | null;
   public number_bloc_position: number | null;
   public text_langue_bloc: string | null;
@@ -30,6 +32,8 @@ export class BlocObject {
       nom_bloc?: string;
       page_id?: string;
       titre?: string;
+      description?: string;
+      color_background_color?: string;
       type?: TypeBloc;
       bloc_position?: number;
       langue_bloc?: string;
@@ -49,6 +53,8 @@ export class BlocObject {
     this.text_nom_bloc = data.nom_bloc ?? null;
     this.number_page_id = data.page_id ?? null;
     this.text_titre = data.titre ?? null;
+    this.text_description = data.description ?? null;
+    this.color_background_color = data.color_background_color ?? null;
     this.text_type = data.type ?? null;
     this.number_bloc_position = data.bloc_position ?? null;
     this.text_langue_bloc = data.langue_bloc ?? null;
@@ -86,6 +92,8 @@ export class BlocObject {
       nom_bloc: this.text_nom_bloc,
       page_id: this.number_page_id,
       titre: this.text_titre,
+      description: this.text_description,
+      color_background_color: this.color_background_color,
       type: this.text_type,
       bloc_position: this.number_bloc_position,
       langue_bloc: this.text_langue_bloc,

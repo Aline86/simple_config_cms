@@ -169,6 +169,13 @@
     overflow-x: hidden;
   }
 }
+h1 {
+  font-size: 45px;
+  text-transform: uppercase;
+}
+h2 {
+  font-size: 25px;
+}
 .tiptap {
   margin-bottom: 20px;
 }

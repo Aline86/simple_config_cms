@@ -87,7 +87,36 @@ const FIELD_CONFIGS: Record<string, FieldParameter> = {
       required: "Le titre est obligatoire",
     },
   }),
-
+  text_nom_site_adresse: new TextParameter({
+    maxLength: 40,
+    required: true,
+    trim: true,
+    placeholder: "Entrez le titre",
+    errorMessages: {
+      maxLength: "Le titre ne peut pas dépasser 255 caractères",
+      required: "Le titre est obligatoire",
+    },
+  }),
+  text_adresse_footer: new TextParameter({
+    maxLength: 255,
+    required: true,
+    trim: true,
+    placeholder: "Entrez le titre",
+    errorMessages: {
+      maxLength: "Le titre ne peut pas dépasser 255 caractères",
+      required: "Le titre est obligatoire",
+    },
+  }),
+  text_code_postal: new TextParameter({
+    maxLength: 50,
+    required: true,
+    trim: true,
+    placeholder: "Entrez le titre",
+    errorMessages: {
+      maxLength: "Le titre ne peut pas dépasser 255 caractères",
+      required: "Le titre est obligatoire",
+    },
+  }),
   text_image_lien: new TextParameter({
     url: true,
     required: false,
@@ -96,7 +125,16 @@ const FIELD_CONFIGS: Record<string, FieldParameter> = {
       url: "Le lien doit être une URL valide",
     },
   }),
-
+  text_description: new TextParameter({
+    maxLength: 500,
+    required: false,
+    trim: true,
+    multiline: 3,
+    placeholder: "Décrivez votre contenu...",
+    errorMessages: {
+      maxLength: "La description ne peut pas dépasser 500 caractères",
+    },
+  }),
   number_position_image: new Parameter({
     integer: true,
     nonnegative: true,
@@ -116,16 +154,7 @@ const FIELD_CONFIGS: Record<string, FieldParameter> = {
       required: "Le titre est obligatoire",
     },
   }),
-  text_description: new TextParameter({
-    maxLength: 500,
-    required: false,
-    trim: true,
-    multiline: 3,
-    placeholder: "Décrivez votre contenu...",
-    errorMessages: {
-      maxLength: "La description ne peut pas dépasser 500 caractères",
-    },
-  }),
+
   text_email: new TextParameter({
     email: true,
     required: true,

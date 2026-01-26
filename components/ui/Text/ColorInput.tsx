@@ -1,4 +1,4 @@
-import { CloudinaryValidator } from "@/validators/MediaValidator";
+import CloudinaryValidator from "@/validators/MediaValidator";
 import { NumberValidator } from "@/validators/NumberValidator";
 import { TextValidator } from "@/validators/TextValidator";
 import { useState } from "react";
@@ -32,11 +32,11 @@ export function ColorInput<T>({
 }: ColorInputProps<T>) {
   const [touched, setTouched] = useState(false);
   const params = validator.getParams();
-
+  const [currentValue, setCurrentValue] = useState(value);
   const validation = validator.validate(value);
   const showError = touched && !validation.valid;
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("e", e.target.value);
+    setCurrentValue(e.target.value);
     onChange(field, e.target.value);
   };
   const handleBlur = () => {
@@ -57,7 +57,7 @@ export function ColorInput<T>({
           id={name}
           name={name}
           type="color"
-          value={value}
+          value={currentValue}
           onChange={handleChange}
           onBlur={handleBlur}
           disabled={disabled}
@@ -66,7 +66,7 @@ export function ColorInput<T>({
         />
         <input
           type="text"
-          value={value}
+          value={currentValue}
           onChange={handleChange}
           onBlur={handleBlur}
           disabled={disabled}
@@ -79,7 +79,7 @@ export function ColorInput<T>({
 
       {showError && validation.errors && (
         <div className="error-messages">
-          {validation.errors.map((error, index) => (
+          {validation.errors.map((error: string, index: number) => (
             <p key={index} className="error-message">
               {error}
             </p>

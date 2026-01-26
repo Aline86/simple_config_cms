@@ -6,7 +6,6 @@ export class HeaderObject {
   [immerable] = true;
 
   public number_id: string | null;
-  public number_bloc_id: number | null;
   public image_logo: MediaObject | null;
   public image_favicon: MediaObject | null;
   public text_nom_site: string | null;
@@ -26,7 +25,6 @@ export class HeaderObject {
     } = {},
   ) {
     this.number_id = data.id ?? null;
-    this.number_bloc_id = data.bloc_id ?? null;
     this.image_logo = data.logo ?? null;
     this.image_favicon = data.favicon ?? null;
     this.text_nom_site = data.nom_site ?? null;
@@ -47,7 +45,6 @@ export class HeaderObject {
   toJSON() {
     return {
       id: this.number_id,
-      bloc_id: this.number_bloc_id,
       logo: this.image_logo?.toJSON() ?? null,
       favicon: this.image_favicon?.toJSON() ?? null,
       nom_site: this.text_nom_site,

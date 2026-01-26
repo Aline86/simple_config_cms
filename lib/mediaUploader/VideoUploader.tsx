@@ -5,9 +5,20 @@ interface UploadedImage {
   file: File;
   preview: string;
   id: string;
+  type: "file";
 }
 
-export default function MediaUploader<T>({
+interface YouTubeVideo {
+  url: string;
+  videoId: string;
+  thumbnail: string;
+  id: string;
+  type: "youtube";
+}
+
+type MediaItem = UploadedImage | YouTubeVideo;
+
+export default function VideoUploader<T>({
   value,
   model,
   field,
@@ -18,9 +29,11 @@ export default function MediaUploader<T>({
   field: string;
   onChange: (fieldName: string, value: any) => void;
 }) {
-  const [images, setImages] = useState<UploadedImage[]>([]);
+  const [media, setMedia] = useState<MediaItem[]>([]);
   const [isDragging, setIsDragging] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
+  const [youtubeUrl, setYoutubeUrl] = useState("");
+  const [showYoutubeInput, setShowYoutubeInput] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const MAX_FILES = 1;
@@ -30,8 +43,57 @@ export default function MediaUploader<T>({
     "image/png",
     "image/gif",
     "image/webp",
-    "application/pdf", // Ajout du PDF
+    "application/pdf",
   ];
+
+  // Fonction pour extraire l'ID de la vidéo YouTube
+  const extractYouTubeId = (url: string): string | null => {
+    const patterns = [
+      /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/,
+      /^([a-zA-Z0-9_-]{11})$/,
+    ];
+
+    for (const pattern of patterns) {
+      const match = url.match(pattern);
+      if (match) return match[1];
+    }
+    return null;
+  };
+
+  // Fonction pour valider et ajouter une vidéo YouTube
+  const addYouTubeVideo = () => {
+    if (!youtubeUrl.trim()) {
+      setErrors(["Veuillez entrer une URL YouTube"]);
+      return;
+    }
+
+    const videoId = extractYouTubeId(youtubeUrl);
+    if (!videoId) {
+      setErrors(["URL YouTube invalide"]);
+      return;
+    }
+
+    if (media.length >= MAX_FILES) {
+      setErrors([
+        `Maximum ${MAX_FILES} média${MAX_FILES > 1 ? "s" : ""} autorisé${MAX_FILES > 1 ? "s" : ""}`,
+      ]);
+      return;
+    }
+
+    const newYouTubeVideo: YouTubeVideo = {
+      url: `https://www.youtube.com/watch?v=${videoId}`,
+      videoId,
+      thumbnail: `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
+      id: `youtube-${Date.now()}-${Math.random()}`,
+      type: "youtube",
+    };
+
+    setMedia((prev) => [...prev, newYouTubeVideo]);
+    onChange(field, newYouTubeVideo.url);
+    setYoutubeUrl("");
+    setShowYoutubeInput(false);
+    setErrors([]);
+  };
 
   const validateFile = (file: File): string | null => {
     if (!ACCEPTED_FORMATS.includes(file.type)) {
@@ -51,9 +113,9 @@ export default function MediaUploader<T>({
     const newErrors: string[] = [];
     const validFiles: File[] = [];
 
-    if (images.length + fileArray.length > MAX_FILES) {
+    if (media.length + fileArray.length > MAX_FILES) {
       newErrors.push(
-        `Maximum ${MAX_FILES} image${MAX_FILES > 1 ? "s" : ""} autorisÃ©e${MAX_FILES > 1 ? "s" : ""}`,
+        `Maximum ${MAX_FILES} média${MAX_FILES > 1 ? "s" : ""} autorisé${MAX_FILES > 1 ? "s" : ""}`,
       );
       setErrors(newErrors);
       return;
@@ -74,10 +136,11 @@ export default function MediaUploader<T>({
       const newImages: UploadedImage[] = validFiles.map((file) => ({
         file,
         preview: URL.createObjectURL(file),
-        id: `${Date.now()}-${Math.random()}`,
+        id: `file-${Date.now()}-${Math.random()}`,
+        type: "file",
       }));
 
-      setImages((prev) => [...prev, ...newImages]);
+      setMedia((prev) => [...prev, ...newImages]);
       const firstFileName = newImages[0].file.name;
       onChange(field, firstFileName);
     }
@@ -125,11 +188,11 @@ export default function MediaUploader<T>({
     fileInputRef.current?.click();
   };
 
-  const removeImage = (id: string) => {
-    setImages((prev) => {
-      const updated = prev.filter((img) => img.id !== id);
-      const removed = prev.find((img) => img.id === id);
-      if (removed) {
+  const removeMedia = (id: string) => {
+    setMedia((prev) => {
+      const updated = prev.filter((item) => item.id !== id);
+      const removed = prev.find((item) => item.id === id);
+      if (removed && removed.type === "file") {
         URL.revokeObjectURL(removed.preview);
       }
       return updated;
@@ -138,24 +201,40 @@ export default function MediaUploader<T>({
   };
 
   const clearAll = () => {
-    images.forEach((img) => URL.revokeObjectURL(img.preview));
-    setImages([]);
+    media.forEach((item) => {
+      if (item.type === "file") {
+        URL.revokeObjectURL(item.preview);
+      }
+    });
+    setMedia([]);
     setErrors([]);
+    setYoutubeUrl("");
+    setShowYoutubeInput(false);
     onChange(field, "");
   };
 
+  const toggleYoutubeInput = () => {
+    setShowYoutubeInput(!showYoutubeInput);
+    setErrors([]);
+  };
+
   return {
-    images,
+    media,
     errors,
     isDragging,
     fileInputRef,
+    youtubeUrl,
+    showYoutubeInput,
+    setYoutubeUrl,
     handleDragEnter,
     handleDragLeave,
     handleDragOver,
     handleDrop,
     handleFileInput,
     handleClick,
-    removeImage,
+    removeMedia,
     clearAll,
+    addYouTubeVideo,
+    toggleYoutubeInput,
   };
 }

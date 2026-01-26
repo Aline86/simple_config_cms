@@ -99,7 +99,7 @@ export class TextValidator {
       });
     }
 
-    if (this._params.multiline) {
+    /*if (this._params.multiline) {
       schema = schema.refine(
         (val) => typeof val === "string" && val.includes("\n"),
         {
@@ -108,7 +108,7 @@ export class TextValidator {
             "Le texte doit contenir au moins un retour à la ligne",
         },
       );
-    }
+    }*/
 
     return schema;
   }

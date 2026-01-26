@@ -57,7 +57,7 @@ model Header {
   logo        Media?   @relation("HeaderLogo")
   favicon     Media?   @relation("HeaderFavicon")
   nom_site    String   @db.VarChar(55)
-  description String   @db.VarChar(255)
+ 
   
   // Relations
   page        Page     @relation(fields: [page_id], references: [id], onDelete: Cascade)

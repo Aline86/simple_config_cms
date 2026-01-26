@@ -1,10 +1,10 @@
 // ==================== UI COMPONENTS ====================
 
 import Image from "next/image";
-import MediaUploader from "@/lib/mediaUploader/MediaUploader";
+import ImageUploader from "@/lib/mediaUploader/ImageUploader";
 import { MediaObject } from "@/model/bloc/MediaObject";
 
-export default function MediaUploaderView<T>({
+export default function ImageUploaderView<T>({
   value,
   previewImages = true,
   label = "Télécharger des images",
@@ -22,7 +22,7 @@ export default function MediaUploaderView<T>({
   onChangeValue: (fieldName: string, value: any) => void;
 }) {
   console.log("value", value, field.split(".")[1]);
-  const uploader = MediaUploader({
+  const uploader = ImageUploader({
     value: value,
     model: model,
     field: field,

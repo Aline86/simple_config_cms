@@ -16,7 +16,8 @@ export interface CreateBlocOptions {
   nom_bloc?: string;
   // Options pour les médias niveau 1 (directement dans le bloc)
   mediaCount?: number;
-
+  color_background_color?: string;
+  description?: string;
   // Options pour les articles
   articleCount?: number;
   mediaPerArticle?: number; // nombre de médias par article
@@ -39,6 +40,8 @@ export function createNewBloc(options: CreateBlocOptions): BlocObject {
     bloc_position,
     type,
     nom_bloc,
+    color_background_color = "#ffffff",
+    description,
     langue_bloc = "fr",
     mediaCount = 0,
     articleCount = 0,
@@ -67,9 +70,10 @@ export function createNewBloc(options: CreateBlocOptions): BlocObject {
       id: id, // toujours null à la création
       nom_bloc: nom_bloc,
       page_id,
-      titre: "", // titre vide
+      titre: "",
+      description,
       type,
-
+      color_background_color,
       bloc_position,
       langue_bloc,
       is_full_width,
@@ -156,6 +160,19 @@ export function createImageGroupBloc(
   page_id: string,
   bloc_position: number,
   imageCount: number = 6,
+): BlocObject {
+  return createNewBloc({
+    page_id,
+    bloc_position,
+    type: TypeBloc.IMAGE_GROUPE,
+    mediaCount: imageCount,
+  });
+}
+// Bloc bouton
+export function createButtonBloc(
+  page_id: string,
+  bloc_position: number,
+  imageCount: number = 1,
 ): BlocObject {
   return createNewBloc({
     page_id,

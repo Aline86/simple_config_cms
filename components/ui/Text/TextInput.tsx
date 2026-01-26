@@ -63,7 +63,7 @@ export default function TextInput<T>({
 
   const commonProps: React.InputHTMLAttributes<HTMLInputElement> &
     React.TextareaHTMLAttributes<HTMLTextAreaElement> = {
-    value: localValue as string | number,
+    defaultValue: localValue as string | number,
     onChange: handleChange,
     onBlur: handleBlur,
     disabled,
@@ -77,7 +77,7 @@ export default function TextInput<T>({
   let InputComponent: JSX.Element;
 
   switch (true) {
-    case multiline:
+    case params.multiline !== undefined:
       // Texte multiligne
       InputComponent = <textarea {...commonProps} rows={rows ?? 4} />;
       break;

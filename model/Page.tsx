@@ -15,6 +15,7 @@ export enum TypeBloc {
   CAROUSEL = "CAROUSEL",
   IMAGE_GROUPE = "IMAGE_GROUPE",
   TEXTE = "TEXTE",
+  BUTTON = "BOUTON",
   SCREEN = "SCREEN",
   VIDEO = "VIDEO",
 }
