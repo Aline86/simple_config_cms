@@ -1,8 +1,9 @@
 import { immerable } from "immer";
 import { MediaObject } from "./MediaObject";
 import { JSONContent } from "@tiptap/core";
+import { BaseValidatable } from "../VaseValidator";
 
-export class ArticleObject {
+export class ArticleObject extends BaseValidatable {
   [immerable] = true;
 
   public number_id: string | null;
@@ -26,6 +27,7 @@ export class ArticleObject {
       text_images_position?: string;
     } = {},
   ) {
+    super();
     this.number_id = data.id ?? null;
     this.number_bloc_id = data.bloc_id ?? null;
     this.text_text_article = data.text_article ?? null;

@@ -1,8 +1,9 @@
 // classes/FooterObject.ts
 import { immerable } from "immer";
 import { MediaObject } from "./MediaObject";
+import { BaseValidatable } from "../VaseValidator";
 
-export class FooterObject {
+export class FooterObject extends BaseValidatable {
   [immerable] = true;
 
   public number_id: string | null;
@@ -21,6 +22,7 @@ export class FooterObject {
       code_postal?: string;
     } = {},
   ) {
+    super();
     this.number_id = data.id ?? null;
     this.color_background_color = data.color_background_color ?? "#ffffff";
 

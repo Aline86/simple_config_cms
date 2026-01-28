@@ -2,8 +2,9 @@ import { immerable } from "immer";
 import { MediaObject } from "./bloc/MediaObject";
 import { TypeBloc } from "./Page";
 import { ArticleObject } from "./bloc/Article";
+import { BaseValidatable } from "./VaseValidator";
 
-export class BlocObject {
+export class BlocObject extends BaseValidatable {
   [immerable] = true;
 
   public number_id: string | null;
@@ -49,6 +50,7 @@ export class BlocObject {
     } = {},
     mode: string = "edition",
   ) {
+    super();
     this.number_id = data.id ?? null;
     this.text_nom_bloc = data.nom_bloc ?? null;
     this.number_page_id = data.page_id ?? null;

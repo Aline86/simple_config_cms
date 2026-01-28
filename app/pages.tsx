@@ -7,6 +7,7 @@ import { Plus } from "lucide-react";
 import { PageObject } from "@/model/Page";
 import { useEffect, useState } from "react";
 import PageCrud from "./pageComponent";
+import slugify from "slugify";
 import {
   deleteItemAndReorder,
   reorderArray,
@@ -50,7 +51,7 @@ export default function Page() {
     setPages((prev) =>
       prev.map((p) => {
         if (p.number_page_position === page.number_page_position) {
-          (p as any)[fieldName] = newValue; // mise à jour de l'instance existante
+          p.setField(fieldName, newValue);
         }
         return p;
       }),
@@ -64,6 +65,7 @@ export default function Page() {
       parent_id: null,
       published: false,
       titre: "",
+      slug: "",
       page_position: pages.length + 1,
       langue: "fr",
       createdAt: new Date(),

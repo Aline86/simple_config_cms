@@ -8,7 +8,7 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
-import { Trash } from "lucide-react";
+import { Save, Trash } from "lucide-react";
 import { FieldRenderer } from "@/validators/renderer/ValidatorRenderer";
 
 import { PageObject } from "@/model/Page";

@@ -1,0 +1,88 @@
+generator client {
+  provider   = "prisma-client-js"
+  engineType = "binary"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Page {
+  id            Int      @id @default(autoincrement())
+  parent_id     Int?
+  published     Boolean  @default(false)
+  titre         String   @db.VarChar(150)
+  slug          String   @unique @db.VarChar(150)
+  page_position Int
+  langue        String   @db.VarChar(4)
+  blocs         String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  footer        Footer?
+  header        Header?
+  parent        Page?    @relation("PageHierarchy", fields: [parent_id], references: [id], onDelete: Cascade)
+  children      Page[]   @relation("PageHierarchy")
+
+  @@index([parent_id])
+}
+
+model Header {
+  id             Int     @id @default(autoincrement())
+  page_id        Int     @unique
+  nom_site       String? @db.VarChar(55)
+  background_url String?
+  page           Page    @relation(fields: [page_id], references: [id], onDelete: Cascade)
+  favicon        Media?  @relation("HeaderFavicon")
+  logo           Media?  @relation("HeaderLogo")
+  reseaux        Media[] @relation("HeaderReseaux")
+}
+
+model Footer {
+  id               Int     @id @default(autoincrement())
+  page_id          Int     @unique
+  background_color String? @db.VarChar(15)
+  nom_site_adresse String? @db.VarChar(50)
+  adresse_footer   String? @db.VarChar(255)
+  code_postal      String? @db.VarChar(50)
+  page             Page    @relation(fields: [page_id], references: [id], onDelete: Cascade)
+  reseaux          Media[] @relation("FooterReseaux")
+}
+
+model Media {
+  id                Int     @id @default(autoincrement())
+  titre             String? @db.VarChar(255)
+  couleur_bg        String? @db.VarChar(15)
+  image_lien        String?
+  position_image    Int?
+  image_url         String
+  header_logo_id    Int?    @unique
+  header_favicon_id Int?    @unique
+  header_reseaux_id Int?
+  footer_id         Int?
+  footer            Footer? @relation("FooterReseaux", fields: [footer_id], references: [id], onDelete: Cascade)
+  headerFavicon     Header? @relation("HeaderFavicon", fields: [header_favicon_id], references: [id], onDelete: Cascade)
+  headerLogo        Header? @relation("HeaderLogo", fields: [header_logo_id], references: [id], onDelete: Cascade)
+  headerReseaux     Header? @relation("HeaderReseaux", fields: [header_reseaux_id], references: [id], onDelete: Cascade)
+
+  @@index([header_reseaux_id])
+  @@index([footer_id])
+}
+
+enum TypeBloc {
+  CAROUSEL
+  IMAGE_GROUPE
+  TEXTE
+  BUTTON
+  SCREEN
+  VIDEO
+}

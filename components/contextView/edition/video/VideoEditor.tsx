@@ -71,30 +71,14 @@ export function VideoEditor<T>({ ...props }: VideoEditorProps<T>) {
             </div>
 
             <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-950">
-              <div
-                className="w-full flex justify-end items-center"
-                onClick={() => props.removeElement(props.media as T)}
-              >
+              <div className="w-full flex justify-end items-center">
                 <div className="mb-4 flex-1">
                   <p className="text-lg font-semibold text-slate-800 mb-2">
                     vidéo n° {Number(props.media.number_position_image) + 1}
                   </p>
                 </div>
 
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-4 h-4 text-red-600 hover:text-red-800 cursor-pointer"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
+             
               </div>
 
               <div className="space-y-6">

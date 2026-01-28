@@ -2,6 +2,7 @@
 @import "tw-animate-css";
 
 :root {
+  color-scheme: light;
   --dark: #171717;
   --light: #ffffff;
   --radius: 0.625rem;
@@ -80,6 +81,7 @@
 }
 
 .dark {
+  color-scheme: dark;
   --background: oklch(0.129 0.042 264.695);
   --foreground: oklch(0.984 0.003 247.858);
   --card: oklch(0.208 0.042 265.755);
@@ -169,6 +171,7 @@
     overflow-x: hidden;
   }
 }
+
 h1 {
   font-size: 45px;
   text-transform: uppercase;
@@ -374,4 +377,11 @@ h2.tiptap_heading {
   justify-content: center;
   height: var(--slide-height);
   user-select: none;
+}
+.validated-input-wrapper .input,
+.validated-input-wrapper textarea,
+.validated-input-wrapper select {
+  background-color: var(--background) !important;
+  color: var(--foreground) !important;
+  appearance: none;
 }

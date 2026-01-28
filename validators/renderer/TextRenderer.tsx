@@ -14,11 +14,7 @@ import { MediaObject } from "@/model/bloc/MediaObject";
 import CloudinaryValidator from "../MediaValidator";
 import NumberInput from "@/components/ui/Text/RangeInput";
 import VideoUploaderView from "@/components/ui/Uploader/VideoUploaderView";
-
-// Types
-type FieldPrefix = "text" | "image" | "video" | "number" | "color";
-
-type ValidatorInstance = TextValidator | CloudinaryValidator | NumberValidator;
+import { createValidator, extractPrefix } from "@/lib/utils/validators.utils";
 
 type FieldRendererProps<T> = {
   label: string;
@@ -26,49 +22,6 @@ type FieldRendererProps<T> = {
   model: Record<string, any>;
   setField: (fieldName: string, value: any) => void;
   isVideo?: boolean;
-};
-
-// Map des classes de validators par préfixe
-const VALIDATOR_MAP: Record<FieldPrefix, any> = {
-  color: TextValidator,
-  text: TextValidator,
-  image: CloudinaryValidator,
-  video: NumberValidator, // À remplacer par VideoValidator si tu en as un
-  number: NumberValidator,
-};
-
-// Helper pour extraire le préfixe
-const extractPrefix = (fieldName: string): FieldPrefix => {
-  const match = fieldName.match(/^(text|image|video|number|color)_/);
-  if (!match) {
-    throw new Error(
-      `Invalid field name format: ${fieldName}. Expected format: "prefix_fieldname"`,
-    );
-  }
-  return match[1] as FieldPrefix;
-};
-type FieldConfigsMap = typeof FIELD_CONFIGS;
-
-// Helper pour créer le validator
-const createValidator = <K extends keyof FieldConfigsMap>(
-  fieldName: K,
-  value: unknown,
-): ValidatorInstance => {
-  const prefix = extractPrefix(fieldName);
-  const ValidatorClass = VALIDATOR_MAP[prefix];
-  const config = FIELD_CONFIGS[fieldName];
-
-  if (!config) {
-    console.warn(
-      `No config found for field: ${String(fieldName)}, using default config`,
-    );
-
-    const defaultConfig = prefix === "text" ? new TextParameter({}) : {};
-
-    return new ValidatorClass(value, defaultConfig);
-  }
-
-  return new ValidatorClass(value, config);
 };
 
 export function FieldRenderer<T>({

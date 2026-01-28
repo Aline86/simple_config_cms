@@ -1,5 +1,6 @@
 import { immerable } from "immer";
-export class MediaObject {
+import { BaseValidatable } from "../VaseValidator";
+export class MediaObject extends BaseValidatable {
   [immerable] = true;
 
   public number_id: string | null;
@@ -19,6 +20,7 @@ export class MediaObject {
       image_url?: string;
     } = {},
   ) {
+    super();
     this.number_id = data.id ?? crypto.randomUUID();
     this.number_bloc_id = data.bloc_id ?? null;
     this.text_titre = data.titre ?? null;

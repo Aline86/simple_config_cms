@@ -1,8 +1,9 @@
 // classes/HeaderObject.ts
 import { immerable } from "immer";
 import { MediaObject } from "./MediaObject";
+import { BaseValidatable } from "../VaseValidator";
 
-export class HeaderObject {
+export class HeaderObject extends BaseValidatable {
   [immerable] = true;
 
   public number_id: string | null;
@@ -24,6 +25,7 @@ export class HeaderObject {
       reseaux?: MediaObject[];
     } = {},
   ) {
+    super();
     this.number_id = data.id ?? null;
     this.image_logo = data.logo ?? null;
     this.image_favicon = data.favicon ?? null;
