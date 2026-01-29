@@ -10,7 +10,7 @@ interface UploadedImage {
 
 interface YouTubeVideo {
   url: string;
-  videoId: string;
+  videoid: string;
   thumbnail: string;
   id: string;
   type: "youtube";
@@ -46,8 +46,8 @@ export default function VideoUploader<T>({
     "application/pdf",
   ];
 
-  // Fonction pour extraire l'ID de la vidéo YouTube
-  const extractYouTubeId = (url: string): string | null => {
+  // Fonction pour extraire l'id de la vidéo YouTube
+  const extractYouTubeid = (url: string): string | null => {
     const patterns = [
       /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/,
       /^([a-zA-Z0-9_-]{11})$/,
@@ -67,8 +67,8 @@ export default function VideoUploader<T>({
       return;
     }
 
-    const videoId = extractYouTubeId(youtubeUrl);
-    if (!videoId) {
+    const videoid = extractYouTubeid(youtubeUrl);
+    if (!videoid) {
       setErrors(["URL YouTube invalide"]);
       return;
     }
@@ -81,9 +81,9 @@ export default function VideoUploader<T>({
     }
 
     const newYouTubeVideo: YouTubeVideo = {
-      url: `https://www.youtube.com/watch?v=${videoId}`,
-      videoId,
-      thumbnail: `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`,
+      url: `https://www.youtube.com/watch?v=${videoid}`,
+      videoid,
+      thumbnail: `https://img.youtube.com/vi/${videoid}/maxresdefault.jpg`,
       id: `youtube-${Date.now()}-${Math.random()}`,
       type: "youtube",
     };

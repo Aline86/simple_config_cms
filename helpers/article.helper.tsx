@@ -7,12 +7,12 @@ export function cloneArticleWithImages(
   images: MediaObject[],
 ) {
   return new ArticleObject({
-    id: article.number_id ?? null,
-    bloc_id: article.number_bloc_id ?? null,
-    text_article: article.text_text_article ?? {},
-    text_width: article.number_text_width ?? 0,
-    text_height: article.number_text_height ?? 0,
-    text_margins: article.number_text_margins ?? 0,
+    id: article.id ?? null,
+    text_bloc_id: article.text_bloc_id ?? null,
+    text_article: article.text_article ?? {},
+    number_text_width: article.number_text_width ?? 0,
+    number_height: article.number_height ?? 0,
+    number_text_margins: article.number_text_margins ?? 0,
     images: images ?? [],
     text_images_position: article.text_images_position ?? "top",
   });

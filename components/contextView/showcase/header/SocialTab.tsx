@@ -25,12 +25,12 @@ export default function SocialTab({ network }: { network: MediaObject }) {
           className="flex items-center bg-white rounded-l-lg shadow-lg overflow-hidden h-16 w-[200px]"
         >
           <div className="items-center justify-center">
-            {network?.image_image_url !== null &&
+            {network?.image_url !== null &&
             network?.text_titre !== null &&
             !isHovered ? (
               <Image
                 className={`inset-0 bg-cover ml-2 bg-center w-12 h-12 flex items-center justify-center fit-contain rounded`}
-                src={network?.image_image_url}
+                src={network?.image_url}
                 alt={network?.text_titre}
                 width="45"
                 height="45"
@@ -52,7 +52,7 @@ export default function SocialTab({ network }: { network: MediaObject }) {
                 isHovered ? "opacity-30" : "opacity-0"
               }`}
               style={{
-                backgroundImage: `url(${network?.image_image_url !== null ? network?.image_image_url : ""})`,
+                backgroundImage: `url(${network?.image_url !== null ? network?.image_url : ""})`,
               }}
             />
             <span className="relative z-10 font-semibold text-gray-800">

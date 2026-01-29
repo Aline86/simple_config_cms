@@ -4,7 +4,7 @@ import { MediaObject } from "@/model/bloc/MediaObject";
 import { BlocObject } from "@/model/Bloc";
 
 import { FieldRenderer } from "@/validators/renderer/TextRenderer";
-import { PictureEditor } from "../grid/PictureEditor";
+import { PictureEditor } from "../grid/image_grid/PictureEditor";
 
 interface ButtonEditorProps<T> {
   button: BlocObject;
@@ -45,13 +45,13 @@ export default function ButtonEdit<T>({
           label={"Couleur de fond de la carte de redirection"}
         />
         <FieldRenderer
-          label="Titre de la carte de redirection"
+          label="text_titre de la carte de redirection"
           fieldName={`text_titre`}
           model={button as Record<string, any>}
           setField={onChange}
         />
         <FieldRenderer
-          label="Description courte (texte court - 500 caractères)"
+          label="text_description courte (texte court - 500 caractères)"
           fieldName={`text_description`}
           model={button as Record<string, any>}
           setField={onChange}
@@ -66,7 +66,7 @@ export default function ButtonEdit<T>({
           {button.image_medias.map((media) => {
             return (
               <PictureEditor
-                key={(media as MediaObject).number_id}
+                key={(media as MediaObject).id}
                 media={media as MediaObject}
                 onChange={onChange}
                 removeElement={removeElement}

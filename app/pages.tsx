@@ -28,7 +28,9 @@ export default function Page() {
   const onDrop = (target: PageObject) => {
     if (!dragged) return;
 
-    setPages((prev) => reorderArray(prev, dragged, target));
+    setPages((prev) =>
+      reorderArray(prev, dragged, target, "number_page_position"),
+    );
 
     setDragged(null);
   };
@@ -64,15 +66,15 @@ export default function Page() {
       id: null,
       parent_id: null,
       published: false,
-      titre: "",
+      text_titre: "",
       slug: "",
-      page_position: pages.length + 1,
+      number_page_position: pages.length + 1,
       langue: "fr",
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      text_createdAt: new Date(),
+      text_updatedAt: new Date(),
       blocs: [],
     });
-    newPage._tmp = crypto.randomUUID();
+
     setPages((prev) => [...prev, newPage]);
   };
 

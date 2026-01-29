@@ -86,10 +86,10 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ bloc }) => {
 
   // Vérifier si c'est une vidéo YouTube
   const isYouTube =
-    bloc.image_medias[0]?.image_image_url?.includes("youtube") ||
-    bloc.image_medias[0]?.image_image_url?.includes("youtu.be");
+    bloc.image_medias[0]?.image_url?.includes("youtube") ||
+    bloc.image_medias[0]?.image_url?.includes("youtu.be");
 
-  const extractYouTubeId = (url: string): string | null => {
+  const extractYouTubeid = (url: string): string | null => {
     const patterns = [
       /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/,
     ];
@@ -100,12 +100,12 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ bloc }) => {
     return null;
   };
 
-  if (isYouTube && bloc.image_medias[0].image_image_url) {
-    const videoId = extractYouTubeId(bloc.image_medias[0].image_image_url);
+  if (isYouTube && bloc.image_medias[0].image_url) {
+    const videoid = extractYouTubeid(bloc.image_medias[0].image_url);
 
     return (
       <div className="w-full max-w-4xl mx-auto">
-        {/* Titre */}
+        {/* text_titre */}
         {bloc.text_titre && (
           <div className="mb-4">
             <h2 className="text-2xl font-semibold text-slate-800">
@@ -123,7 +123,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ bloc }) => {
             <iframe
               width="100%"
               height="100%"
-              src={`https://www.youtube.com/embed/${videoId}`}
+              src={`https://www.youtube.com/embed/${videoid}`}
               title={bloc.text_titre || "YouTube video"}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
@@ -137,7 +137,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ bloc }) => {
 
   return (
     <div className="w-full max-w-4xl mx-auto">
-      {/* Titre */}
+      {/* text_titre */}
       {bloc.text_titre && (
         <div className="mb-4">
           <h2 className=" text-2xl font-semibold text-slate-800">
@@ -153,8 +153,10 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ bloc }) => {
       <div className="relative group bg-black rounded-lg overflow-hidden shadow-lg">
         {bloc !== undefined &&
           bloc !== null &&
-          bloc.image_medias[0].image_image_url !== undefined &&
-          bloc.image_medias[0].image_image_url !== null && (
+          bloc.image_medias[0] !== undefined &&
+          bloc.image_medias[0] !== null &&
+          bloc.image_medias[0].image_url !== undefined &&
+          bloc.image_medias[0].image_url !== null && (
             <video
               ref={videoRef}
               className="w-full aspect-video"
@@ -162,10 +164,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ bloc }) => {
               onLoadedMetadata={handleLoadedMetadata}
               onClick={togglePlay}
             >
-              <source
-                src={bloc.image_medias[0]?.image_image_url}
-                type="video/mp4"
-              />
+              <source src={bloc.image_medias[0]?.image_url} type="video/mp4" />
               Votre navigateur ne supporte pas la vidéo.
             </video>
           )}

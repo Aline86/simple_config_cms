@@ -4,13 +4,13 @@ import { MediaObject } from "@/model/bloc/MediaObject";
 import { BlocObject } from "@/model/Bloc";
 
 import { FieldRenderer } from "@/validators/renderer/TextRenderer";
-import { PictureEditor } from "../../grid/PictureEditor";
+import { PictureEditor } from "../../grid/image_grid/PictureEditor";
 
 interface CarouselThumbnailsProps<T> {
-  images_group: BlocObject;
+  bloc: BlocObject;
   onChange: (fieldName: string, newValue: any) => void;
   addElement: () => void;
-  removeElement: (images_group: T) => void;
+  removeElement: (bloc: MediaObject) => void;
   onDragStart: (page: MediaObject) => void;
   onDrop: (page: MediaObject) => void;
   isLink?: boolean;
@@ -18,7 +18,7 @@ interface CarouselThumbnailsProps<T> {
 }
 
 export default function CarouselThumbnailsEdit<T>({
-  images_group,
+  bloc,
   onChange,
   addElement,
   removeElement,
@@ -56,30 +56,30 @@ export default function CarouselThumbnailsEdit<T>({
           </svg>
         </button>
         <FieldRenderer
-          label="Titre du bloc carousel d'images"
+          label="text_titre du bloc carousel d'images"
           fieldName={`text_titre`}
-          model={images_group as Record<string, any>}
+          model={bloc as Record<string, any>}
           setField={onChange}
         />
         {showWidth && (
           <FieldRenderer
             label="Largeur de l'image sur grand écran"
             fieldName={`number_width`}
-            model={images_group as Record<string, any>}
+            model={bloc as Record<string, any>}
             setField={onChange}
           />
         )}
         <FieldRenderer
           label="Hauteur de l'image sur grand écran"
           fieldName={`number_height`}
-          model={images_group as Record<string, any>}
+          model={bloc as Record<string, any>}
           setField={onChange}
         />
         <div className="grid grid-cols-2 gap-6">
-          {images_group.image_medias.map((media) => {
+          {bloc.image_medias.map((media) => {
             return (
               <PictureEditor
-                key={(media as MediaObject).number_id}
+                key={(media as MediaObject).id}
                 media={media as MediaObject}
                 onChange={onChange}
                 removeElement={removeElement}
@@ -99,7 +99,7 @@ export default function CarouselThumbnailsEdit<T>({
             Props reçues (HeaderEdit)
           </h3>
           <pre className="text-xs overflow-auto">
-            {JSON.stringify(images_group, null, 2)}
+            {JSON.stringify(bloc, null, 2)}
           </pre>
         </div>
       ) : (

@@ -49,7 +49,7 @@ export default class CloudinaryValidator {
     }
 
     // Validation Cloudinary
-    schema = schema.refine(
+    /* schema = schema.refine(
       (url) => {
         if (
           url === null ||
@@ -77,7 +77,7 @@ export default class CloudinaryValidator {
           this.params.errorMessages?.cloudinary ||
           "Doit être une URL Cloudinary valide",
       },
-    );
+    );*/
 
     // Si le champ n’est pas requis, rendre optionnel
     if (!this.params.required) {

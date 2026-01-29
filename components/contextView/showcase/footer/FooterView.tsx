@@ -43,14 +43,14 @@ export default function FooterView({ footer }: MediaViewProps) {
                 {footer.image_reseaux.map((social) => {
                   return (
                     <a
-                      key={social.number_id}
+                      key={social.id}
                       href={social.text_image_lien ?? "#"}
                       className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors"
                     >
-                      {social.image_image_url !== undefined &&
-                        social.image_image_url !== null && (
+                      {social.image_url !== undefined &&
+                        social.image_url !== null && (
                           <Image
-                            src={social.image_image_url}
+                            src={social.image_url}
                             alt={social.text_titre ?? ""}
                             width="50"
                             height="50"

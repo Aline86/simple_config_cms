@@ -2,19 +2,20 @@
 import { PageObject } from "@/model/Page";
 
 export function createNewPage(
-  page_position: number,
+  number_page_position: number,
   langue: string,
 ): PageObject {
   return new PageObject(
     {
       parent_id: null, // toujours null à la création
       published: false, // page non publiée par défaut
-      titre: "", // titre vide
-      page_position: page_position,
-      langue: langue ?? "fr", // langue par défaut "fr"
+      text_titre: "", // text_titre vide
+      slug: "", // text_titre vide
+      number_page_position: number_page_position,
+      langue: langue ?? "fr_FR", // langue par défaut "fr"
       blocs: [], // aucun bloc par défaut
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      text_createdAt: new Date(),
+      text_updatedAt: new Date(),
     },
     "edition", // mode fixe
   );

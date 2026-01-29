@@ -124,9 +124,9 @@ export default function HeaderView({ header }: MediaViewProps) {
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-between h-16 ">
             <span className="text-xl font-bold text-indigo-600 relative  flex-shrink-0 z-0">
-              {header?.image_logo?.image_image_url ? (
+              {header?.image_logo?.image_url ? (
                 <img
-                  src={header.image_logo.image_image_url}
+                  src={header.image_logo.image_url}
                   className="logo-site"
                   alt={header.text_nom_site || "Logo"}
                 />

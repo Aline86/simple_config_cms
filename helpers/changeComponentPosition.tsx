@@ -1,21 +1,34 @@
-export function reorderArray<T extends Record<string, any>>(
+// helpers/changeComponentPosition.ts (ou similaire)
+
+export function reorderArray<T>(
   array: T[],
   dragged: T,
   target: T,
+  positionKey: keyof T,
 ): T[] {
-  const fromIndex = array.findIndex((item) => item === dragged);
-  const toIndex = array.findIndex((item) => item === target);
+  const draggedIndex = array.indexOf(dragged);
+  const targetIndex = array.indexOf(target);
 
-  if (fromIndex === -1 || toIndex === -1) return array;
+  if (draggedIndex === -1 || targetIndex === -1) return array;
 
-  const copy = [...array];
-  const [moved] = copy.splice(fromIndex, 1);
-  copy.splice(toIndex, 0, moved);
+  const newArray = [...array];
 
-  return copy.map((item, index) => {
-    return { ...item, [index]: index + 1 };
-  });
+  // Retirer l'élément dragué
+  newArray.splice(draggedIndex, 1);
+
+  // Calculer le nouvel index
+  const insertIndex = draggedIndex < targetIndex ? targetIndex : targetIndex;
+
+  // Insérer à la nouvelle position
+  newArray.splice(insertIndex, 0, dragged);
+
+  // ✅ Mettre à jour les positions
+  return newArray.map((item, index) => ({
+    ...item, // ✅ Spread pour copier toutes les propriétés
+    [positionKey]: index,
+  }));
 }
+
 export function deleteItemAndReorder<T extends Record<string, any>>(
   prev: T[],
   itemToDelete: T,

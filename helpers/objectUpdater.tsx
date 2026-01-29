@@ -22,7 +22,7 @@ type ValidatorClass =
 type ParameterClass = CloudinaryParameter | TextParameter | Parameter;
 
 // Map des classes de validators par préfixe
-const VALIDATOR_MAP: Record<FieldPrefix, ValidatorClass> = {
+const VALidATOR_MAP: Record<FieldPrefix, ValidatorClass> = {
   text: TextValidator,
   image: CloudinaryValidator,
   number: NumberValidator,
@@ -88,7 +88,7 @@ export const createValidatorForField = (
     const prefix = extractPrefix(fieldName);
 
     // 2. Récupérer la classe de validator
-    const ValidatorClass = VALIDATOR_MAP[prefix];
+    const ValidatorClass = VALidATOR_MAP[prefix];
 
     if (!ValidatorClass) {
       throw new Error(`No validator found for prefix: "${prefix}"`);

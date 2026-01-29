@@ -82,7 +82,7 @@ export const EditorToolbar = ({ editor, onSetLink }: EditorToolbarProps) => (
         onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
         isActive={editor.isActive("heading", { level: 2 })}
         icon={<H2Icon />}
-        alt="Titre H2"
+        alt="text_titre H2"
       />
 
       <ToolbarButton

@@ -18,6 +18,13 @@ const FIELD_CONFIGS: Record<string, FieldParameter> = {
       integer: "La largeur doit être un nombre entier",
     },
   }),
+  text_createdAt: new TextParameter({
+    isDate: true,
+  }),
+  text_updatedAt: new TextParameter({
+    isDate: true,
+  }),
+
   number_gap: new Parameter({
     type: "range",
     min: 0,
@@ -57,13 +64,13 @@ const FIELD_CONFIGS: Record<string, FieldParameter> = {
       max: "La largeur maximale est 250px",
     },
   }),
-  number_bloc_id: new Parameter({
+  text_bloc_id: new Parameter({
     integer: true,
     positive: true,
     required: false,
     errorMessages: {
-      integer: "L'ID du bloc doit être un nombre entier",
-      positive: "L'ID du bloc doit être positif",
+      integer: "L'id du bloc doit être un nombre entier",
+      positive: "L'id du bloc doit être positif",
     },
   }),
   text_empty: new TextParameter({
@@ -72,8 +79,8 @@ const FIELD_CONFIGS: Record<string, FieldParameter> = {
     trim: true,
     type: "hidden",
     errorMessages: {
-      maxLength: "Le titre ne peut pas dépasser 255 caractères",
-      required: "Le titre est obligatoire",
+      maxLength: "Le text_titre ne peut pas dépasser 255 caractères",
+      required: "Le text_titre est obligatoire",
     },
   }),
   // à faire
@@ -83,38 +90,38 @@ const FIELD_CONFIGS: Record<string, FieldParameter> = {
     trim: true,
     type: "hidden",
     errorMessages: {
-      maxLength: "Le titre ne peut pas dépasser 255 caractères",
-      required: "Le titre est obligatoire",
+      maxLength: "Le text_titre ne peut pas dépasser 255 caractères",
+      required: "Le text_titre est obligatoire",
     },
   }),
   text_nom_site_adresse: new TextParameter({
     maxLength: 40,
     required: true,
     trim: true,
-    placeholder: "Entrez le titre",
+    placeholder: "Entrez le text_titre",
     errorMessages: {
-      maxLength: "Le titre ne peut pas dépasser 255 caractères",
-      required: "Le titre est obligatoire",
+      maxLength: "Le text_titre ne peut pas dépasser 255 caractères",
+      required: "Le text_titre est obligatoire",
     },
   }),
   text_adresse_footer: new TextParameter({
     maxLength: 255,
     required: true,
     trim: true,
-    placeholder: "Entrez le titre",
+    placeholder: "Entrez le text_titre",
     errorMessages: {
-      maxLength: "Le titre ne peut pas dépasser 255 caractères",
-      required: "Le titre est obligatoire",
+      maxLength: "Le text_titre ne peut pas dépasser 255 caractères",
+      required: "Le text_titre est obligatoire",
     },
   }),
   text_code_postal: new TextParameter({
     maxLength: 50,
     required: true,
     trim: true,
-    placeholder: "Entrez le titre",
+    placeholder: "Entrez le text_titre",
     errorMessages: {
-      maxLength: "Le titre ne peut pas dépasser 255 caractères",
-      required: "Le titre est obligatoire",
+      maxLength: "Le text_titre ne peut pas dépasser 255 caractères",
+      required: "Le text_titre est obligatoire",
     },
   }),
   text_image_lien: new TextParameter({
@@ -132,7 +139,7 @@ const FIELD_CONFIGS: Record<string, FieldParameter> = {
     multiline: 3,
     placeholder: "Décrivez votre contenu...",
     errorMessages: {
-      maxLength: "La description ne peut pas dépasser 500 caractères",
+      maxLength: "La text_description ne peut pas dépasser 500 caractères",
     },
   }),
   number_position_image: new Parameter({
@@ -148,10 +155,10 @@ const FIELD_CONFIGS: Record<string, FieldParameter> = {
     maxLength: 255,
     required: true,
     trim: true,
-    placeholder: "Entrez le titre",
+    placeholder: "Entrez le text_titre",
     errorMessages: {
-      maxLength: "Le titre ne peut pas dépasser 255 caractères",
-      required: "Le titre est obligatoire",
+      maxLength: "Le text_titre ne peut pas dépasser 255 caractères",
+      required: "Le text_titre est obligatoire",
     },
   }),
 
@@ -175,7 +182,7 @@ const FIELD_CONFIGS: Record<string, FieldParameter> = {
       url: "Veuillez entrer une URL valide",
     },
   }),
-  image_image_url: new CloudinaryParameter({
+  image_url: new CloudinaryParameter({
     required: true,
     resourceTypes: ["image"], // uniquement les images
     allowedFormats: ["jpg", "jpeg", "png", "webp"], // formats autorisés

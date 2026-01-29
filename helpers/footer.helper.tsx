@@ -1,12 +1,13 @@
 import { FooterObject } from "@/model/bloc/Footer";
 import { MediaObject } from "@/model/bloc/MediaObject";
+import { nanoid } from "nanoid";
 
 export function cloneFooterWithReseaux(
   prev: FooterObject,
   updatedReseaux: MediaObject[],
 ) {
   return new FooterObject({
-    id: prev.number_id ?? undefined,
+    id: prev.id ?? undefined,
     nom_site_adresse: prev.text_nom_site_adresse ?? undefined,
     color_background_color: prev.color_background_color ?? undefined,
     adresse_footer: prev.text_adresse_footer ?? undefined,
@@ -17,7 +18,7 @@ export function cloneFooterWithReseaux(
 
 export function cloneFooterWithReseau(prev: FooterObject, reseau: MediaObject) {
   return new FooterObject({
-    id: prev.number_id ?? undefined,
+    id: prev.id ?? undefined,
     nom_site_adresse: prev.text_nom_site_adresse ?? undefined,
     color_background_color: prev.color_background_color ?? undefined,
     adresse_footer: prev.text_adresse_footer ?? undefined,
@@ -36,20 +37,20 @@ export function mockFooter(idBloc: string) {
     code_postal: "",
     reseaux: [
       new MediaObject({
-        id: crypto.randomUUID(),
+        id: nanoid(),
         bloc_id: idBloc,
-        titre: "paysage",
+        text_titre: "paysage",
         image_lien: "#",
-        position_image: 0,
+        number_position_image: 0,
         image_url:
           "https://res.cloudinary.com/demo/image/upload/w_400,h_300,c_fill/kitten.jpg",
       }),
       new MediaObject({
-        id: crypto.randomUUID(),
+        id: nanoid(),
         bloc_id: idBloc,
-        titre: "paysage",
+        text_titre: "paysage",
         image_lien: "#",
-        position_image: 1,
+        number_position_image: 1,
         image_url:
           "https://res.cloudinary.com/demo/image/upload/w_400,h_300,c_fill/kitten.jpg",
       }),

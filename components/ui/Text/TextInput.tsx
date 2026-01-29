@@ -34,14 +34,15 @@ export default function TextInput<T>({
 }: ValidatedTextInputProps<T>) {
   const [touched, setTouched] = useState(false);
   const [localValue, setLocalValue] = useState(value);
-  console.log("value", validator);
+  console.log("value", value);
   const params = validator.getParams();
 
   // Sync localValue si le modèle change depuis l'extérieur
   useEffect(() => {
+    setLocalValue(value ?? "");
     validator.value = String(value ?? "");
     setTouched(false);
-  }, [localValue, field, validator]);
+  }, [value, field]);
 
   // Validation
   const validation = validator.validate(localValue);
@@ -64,6 +65,7 @@ export default function TextInput<T>({
   const commonProps: React.InputHTMLAttributes<HTMLInputElement> &
     React.TextareaHTMLAttributes<HTMLTextAreaElement> = {
     defaultValue: localValue as string | number,
+
     onChange: handleChange,
     onBlur: handleBlur,
     disabled,

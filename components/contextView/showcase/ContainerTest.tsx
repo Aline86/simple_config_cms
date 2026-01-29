@@ -19,8 +19,8 @@ export default function MediaContainer({
 }) {
   useEffect(() => {
     console.log("🔄 Media updated:", {
-      titre: mediaObject.text_titre,
-      image_url: mediaObject.image_image_url,
+      text_titre: mediaObject.text_titre,
+      image_url: mediaObject.image_url,
       image_lien: mediaObject.text_image_lien,
     });
   }, [mediaObject]);

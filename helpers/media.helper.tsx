@@ -1,13 +1,14 @@
 import { MediaObject } from "@/model/bloc/MediaObject";
+import { nanoid } from "nanoid";
 
 export function cloneMediaWithPosition(media: MediaObject, position: number) {
   return new MediaObject({
-    id: media.number_id,
-    bloc_id: media.number_bloc_id,
-    titre: media.text_titre ?? undefined,
+    id: media.id,
+    bloc_id: media.text_bloc_id,
+    text_titre: media.text_titre ?? undefined,
     image_lien: media.text_image_lien ?? undefined,
-    image_url: media.image_image_url ?? undefined,
-    position_image: position,
+    image_url: media.image_url ?? undefined,
+    number_position_image: position,
   });
 }
 
@@ -21,11 +22,11 @@ export function createMedia(position: number, bloc_id: string | null) {
   const height = Math.floor(Math.random() * (maxH - minH + 1)) + minH;
   const image_url = `https://picsum.photos/${width}/${height}?random=${Date.now()}-${position}`;
   return new MediaObject({
-    id: crypto.randomUUID(),
+    id: nanoid(),
     bloc_id: bloc_id,
-    titre: "",
+    text_titre: "",
     image_lien: "#",
     image_url: image_url,
-    position_image: position,
+    number_position_image: position,
   });
 }

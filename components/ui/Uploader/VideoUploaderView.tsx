@@ -13,7 +13,7 @@ interface UploadedImage {
 
 interface YouTubeVideo {
   url: string;
-  videoId: string;
+  videoid: string;
   thumbnail: string;
   id: string;
   type: "youtube";
@@ -279,7 +279,7 @@ function PreviewItem({ item, onRemove }: PreviewItemProps) {
   if (item.type === "youtube") {
     return (
       <div className="preview-item youtube-item">
-        <YouTubePreview url={item.url} videoId={item.videoId} />
+        <YouTubePreview url={item.url} videoid={item.VIDEOid} />
         <div className="preview-overlay">
           <button
             type="button"
@@ -321,9 +321,9 @@ function PreviewItem({ item, onRemove }: PreviewItemProps) {
   );
 }
 
-function YouTubePreview({ url, videoId }: { url: string; videoId?: string }) {
-  const extractId = (url: string): string => {
-    if (videoId) return videoId;
+function YouTubePreview({ url, videoid }: { url: string; videoid?: string }) {
+  const extractid = (url: string): string => {
+    if (videoid) return videoid;
     const patterns = [
       /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/,
     ];
@@ -334,7 +334,7 @@ function YouTubePreview({ url, videoId }: { url: string; videoId?: string }) {
     return "";
   };
 
-  const id = extractId(url);
+  const id = extractid(url);
 
   return (
     <div className="youtube-preview">

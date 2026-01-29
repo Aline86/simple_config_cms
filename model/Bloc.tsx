@@ -2,27 +2,28 @@ import { immerable } from "immer";
 import { MediaObject } from "./bloc/MediaObject";
 import { TypeBloc } from "./Page";
 import { ArticleObject } from "./bloc/Article";
-import { BaseValidatable } from "./VaseValidator";
+import { BaseValidatable } from "./BaseValidator";
 
 export class BlocObject extends BaseValidatable {
   [immerable] = true;
 
-  public number_id: string | null;
+  // Structure des blocs (stockés en JSON dans Prisma)
+  public id: string | null;
   public text_nom_bloc: string | null;
-  public number_page_id: string | null;
+  public number_page_id: number | null;
   public text_titre: string | null;
   public text_description: string | null;
   public color_background_color: string | null;
-  public text_type: TypeBloc | null;
-  public number_bloc_position: number | null;
-  public text_langue_bloc: string | null;
-  public number_is_full_width: boolean;
+  public type: TypeBloc | string;
+  public bloc_position: number | null;
+  public langue_bloc: string | null;
+  public checkbox_is_full_width: boolean;
   public number_width: number | null;
   public number_height: number | null;
   public number_gap: number | null;
   public number_columns: number | null;
-  public number_createdAt: Date | null;
-  public number_updatedAt: Date | null;
+  public text_createdAt: Date | null;
+  public text_updatedAt: Date | null;
   public image_medias: MediaObject[];
   public articles: ArticleObject[];
   public mode: string;
@@ -30,45 +31,59 @@ export class BlocObject extends BaseValidatable {
   constructor(
     data: {
       id?: string | null;
-      nom_bloc?: string;
-      page_id?: string;
-      titre?: string;
-      description?: string;
-      color_background_color?: string;
-      type?: TypeBloc;
-      bloc_position?: number;
-      langue_bloc?: string;
-      is_full_width?: boolean;
-      width?: number;
-      height?: number;
-      gap?: number;
-      columns?: number;
-      createdAt?: Date;
-      updatedAt?: Date;
-      image_medias?: MediaObject[];
+      text_nom_bloc?: string | null;
+      number_page_id?: number | null;
+      text_titre?: string | null;
+      text_description?: string | null;
+      color_background_color?: string | null;
+      type?: TypeBloc | string;
+      bloc_position?: number | null;
+      langue_bloc?: string | null;
+      checkbox_is_full_width?: boolean;
+      number_width?: number | null;
+      number_height?: number | null;
+      number_gap?: number | null;
+      number_columns?: number | null;
+      text_createdAt?: Date | null;
+      text_updatedAt?: Date | null;
+      image_medias?: MediaObject[] | any[];
       articles?: ArticleObject[];
     } = {},
     mode: string = "edition",
   ) {
     super();
-    this.number_id = data.id ?? null;
-    this.text_nom_bloc = data.nom_bloc ?? null;
-    this.number_page_id = data.page_id ?? null;
-    this.text_titre = data.titre ?? null;
-    this.text_description = data.description ?? null;
+    this.id = data.id ?? null;
+    this.text_nom_bloc = data.text_nom_bloc ?? "";
+    this.number_page_id = data.number_page_id ?? null;
+    this.text_titre = data.text_titre ?? "";
+    this.text_description = data.text_description ?? "";
     this.color_background_color = data.color_background_color ?? null;
-    this.text_type = data.type ?? null;
-    this.number_bloc_position = data.bloc_position ?? null;
-    this.text_langue_bloc = data.langue_bloc ?? null;
-    this.number_is_full_width = data.is_full_width ?? false;
-    this.number_width = data.width ?? null;
-    this.number_height = data.height ?? null;
-    this.number_gap = data.gap ?? null;
-    this.number_columns = data.columns ?? null;
-    this.number_createdAt = data.createdAt ?? null;
-    this.number_updatedAt = data.updatedAt ?? null;
-    this.image_medias = data.image_medias ?? [];
-    this.articles = data.articles ?? [];
+    this.type = data.type ?? "";
+    this.bloc_position = data.bloc_position ?? null;
+    this.langue_bloc = data.langue_bloc ?? null;
+    this.checkbox_is_full_width = data.checkbox_is_full_width ?? false;
+    this.number_width = data.number_width ?? 75;
+    this.number_height = data.number_height ?? 75;
+    this.number_gap = data.number_gap ?? 30;
+    this.number_columns = data.number_columns ?? 3;
+    this.text_createdAt = data.text_createdAt
+      ? new Date(data.text_createdAt)
+      : new Date();
+    this.text_updatedAt = data.text_updatedAt
+      ? new Date(data.text_updatedAt)
+      : new Date();
+    // Réhydrater les MediaObject
+    this.image_medias = (data.image_medias ?? []).map((m: any) => {
+      if (m instanceof MediaObject) return m;
+      return new MediaObject(m);
+    });
+
+    // Réhydrater les ArticleObject
+    this.articles = (data.articles ?? []).map((a: any) => {
+      if (a instanceof ArticleObject) return a;
+      return new ArticleObject(a);
+    });
+
     this.mode = mode;
   }
 
@@ -90,22 +105,22 @@ export class BlocObject extends BaseValidatable {
 
   toJSON() {
     return {
-      id: this.number_id,
-      nom_bloc: this.text_nom_bloc,
-      page_id: this.number_page_id,
-      titre: this.text_titre,
-      description: this.text_description,
+      id: this.id,
+      text_nom_bloc: this.text_nom_bloc,
+      number_page_id: this.number_page_id,
+      text_titre: this.text_titre,
+      text_description: this.text_description,
       color_background_color: this.color_background_color,
-      type: this.text_type,
-      bloc_position: this.number_bloc_position,
-      langue_bloc: this.text_langue_bloc,
-      is_full_width: this.number_is_full_width,
-      width: this.number_width,
-      height: this.number_height,
-      gap: this.number_gap,
-      columns: this.number_columns,
-      createdAt: this.number_createdAt,
-      updatedAt: this.number_updatedAt,
+      type: this.type,
+      bloc_position: this.bloc_position,
+      langue_bloc: this.langue_bloc,
+      checkbox_is_full_width: this.checkbox_is_full_width,
+      number_width: this.number_width,
+      number_height: this.number_height,
+      number_gap: this.number_gap,
+      number_columns: this.number_columns,
+      text_createdAt: this.text_createdAt,
+      text_updatedAt: this.text_updatedAt,
       image_medias: this.image_medias.map((m) => m.toJSON()),
       articles: this.articles.map((a) => a.toJSON()),
     };

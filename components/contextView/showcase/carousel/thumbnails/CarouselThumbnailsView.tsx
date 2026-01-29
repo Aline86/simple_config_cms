@@ -4,19 +4,7 @@ import { BlocObject } from "@/model/Bloc";
 import CarouselContainer from "./CarouselContainer";
 import { useIsSmScreen } from "@/hooks/screenSize/useIsSmScreen";
 
-export default function CarouselThumbnailsView({
-  width = 300,
-  height = 200,
-  gap = 20,
-  cardNumber = 5,
-  bloc,
-}: {
-  width: number;
-  height: number;
-  gap: number;
-  cardNumber: number;
-  bloc: BlocObject;
-}) {
+export default function CarouselThumbnailsView({ bloc }: { bloc: BlocObject }) {
   const [medias, setMedias] = useState<MediaObject[]>([
     ...bloc.image_medias,
     ...bloc.image_medias,
@@ -30,6 +18,10 @@ export default function CarouselThumbnailsView({
   const [clic, setIsClic] = useState(false);
   const [cardValue, setCardValue] = useState(0);
   const isSm = useIsSmScreen();
+  const cardNumber = bloc.image_medias.length;
+  const width = bloc.number_width ?? 150;
+  const height = bloc.number_height ?? 150;
+  const gap = bloc.number_gap ?? 30;
 
   function updateCardEnd() {
     if (medias.length === cardNumber * 3 && cardValue > 0) {
@@ -93,7 +85,7 @@ export default function CarouselThumbnailsView({
             Props reçues (HeaderEdit)
           </h3>
           <h2 className="mb-2 text-sm font-semibold">
-            Nb d&apos;images : {medias.length}
+            Nb d'images : {medias.length}
           </h2>
           <pre className="max-h-64 overflow-auto text-xs">
             {JSON.stringify(medias, null, 2)}

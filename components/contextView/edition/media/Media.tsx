@@ -59,7 +59,7 @@ export function MediaEditor<T>({ ...props }: MediaEditorProps<T>) {
           />
           <FieldRenderer
             label="Image associée au réseau social"
-            fieldName={`image_reseaux.${(props.socialMedia as MediaObject).number_position_image}.image_image_url`}
+            fieldName={`image_reseaux.${(props.socialMedia as MediaObject).number_position_image}.image_url`}
             model={props.socialMedia as Record<string, any>}
             setField={props.onChange}
           />

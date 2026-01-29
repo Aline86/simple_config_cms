@@ -9,14 +9,14 @@ type MediaPreviewProps = {
   isLink?: boolean;
 };
 /*<Image
-              src={media.image_image_url!}
+              src={media.image_url!}
               alt={media.text_titre || "Image"}
               fill
               className="object-cover"
               unoptimized
             />*/
 export function MediaPreview({ media, isLink }: MediaPreviewProps) {
-  const hasImage = Boolean(media.image_image_url);
+  const hasImage = Boolean(media.image_url);
   const hasLink = Boolean(media.text_image_lien);
 
   return (
@@ -35,7 +35,7 @@ export function MediaPreview({ media, isLink }: MediaPreviewProps) {
         <div className="relative aspect-video bg-slate-100 dark:bg-slate-800">
           {hasImage ? (
             <div className="flex h-full items-center justify-center text-sm text-slate-500">
-              {media.image_image_url}
+              {media.image_url}
             </div>
           ) : (
             <div className="flex h-full items-center justify-center text-sm text-slate-500">

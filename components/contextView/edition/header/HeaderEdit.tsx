@@ -44,7 +44,7 @@ export default function HeaderEdit<T>({
             label={"Nom du site"}
           />
           <FieldRenderer
-            fieldName="image_logo.image_image_url"
+            fieldName="image_logo.image_url"
             model={
               header.image_logo !== null ? header.image_logo : new MediaObject()
             }
@@ -52,7 +52,7 @@ export default function HeaderEdit<T>({
             label={"Logo du site"}
           />
           <FieldRenderer
-            fieldName="image_favicon.image_image_url"
+            fieldName="image_favicon.image_url"
             model={
               header.image_favicon !== null
                 ? header.image_favicon
@@ -65,7 +65,7 @@ export default function HeaderEdit<T>({
             label="Image"
             fieldKey="text_background_url"
             availableValidators={[
-              "image_image_url",
+              "image_url",
               "text_empty",
               "color_background_color",
             ]}

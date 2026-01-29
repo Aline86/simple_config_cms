@@ -18,7 +18,7 @@ interface CustomCarouselInfo {
 
 export default function CarouselSimple({ bloc }: CustomCarouselInfo) {
   if (!bloc?.image_medias?.length) return null;
-
+  console.log("bloc111", bloc);
   return (
     <div className="relative  flex-col justify-center align-center m-auto overflow-hidden">
       <h2 className="text-2xl text-center font-bold text-slate-800 mb-6">
@@ -37,9 +37,9 @@ export default function CarouselSimple({ bloc }: CustomCarouselInfo) {
                   height: `${bloc.number_height ?? 150}px`,
                 }}
               >
-                {media.image_image_url && (
+                {media.image_url && (
                   <Image
-                    src={media.image_image_url}
+                    src={media.image_url}
                     alt={media.text_titre || "Image"}
                     fill
                     className="object-cover rounded "

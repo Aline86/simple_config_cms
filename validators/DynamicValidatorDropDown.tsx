@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FieldRenderer } from "./renderer/ValidatorRenderer";
 
 const LABEL_HEADER = {
-  image_image_url: "URL de l'image",
+  image_url: "URL de l'image",
   text_empty: "Fond vide",
   color_background_color: "Choisir une couleur de fond",
 };

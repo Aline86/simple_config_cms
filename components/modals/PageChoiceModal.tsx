@@ -1,86 +1,81 @@
-import PageCrud from "@/app/pageComponent";
+"use client";
+
 import { Modal } from "./Modal";
 import { PageObject, TypeBloc } from "@/model/Page";
 import { CreateBlocOptions, createNewBloc } from "@/lib/factories/Bloc.factory";
 import { useEffect, useState } from "react";
+import PageCrud from "@/app/edition/page/[slug]/pageComponent";
 
-export default function BlocChoiceModal(page: PageObject) {
+export default function BlocChoiceModal({
+  page,
+  addBlocToPage,
+}: {
+  page: PageObject;
+  addBlocToPage(options: CreateBlocOptions): void;
+}) {
   const [open, setOpen] = useState(false);
 
-  const [page_data, setPage] = useState(page);
-  const addBlocToPage = (options: CreateBlocOptions) => {
-    const bloc = createNewBloc(options);
-
-    // Créer une NOUVELLE page avec le bloc ajouté
-    setPage((prevPage) => {
-      const newPage = new PageObject({
-        ...prevPage,
-        blocs: [...prevPage.blocs, bloc], // ← Nouveau array
-      });
-      return newPage;
-    });
-
-    setOpen(false);
+  const baseOptions = {
+    number_page_id: page.number_id ?? -1,
+    bloc_position: page.blocs?.length ?? 0,
   };
 
   const options_carousel_miniature: CreateBlocOptions = {
-    page_id: page.number_id !== null ? page.number_id : -1,
-    bloc_position: page.blocs.length,
-    nom_bloc: "miniatures",
+    ...baseOptions,
+    text_nom_bloc: "miniatures",
     type: TypeBloc.CAROUSEL,
     mediaCount: 4,
   };
   const options_carousel_classique: CreateBlocOptions = {
-    page_id: page.number_id !== null ? page.number_id : -1,
-    bloc_position: page.blocs.length,
-    nom_bloc: "classique",
+    ...baseOptions,
+    text_nom_bloc: "classique",
     type: TypeBloc.CAROUSEL,
     mediaCount: 5,
   };
   const options_carousel_automatique: CreateBlocOptions = {
-    page_id: page.number_id !== null ? page.number_id : -1,
-    bloc_position: page.blocs.length,
-    nom_bloc: "automatique",
+    ...baseOptions,
+    text_nom_bloc: "automatique",
     type: TypeBloc.CAROUSEL,
     mediaCount: 2,
   };
   const options_image_grid: CreateBlocOptions = {
-    page_id: page.number_id !== null ? page.number_id : -1,
-    bloc_position: page.blocs.length,
-    nom_bloc: "grid",
+    ...baseOptions,
+    text_nom_bloc: "grid",
     type: TypeBloc.IMAGE_GROUPE,
-    mediaCount: 2,
+    mediaCount: 4,
   };
   const options_image_group: CreateBlocOptions = {
-    page_id: page.number_id !== null ? page.number_id : -1,
-    bloc_position: page.blocs.length,
-    nom_bloc: "image_group",
+    ...baseOptions,
+    text_nom_bloc: "image_group",
     type: TypeBloc.IMAGE_GROUPE,
-    mediaCount: 2,
+    mediaCount: 4,
   };
   const options_screen: CreateBlocOptions = {
-    page_id: page.number_id !== null ? page.number_id : -1,
-    bloc_position: page.blocs.length,
-    nom_bloc: "screen",
+    ...baseOptions,
+    text_nom_bloc: "screen",
     type: TypeBloc.SCREEN,
     mediaCount: 1,
   };
   const options_video: CreateBlocOptions = {
-    page_id: page.number_id !== null ? page.number_id : -1,
-    bloc_position: page.blocs.length,
-    nom_bloc: "video",
+    ...baseOptions,
+    text_nom_bloc: "video",
     type: TypeBloc.VIDEO,
+    mediaCount: 1,
+  };
+  const options_button: CreateBlocOptions = {
+    ...baseOptions,
+    text_nom_bloc: "bouton",
+    type: TypeBloc.BUTTON,
+    mediaCount: 1,
   };
   const options_texte: CreateBlocOptions = {
-    page_id: page.number_id !== null ? page.number_id : -1,
-    bloc_position: page.blocs.length,
-    nom_bloc: "texte",
+    ...baseOptions,
+    text_nom_bloc: "texte",
     type: TypeBloc.TEXTE,
     articleCount: 1,
     mediaPerArticle: 4,
   };
 
-  useEffect(() => {}, [page_data]);
   return (
     <div className="p-6 space-y-6">
       <div className="p-10">
@@ -149,6 +144,12 @@ export default function BlocChoiceModal(page: PageObject) {
             </button>
             <button
               className="px-4 py-4 rounded bg-slate-600 text-white text-lg hover:bg-slate-700 transition"
+              onClick={() => addBlocToPage(options_button)}
+            >
+              Bouton
+            </button>
+            <button
+              className="px-4 py-4 rounded bg-slate-600 text-white text-lg hover:bg-slate-700 transition"
               onClick={() => addBlocToPage(options_texte)}
             >
               Texte
@@ -156,25 +157,6 @@ export default function BlocChoiceModal(page: PageObject) {
           </div>
         </Modal>
       </div>
-      <PageCrud
-        page_data={page_data}
-        onDelete={function (page: PageObject): void {
-          throw new Error("Function not implemented.");
-        }}
-        onEdit={function (
-          page: PageObject,
-          fieldName: keyof PageObject,
-          newValue: any,
-        ): void {
-          throw new Error("Function not implemented.");
-        }}
-        onDragStart={function (page: PageObject): void {
-          throw new Error("Function not implemented.");
-        }}
-        onDrop={function (page: PageObject): void {
-          throw new Error("Function not implemented.");
-        }}
-      />
     </div>
   );
 }

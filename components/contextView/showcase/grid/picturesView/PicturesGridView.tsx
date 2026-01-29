@@ -1,33 +1,29 @@
-// PicturesGridView.tsx
+// PicturesgridView.tsx
 import React, { useState } from "react";
 import { BlocObject } from "@/model/Bloc";
 import Image from "next/image";
 
-export default function PicturesGridView({
-  imageGroupData,
-}: {
-  imageGroupData: BlocObject;
-}) {
+export default function PicturesgridView({ bloc }: { bloc: BlocObject }) {
   const [activeImage, setActiveImage] = useState<string | null>(null);
 
   return (
     <section className="min-h-screen bg-slate-100 text-center p-8">
       <h2 className="text-2xl font-bold text-slate-800 mb-6">
-        {imageGroupData.text_titre}
+        {bloc.text_titre}
       </h2>
 
       {/* Masonry */}
       <div
         className="masonry-container"
         style={{
-          columnGap: `${imageGroupData.number_gap}px`,
-          ["--max-columns" as any]: imageGroupData.number_columns,
+          columnGap: `${bloc.number_gap}px`,
+          ["--max-columns" as any]: bloc.number_columns,
         }}
       >
-        {imageGroupData.image_medias.map((img, idx) => (
+        {bloc.image_medias.map((img, idx) => (
           <button
             key={idx}
-            onClick={() => setActiveImage(img.image_image_url)}
+            onClick={() => setActiveImage(img.image_url)}
             className="w-full mb-4 overflow-hidden rounded focus:outline-none"
             style={{
               breakInside: "avoid",
@@ -35,10 +31,9 @@ export default function PicturesGridView({
               display: "inline-block",
             }}
           >
-            {img.image_image_url !== undefined &&
-            img.image_image_url !== null ? (
+            {img.image_url !== undefined && img.image_url !== null ? (
               <Image
-                src={img.image_image_url}
+                src={img.image_url}
                 alt={img.text_titre || `img-${idx}`}
                 className="rounded w-full cursor-pointer"
                 width={100}

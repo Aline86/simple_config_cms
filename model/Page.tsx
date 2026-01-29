@@ -1,6 +1,6 @@
 import { immerable } from "immer";
 import { BlocObject } from "./Bloc";
-import { BaseValidatable } from "./VaseValidator";
+import { BaseValidatable } from "./BaseValidator";
 import slugify from "slugify";
 
 // enums/TypeMedia.ts
@@ -22,8 +22,6 @@ export enum TypeBloc {
   VIDEO = "VIDEO",
 }
 
-// classes/MediaObject.ts
-
 export class PageObject extends BaseValidatable {
   [immerable] = true;
 
@@ -34,44 +32,74 @@ export class PageObject extends BaseValidatable {
   public text_slug: string | null;
   public number_page_position: number | null;
   public text_langue: string | null;
-  public number_createdAt: Date | null;
-  public number_updatedAt: Date | null;
+  public text_createdAt: Date | null;
+  public text_updatedAt: Date | null;
   public blocs: BlocObject[];
   public mode: string;
+
   constructor(
     data: {
+      // ✅ Accepter les deux formats
       id?: number | null;
+      number_id?: number | null;
       parent_id?: number | null;
+      number_parent_id?: number | null;
       published?: boolean;
-      titre?: string;
-      slug?: string;
-      page_position?: number;
-      langue?: string;
-      createdAt?: Date;
-      updatedAt?: Date;
+      checkbox_published?: boolean;
+      text_titre?: string | null;
+
+      slug?: string | null;
+      text_slug?: string | null;
+      page_position?: number | null;
+      number_page_position?: number | null;
+      langue?: string | null;
+      text_langue?: string | null;
+      text_createdAt?: Date | string | null;
+
+      text_updatedAt?: Date | string | null;
       blocs?: BlocObject[] | string;
     } = {},
     mode: string = "edition",
   ) {
     super();
-    this.number_id = data.id ?? -1;
-    this.number_parent_id = data.parent_id ?? -1;
-    this.checkbox_published = data.published ?? false;
-    this.text_titre = data.titre ?? null;
-    this.text_slug = data.slug ?? null;
-    this.number_page_position = data.page_position ?? null;
-    this.text_langue = data.langue ?? "fr_FR";
-    this.number_createdAt = data.createdAt ? new Date(data.createdAt) : null;
-    this.number_updatedAt = data.updatedAt ? new Date(data.updatedAt) : null;
+
+    // ✅ Accepter les deux formats (avec ou sans préfixes)
+    this.number_id = data.number_id ?? data.id ?? null;
+    this.number_parent_id = data.number_parent_id ?? data.parent_id ?? null;
+    this.checkbox_published =
+      data.checkbox_published ?? data.published ?? false;
+    this.text_titre = data.text_titre ?? data.text_titre ?? null;
+    this.text_slug = data.text_slug ?? data.slug ?? null;
+    this.number_page_position =
+      data.number_page_position ?? data.page_position ?? 0;
+    this.text_langue = data.text_langue ?? data.langue ?? "fr_FR";
+
+    this.text_createdAt = data.text_createdAt
+      ? new Date(data.text_createdAt)
+      : data.text_createdAt
+        ? new Date(data.text_createdAt)
+        : null;
+
+    this.text_updatedAt = data.text_updatedAt
+      ? new Date(data.text_updatedAt)
+      : data.text_updatedAt
+        ? new Date(data.text_updatedAt)
+        : null;
 
     this.blocs = [];
 
     if (typeof data.blocs === "string") {
       JSON.parse(data.blocs).forEach((b: any) =>
-        this.addBloc(new BlocObject(b)),
+        this.addBloc(new BlocObject(b, mode)),
       );
-    } else {
-      (data.blocs ?? []).forEach((b: any) => this.addBloc(new BlocObject(b)));
+    } else if (Array.isArray(data.blocs)) {
+      data.blocs.forEach((b: any) => {
+        if (b instanceof BlocObject) {
+          this.addBloc(b);
+        } else {
+          this.addBloc(new BlocObject(b, mode));
+        }
+      });
     }
 
     this.mode = mode;
@@ -84,23 +112,28 @@ export class PageObject extends BaseValidatable {
   removeBloc(index: number): void {
     this.blocs.splice(index, 1);
   }
+
   setField<K extends keyof PageObject>(field: K, value: PageObject[K]) {
     (this as any)[field] = value;
     if (field === "text_titre") {
-      this.text_slug = slugify(value as unknown as string);
+      this.text_slug = slugify(value as unknown as string, {
+        lower: true,
+        strict: true,
+      });
     }
   }
+
   toJSON() {
     return {
-      id: this.number_id,
-      parent_id: this.number_parent_id,
-      published: this.checkbox_published,
-      titre: this.text_titre,
-      slug: this.text_slug,
-      page_position: this.number_page_position,
-      langue: this.text_langue,
-      createdAt: this.number_createdAt,
-      updatedAt: this.number_updatedAt,
+      number_id: this.number_id,
+      number_parent_id: this.number_parent_id,
+      checkbox_published: this.checkbox_published,
+      text_titre: this.text_titre,
+      text_slug: this.text_slug,
+      number_page_position: this.number_page_position,
+      text_langue: this.text_langue,
+      text_createdAt: this.text_createdAt,
+      text_updatedAt: this.text_updatedAt,
       blocs: this.blocs.map((b) => b.toJSON()),
     };
   }

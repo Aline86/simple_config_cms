@@ -14,7 +14,7 @@ export function updateObjectBySetter<T>(
 ): UpdateResult<T> {
   const keys = path.split(".");
   let updated = false;
-
+  console.log("keys", obj, keys);
   const result = produce(obj, (draft: any) => {
     let current = draft;
 
@@ -33,7 +33,7 @@ export function updateObjectBySetter<T>(
     }
 
     const lastKey = keys[keys.length - 1];
-    console.log("value", value);
+
     if (current[lastKey] !== value) {
       current[lastKey] = value;
       updated = true;
@@ -276,19 +276,19 @@ function convertTiptapToHTML(nodes: JSONContent): string {
   return html;
 }
 
-export const output = (text_text_article: Record<string, any>) => {
-  if (text_text_article !== undefined) {
+export const output = (text_article: Record<string, any>) => {
+  if (text_article !== undefined) {
     const html: string[] = [];
 
     if (
-      text_text_article !== undefined &&
-      text_text_article !== null &&
-      text_text_article.content !== undefined &&
-      text_text_article.content !== null &&
-      Array.isArray(text_text_article.content) &&
-      text_text_article.content.length > 0
+      text_article !== undefined &&
+      text_article !== null &&
+      text_article.content !== undefined &&
+      text_article.content !== null &&
+      Array.isArray(text_article.content) &&
+      text_article.content.length > 0
     ) {
-      text_text_article.content.map((value: object) => {
+      text_article.content.map((value: object) => {
         html.push(convertTiptapToHTML(value));
       });
       const safeHtmlArray = html.map((item) => DOMPurify.sanitize(item));
@@ -297,7 +297,7 @@ export const output = (text_text_article: Record<string, any>) => {
   }
 };
 // Déterminer les classes de grille en fonction du nombre de colonnes
-export const getGridClasses = (columns: number | null) => {
+export const getgridClasses = (columns: number | null) => {
   switch (columns) {
     case 1:
       return "grid-cols-1";

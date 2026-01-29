@@ -3,13 +3,14 @@
 import { BlocObject } from "@/model/Bloc";
 import { MediaObject } from "@/model/bloc/MediaObject";
 import { FieldRenderer } from "@/validators/renderer/TextRenderer";
-import { PictureEditor } from "../../edition/grid/picturesLink/PictureEditor";
+
 import { Tiptap } from "./TipTapEditor";
 import { PlusIcon } from "lucide-react";
 import { useState } from "react";
+import { PictureEditor } from "../grid/image_grid/PictureEditor";
 
 interface TextEditorProps {
-  text: BlocObject;
+  bloc: BlocObject;
   onChange: (fieldName: string, newValue: any) => void;
   addElement: () => void;
   removeElement: (media: MediaObject) => void;
@@ -19,7 +20,7 @@ interface TextEditorProps {
 }
 
 export default function TextEditor({
-  text,
+  bloc,
   onChange,
   addElement,
   removeElement,
@@ -29,7 +30,7 @@ export default function TextEditor({
 }: TextEditorProps) {
   // Vérification de sécurité
 
-  const hasArticles = text?.articles?.[0];
+  const hasArticles = bloc?.articles?.[0];
   const images = hasArticles?.images || [];
   const [selectedValidatorKey, setSelectedValidatorKey] = useState<string>(
     hasArticles?.text_images_position,
@@ -74,9 +75,9 @@ export default function TextEditor({
         {/* Configuration Fields */}
         <div className="space-y-4 mb-6">
           <FieldRenderer
-            label="Titre du bloc d'images avec lien de redirection"
+            label="text_titre du bloc d'images avec lien de redirection"
             fieldName="text_titre"
-            model={text as Record<string, any>}
+            model={bloc as Record<string, any>}
             setField={onChange}
           />
 
@@ -116,19 +117,19 @@ export default function TextEditor({
               <FieldRenderer
                 label="Nombre de colonnes par ligne"
                 fieldName="number_columns"
-                model={text as Record<string, any>}
+                model={bloc as Record<string, any>}
                 setField={onChange}
               />
             </>
           )}
         </div>
 
-        {/* Images Grid */}
+        {/* Images grid */}
         {images.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             {images.map((media) => (
               <PictureEditor
-                key={(media as MediaObject).number_id}
+                key={(media as MediaObject).id}
                 media={media as MediaObject}
                 onChange={onChange}
                 removeElement={removeElement}
@@ -152,7 +153,7 @@ export default function TextEditor({
             <h3 className="mb-3 text-sm font-semibold text-slate-700 dark:text-slate-300">
               Contenu de l'article
             </h3>
-            <Tiptap bloc={text.articles[0]} updateComponent={onChange} />
+            <Tiptap bloc={bloc.articles[0]} updateComponent={onChange} />
           </div>
         )}
       </section>
@@ -165,7 +166,7 @@ export default function TextEditor({
             Debug - Props reçues
           </h3>
           <pre className="overflow-auto text-xs text-amber-800 dark:text-amber-200">
-            {JSON.stringify(text, null, 2)}
+            {JSON.stringify(bloc, null, 2)}
           </pre>
         </aside>
       )}

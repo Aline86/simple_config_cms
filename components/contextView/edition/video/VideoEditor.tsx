@@ -77,15 +77,13 @@ export function VideoEditor<T>({ ...props }: VideoEditorProps<T>) {
                     vidéo n° {Number(props.media.number_position_image) + 1}
                   </p>
                 </div>
-
-             
               </div>
 
               <div className="space-y-6">
                 {props.isLink && (
                   <>
                     <FieldRenderer
-                      label="Titre de la vidéo"
+                      label="text_titre de la vidéo"
                       fieldName={
                         context_medias +
                         `${(props.media as MediaObject).number_position_image}.text_titre`
@@ -108,7 +106,7 @@ export function VideoEditor<T>({ ...props }: VideoEditorProps<T>) {
                   label="Image associée à la vidéo"
                   fieldName={
                     context_medias +
-                    `${(props.media as MediaObject).number_position_image}.image_image_url`
+                    `${(props.media as MediaObject).number_position_image}.image_url`
                   }
                   model={props.media as Record<string, any>}
                   setField={props.onChange}

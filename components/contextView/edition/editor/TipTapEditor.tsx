@@ -22,7 +22,7 @@ export const Tiptap = ({ bloc, updateComponent }: TiptapProps) => {
     content: getInitialContent(),
     onCreate: ({ editor }) => handleEditorUpdate(editor),
     onUpdate: ({ editor }) =>
-      updateComponent("articles.0.text_text_article", editor.getJSON()),
+      updateComponent("articles.0.text_article", editor.getJSON()),
     extensions: getEditorExtensions(),
   });
 

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 export function useClickInside<T extends HTMLElement>(
   ref: React.RefObject<T>,
-  handlerClickInside: (event: MouseEvent) => void
+  handlerClickInside: (event: MouseEvent) => void,
 ) {
   useEffect(() => {
     function listener(event: MouseEvent) {

@@ -29,9 +29,9 @@ export type FieldRendererProps<T extends Record<string, any>> = {
 };
 
 // --------------------
-// VALIDATOR MAP
+// VALidATOR MAP
 // --------------------
-export const VALIDATOR_MAP: Record<FieldPrefix, any> = {
+export const VALidATOR_MAP: Record<FieldPrefix, any> = {
   text: TextValidator,
   color: TextValidator,
   image: CloudinaryValidator,
@@ -53,7 +53,7 @@ const createValidator = (
   value: unknown,
 ): ValidatorInstance => {
   const prefix = extractPrefix(fieldName);
-  const ValidatorClass = VALIDATOR_MAP[prefix];
+  const ValidatorClass = VALidATOR_MAP[prefix];
   const config = FIELD_CONFIGS[fieldName];
 
   let safeValue: unknown;

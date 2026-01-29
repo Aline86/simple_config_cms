@@ -41,9 +41,9 @@ export const SocialMediaModal = <T,>({
                 <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border border-slate-200 overflow-hidden group">
                   {/* Image */}
                   <div className="relative h-48 bg-gradient-to-br from-slate-300 to-slate-400 overflow-hidden">
-                    {(reseau as MediaObject)?.image_image_url !== null ? (
+                    {(reseau as MediaObject)?.image_url !== null ? (
                       <img
-                        src={(reseau as MediaObject).image_image_url}
+                        src={(reseau as MediaObject).image_url}
                         alt="Item preview"
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
@@ -83,7 +83,7 @@ export const SocialMediaModal = <T,>({
           {socialMedia.map((reseau) => {
             return (
               <MediaEditor
-                key={(reseau as MediaObject).number_id}
+                key={(reseau as MediaObject).id}
                 socialMedia={reseau as MediaObject}
                 onChange={onChange}
                 removeElement={removeElement}

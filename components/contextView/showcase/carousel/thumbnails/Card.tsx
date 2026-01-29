@@ -36,7 +36,7 @@ export default function Card({
         ref={cardRef}
         data-value={index}
         style={{
-          backgroundImage: `url(${color.image_image_url})`,
+          backgroundImage: `url(${color.image_url})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",

@@ -8,32 +8,35 @@ import { BlocObject } from "@/model/Bloc";
 
 type CardDatas = {
   options?: EmblaOptionsType;
-  slides: BlocObject;
+  bloc: BlocObject;
 };
 
 const CarouselAutoView: React.FC<CardDatas> = ({
-  slides,
+  bloc,
 
   options,
 }: CardDatas) => {
   const [emblaRef] = useEmblaCarousel(options, [Autoplay()]);
-
-  return slides !== undefined ? (
-    <section className={"embla w-full flex flex-row justify-start p-1"}>
+  console.log("bloc 2", bloc);
+  return bloc !== undefined ? (
+    <section className="embla">
+      <h2 className="text-2xl text-center font-bold text-slate-800">
+        {bloc.text_titre}
+      </h2>
       <div className="embla__viewport w-full" ref={emblaRef}>
         <div className="embla__container w-full">
-          {slides.image_medias.map((item, idx) => (
+          {bloc.image_medias.map((item, idx) => (
             <div className="embla__slide" key={String(idx)}>
               <div className="embla__slide__number">
                 <div
                   key={String(idx)}
                   className="relative block m-1 w-full h-full "
-                  style={{ height: slides.number_height + "px" }}
+                  style={{ height: bloc.number_height + "px" }}
                 >
-                  {item.image_image_url !== null && (
+                  {item.image_url !== null && (
                     <Image
                       className="rounded overflow-hidden object-cover"
-                      src={item.image_image_url}
+                      src={item.image_url}
                       fill={true}
                       alt="Image"
                     />

@@ -1,13 +1,13 @@
 import { HeaderObject } from "@/model/bloc/Header";
 import { MediaObject } from "@/model/bloc/MediaObject";
-
+import { nanoid } from "nanoid";
 export function cloneHeaderWithReseaux(
   prev: HeaderObject,
   updatedReseaux: MediaObject[],
 ) {
   return new HeaderObject({
-    id: prev.number_id ?? undefined,
-    bloc_id: prev.number_bloc_id ?? undefined,
+    id: prev.id ?? undefined,
+
     nom_site: prev.text_nom_site ?? undefined,
     favicon: prev.image_favicon ?? undefined,
     logo: prev.image_logo ?? undefined,
@@ -19,8 +19,8 @@ export function cloneHeaderWithReseaux(
 
 export function cloneHeaderWithReseau(prev: HeaderObject, reseau: MediaObject) {
   return new HeaderObject({
-    id: prev.number_id ?? undefined,
-    bloc_id: prev.number_bloc_id ?? undefined,
+    id: prev.id ?? undefined,
+    bloc_id: prev.text_bloc_id ?? undefined,
     nom_site: prev.text_nom_site ?? undefined,
     favicon: prev.image_favicon ?? undefined,
     logo: prev.image_logo ?? undefined,
@@ -35,38 +35,38 @@ export function mockHeader(idBloc: string) {
 
     nom_site: "test nom site",
     favicon: new MediaObject({
-      id: crypto.randomUUID(),
+      id: nanoid(),
       bloc_id: idBloc,
-      titre: "paysage",
+      text_titre: "paysage",
       image_lien: "#",
       image_url:
         "https://res.cloudinary.com/demo/image/upload/w_400,h_300,c_fill/kitten.jpg",
     }),
     logo: new MediaObject({
-      id: crypto.randomUUID(),
+      id: nanoid(),
       bloc_id: idBloc,
-      titre: "paysage",
+      text_titre: "paysage",
       image_lien: "#",
       image_url:
         "https://res.cloudinary.com/demo/image/upload/w_400,h_300,c_fill/kitten.jpg",
     }),
-    description: "",
+    text_description: "",
     reseaux: [
       new MediaObject({
-        id: crypto.randomUUID(),
+        id: nanoid(),
         bloc_id: idBloc,
-        titre: "paysage",
+        text_titre: "paysage",
         image_lien: "#",
-        position_image: 0,
+        number_position_image: 0,
         image_url:
           "https://res.cloudinary.com/demo/image/upload/w_400,h_300,c_fill/kitten.jpg",
       }),
       new MediaObject({
-        id: crypto.randomUUID(),
+        id: nanoid(),
         bloc_id: idBloc,
-        titre: "paysage",
+        text_titre: "paysage",
         image_lien: "#",
-        position_image: 1,
+        number_position_image: 1,
         image_url:
           "https://res.cloudinary.com/demo/image/upload/w_400,h_300,c_fill/kitten.jpg",
       }),
