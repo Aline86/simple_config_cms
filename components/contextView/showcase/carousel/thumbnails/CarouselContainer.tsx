@@ -173,7 +173,7 @@ export default function CarouselContainer({
         <div
           style={{
             overflow: "hidden",
-            width: `${width * 3 + gap * 2}px`,
+            width: `${width * 5 + gap * 2}px`,
             height: `${height}px`,
             position: "relative",
           }}

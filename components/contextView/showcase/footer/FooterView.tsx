@@ -40,7 +40,7 @@ export default function FooterView({ footer }: MediaViewProps) {
           <div className="pt-8 border-t border-gray-800">
             <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
               <div className="flex space-x-4">
-                {footer.image_reseaux.map((social) => {
+                {footer.reseaux.map((social) => {
                   return (
                     <a
                       key={social.id}

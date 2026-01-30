@@ -7,12 +7,12 @@ export default function SocialTab({ network }: { network: MediaObject }) {
 
   return (
     <div
-      className="relative mb-2 flex flex-col gap-2"
+      className="relative  mb-2 flex flex-col gap-2"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <div
-        className={`relative flex items-center transition-transform duration-700 ease-in-out ${
+        className={`relative  flex items-center transition-transform duration-700 ease-in-out ${
           isHovered ? "translate-x-0" : "translate-x-[150px]"
         }`}
       >

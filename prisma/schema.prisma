@@ -26,6 +26,7 @@ model Page {
   number_parent_id      Int?
   checkbox_published    Boolean  @default(false)
   text_titre            String   @db.VarChar(150)
+  text_description      String?   @db.VarChar(255)
   text_slug             String   @unique @db.VarChar(150)
   number_page_position  Int
   text_langue           String   @db.VarChar(10)
@@ -33,9 +34,8 @@ model Page {
   text_createdAt        DateTime @default(now())
   text_updatedAt        DateTime @updatedAt
   
-  // Relations
-  footer   Footer?
-  header   Header?
+
+
   parent   Page?   @relation("PageHierarchy", fields: [number_parent_id], references: [number_id], onDelete: Cascade)
   children Page[]  @relation("PageHierarchy")
 
@@ -46,12 +46,10 @@ model Page {
 
 model Header {
   number_id              Int      @id @default(autoincrement())
-  number_page_id         Int      @unique
   text_nom_site          String?  @db.VarChar(100)
   text_background_url    String?  @db.Text
   
   // Relations
-  page    Page    @relation(fields: [number_page_id], references: [number_id], onDelete: Cascade)
   favicon Media?  @relation("HeaderFavicon")
   logo    Media?  @relation("HeaderLogo")
   reseaux Media[] @relation("HeaderReseaux")
@@ -61,14 +59,12 @@ model Header {
 
 model Footer {
   number_id                 Int      @id @default(autoincrement())
-  number_page_id            Int      @unique
   color_background_color    String?  @db.VarChar(20)
   text_nom_site_adresse     String?  @db.VarChar(100)
   text_adresse_footer       String?  @db.VarChar(255)
   text_code_postal          String?  @db.VarChar(20)
   
   // Relations
-  page    Page    @relation(fields: [number_page_id], references: [number_id], onDelete: Cascade)
   reseaux Media[] @relation("FooterReseaux")
 
   @@map("footers")

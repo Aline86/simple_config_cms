@@ -29,6 +29,7 @@ export class PageObject extends BaseValidatable {
   public number_parent_id: number | null;
   public checkbox_published: boolean;
   public text_titre: string | null;
+  public text_description: string | null;
   public text_slug: string | null;
   public number_page_position: number | null;
   public text_langue: string | null;
@@ -39,7 +40,6 @@ export class PageObject extends BaseValidatable {
 
   constructor(
     data: {
-      // ✅ Accepter les deux formats
       id?: number | null;
       number_id?: number | null;
       parent_id?: number | null;
@@ -47,7 +47,7 @@ export class PageObject extends BaseValidatable {
       published?: boolean;
       checkbox_published?: boolean;
       text_titre?: string | null;
-
+      text_description?: string | null;
       slug?: string | null;
       text_slug?: string | null;
       page_position?: number | null;
@@ -73,7 +73,7 @@ export class PageObject extends BaseValidatable {
     this.number_page_position =
       data.number_page_position ?? data.page_position ?? 0;
     this.text_langue = data.text_langue ?? data.langue ?? "fr_FR";
-
+    this.text_description = data.text_description ?? "";
     this.text_createdAt = data.text_createdAt
       ? new Date(data.text_createdAt)
       : data.text_createdAt

@@ -11,15 +11,13 @@ interface TiptapProps {
 }
 
 export const Tiptap = ({ bloc, updateComponent }: TiptapProps) => {
-  const { handleEditorUpdate, getInitialContent } = useEditorContent(
-    bloc,
-    updateComponent,
-  );
+  const { handleEditorUpdate } = useEditorContent(bloc, updateComponent);
 
   const editor = useEditor({
     immediatelyRender: false,
+
     editable: true,
-    content: getInitialContent(),
+    content: bloc.text_article,
     onCreate: ({ editor }) => handleEditorUpdate(editor),
     onUpdate: ({ editor }) =>
       updateComponent("articles.0.text_article", editor.getJSON()),

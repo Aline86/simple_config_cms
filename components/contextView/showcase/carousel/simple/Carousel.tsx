@@ -20,7 +20,7 @@ export default function CarouselSimple({ bloc }: CustomCarouselInfo) {
   if (!bloc?.image_medias?.length) return null;
   console.log("bloc111", bloc);
   return (
-    <div className="relative  flex-col justify-center align-center m-auto overflow-hidden">
+    <div className="relative w-full flex-col justify-center align-center m-auto overflow-hidden">
       <h2 className="text-2xl text-center font-bold text-slate-800 mb-6">
         {bloc.text_titre}
       </h2>

@@ -14,7 +14,7 @@ export class FooterObject extends BaseValidatable {
   public text_code_postal: string | null;
 
   // Relation
-  public image_reseaux: MediaObject[];
+  public reseaux: MediaObject[];
 
   constructor(
     data: {
@@ -36,17 +36,17 @@ export class FooterObject extends BaseValidatable {
     this.text_code_postal = data.code_postal ?? null;
 
     // Réhydrater les réseaux sociaux
-    this.image_reseaux = (data.reseaux ?? []).map((r: any) =>
+    this.reseaux = (data.reseaux ?? []).map((r: any) =>
       r instanceof MediaObject ? r : new MediaObject(r),
     );
   }
 
   addReseau(media: MediaObject): void {
-    this.image_reseaux.push(media);
+    this.reseaux.push(media);
   }
 
   removeReseau(index: number): void {
-    this.image_reseaux.splice(index, 1);
+    this.reseaux.splice(index, 1);
   }
 
   toJSON() {
@@ -57,7 +57,7 @@ export class FooterObject extends BaseValidatable {
       nom_site_adresse: this.text_nom_site_adresse,
       adresse_footer: this.text_adresse_footer,
       code_postal: this.text_code_postal,
-      reseaux: this.image_reseaux.map((r) => r.toJSON()),
+      reseaux: this.reseaux.map((r) => r.toJSON()),
     };
   }
 }

@@ -7,7 +7,7 @@ export default function PicturesgridView({ bloc }: { bloc: BlocObject }) {
   const [activeImage, setActiveImage] = useState<string | null>(null);
 
   return (
-    <section className="min-h-screen bg-slate-100 text-center p-8">
+    <section className="min-h-screen text-center p-8">
       <h2 className="text-2xl font-bold text-slate-800 mb-6">
         {bloc.text_titre}
       </h2>

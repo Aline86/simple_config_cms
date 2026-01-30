@@ -62,7 +62,7 @@ export default function FooterEdit<T>({
             label={"Code postal et Ville"}
           />
           <SocialMediaModal
-            socialMedia={footer.image_reseaux as MediaObject[]}
+            socialMedia={footer.reseaux as MediaObject[]}
             onChange={onChange}
             addElement={addElement}
             removeElement={removeElement}

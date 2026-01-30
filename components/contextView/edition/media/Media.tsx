@@ -47,19 +47,19 @@ export function MediaEditor<T>({ ...props }: MediaEditorProps<T>) {
         <div className="space-y-6">
           <FieldRenderer
             label="Nom du réseau social"
-            fieldName={`image_reseaux.${(props.socialMedia as MediaObject).number_position_image}.text_titre`}
+            fieldName={`reseaux.${(props.socialMedia as MediaObject).number_position_image}.text_titre`}
             model={props.socialMedia as Record<string, any>}
             setField={props.onChange}
           />
           <FieldRenderer
             label="Lien du réseau social"
-            fieldName={`image_reseaux.${(props.socialMedia as MediaObject).number_position_image}.text_image_lien`}
+            fieldName={`reseaux.${(props.socialMedia as MediaObject).number_position_image}.text_image_lien`}
             model={props.socialMedia as Record<string, any>}
             setField={props.onChange}
           />
           <FieldRenderer
             label="Image associée au réseau social"
-            fieldName={`image_reseaux.${(props.socialMedia as MediaObject).number_position_image}.image_url`}
+            fieldName={`reseaux.${(props.socialMedia as MediaObject).number_position_image}.image_url`}
             model={props.socialMedia as Record<string, any>}
             setField={props.onChange}
           />

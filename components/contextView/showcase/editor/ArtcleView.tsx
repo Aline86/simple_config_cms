@@ -21,24 +21,22 @@ function ArticleView({ bloc }: BlocParams) {
     console.log("html", html);
   }, [html]);
   return (
-    <div className="">
-      <div className="">
-        <Suspense fallback={<div>Chargement...</div>}>
-          {html !== undefined &&
-            typeof html === "object" &&
-            Array.isArray(html) &&
-            html.length > 0 &&
-            html.map((out, index) => {
-              return (
-                <div
-                  key={index}
-                  className="tiptap none"
-                  dangerouslySetInnerHTML={{ __html: out }}
-                />
-              );
-            })}
-        </Suspense>
-      </div>
+    <div className="min-w-sm">
+      <Suspense fallback={<div>Chargement...</div>}>
+        {html !== undefined &&
+          typeof html === "object" &&
+          Array.isArray(html) &&
+          html.length > 0 &&
+          html.map((out, index) => {
+            return (
+              <div
+                key={index}
+                className="tiptap none"
+                dangerouslySetInnerHTML={{ __html: out }}
+              />
+            );
+          })}
+      </Suspense>
     </div>
   );
 }

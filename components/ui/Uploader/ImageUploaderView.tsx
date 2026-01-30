@@ -184,7 +184,10 @@ function PreviewSection({
       </div>
 
       <div className="preview-grid">
-        {value !== undefined && value !== null && value !== "" ? (
+        {value !== undefined &&
+        value !== null &&
+        value !== "" &&
+        !value.includes("#") ? (
           <div className="image-wrapper">
             <Image src={value} alt="preview" fill className="preview-image" />
           </div>

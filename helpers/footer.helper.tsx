@@ -24,7 +24,7 @@ export function cloneFooterWithReseau(prev: FooterObject, reseau: MediaObject) {
     adresse_footer: prev.text_adresse_footer ?? undefined,
     code_postal: prev.text_code_postal ?? undefined,
 
-    reseaux: [...prev.image_reseaux, reseau],
+    reseaux: [...prev.reseaux, reseau],
   });
 }
 
@@ -38,18 +38,18 @@ export function mockFooter(idBloc: string) {
     reseaux: [
       new MediaObject({
         id: nanoid(),
-        bloc_id: idBloc,
+
         text_titre: "paysage",
-        image_lien: "#",
+        text_image_lien: "#",
         number_position_image: 0,
         image_url:
           "https://res.cloudinary.com/demo/image/upload/w_400,h_300,c_fill/kitten.jpg",
       }),
       new MediaObject({
         id: nanoid(),
-        bloc_id: idBloc,
+
         text_titre: "paysage",
-        image_lien: "#",
+        text_image_lien: "#",
         number_position_image: 1,
         image_url:
           "https://res.cloudinary.com/demo/image/upload/w_400,h_300,c_fill/kitten.jpg",

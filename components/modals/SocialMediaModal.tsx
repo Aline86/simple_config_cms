@@ -33,10 +33,7 @@ export const SocialMediaModal = <T,>({
 
         {socialMedia.map((reseau, id) => {
           return (
-            <div
-              key={id}
-              className="bg-slate-100 flex items-center justify-center p-8"
-            >
+            <div key={id} className=" flex items-center justify-center p-8">
               <div className="w-full max-w-md">
                 <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border border-slate-200 overflow-hidden group">
                   {/* Image */}

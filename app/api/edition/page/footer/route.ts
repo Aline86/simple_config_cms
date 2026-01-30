@@ -1,13 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma/prisma";
 import { PageObject } from "@/model/Page";
-import { BlocObject } from "@/model/Bloc";
-import {
-  cloneBlocWithArticles,
-  cloneBlocWithArticlesAndMedia,
-} from "@/helpers/bloc.helper";
-import { ArticleObject } from "@/model/bloc/Article";
-import { MediaObject } from "@/model/bloc/MediaObject";
 
 export async function GET(request: NextRequest) {
   try {
@@ -71,7 +64,6 @@ export async function PUT(request: NextRequest) {
     const rawPage = body.data;
     const w = JSON.stringify(rawPage.blocs);
     rawPage.blocs = w;
-
     const page = new PageObject(rawPage);
 
     if (!page.validateAll()) {

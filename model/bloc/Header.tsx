@@ -7,75 +7,77 @@ export class HeaderObject extends BaseValidatable {
 
   // Aligné sur Prisma Header: id, number_page_id, nom_site, background_url
   public number_id: number | null;
-  public number_page_id: number | null;
+
   public text_nom_site: string | null;
   public text_background_url: string | null;
 
   // Relations
   public image_logo: MediaObject | null;
   public image_favicon: MediaObject | null;
-  public image_reseaux: MediaObject[];
-
+  public reseaux: MediaObject[];
+  public mode: string;
   constructor(
     data: {
-      id?: number | null;
-      number_page_id?: number | null;
-      nom_site?: string | null;
-      background_url?: string | null;
-      logo?: MediaObject | any;
-      favicon?: MediaObject | any;
+      number_id?: number | null;
+
+      text_nom_site?: string | null;
+      text_background_url?: string | null;
+      image_logo?: MediaObject | any;
+      image_favicon?: MediaObject | any;
       reseaux?: MediaObject[] | any[];
     } = {},
+    mode: string,
   ) {
     super();
-    this.number_id = data.id ?? null;
-    this.number_page_id = data.number_page_id ?? null;
-    this.text_nom_site = data.nom_site ?? null;
-    this.text_background_url = data.background_url ?? null;
-
+    this.number_id = data.number_id ?? null;
+    this.text_nom_site = data.text_nom_site ?? null;
+    this.text_background_url = data.text_background_url ?? null;
+    this.mode = mode ?? "edition";
     // Réhydrater le logo
-    if (data.logo) {
+    if (data.image_logo) {
       this.image_logo =
-        data.logo instanceof MediaObject
-          ? data.logo
-          : new MediaObject(data.logo);
+        data.image_logo instanceof MediaObject
+          ? data.image_logo
+          : new MediaObject(data.image_logo);
     } else {
-      this.image_logo = null;
+      this.image_logo = new MediaObject({
+        text_bloc_id: data.number_id as number,
+      });
     }
 
     // Réhydrater le favicon
-    if (data.favicon) {
+    if (data.image_favicon) {
       this.image_favicon =
-        data.favicon instanceof MediaObject
-          ? data.favicon
-          : new MediaObject(data.favicon);
+        data.image_favicon instanceof MediaObject
+          ? data.image_favicon
+          : new MediaObject(data.image_favicon);
     } else {
-      this.image_favicon = null;
+      this.image_favicon = new MediaObject({
+        text_bloc_id: data.number_id as number,
+      });
     }
 
     // Réhydrater les réseaux sociaux
-    this.image_reseaux = (data.reseaux ?? []).map((r: any) =>
-      r instanceof MediaObject ? r : new MediaObject(r),
-    );
+    this.reseaux = (data.reseaux ?? []).map((r: any) => new MediaObject(r));
   }
 
   addReseau(media: MediaObject): void {
-    this.image_reseaux.push(media);
+    this.reseaux.push(media);
   }
 
   removeReseau(index: number): void {
-    this.image_reseaux.splice(index, 1);
+    this.reseaux.splice(index, 1);
   }
 
   toJSON() {
     return {
       id: this.number_id,
-      number_page_id: this.number_page_id,
+
       nom_site: this.text_nom_site,
       background_url: this.text_background_url,
       logo: this.image_logo?.toJSON() ?? null,
       favicon: this.image_favicon?.toJSON() ?? null,
-      reseaux: this.image_reseaux.map((r) => r.toJSON()),
+      reseaux: this.reseaux.map((r) => r.toJSON()),
     };
   }
 }

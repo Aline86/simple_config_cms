@@ -7,8 +7,8 @@ export class MediaObject extends BaseValidatable {
 
   // Aligné sur Prisma Media: id, text_titre, couleur_bg, image_lien, number_position_image, image_url
   // Autoincrement en BDD
-  public id: string | null; // id temporaire côté client
-  public text_bloc_id: string | null; // Pour les médias dans les blocs JSON
+  public id: string | number | null; // id temporaire côté client
+  public text_bloc_id: string | null | number; // Pour les médias dans les blocs JSON
   public text_titre: string | null;
   public color_couleur_bg: string | null;
   public text_image_lien: string | null;
@@ -17,8 +17,8 @@ export class MediaObject extends BaseValidatable {
 
   constructor(
     data: {
-      id?: string | null;
-      text_bloc_id?: string | null;
+      id?: string | number | null;
+      text_bloc_id?: string | null | number;
       text_titre?: string | null;
       color_couleur_bg?: string | null;
       text_image_lien?: string | null;

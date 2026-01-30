@@ -65,7 +65,7 @@ export const pictureGroupToRender: SubGroupRenderType = {
 };
 export const blocksFrontToRender: FrontRenderType = {
   CAROUSEL: {
-    automatic: CarouselAutoView,
+    automatique: CarouselAutoView,
     miniatures: CarouselThumbnailsView,
     classique: CarouselSimple,
   },

@@ -10,6 +10,8 @@ export function createNewPage(
       parent_id: null, // toujours null à la création
       published: false, // page non publiée par défaut
       text_titre: "", // text_titre vide
+      text_description: "", // text_titre vide
+
       slug: "", // text_titre vide
       number_page_position: number_page_position,
       langue: langue ?? "fr_FR", // langue par défaut "fr"

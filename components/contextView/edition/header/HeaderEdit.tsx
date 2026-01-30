@@ -23,7 +23,8 @@ export default function HeaderEdit<T>({
   addElement,
   removeElement,
 }: MediaEditorProps<T>) {
-  const debug = false;
+  const debug = true;
+
   return (
     <div className="mx-auto max-w-2xl space-y-6 p-6">
       <div className="space-y-2">
@@ -84,7 +85,7 @@ export default function HeaderEdit<T>({
             onChange={onChange}
           />
           <SocialMediaModal
-            socialMedia={header.image_reseaux as T[]}
+            socialMedia={header.reseaux as T[]}
             onChange={onChange}
             addElement={addElement}
             removeElement={removeElement}

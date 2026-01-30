@@ -22,6 +22,7 @@ export async function GET() {
         parent_id: dbPage.number_parent_id, // ✅ Changé de parent_id
         published: dbPage.checkbox_published, // ✅ Changé de published
         text_titre: dbPage.text_titre, // ✅ Changé de text_titre
+        text_description: dbPage.text_description ?? "", // ✅ Changé de text_titre
         slug: dbPage.text_slug, // ✅ Changé de slug
         number_page_position: dbPage.number_page_position, // ✅ Changé de number_page_position
         langue: dbPage.text_langue, // ✅ Changé de langue

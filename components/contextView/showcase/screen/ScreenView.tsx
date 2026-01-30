@@ -31,14 +31,14 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
       <span className="absolute bg-black/20 inset-0"></span>
     </div>
   ) : (
-    <div className={"relative h-[100vh] bottom-[5px]"}>
+    <div className={"relative z-10 h-[100vh] bottom-[5px]"}>
       <Image
         className={"absolute h-full z-0 object-cover "}
         src={bloc.image_medias[0].image_url}
         fill
         alt={bloc.text_titre}
       />
-      <div className="h-full  left-[10%] z-10 title text-white flex flex-col justify-end p-24">
+      <div className="h-full  left-[10%] z-10 title text-white flex flex-col justify-end p-24 ">
         <h1 className="relative z-10">{bloc.text_titre}</h1>
         <h2 className="relative z-10 ">{bloc.text_description}</h2>
       </div>

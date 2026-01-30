@@ -37,7 +37,7 @@ export default function FooterContextEdition() {
     setFooter((prev) => {
       if (!prev) return prev;
       const res = deleteItemAndReorder(
-        prev.image_reseaux,
+        prev.reseaux,
         model,
         "number_position_image",
       );
@@ -52,7 +52,7 @@ export default function FooterContextEdition() {
   const handleAdd = () => {
     setFooter((prev) => {
       if (!prev) return prev;
-      const newMedia = createMedia(prev.image_reseaux.length, prev.id);
+      const newMedia = createMedia(prev.reseaux.length, prev.id);
       const updatedFooter = cloneFooterWithReseau(prev, newMedia);
 
       return updatedFooter;

@@ -1,4 +1,4 @@
-import getPageBySlug from "./callPages";
+import { getPageBySlug, getPageHeader } from "./callPages";
 import PageClient from "./PageClient";
 
 interface PageProps {
@@ -9,10 +9,15 @@ export default async function Page({ params }: PageProps) {
   const { slug } = await params;
 
   const page = await getPageBySlug(slug);
-  console.log("pge", page);
+
   if (!page) {
     return <div>Page non trouvée</div>;
   }
+  const header = await getPageHeader();
+  console.log("pge", page);
 
-  return <PageClient initialpage={page} />;
+  if (!header) {
+    return <div>PB lors du chargement du header</div>;
+  }
+  return <PageClient initialpage={page} header={header} />;
 }

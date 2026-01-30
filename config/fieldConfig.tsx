@@ -133,7 +133,7 @@ const FIELD_CONFIGS: Record<string, FieldParameter> = {
     },
   }),
   text_description: new TextParameter({
-    maxLength: 500,
+    maxLength: 255,
     required: false,
     trim: true,
     multiline: 3,

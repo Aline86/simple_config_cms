@@ -32,7 +32,7 @@ export function MediaPreview({ media, isLink }: MediaPreviewProps) {
 
       <Card className="overflow-hidden">
         {/* Image */}
-        <div className="relative aspect-video bg-slate-100 dark:bg-slate-800">
+        <div className="relative aspect-video  dark:bg-slate-800">
           {hasImage ? (
             <div className="flex h-full items-center justify-center text-sm text-slate-500">
               {media.image_url}

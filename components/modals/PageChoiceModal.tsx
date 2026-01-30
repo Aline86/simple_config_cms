@@ -24,7 +24,7 @@ export default function BlocChoiceModal({
     ...baseOptions,
     text_nom_bloc: "miniatures",
     type: TypeBloc.CAROUSEL,
-    mediaCount: 4,
+    mediaCount: 5,
   };
   const options_carousel_classique: CreateBlocOptions = {
     ...baseOptions,

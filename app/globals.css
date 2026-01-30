@@ -1,6 +1,16 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-
+.bg-white {
+  background-color: white;
+}
+.bg-slate-50 {
+  background-color: #f3f4f6;
+}
+h2,
+select,
+option {
+  color: rgb(20, 20, 20);
+}
 :root {
   color-scheme: light;
   --dark: #171717;

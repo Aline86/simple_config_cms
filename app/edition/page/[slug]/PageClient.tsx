@@ -11,16 +11,22 @@ import { cloneBlocWithMedias } from "@/helpers/bloc.helper";
 import { clonePageWithBlocs } from "@/helpers/page.helper";
 import BlocChoiceModal from "@/components/modals/PageChoiceModal";
 import { CreateBlocOptions, createNewBloc } from "@/lib/factories/Bloc.factory";
+import { HeaderObject } from "@/model/bloc/Header";
+import HeaderView from "@/components/contextView/showcase/header/HeaderView";
+import HeaderContextEdition from "@/components/contextView/edition/header/HeaderContextEdition";
 
 export default function PageClient({
   initialpage,
+  header,
 }: {
   initialpage: PageObject;
+  header: HeaderObject;
 }) {
   const [page, setPage] = useState(new PageObject(initialpage));
+  const [headerData, setHeader] = useState(new HeaderObject(header));
   const [dragged, setDragged] = useState<BlocObject | null>(null);
   const [draggableEnabled, setDraggableEnabled] = useState(false);
-
+  console.log("header", headerData);
   const onDragStart = (bloc: BlocObject) => {
     if (bloc !== null) {
       setDragged(bloc);
@@ -66,30 +72,59 @@ export default function PageClient({
   };
   const handleSavePage = async () => {
     try {
-      console.log("pages", page);
-      const res = await fetch("/api/edition/page", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          data: page,
+      console.log(headerData);
+      // Exécuter les 2 requêtes en parallèle
+      const [pageRes, headerRes] = await Promise.all([
+        // Promise 1 : Sauvegarder la page
+        fetch("/api/edition/page", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            data: page,
+          }),
         }),
-      });
 
-      if (!res.ok) {
-        throw new Error("Erreur lors de l'enregistrement");
+        // Promise 2 : Sauvegarder le header
+        fetch("/api/edition/page/header", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            data: headerData,
+          }), // Assurez-vous d'avoir un state 'header'
+        }),
+      ]);
+
+      // Vérifier les deux réponses
+      if (!pageRes.ok) {
+        throw new Error("Erreur lors de l'enregistrement de la page");
+      }
+      if (!headerRes.ok) {
+        throw new Error("Erreur lors de l'enregistrement du header");
       }
 
-      const result = await res.json();
-      console.log("result", result);
-      if (result !== undefined) {
-        setPage(new PageObject(result.blocs));
-      }
+      // Parser les résultats
+      const [pageResult, headerResult] = await Promise.all([
+        pageRes.json(),
+        headerRes.json(),
+      ]);
 
-      console.log("Page enregistrée :", result);
+      console.log("Page enregistrée :", pageResult);
+      console.log("Header enregistré :", headerResult);
+
+      // Mettre à jour les states
+      if (pageResult !== undefined) {
+        setPage(new PageObject(pageResult.blocs));
+      }
+      if (headerResult !== undefined) {
+        console.log("header.data", headerResult);
+        setHeader(new HeaderObject(headerResult)); // Assurez-vous d'avoir un setHeader
+      }
     } catch (error) {
-      console.error(error);
+      console.error("Erreur sauvegarde :", error);
     }
   };
   const handleRemove = (model: BlocObject) => {
@@ -100,9 +135,13 @@ export default function PageClient({
       return clonePageWithBlocs(prev, filteredImages);
     });
   };
-
+  const updateHeader = (updatedBloc: HeaderObject) => {
+    setHeader(updatedBloc);
+  };
+  useEffect(() => {}, [headerData]);
   return (
     <div className="p-6 space-y-6">
+      <HeaderContextEdition bloc={headerData} onChange={updateHeader} />
       {page !== undefined && (
         <div>
           <BlocChoiceModal page={page} addBlocToPage={addBlocToPage} />

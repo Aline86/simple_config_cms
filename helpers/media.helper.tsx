@@ -3,16 +3,16 @@ import { nanoid } from "nanoid";
 
 export function cloneMediaWithPosition(media: MediaObject, position: number) {
   return new MediaObject({
-    id: media.id,
-    bloc_id: media.text_bloc_id,
+    id: media.id as string,
+    text_bloc_id: media.text_bloc_id,
     text_titre: media.text_titre ?? undefined,
-    image_lien: media.text_image_lien ?? undefined,
+    text_image_lien: media.text_image_lien ?? undefined,
     image_url: media.image_url ?? undefined,
     number_position_image: position,
   });
 }
 
-export function createMedia(position: number, bloc_id: string | null) {
+export function createMedia(position: number, bloc_id: string | number | null) {
   const minW = 200;
   const maxW = 600;
   const minH = 150;
@@ -23,9 +23,9 @@ export function createMedia(position: number, bloc_id: string | null) {
   const image_url = `https://picsum.photos/${width}/${height}?random=${Date.now()}-${position}`;
   return new MediaObject({
     id: nanoid(),
-    bloc_id: bloc_id,
+    text_bloc_id: bloc_id,
     text_titre: "",
-    image_lien: "#",
+    text_image_lien: "#",
     image_url: image_url,
     number_position_image: position,
   });

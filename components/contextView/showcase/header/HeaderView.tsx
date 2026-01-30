@@ -53,7 +53,7 @@ export default function HeaderView({ header }: MediaViewProps) {
     const containerWidth = scrollRef.current.offsetWidth;
     const navWidth = navRef.current.scrollWidth;
 
-    setIsBurger(navWidth > containerWidth - 50);
+    setIsBurger(navWidth > containerWidth - containerWidth * 0.5);
   };
 
   const handleScroll = () => {
@@ -119,7 +119,11 @@ export default function HeaderView({ header }: MediaViewProps) {
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
-        className={`shadow ${isSticky ? "sticky" : "relative"} top-0 left-0 right-0 z-20`}
+        className={
+          header.mode === "edition"
+            ? `shadow ${isSticky ? "sticky" : "relative"} top-0 left-0 right-0 z-20`
+            : "shadow fixed  top-0 left-0 right-0 z-20"
+        }
       >
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-between h-16 ">
@@ -196,12 +200,16 @@ export default function HeaderView({ header }: MediaViewProps) {
           </div>
         </div>
       </header>
-      {header?.image_reseaux !== null ? (
+      {header?.reseaux !== null ? (
         <div
-          className={` ${isSticky ? "fixed w-fit h-fit mt-5 right-[30px] z-0" : "absolute w-fit h-fit mt-20 right-[30px] z-0"}`}
+          className={
+            header.mode === "edition"
+              ? ` ${isSticky ? "fixed w-fit h-fit mt-5 right-[30px] z-0" : "absolute w-fit h-fit mt-20 right-[30px] z-0"}`
+              : "fixed w-fit h-fit mt-5 right-[30px] z-15 mt-24"
+          }
         >
-          <div className="social-media absolute mb-2 right-[0px]">
-            {header.image_reseaux.map((network, index) => {
+          <div className="social-media absolute mb-2 right-[0px] ">
+            {header.reseaux.map((network, index) => {
               return <SocialTab key={index} network={network} />;
             })}
           </div>
