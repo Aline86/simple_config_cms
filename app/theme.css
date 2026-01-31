@@ -1,0 +1,33 @@
+.dark {
+  background-color: rgb(34, 34, 34);
+}
+.dark body {
+  background-color: rgb(34, 34, 34);
+}
+.light {
+  background-color: white;
+}
+body > .light {
+  background-color: white;
+}
+.dark h2,
+.dark select,
+.dark option {
+  color: white !important;
+  word-break: break-word;
+}
+.light h2,
+.light select,
+.light option {
+  color: rgb(20, 20, 20);
+  word-break: break-word;
+}
+h1 {
+  word-break: break-word;
+
+  font-size: 45px;
+  text-transform: uppercase;
+}
+h2 {
+  font-size: 25px;
+}

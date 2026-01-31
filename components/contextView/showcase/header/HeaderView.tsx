@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import SocialTab from "./SocialTab";
 import { HeaderObject } from "../../../../model/bloc/Header";
+import getPages from "../../../../app/edition/pages/callPages";
+import { PageObject } from "../../../../model/Page";
 
 interface MediaViewProps {
   header: HeaderObject;
@@ -38,10 +40,11 @@ export default function HeaderView({ header }: MediaViewProps) {
   const scrollRef = useRef<HTMLElement>(null);
 
   const [isSticky, setIsSticky] = useState(true);
-  const [isMounted, setIsMounted] = useState(false);
+  // const [pages, setpages] = useState(false);
   const [isBurger, setIsBurger] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [stateBG, setStateBG] = useState<"color" | "image" | "empty">("empty");
+  const [pages, setPages] = useState<PageObject[]>();
 
   const checkOverflow = () => {
     if (!scrollRef.current || !navRef.current) return;
@@ -50,6 +53,12 @@ export default function HeaderView({ header }: MediaViewProps) {
     const navWidth = navRef.current.scrollWidth;
 
     setIsBurger(navWidth > containerWidth - containerWidth * 0.5);
+  };
+  const showPages = async () => {
+    const pages = await getPages();
+    if (pages !== undefined) {
+      setPages(pages);
+    }
   };
 
   const handleScroll = () => {
@@ -60,13 +69,14 @@ export default function HeaderView({ header }: MediaViewProps) {
   };
 
   useEffect(() => {
-    setIsMounted(true);
+    showPages();
   }, []);
   useEffect(() => {
-    setIsMounted(true);
-  }, []);
+    // setpages(true);
+    console.log("pages", pages);
+  }, [pages]);
   useEffect(() => {
-    if (!isMounted) return;
+    if (!pages) return;
 
     checkOverflow();
 
@@ -82,13 +92,13 @@ export default function HeaderView({ header }: MediaViewProps) {
       window.removeEventListener("resize", checkOverflow);
       observer.disconnect();
     };
-  }, [isMounted]);
+  }, [pages]);
 
   useEffect(() => {
     setStateBG(getBackgroundType(header?.text_background_url as string));
   }, [header?.text_background_url]);
 
-  if (!isMounted) {
+  if (!pages) {
     return (
       <header className="bg-white shadow ">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
@@ -100,119 +110,121 @@ export default function HeaderView({ header }: MediaViewProps) {
   }
 
   return (
-    <>
-      <header
-        ref={scrollRef}
-        style={{
-          backgroundColor:
-            stateBG !== "image"
-              ? (header?.text_background_url as string)
-              : undefined,
-          backgroundImage:
-            stateBG === "image" && header?.text_background_url
-              ? `url(${header.text_background_url})`
-              : undefined,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-        className={
-          header.mode === "edition"
-            ? `shadow ${isSticky ? "sticky" : "relative"} top-0 left-0 right-0 z-20`
-            : " shadow fixed  top-0 left-0 right-0 z-20"
-        }
-      >
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center justify-between h-16 ">
-            <span className="text-xl font-bold text-indigo-600 relative  flex-shrink-0 z-0">
-              {header?.logo?.image_url ? (
-                <img
-                  src={header.logo.image_url}
-                  className="logo-site"
-                  alt={header.text_nom_site || "Logo"}
-                />
-              ) : (
-                "Mon Site"
-              )}
-            </span>
-
-            <h1 className="flex-shrink-0 mx-4 ">{header?.text_nom_site}</h1>
-
-            <nav
-              ref={navRef}
-              className={`cursor-pointer flex flex-shrink space-x-8 whitespace-nowrap ${
-                isBurger && isOpen
-                  ? "nav-dynamique nav-dynamique--open"
-                  : isBurger
-                    ? "absolute invisible"
-                    : ""
-              }`}
-            >
-              <a href="#">Accueil</a>
-              <a href="#">Services</a>
-              <a href="#">À propos</a>
-              <a href="#">Contact</a>
-              <a href="#">Accueil</a>
-              <a href="#">Services</a>
-              <a href="#">À propos</a>
-              <a href="#">Contact</a>
-            </nav>
-
-            {isBurger && (
-              <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="relative z-50  cursor-pointer"
-              >
-                {!isOpen ? (
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M4 6h16M4 12h16M4 18h16"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                )}
-              </button>
-            )}
-          </div>
-        </div>
-      </header>
-      {header?.reseaux !== null ? (
-        <div
+    pages !== undefined &&
+    pages.length > 0 && (
+      <>
+        <header
+          ref={scrollRef}
+          style={{
+            backgroundColor:
+              stateBG !== "image"
+                ? (header?.text_background_url as string)
+                : undefined,
+            backgroundImage:
+              stateBG === "image" && header?.text_background_url
+                ? `url(${header.text_background_url})`
+                : undefined,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
           className={
             header.mode === "edition"
-              ? ` ${isSticky ? "fixed w-fit h-fit mt-5 right-[30px] z-0" : "absolute w-fit h-fit mt-20 right-[30px] z-0"}`
-              : "fixed w-fit h-fit mt-5 right-[15px] z-15 "
+              ? `shadow ${isSticky ? "sticky" : "relative"} top-0 left-0 right-0 z-20`
+              : " shadow fixed  top-0 left-0 right-0 z-20"
           }
         >
-          <div className="social-media absolute mb-2 right-[0px] ">
-            {header.reseaux.map((network, index) => {
-              return <SocialTab key={index} network={network} />;
-            })}
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="flex items-center justify-between h-16 ">
+              <span className="text-xl font-bold text-indigo-600 relative  flex-shrink-0 z-0">
+                {header?.logo?.image_url ? (
+                  <img
+                    src={header.logo.image_url}
+                    className="logo-site"
+                    alt={header.text_nom_site || "Logo"}
+                  />
+                ) : (
+                  "Mon Site"
+                )}
+              </span>
+
+              <h1 className="flex-shrink-0 mx-4 ">{header?.text_nom_site}</h1>
+
+              <nav
+                ref={navRef}
+                className={`cursor-pointer flex flex-shrink space-x-8 whitespace-nowrap ${
+                  isBurger && isOpen
+                    ? "nav-dynamique nav-dynamique--open"
+                    : isBurger
+                      ? "absolute invisible"
+                      : ""
+                }`}
+              >
+                {pages.map((page) => {
+                  return (
+                    <a key={page.number_id} href={"/" + page.text_slug}>
+                      {page.text_titre}
+                    </a>
+                  );
+                })}
+              </nav>
+
+              {isBurger && (
+                <button
+                  onClick={() => setIsOpen(!isOpen)}
+                  className="relative z-50  cursor-pointer"
+                >
+                  {!isOpen ? (
+                    <svg
+                      className="w-6 h-6"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M4 6h16M4 12h16M4 18h16"
+                      />
+                    </svg>
+                  ) : (
+                    <svg
+                      className="w-6 h-6"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M6 18L18 6M6 6l12 12"
+                      />
+                    </svg>
+                  )}
+                </button>
+              )}
+            </div>
           </div>
-        </div>
-      ) : (
-        <></>
-      )}
-    </>
+        </header>
+        {header?.reseaux !== null ? (
+          <div
+            className={
+              header.mode === "edition"
+                ? ` ${isSticky ? "fixed w-fit h-fit mt-5 right-[30px] z-0" : "absolute w-fit h-fit mt-20 right-[30px] z-0"}`
+                : "fixed w-fit h-fit mt-5 right-[15px] z-15 "
+            }
+          >
+            <div className="social-media absolute mb-2 right-[0px] ">
+              {header.reseaux.map((network, index) => {
+                return <SocialTab key={index} network={network} />;
+              })}
+            </div>
+          </div>
+        ) : (
+          <></>
+        )}
+      </>
+    )
   );
 }

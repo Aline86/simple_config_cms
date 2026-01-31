@@ -6,15 +6,26 @@
 .bg-slate-50 {
   background-color: #f3f4f6;
 }
-h2,
-select,
-option {
-  color: rgb(20, 20, 20);
-  word-break: break-word;
+
+/* app/globals.css */
+:root {
+  --bg-color: white;
+  --text-color: black;
 }
-h1 {
-  word-break: break-word;
+
+.dark {
+  --bg-color: #121212;
+  --text-color: white;
 }
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}
+
 :root {
   color-scheme: light;
   --dark: #171717;
@@ -186,13 +197,6 @@ h1 {
   }
 }
 
-h1 {
-  font-size: 45px;
-  text-transform: uppercase;
-}
-h2 {
-  font-size: 25px;
-}
 .tiptap {
   margin-bottom: 20px;
 }
