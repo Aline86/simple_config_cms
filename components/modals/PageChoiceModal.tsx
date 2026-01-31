@@ -76,11 +76,11 @@ export default function BlocChoiceModal({
   };
 
   return (
-    <div className="p-6 space-y-6">
-      <div className="p-10">
+    <div className="space-y-6">
+      <div className="">
         <button
           onClick={() => setOpen(true)}
-          className="rounded bg-slate-600 px-4 py-4 text-white text-lg hover:bg-slate-700 transition"
+          className="rounded bg-slate-600 px-2 py-2 text-white text-lg hover:bg-slate-700 transition"
         >
           Créer un bloc
         </button>

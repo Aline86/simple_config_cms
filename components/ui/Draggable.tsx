@@ -12,7 +12,7 @@ export default function Draggable({
   return (
     <button
       onClick={() => setDraggableEnabled(!draggableEnabled)}
-      className={`flex items-center gap-2 px-3 py-2 rounded-lg transition
+      className={`cursor-pointer flex items-center gap-2 px-3 py-2 rounded-lg transition
         ${
           draggableEnabled
             ? "bg-green-600 text-white hover:bg-green-700"

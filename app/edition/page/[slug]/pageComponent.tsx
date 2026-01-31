@@ -1,6 +1,8 @@
 "use client";
 
+import { useEffect } from "react";
 import ComponentBloc from "../../../../components/contextView/ComponentBloc";
+import { Accordion } from "../../../../components/ui/Accordeon";
 import { BlocObject } from "../../../../model/Bloc";
 import { PageObject } from "../../../../model/Page";
 
@@ -23,7 +25,7 @@ export default function PageBlocs({
   draggableEnabled,
 }: PageCrudProps) {
   const show_debug = false;
-
+  useEffect(() => {}, [draggableEnabled]);
   return (
     <div className="p-6  space-y-6 ">
       {page_data !== undefined &&
@@ -32,19 +34,25 @@ export default function PageBlocs({
         page_data.blocs !== null &&
         page_data.blocs.length > 0 &&
         page_data.blocs.map((bloc, index) => {
+          const num = Number(index) + 1;
           return (
             <div
-              key={index}
+              key={bloc.id}
               draggable={draggableEnabled}
               onDragStart={() => onDragStart(bloc)}
               onDragOver={(e) => e.preventDefault()}
               onDrop={() => onDrop(bloc)}
-              className="grid  lg:grid-cols-1 gap-6  cursor-grab active:cursor-grabbing"
+              className="cursor-grab active:cursor-grabbing"
             >
-              <ComponentBloc
-                bloc={bloc}
-                onDelete={onDelete}
-                updateBloc={updateBloc}
+              <Accordion
+                children={
+                  <ComponentBloc
+                    bloc={bloc}
+                    onDelete={onDelete}
+                    updateBloc={updateBloc}
+                  />
+                }
+                header={" Bloc n° : " + num + " " + bloc.type}
               />
             </div>
           );

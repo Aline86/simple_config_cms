@@ -7,6 +7,9 @@ import { reorderArray } from "../../../helpers/changeComponentPosition";
 import { BlocObject } from "../../../model/Bloc";
 import { PageObject } from "../../../model/Page";
 import PageCrud from "./pageComponent";
+import LogoutButton from "../../../components/ui/LogoutButton";
+import NavBarEdition from "../../../components/ui/NavBarEdition";
+import ErrorMessage from "../../../components/ui/ErrorMessage";
 
 export default function PageClient({
   initialPages,
@@ -15,8 +18,9 @@ export default function PageClient({
 }) {
   const [pages, setPages] = useState(initialPages);
   const [draggableEnabled, setDraggableEnabled] = useState(false);
-
-  // parent
+  const [message, setMessage] = useState("");
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const [hasSucceeded, setHasSucceeded] = useState(false);
   const [dragged, setDragged] = useState<PageObject | null>(null);
 
   const onDragStart = (page: PageObject) => {
@@ -66,8 +70,6 @@ export default function PageClient({
       });
 
       if (!res.ok) throw new Error("Erreur lors de la suppression");
-
-      const result = await res.json(); // le page supprimée ou info renvoyée
 
       // Supprime la page du state
       setPages((prev) => prev.filter((p) => p.number_id !== page.number_id));
@@ -121,8 +123,12 @@ export default function PageClient({
 
         setPages(updatedPages);
       }
+      setMessage("L'action a réussi !");
+      setShowErrorMessage(!showErrorMessage);
+      setHasSucceeded(true);
     } catch (error) {
-      console.error("❌ Erreur lors de la sauvegarde:", error);
+      setMessage("L'action n'a pas réussi !");
+      logout();
     }
   };
 
@@ -163,34 +169,38 @@ export default function PageClient({
 
     setPages((prev) => [...prev, newPage]);
   };
+  const logout = async () => {
+    await fetch("/api/auth/logout", {
+      method: "POST",
+      credentials: "include",
+    });
 
+    window.location.href = "/login";
+  };
   useEffect(() => {
     const result = initialPages.map((page) => new PageObject(page));
     setPages(result);
   }, [initialPages]);
-
+  useEffect(() => {}, [showErrorMessage, message, hasSucceeded]);
   return (
-    <div className="p-6 space-y-6">
-      {/* Header */}
+    <div className="p-24 space-y-6">
       <h2 className="text-2xl font-bold">Pages</h2>
-      <div className="flex justify-between items-center gap-4">
-        <button
-          onClick={handleAdd}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-600 text-white hover:bg-slate-700 transition"
-        >
-          <Plus size={16} /> Nouvelle Page
-        </button>{" "}
-        <Draggable
-          draggableEnabled={draggableEnabled}
-          setDraggableEnabled={setDraggableEnabled}
+      {showErrorMessage && (
+        <ErrorMessage
+          message={message}
+          setShowErrorMessage={setShowErrorMessage}
+          errorMessage={showErrorMessage}
+          hasSucceeded={hasSucceeded}
         />
-        <button
-          onClick={() => handleSavePages()}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-600 transition"
-        >
-          <Save size={14} /> Enregistrer les pages
-        </button>
-      </div>
+      )}
+      <NavBarEdition
+        labelAdd="Ajouter une page"
+        logout={logout}
+        handleAdd={handleAdd}
+        setDraggableEnabled={setDraggableEnabled}
+        handleSavePages={handleSavePages}
+        draggableEnabled={draggableEnabled}
+      />
 
       {/* Grille des pages */}
       <div className="grid grid-cols-1 gap-6">

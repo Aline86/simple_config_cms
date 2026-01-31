@@ -75,7 +75,7 @@ const ScreenContextEdition: React.FC<ScreenContextEditionProps> = ({
 
   return (
     <div className="flex flex-col lg:flex-row gap-6 h-full">
-      <div className="flex-1 rounded-lg border p-4 bg-background shadow-sm">
+      <div className="flex-1 rounded-lg  p-4 shadow-sm">
         <h2 className="text-lg font-semibold mb-4">Éditeur</h2>
         <ScreenEdit
           bloc={bloc}
@@ -88,7 +88,7 @@ const ScreenContextEdition: React.FC<ScreenContextEditionProps> = ({
         />
       </div>
 
-      <div className="flex-1 rounded-lg border p-4 bg-background shadow-sm pb-16">
+      <div className="flex-1 rounded-lg  p-4 shadow-sm pb-16">
         <h2 className="text-lg font-semibold mb-4">Aperçu</h2>
         <ScreenView bloc={bloc} />
       </div>

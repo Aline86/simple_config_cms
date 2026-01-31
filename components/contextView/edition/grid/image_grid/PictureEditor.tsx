@@ -33,7 +33,7 @@ export function PictureEditor<T>({ ...props }: MediaEditorProps<T>) {
     >
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between p-4 bg-background hover:bg-gray-50 transition-colors"
+        className="w-full flex items-center justify-between p-4 hover:bg-gray-50 transition-colors"
       >
         <span className="font-semibold text-black">
           Carte n° {Number(props.media.number_position_image) + 1}
@@ -70,7 +70,7 @@ export function PictureEditor<T>({ ...props }: MediaEditorProps<T>) {
               </p>
             </div>
 
-            <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-950">
+            <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-200 dark:bg-slate-950">
               <div
                 className="w-full flex justify-end items-center"
                 onClick={() => props.removeElement(props.media as T)}
@@ -138,7 +138,7 @@ export function PictureEditor<T>({ ...props }: MediaEditorProps<T>) {
 
             {/* Debug panel */}
             {debug && (
-              <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-900">
+              <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-200 dark:bg-slate-900">
                 <h3 className="text-sm font-semibold mb-2">
                   Props reçues (MediaEditor)
                 </h3>

@@ -71,7 +71,7 @@ export function MediaPreview({ media, isLink }: MediaPreviewProps) {
       </Card>
 
       {/* Debug panel */}
-      <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-900">
+      <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-200 dark:bg-slate-900">
         <h3 className="text-sm font-semibold mb-2 text-slate-900 dark:text-slate-50">
           Props reçues (MediaPreview)
         </h3>

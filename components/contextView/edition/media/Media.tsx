@@ -22,7 +22,7 @@ export function MediaEditor<T>({ ...props }: MediaEditorProps<T>) {
         </p>
       </div>
 
-      <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-950">
+      <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-200 dark:bg-slate-950">
         <div
           className="w-full flex justify-end items-center"
           onClick={() => props.removeElement(props.socialMedia as T)}
@@ -71,7 +71,7 @@ export function MediaEditor<T>({ ...props }: MediaEditorProps<T>) {
 
       {/* Debug panel */}
       {debug && (
-        <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-900">
+        <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-200 dark:bg-slate-900">
           <h3 className="text-sm font-semibold mb-2">
             Props reçues (MediaEditor)
           </h3>

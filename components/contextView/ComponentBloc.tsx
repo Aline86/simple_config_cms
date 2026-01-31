@@ -2,6 +2,7 @@
 
 import { blocksToRender } from "../../config/componentsView";
 import { BlocObject } from "../../model/Bloc";
+import { DeleteButton } from "../ui/DeleteButton";
 
 interface PageCrudProps {
   bloc: BlocObject;
@@ -19,6 +20,7 @@ export default function ComponentBloc({
 
   return (
     <div className="flex flex-col ">
+      <DeleteButton onDelete={onDelete} bloc={bloc} />
       <Renderer bloc={bloc} onChange={updateBloc} />
     </div>
   );

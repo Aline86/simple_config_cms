@@ -38,7 +38,7 @@ export default function CarouselThumbnailsEdit<T>({
         </p>
       </div>
 
-      <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-950">
+      <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-200 dark:bg-slate-950">
         <button
           onClick={addElement}
           className="flex h-10 w-10 items-center justify-center rounded-full bg-black text-white hover:bg-gray-800"
@@ -93,7 +93,7 @@ export default function CarouselThumbnailsEdit<T>({
 
       {/* Debug panel */}
       {debug ? (
-        <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-800 dark:bg-slate-900">
+        <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-200 dark:bg-slate-900">
           <h3 className="text-sm font-semibold mb-2">
             Props reçues (HeaderEdit)
           </h3>

@@ -200,6 +200,25 @@ body {
 .tiptap {
   margin-bottom: 20px;
 }
+.dark .edition {
+  margin-bottom: 0px !important;
+  color: black !important;
+  padding: 15px !important;
+  border-radius: 5px;
+}
+.nav-edition {
+  background-color: white !important;
+}
+.dark .nav-edition {
+  background-color: black !important;
+}
+.tiptap > p.mt-5 {
+  padding: 0 !important;
+  margin: 0;
+}
+.edition .tiptap {
+  margin-bottom: 0px;
+}
 .validated-input-wrapper .input {
   border: 1px solid #d1d5db;
   border-radius: 6px;

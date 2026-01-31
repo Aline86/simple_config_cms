@@ -80,7 +80,7 @@ export default function CarouselThumbnailsView({ bloc }: { bloc: BlocObject }) {
       )}
 
       {debug && (
-        <div className="mt-6 rounded-lg border border-slate-200 bg-slate-50 p-4 text-slate-800 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200">
+        <div className="mt-6 rounded-lg border border-slate-200 bg-slate-50 p-4 text-slate-800 dark:border-slate-200 dark:bg-slate-900 dark:text-slate-200">
           <h3 className="mb-2 text-sm font-semibold">
             Props reçues (HeaderEdit)
           </h3>

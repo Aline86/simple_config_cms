@@ -129,7 +129,7 @@ export default function HeaderView({ header }: MediaViewProps) {
           }}
           className={
             header.mode === "edition"
-              ? `shadow ${isSticky ? "sticky" : "relative"} top-0 left-0 right-0 z-20`
+              ? `shadow ${isSticky ? "sticky" : "relative"} top-24 left-0 right-0 z-20`
               : " shadow fixed  top-0 left-0 right-0 z-20"
           }
         >

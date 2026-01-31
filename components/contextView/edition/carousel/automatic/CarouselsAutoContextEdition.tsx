@@ -76,7 +76,7 @@ const CarouselsAutoContextEdition: React.FC<
   if (!bloc) {
     return (
       <div className="flex flex-col lg:flex-row gap-6 w-full">
-        <div className="flex-1 rounded-lg border p-4 bg-background shadow-sm">
+        <div className="flex-1 rounded-lg  p-4 shadow-sm">
           <h2 className="text-lg font-semibold mb-4">Éditeur</h2>
           <div className="animate-pulse space-y-4">
             <div className="h-4 bg-gray-200 rounded w-3/4"></div>
@@ -84,7 +84,7 @@ const CarouselsAutoContextEdition: React.FC<
           </div>
         </div>
 
-        <div className="flex-1 rounded-lg border p-4 bg-background shadow-sm">
+        <div className="flex-1 rounded-lg  p-4 shadow-sm">
           <h2 className="text-lg font-semibold mb-4">Aperçu</h2>
           <div className="animate-pulse space-y-4">
             <div className="h-16 bg-gray-200 rounded"></div>
@@ -96,7 +96,7 @@ const CarouselsAutoContextEdition: React.FC<
 
   return (
     <div className="flex flex-col lg:flex-row gap-6 w-full">
-      <div className="w-full lg:w-1/2 rounded-lg border p-4 bg-background shadow-sm">
+      <div className="w-full lg:w-1/2 rounded-lg border p-4 shadow-sm">
         <h2 className="text-lg font-semibold mb-4">Éditeur</h2>
         <CarouselThumbnailsEdit
           bloc={bloc}
@@ -110,7 +110,7 @@ const CarouselsAutoContextEdition: React.FC<
         />
       </div>
 
-      <div className="flex-1 rounded-lg border p-4 bg-background shadow-sm">
+      <div className="flex-1 rounded-lg  p-4 shadow-sm">
         <h2 className="text-lg font-semibold mb-4">Aperçu</h2>
         <CarouselAutoView bloc={bloc} />
       </div>

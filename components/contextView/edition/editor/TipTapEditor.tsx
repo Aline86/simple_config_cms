@@ -31,11 +31,11 @@ export const Tiptap = ({ bloc, updateComponent }: TiptapProps) => {
   }
 
   return (
-    <div className="ml-5">
+    <div className="ml-5 edition">
       <EditorToolbar editor={editor} onSetLink={setLink} />
       <EditorContent
         editor={editor}
-        className="border border-gray-300 rounded-md"
+        className="border border-gray-700 p-2 rounded-md"
       />
     </div>
   );

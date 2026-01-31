@@ -50,7 +50,7 @@ export const Modal: React.FC<ModalProps> = ({
             {secondaryAction && (
               <button
                 onClick={secondaryAction.onClick}
-                className="rounded-md border border-gray-300 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition"
+                className="rounded-md  px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition"
               >
                 {secondaryAction.label}
               </button>

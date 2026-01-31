@@ -17,6 +17,9 @@ import HeaderContextEdition from "../../../../components/contextView/edition/hea
 import BlocChoiceModal from "../../../../components/modals/PageChoiceModal";
 import FooterContextEdition from "../../../../components/contextView/edition/footer/FooterContextEdition";
 import { reorderArray } from "../../../../helpers/changeComponentPosition";
+import NavBarEdition from "../../../../components/ui/NavBarEdition";
+import ErrorMessage from "../../../../components/ui/ErrorMessage";
+import { Accordion } from "../../../../components/ui/Accordeon";
 
 export default function PageClient({
   initialpage,
@@ -32,6 +35,9 @@ export default function PageClient({
   const [footerData, setFooter] = useState(new FooterObject(footer, "edition"));
   const [dragged, setDragged] = useState<BlocObject | null>(null);
   const [draggableEnabled, setDraggableEnabled] = useState(false);
+  const [message, setMessage] = useState("");
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const [hasSucceeded, setHasSucceeded] = useState(false);
 
   const onDragStart = (bloc: BlocObject) => {
     if (bloc !== null) {
@@ -64,6 +70,9 @@ export default function PageClient({
     setPage((prevPage) =>
       clonePageWithBlocs(prevPage, [...prevPage.blocs, bloc]),
     );
+    setMessage("L'action a réussi !");
+    setShowErrorMessage(!showErrorMessage);
+    setHasSucceeded(true);
   };
 
   const updateBloc = (updatedBloc: BlocObject) => {
@@ -138,8 +147,11 @@ export default function PageClient({
       if (footerResult !== undefined) {
         setFooter(new FooterObject(footerResult, "edition")); // Assurez-vous d'avoir un setHeader
       }
+      setMessage("L'action a réussi !");
+      setShowErrorMessage(!showErrorMessage);
+      setHasSucceeded(true);
     } catch (error) {
-      console.error("Erreur sauvegarde :", error);
+      logout();
     }
   };
   const handleRemove = (model: BlocObject) => {
@@ -149,6 +161,11 @@ export default function PageClient({
 
       return clonePageWithBlocs(prev, filteredImages);
     });
+    setMessage(
+      "Action réussi mais veuillez enregistrer tout le contenu pour sauvegarder la suppression",
+    );
+    setShowErrorMessage(!showErrorMessage);
+    setHasSucceeded(true);
   };
   const updateHeader = (updatedBloc: HeaderObject) => {
     setHeader(updatedBloc);
@@ -156,21 +173,49 @@ export default function PageClient({
   const updateFooter = (updatedBloc: FooterObject) => {
     setFooter(updatedBloc);
   };
-  useEffect(() => {}, [headerData, footerData]);
+  const logout = async () => {
+    await fetch("/api/auth/logout", {
+      method: "POST",
+      credentials: "include",
+    });
+
+    window.location.href = "/login";
+  };
+  useEffect(() => {}, [
+    headerData,
+    footerData,
+    showErrorMessage,
+    message,
+    hasSucceeded,
+  ]);
+
   return (
-    <div className="p-6 space-y-6">
-      <button
-        onClick={() => handleSavePage()}
-        className="cursor-pointer shadow-lg fixed top-[50px]   z-100 flex items-center gap-2 px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-600 transition "
-      >
-        <Save size={14} /> Enregistrer la page
-      </button>
-      <HeaderContextEdition bloc={headerData} onChange={updateHeader} />
-      {page !== undefined && (
-        <div className="">
-          <BlocChoiceModal page={page} addBlocToPage={addBlocToPage} />
-        </div>
+    <div className="space-y-6 ">
+      <NavBarEdition
+        labelAdd="Ajouter un bloc"
+        handleAdd={addBlocToPage}
+        logout={logout}
+        setDraggableEnabled={setDraggableEnabled}
+        handleSavePages={handleSavePage}
+        draggableEnabled={draggableEnabled}
+        model={page as unknown}
+      />
+      {showErrorMessage && (
+        <ErrorMessage
+          message={message}
+          setShowErrorMessage={setShowErrorMessage}
+          errorMessage={showErrorMessage}
+          hasSucceeded={hasSucceeded}
+        />
       )}
+      <div className="pt-24">
+        <Accordion
+          children={
+            <HeaderContextEdition bloc={headerData} onChange={updateHeader} />
+          }
+          header={"En-tête"}
+        />
+      </div>
 
       <PageBlocs
         page_data={page}
@@ -180,7 +225,12 @@ export default function PageClient({
         onDrop={onDrop}
         draggableEnabled={draggableEnabled}
       />
-      <FooterContextEdition bloc={footerData} onChange={updateFooter} />
+      <Accordion
+        children={
+          <FooterContextEdition bloc={footerData} onChange={updateFooter} />
+        }
+        header={"Pied de page"}
+      />
     </div>
   );
 }

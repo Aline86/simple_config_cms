@@ -84,7 +84,7 @@ export function DynamicValidatorDropDown<T extends Record<keyof T, any>>({
       <select
         value={selectedValidatorKey}
         onChange={handleValidatorChange}
-        className="flex h-10 w-full items-center justify-between rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 ring-offset-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-950 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-50 dark:ring-offset-slate-950 dark:placeholder:text-slate-400 dark:focus:ring-slate-300"
+        className="flex h-10 w-full items-center justify-between rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 ring-offset-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-950 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-200 dark:bg-slate-950 dark:text-slate-50 dark:ring-offset-slate-950 dark:placeholder:text-slate-400 dark:focus:ring-slate-300"
       >
         {availableValidators.map((validatorKey) => (
           <option
@@ -102,7 +102,7 @@ export function DynamicValidatorDropDown<T extends Record<keyof T, any>>({
         ))}
       </select>
 
-      <div className="rounded-lg border border-slate-200 bg-slate-50/50 p-4 dark:border-slate-800 dark:bg-slate-900/50">
+      <div className="rounded-lg border border-slate-200 bg-slate-50/50 p-4 dark:border-slate-200 dark:bg-slate-900/50">
         <FieldRenderer
           selectedValidatorKey={selectedValidatorKey}
           fieldName={fieldKey as string}
