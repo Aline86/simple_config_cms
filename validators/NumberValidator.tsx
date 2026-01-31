@@ -81,7 +81,6 @@ export class NumberValidator {
       );
     }
 
-    // 5️⃣ Max
     if (this.params.max !== undefined) {
       schema = schema.refine(
         (val) => val === undefined || val <= this.params.max!,

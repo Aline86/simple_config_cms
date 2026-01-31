@@ -11,10 +11,8 @@ import Paragraph from "@tiptap/extension-paragraph";
 
 import {
   DISALLOWED_LINK_PROTOCOLS,
-  DISALLOWED_LINK_DOMAINS,
   NO_AUTOLINK_DOMAINS,
 } from "./editorTypesConfig";
-import { Bold } from "lucide-react";
 
 export const getEditorExtensions = () => [
   StarterKit.configure({
@@ -67,10 +65,6 @@ export const getEditorExtensions = () => [
           typeof p === "string" ? p : p.scheme,
         );
         if (!allowedProtocols.includes(protocol)) {
-          return false;
-        }
-
-        if (DISALLOWED_LINK_DOMAINS.includes(parsedUrl.hostname)) {
           return false;
         }
 

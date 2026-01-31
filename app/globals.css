@@ -426,3 +426,28 @@ iframe {
   z-index: 2000 !important;
   pointer-events: auto !important;
 }
+/* checkbox edition input */
+
+/* Carré custom */
+.checkmark {
+  width: 25px;
+  height: 25px;
+  border-radius: 5px;
+  border: 2px solid #9ca3af;
+  background-color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+/* Hover */
+.checkmark:hover .checkmark {
+  border-color: #2563eb;
+}
+
+/* Checked */
+.checkmark:checked {
+  background-color: #2563eb;
+  border-color: #2563eb;
+}

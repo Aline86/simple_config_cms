@@ -2,14 +2,27 @@ import { NextRequest, NextResponse } from "next/server";
 import { BlocObject } from "../../../../model/Bloc";
 import { PageObject } from "../../../../model/Page";
 import { prisma } from "./../../../../lib/prisma/prisma";
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    const dbPages = await prisma.page.findMany({
-      orderBy: {
-        number_page_position: "asc",
-      },
-    });
-
+    const { searchParams } = new URL(request.url);
+    const with_homepage = searchParams.get("with_homepage");
+    let dbPages = [];
+    if (with_homepage === "without_homepage") {
+      dbPages = await prisma.page.findMany({
+        where: {
+          checkbox_home_page: false,
+        },
+        orderBy: {
+          number_page_position: "asc",
+        },
+      });
+    } else {
+      dbPages = await prisma.page.findMany({
+        orderBy: {
+          number_page_position: "asc",
+        },
+      });
+    }
     const pages = dbPages.map((dbPage) => {
       const blocs =
         typeof dbPage.blocs === "string"
@@ -20,6 +33,7 @@ export async function GET() {
         id: dbPage.number_id, // ✅ Changé de id
         parent_id: dbPage.number_parent_id, // ✅ Changé de parent_id
         published: dbPage.checkbox_published, // ✅ Changé de published
+        checkbox_home_page: dbPage.checkbox_home_page,
         text_titre: dbPage.text_titre, // ✅ Changé de text_titre
         text_description: dbPage.text_description ?? "", // ✅ Changé de text_titre
         slug: dbPage.text_slug, // ✅ Changé de slug
@@ -42,16 +56,13 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const pagesPayload = Array.isArray(body) ? body : body.data;
-
+    console.log(pagesPayload);
     if (!Array.isArray(pagesPayload)) {
       return NextResponse.json(
         { error: "Payload must be an array of pages" },
         { status: 400 },
       );
     }
-
-    const createdPages: any[] = [];
-    const updates: Promise<any>[] = [];
 
     for (const p of pagesPayload) {
       const page = p instanceof PageObject ? p : new PageObject(p);
@@ -85,6 +96,7 @@ export async function POST(request: NextRequest) {
               number_parent_id:
                 page.number_parent_id === -1 ? null : page.number_parent_id,
               checkbox_published: page.checkbox_published,
+              checkbox_home_page: page.checkbox_home_page,
               text_titre: page.text_titre ?? "",
               text_slug: page.text_slug ?? "",
               number_page_position: page.number_page_position ?? 0,
@@ -99,6 +111,7 @@ export async function POST(request: NextRequest) {
               number_parent_id:
                 page.number_parent_id === -1 ? null : page.number_parent_id,
               checkbox_published: page.checkbox_published,
+              checkbox_home_page: page.checkbox_home_page,
               text_titre: page.text_titre ?? "",
               text_slug: page.text_slug ?? "",
               number_page_position: page.number_page_position ?? 0,
@@ -116,8 +129,6 @@ export async function POST(request: NextRequest) {
       status: 201,
     });
   } catch (err) {
-    console.error("❌ POST /api/edition/pages error:", err);
-
     // ✅ Gérer l'erreur de slug unique
     if (err.code === "P2002") {
       return NextResponse.json(

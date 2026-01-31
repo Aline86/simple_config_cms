@@ -28,6 +28,7 @@ export class PageObject extends BaseValidatable {
   public number_id: number | null;
   public number_parent_id: number | null;
   public checkbox_published: boolean;
+  public checkbox_home_page: boolean;
   public text_titre: string | null;
   public text_description: string | null;
   public text_slug: string | null;
@@ -45,6 +46,7 @@ export class PageObject extends BaseValidatable {
       parent_id?: number | null;
       number_parent_id?: number | null;
       published?: boolean;
+      checkbox_home_page?: boolean;
       checkbox_published?: boolean;
       text_titre?: string | null;
       text_description?: string | null;
@@ -63,11 +65,12 @@ export class PageObject extends BaseValidatable {
   ) {
     super();
 
-    // ✅ Accepter les deux formats (avec ou sans préfixes)
     this.number_id = data.number_id ?? data.id ?? null;
     this.number_parent_id = data.number_parent_id ?? data.parent_id ?? null;
     this.checkbox_published =
       data.checkbox_published ?? data.published ?? false;
+    this.checkbox_home_page =
+      data.checkbox_home_page ?? data.checkbox_home_page ?? false;
     this.text_titre = data.text_titre ?? data.text_titre ?? null;
     this.text_slug = data.text_slug ?? data.slug ?? null;
     this.number_page_position =
@@ -128,6 +131,7 @@ export class PageObject extends BaseValidatable {
       number_id: this.number_id,
       number_parent_id: this.number_parent_id,
       checkbox_published: this.checkbox_published,
+      checkbox_home_page: this.checkbox_home_page,
       text_titre: this.text_titre,
       text_slug: this.text_slug,
       number_page_position: this.number_page_position,

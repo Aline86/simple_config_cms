@@ -1,6 +1,7 @@
 // components/FieldRenderer.tsx
 "use client";
 
+import CheckboxInput from "../../components/ui/Text/CheckBoxInput";
 import { ColorInput } from "../../components/ui/Text/ColorInput";
 import NumberInput from "../../components/ui/Text/RangeInput";
 import TextInput from "../../components/ui/Text/TextInput";
@@ -11,6 +12,7 @@ import {
   extractPrefix,
 } from "../../lib/utils/validators.utils";
 import { MediaObject } from "../../model/bloc/MediaObject";
+import { PageObject } from "../../model/Page";
 import { NumberValidator } from "../NumberValidator";
 import { TextValidator } from "../TextValidator";
 
@@ -20,6 +22,7 @@ type FieldRendererProps<T> = {
   model: Record<string, any>;
   setField: (fieldName: string, value: any) => void;
   isVideo?: boolean;
+  pages?: PageObject[];
 };
 
 export function FieldRenderer<T>({
@@ -28,6 +31,7 @@ export function FieldRenderer<T>({
   model,
   setField,
   isVideo,
+  pages,
 }: FieldRendererProps<T>) {
   const fieldNameToInvestigate =
     fieldName.split(".")[fieldName.split(".").length - 1];
@@ -47,6 +51,19 @@ export function FieldRenderer<T>({
             model={model}
             field={fieldName}
             onChangeValue={setField}
+          />
+        );
+      }
+      case "checkbox": {
+        return (
+          <CheckboxInput
+            label={label}
+            value={currentValue}
+            validator={validator as TextValidator}
+            model={model}
+            field={fieldName}
+            onChangeValue={setField}
+            pages={pages}
           />
         );
       }

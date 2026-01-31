@@ -25,6 +25,7 @@ interface PageCrudProps {
   onDragStart: (page: PageObject) => void;
   onDrop: (page: PageObject) => void;
   draggableEnabled: boolean;
+  pages: PageObject[];
 }
 
 export default function PageCrud({
@@ -34,6 +35,7 @@ export default function PageCrud({
   onDragStart,
   onDrop,
   draggableEnabled,
+  pages,
 }: PageCrudProps) {
   const show_debug = false;
   const handleEdit = (fieldName: string, newValue: any) => {
@@ -66,6 +68,15 @@ export default function PageCrud({
                 model={page_data}
                 setField={handleEdit}
                 label={""}
+              />
+            </div>
+            <div className="text-sm text-muted-foreground">
+              <FieldRenderer
+                fieldName={"checkbox_home_page"}
+                model={page_data}
+                setField={handleEdit}
+                label={""}
+                pages={pages}
               />
             </div>
           </CardContent>

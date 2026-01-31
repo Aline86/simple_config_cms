@@ -25,6 +25,7 @@ model Page {
   number_id             Int      @id @default(autoincrement())
   number_parent_id      Int?
   checkbox_published    Boolean  @default(false)
+  checkbox_home_page    Boolean  @default(false)
   text_titre            String   @db.VarChar(150)
   text_description      String?   @db.VarChar(255)
   text_slug             String   @unique @db.VarChar(150)

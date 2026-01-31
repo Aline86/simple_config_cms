@@ -16,30 +16,34 @@ interface InternUrlInputProps<T> {
 export default function InternUrlInput<T>({
   value,
   label,
-  model,
+
   field,
   onChangeValue,
   className = "",
-  disabled = false,
 }: InternUrlInputProps<T>) {
   const { pages, loading } = usePages();
-
+  console.log("value", value);
   if (loading) return <div>Loading...</div>;
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newValue = e.currentTarget.value;
-
     onChangeValue(field as string, newValue); // remonte l'état au parent
   };
 
   return (
     <div className={`validated-input-wrapper ${className} mb-4`}>
       {label && <label className="input-label">{label}</label>}
-      <select value={value} onChange={handleChange}>
-        <option value="">-- Choisir une page --</option>
+      <select onChange={handleChange}>
+        <option key="0" value="">
+          - Page -
+        </option>
         {pages.map((p) => (
-          <option key={p.slug} value={p.slug}>
-            {p.title}
+          <option
+            key={p.text_titre}
+            value={p.text_slug}
+            selected={p.text_slug === value}
+          >
+            {p.text_titre}
           </option>
         ))}
       </select>

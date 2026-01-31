@@ -17,12 +17,12 @@ export default async function Page({ params }: PageProps) {
 
       <iframe
         src={`/${slug}`}
-        className="w-[375px] h-[667px] mt-8 border mx-auto"
+        className="w-[1200px] h-[667px] mt-8 border mx-auto"
         style={{
           transform: "scale(1)",
           transformOrigin: "top left",
-          width: "375px",
-          height: "500px",
+          width: "1200px",
+          height: "600px",
         }}
       />
     </div>

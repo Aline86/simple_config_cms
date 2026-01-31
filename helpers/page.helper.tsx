@@ -8,7 +8,8 @@ export function clonePageWithBlocs(
   return new PageObject({
     id: page.number_id,
     parent_id: page.number_parent_id, // toujours null à la création
-    published: page.checkbox_published, // page non publiée par défaut
+    checkbox_published: page.checkbox_published, // page non publiée par défaut
+    checkbox_home_page: page.checkbox_home_page, // page non publiée par défaut
     text_titre: page.text_titre ?? "", // text_titre vide
     text_description: page.text_description ?? "", // text_titre vide
     slug: page.text_slug ?? "", // text_titre vide

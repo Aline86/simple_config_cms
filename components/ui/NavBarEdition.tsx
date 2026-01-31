@@ -4,6 +4,8 @@ import LogoutButton from "./LogoutButton";
 import BlocChoiceModal from "../modals/PageChoiceModal";
 import { PageObject } from "../../model/Page";
 import { CreateBlocOptions } from "../../lib/factories/Bloc.factory";
+import { usePathname } from "next/navigation";
+
 interface NavBarEditionProps<T> {
   logout: () => void;
   labelAdd: string;
@@ -23,8 +25,9 @@ export default function NavBarEdition<T>({
   labelAdd,
   model,
 }: NavBarEditionProps<T>) {
+  const pathname = usePathname();
   return (
-    <div className="flex justify-between items-center gap-4 fixed top-0 left-0 right-0 z-100 nav-edition p-4 shadow-lg">
+    <div className="flex justify-end items-center gap-4 fixed top-0 left-0 right-0 z-70 nav-edition p-4 shadow-lg">
       {handleAdd !== undefined && model !== undefined ? (
         <BlocChoiceModal page={model as PageObject} addBlocToPage={handleAdd} />
       ) : (
@@ -36,6 +39,22 @@ export default function NavBarEdition<T>({
             <Plus size={16} /> {labelAdd}
           </button>
         )
+      )}
+      {model !== undefined && (
+        <>
+          <a
+            href={`${pathname}/mobile`}
+            className="cursor-pointer flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-600 transition"
+          >
+            Voir la version mobile
+          </a>
+          <a
+            href={`${pathname}/preview`}
+            className="cursor-pointer flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-600 transition"
+          >
+            Voir le rendu actuel
+          </a>
+        </>
       )}
       <Draggable
         draggableEnabled={draggableEnabled}

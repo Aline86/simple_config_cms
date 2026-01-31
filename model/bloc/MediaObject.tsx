@@ -48,8 +48,8 @@ export class MediaObject extends BaseValidatable {
       id: this.id, // Pour JSON, on utilise le string id
       bloc_id: this.text_bloc_id,
       text_titre: this.text_titre,
-      couleur_bg: this.color_couleur_bg,
-      image_lien: this.text_image_lien,
+      color_couleur_bg: this.color_couleur_bg,
+      text_image_lien: this.text_image_lien,
       number_position_image: this.number_position_image,
       image_url: this.image_url,
     };

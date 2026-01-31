@@ -5,7 +5,7 @@ export default function usePages() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/pages")
+    fetch("/api/edition/pages")
       .then((res) => res.json())
       .then((data) => setPages(data))
       .finally(() => setLoading(false));

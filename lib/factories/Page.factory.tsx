@@ -12,8 +12,9 @@ export function createNewPage(
       published: false, // page non publiée par défaut
       text_titre: "", // text_titre vide
       text_description: "", // text_titre vide
-
-      slug: "", // text_titre vide
+      checkbox_home_page: false,
+      checkbox_published: false,
+      text_slug: "", // text_titre vide
       number_page_position: number_page_position,
       langue: langue ?? "fr_FR", // langue par défaut "fr"
       blocs: [], // aucun bloc par défaut

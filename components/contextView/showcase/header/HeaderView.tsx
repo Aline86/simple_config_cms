@@ -55,7 +55,7 @@ export default function HeaderView({ header }: MediaViewProps) {
     setIsBurger(navWidth > containerWidth - containerWidth * 0.5);
   };
   const showPages = async () => {
-    const pages = await getPages();
+    const pages = await getPages("without_homepage");
     if (pages !== undefined) {
       setPages(pages);
     }
@@ -118,7 +118,7 @@ export default function HeaderView({ header }: MediaViewProps) {
           style={{
             backgroundColor:
               stateBG !== "image"
-                ? (header?.text_background_url as string)
+                ? ((header?.text_background_url + "40") as string)
                 : undefined,
             backgroundImage:
               stateBG === "image" && header?.text_background_url
@@ -126,6 +126,8 @@ export default function HeaderView({ header }: MediaViewProps) {
                 : undefined,
             backgroundSize: "cover",
             backgroundPosition: "center",
+            color:
+              stateBG === "image" || stateBG === "color" ? "white" : "black",
           }}
           className={
             header.mode === "edition"

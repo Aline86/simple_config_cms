@@ -42,6 +42,7 @@ export default function PageClient({
             id: p.number_id,
             parent_id: p.number_parent_id, // toujours null à la création
             published: p.checkbox_published, // page non publiée par défaut
+            checkbox_home_page: p.checkbox_home_page,
             text_titre: p.text_titre ?? "", // text_titre vide
             text_description: p.text_description ?? "",
             slug: p.text_slug ?? "", // text_titre vide
@@ -109,6 +110,7 @@ export default function PageClient({
             number_id: dbPage.number_id,
             number_parent_id: dbPage.number_parent_id,
             checkbox_published: dbPage.checkbox_published,
+            checkbox_home_page: dbPage.checkbox_home_page,
             text_titre: dbPage.text_titre,
             text_description: dbPage.text_description,
 
@@ -157,6 +159,7 @@ export default function PageClient({
       number_id: null,
       number_parent_id: null,
       checkbox_published: false,
+      checkbox_home_page: false,
       text_titre: "",
       text_description: "",
       text_slug: "",
@@ -216,6 +219,7 @@ export default function PageClient({
                   onDrop={onDrop}
                   onDragStart={onDragStart}
                   draggableEnabled={draggableEnabled}
+                  pages={pages}
                 />
               ),
           )}

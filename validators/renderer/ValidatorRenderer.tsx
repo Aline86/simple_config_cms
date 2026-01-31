@@ -121,6 +121,7 @@ export function FieldRenderer<T extends Record<string, any>>({
             value={currentValue}
             field={fieldName as string}
             onChangeValue={setField}
+            label="Lien vers une page"
           />
         ) : (
           <TextInput
@@ -163,9 +164,6 @@ export function FieldRenderer<T extends Record<string, any>>({
   return (
     <div className="field-group space-y-2">
       <label className="block text-sm font-medium text-slate-700">
-        {String(fieldName)
-          .replace(/_/g, " ")
-          .replace(/^(text|image|video|number|color)\s/, "")}
         {validator.getParams().required && (
           <span className="text-red-500 ml-1">*</span>
         )}

@@ -91,7 +91,7 @@ export default function BlocChoiceModal({
           onOpenChange={setOpen}
           primaryAction={{
             label: "Confirmer",
-            onClick: () => alert("Action principale !"),
+            onClick: () => setOpen(false),
           }}
           secondaryAction={{
             label: "Annuler",

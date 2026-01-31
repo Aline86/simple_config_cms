@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { MediaObject } from "../../../../../model/bloc/MediaObject";
 import { FieldRenderer } from "../../../../../validators/renderer/TextRenderer";
+import { DynamicValidatorDropDown } from "../../../../../validators/DynamicValidatorDropDown";
 
 interface MediaEditorProps<T> {
   media: MediaObject;
@@ -109,14 +110,19 @@ export function PictureEditor<T>({ ...props }: MediaEditorProps<T>) {
                       model={props.media as Record<string, any>}
                       setField={props.onChange}
                     />
-                    <FieldRenderer
+                    <DynamicValidatorDropDown
                       label="Lien de la carte"
-                      fieldName={
+                      availableValidators={[
+                        "text_url_interne",
+                        "text_url",
+                        "text_mailto",
+                      ]}
+                      fieldKey={
                         context_medias +
                         `${(props.media as MediaObject).number_position_image}.text_image_lien`
                       }
                       model={props.media as Record<string, any>}
-                      setField={props.onChange}
+                      onChange={props.onChange}
                     />
                   </>
                 )}

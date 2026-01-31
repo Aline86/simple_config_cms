@@ -167,6 +167,7 @@ const FIELD_CONFIGS: Record<string, FieldParameter> = {
     required: true,
     trim: true,
   }),
+  checkbox_home_page: new TextParameter({}),
   text_nom_site: new TextParameter({
     maxLength: 100,
     required: true,
@@ -177,6 +178,7 @@ const FIELD_CONFIGS: Record<string, FieldParameter> = {
       required: "Le text_titre est obligatoire",
     },
   }),
+
   text_email: new TextParameter({
     email: true,
     required: true,

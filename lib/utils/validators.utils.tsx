@@ -4,7 +4,13 @@ import { NumberValidator } from "../../validators/NumberValidator";
 import { TextValidator, TextParameter } from "../../validators/TextValidator";
 
 // Types
-export type FieldPrefix = "text" | "image" | "video" | "number" | "color";
+export type FieldPrefix =
+  | "text"
+  | "image"
+  | "video"
+  | "number"
+  | "color"
+  | "checkbox";
 
 export type ValidatorInstance =
   | TextValidator
@@ -14,14 +20,15 @@ export type ValidatorInstance =
 export const VALidATOR_MAP: Record<FieldPrefix, any> = {
   color: TextValidator,
   text: TextValidator,
+  checkbox: TextValidator,
   image: CloudinaryValidator,
-  video: NumberValidator, // À remplacer par VideoValidator si tu en as un
+  video: TextValidator,
   number: NumberValidator,
 };
 
 // Helper pour extraire le préfixe
 export const extractPrefix = (fieldName: string): FieldPrefix => {
-  const match = fieldName.match(/^(text|image|video|number|color)_/);
+  const match = fieldName.match(/^(text|image|video|number|color|checkbox)_/);
   if (!match) {
     throw new Error(
       `Invalid field name format: ${fieldName}. Expected format: "prefix_fieldname"`,

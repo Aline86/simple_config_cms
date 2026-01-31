@@ -65,7 +65,7 @@ export default function HeaderEdit<T>({
           />
           <DynamicValidatorDropDown
             label="Image"
-            fieldKey="image_text_url"
+            fieldKey="text_image_lien"
             availableValidators={[
               "text_url_interne",
               "text_url",

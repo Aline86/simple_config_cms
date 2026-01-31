@@ -31,3 +31,9 @@ h1 {
 h2 {
   font-size: 25px;
 }
+.light select {
+  color: black !important;
+}
+.light select option {
+  color: black !important;
+}
