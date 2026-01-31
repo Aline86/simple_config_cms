@@ -1,17 +1,18 @@
 "use client";
 
-import { TypeBloc } from "@/model/Page";
-import { CreateBlocOptions, createNewBloc } from "@/lib/factories/Bloc.factory";
-import { useEffect, useState } from "react";
-import { MediaObject } from "@/model/bloc/MediaObject";
-import { updateObjectBySetter } from "@/lib/utils/functions";
-import { reorderArray } from "@/helpers/changeComponentPosition";
-import { BlocObject } from "@/model/Bloc";
-import { cloneBlocWithMedias } from "@/helpers/bloc.helper";
-import { cloneMediaWithPosition, createMedia } from "@/helpers/media.helper";
-import { updateBlocImages } from "@/helpers/bloc.media.helper";
-import CarouselThumbnailsView from "@/components/contextView/showcase/carousel/thumbnails/CarouselThumbnailsView";
-import CarouselThumbnailsEdit from "@/components/contextView/edition/carousel/thumbnails/CarouselThumbnailsEdit";
+import { useState } from "react";
+import { cloneBlocWithMedias } from "../../../../../helpers/bloc.helper";
+import { reorderArray } from "../../../../../helpers/changeComponentPosition";
+import {
+  cloneMediaWithPosition,
+  createMedia,
+} from "../../../../../helpers/media.helper";
+import { updateObjectBySetter } from "../../../../../lib/utils/functions";
+import { BlocObject } from "../../../../../model/Bloc";
+import { MediaObject } from "../../../../../model/bloc/MediaObject";
+import CarouselThumbnailsView from "../../../showcase/carousel/thumbnails/CarouselThumbnailsView";
+import CarouselThumbnailsEdit from "./CarouselThumbnailsEdit";
+
 interface CarouselThumbnailsContextEditionProps {
   bloc: BlocObject;
   onChange: (bloc: BlocObject) => void;
@@ -47,7 +48,6 @@ const CarouselThumbnailsContextEdition: React.FC<
   };
 
   const updateField = (field: string, value: any) => {
-    console.log("updateField", field, value);
     const updatedBloc = updateObjectBySetter(bloc, field, value);
     onChange(updatedBloc.data);
   };
@@ -111,15 +111,7 @@ const CarouselThumbnailsContextEdition: React.FC<
 
       <div className="flex-1 rounded-lg border p-4 bg-background shadow-sm">
         <h2 className="text-lg font-semibold mb-4">Aperçu</h2>
-        {bloc !== undefined && (
-          <CarouselThumbnailsView
-            bloc={bloc}
-            width={bloc.number_width ? bloc.number_width : 150}
-            height={bloc.number_height ? bloc.number_height : 150}
-            gap={30}
-            cardNumber={bloc.image_medias.length}
-          />
-        )}
+        {bloc !== undefined && <CarouselThumbnailsView bloc={bloc} />}
       </div>
     </div>
   );

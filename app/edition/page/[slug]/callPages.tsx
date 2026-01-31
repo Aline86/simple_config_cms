@@ -26,7 +26,7 @@ export async function getPageHeader() {
     throw new Error("Erreur chargement page");
   }
   const header = await res.json();
-  console.log("hedaer", header);
+
   const headerData = {
     text_nom_site: "",
     text_background_url: "",
@@ -52,7 +52,6 @@ export async function getPageHeader() {
       number_position_image: number;
     }>,
   };
-  console.log("header", header);
   return header ?? postPageHeader(headerData);
 }
 async function postPageHeader(headerData: { [key: string]: unknown }) {
@@ -71,6 +70,57 @@ async function postPageHeader(headerData: { [key: string]: unknown }) {
   if (!res.ok) {
     const error = await res.json();
     throw new Error(error.error || "Erreur création header");
+  }
+
+  const result = await res.json();
+  return result.data;
+}
+export async function getPageFooter() {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_APP_URL}/api/edition/page/footer`,
+    {
+      cache: "no-store",
+    },
+  );
+
+  if (!res.ok) {
+    throw new Error("Erreur chargement footer");
+  }
+
+  const footer = await res.json();
+
+  const footerData = {
+    color_background_color: "",
+    text_nom_site_adresse: "",
+    text_adresse_footer: "",
+    text_code_postal: "",
+    reseaux: Array<{
+      text_titre: "";
+      image_url: "";
+      color_couleur_bg: "";
+      text_image_lien: "";
+      number_position_image: number;
+    }>,
+  };
+
+  return footer ?? postPageFooter(footerData);
+}
+async function postPageFooter(footerData: { [key: string]: unknown }) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_APP_URL}/api/edition/page/footer`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(footerData),
+      cache: "no-store",
+    },
+  );
+
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error.error || "Erreur création footer");
   }
 
   const result = await res.json();

@@ -1,7 +1,7 @@
 "use client";
 
-import { blocksToRender } from "@/config/componentsView";
-import { BlocObject } from "@/model/Bloc";
+import { blocksToRender } from "../../config/componentsView";
+import { BlocObject } from "../../model/Bloc";
 
 interface PageCrudProps {
   bloc: BlocObject;
@@ -15,7 +15,6 @@ export default function ComponentBloc({
   updateBloc,
 }: PageCrudProps) {
   const Renderer = blocksToRender[bloc.type].backend;
-  console.log("onchange 1", updateBloc);
   if (!Renderer) return null; // fallback si type inconnu
 
   return (

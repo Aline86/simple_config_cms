@@ -1,18 +1,20 @@
 "use client";
 
-import { TypeBloc } from "@/model/Page";
-import { CreateBlocOptions, createNewBloc } from "@/lib/factories/Bloc.factory";
-import { useEffect, useState } from "react";
-import { MediaObject } from "@/model/bloc/MediaObject";
-import { updateObjectBySetter } from "@/lib/utils/functions";
-import { reorderArray } from "@/helpers/changeComponentPosition";
-import { BlocObject } from "@/model/Bloc";
-import TextEditor from "@/components/contextView/edition/editor/TextEdit";
-import TextView from "@/components/contextView/showcase/editor/TextView";
-import { cloneMediaWithPosition, createMedia } from "@/helpers/media.helper";
-import { updateArticleImages } from "@/helpers/article.media.helper";
-import { cloneBlocWithArticles } from "@/helpers/bloc.helper";
-import { cloneArticleWithImages } from "@/helpers/article.helper";
+import { useState } from "react";
+import { cloneArticleWithImages } from "../../../../helpers/article.helper";
+import { updateArticleImages } from "../../../../helpers/article.media.helper";
+import { cloneBlocWithArticles } from "../../../../helpers/bloc.helper";
+import { reorderArray } from "../../../../helpers/changeComponentPosition";
+import {
+  cloneMediaWithPosition,
+  createMedia,
+} from "../../../../helpers/media.helper";
+import { updateObjectBySetter } from "../../../../lib/utils/functions";
+import { BlocObject } from "../../../../model/Bloc";
+import { MediaObject } from "../../../../model/bloc/MediaObject";
+import TextView from "../../showcase/editor/TextView";
+import TextEditor from "./TextEdit";
+
 interface TextPicturesContextEditionProps {
   bloc: BlocObject;
   onChange: (bloc: BlocObject) => void;
@@ -23,7 +25,6 @@ const TextPicturesContextEdition: React.FC<TextPicturesContextEditionProps> = ({
   onChange,
 }: TextPicturesContextEditionProps) => {
   const [dragged, setDragged] = useState<MediaObject | null>(null);
-  console.log("onChange", onChange);
   const onDragStart = (media: MediaObject) => setDragged(media);
 
   const onDrop = (target: MediaObject) => {
@@ -94,7 +95,7 @@ const TextPicturesContextEdition: React.FC<TextPicturesContextEditionProps> = ({
 
       <div className="flex-1 rounded-lg border p-4 bg-background shadow-sm">
         <h2 className="text-lg font-semibold mb-4">Aperçu</h2>
-        <TextView index={0} bloc={bloc} />
+        <TextView bloc={bloc} />
       </div>
     </div>
   );

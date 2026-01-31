@@ -1,9 +1,8 @@
 "use client";
 
-import { MediaObject } from "@/model/bloc/MediaObject";
-import { BlocObject } from "@/model/Bloc";
-
-import { FieldRenderer } from "@/validators/renderer/TextRenderer";
+import { BlocObject } from "../../../../model/Bloc";
+import { MediaObject } from "../../../../model/bloc/MediaObject";
+import { FieldRenderer } from "../../../../validators/renderer/TextRenderer";
 import { PictureEditor } from "../grid/image_grid/PictureEditor";
 
 interface ButtonEditorProps<T> {

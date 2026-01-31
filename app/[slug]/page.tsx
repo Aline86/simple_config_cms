@@ -1,4 +1,9 @@
-import { getPageBySlug, getPageHeader } from "./callPages";
+import {
+  getPageBySlug,
+  getPageFooter,
+  getPageHeader,
+} from "../edition/page/[slug]/callPages";
+
 import PageClient from "./PageClient";
 
 interface PageProps {
@@ -14,10 +19,14 @@ export default async function Page({ params }: PageProps) {
     return <div>Page non trouvée</div>;
   }
   const header = await getPageHeader();
-  console.log("pge", page);
 
   if (!header) {
     return <div>PB lors du chargement du header</div>;
   }
-  return <PageClient initialpage={page} header={header} />;
+  const footer = await getPageFooter();
+
+  if (!footer) {
+    return <div>PB lors du chargement du header</div>;
+  }
+  return <PageClient initialpage={page} header={header} footer={footer} />;
 }

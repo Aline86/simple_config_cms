@@ -1,8 +1,6 @@
 // pages/api/pages/[id].ts
 import type { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
-import { BlocObject } from "@/model/Bloc";
-import { PageObject } from "@/model/Page";
 
 const prisma = new PrismaClient();
 export default async function handler(
@@ -16,7 +14,7 @@ export default async function handler(
     // ==================== DELETE ====================
     if (req.method === "DELETE") {
       const deletedPage = await prisma.page.delete({
-        where: { id: Number(id) },
+        where: { number_id: Number(id) },
       });
       return res.status(200).json(deletedPage);
     }

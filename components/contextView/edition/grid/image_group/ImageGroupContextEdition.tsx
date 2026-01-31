@@ -1,14 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { MediaObject } from "@/model/bloc/MediaObject";
-import { updateObjectBySetter } from "@/lib/utils/functions";
-import { reorderArray } from "@/helpers/changeComponentPosition";
-import { BlocObject } from "@/model/Bloc";
-import PicturesLinkView from "@/components/contextView/showcase/grid/picturesLink/PicturesLinkView";
-import { cloneBlocWithMedias } from "@/helpers/bloc.helper";
-import { cloneMediaWithPosition, createMedia } from "@/helpers/media.helper";
+
 import PicturesLinkEdit from "./PicturesLinkEdit";
+import { cloneBlocWithMedias } from "../../../../../helpers/bloc.helper";
+import { reorderArray } from "../../../../../helpers/changeComponentPosition";
+import {
+  cloneMediaWithPosition,
+  createMedia,
+} from "../../../../../helpers/media.helper";
+import { updateObjectBySetter } from "../../../../../lib/utils/functions";
+import { BlocObject } from "../../../../../model/Bloc";
+import { MediaObject } from "../../../../../model/bloc/MediaObject";
+import PicturesLinkView from "../../../showcase/grid/picturesLink/PicturesLinkView";
 
 interface ImageGroupContextEditionProps {
   bloc: BlocObject;
@@ -109,7 +113,7 @@ const ImageGroupContextEdition: React.FC<ImageGroupContextEditionProps> = ({
 
       <div className="flex-1 rounded-lg border p-4 bg-background shadow-sm">
         <h2 className="text-lg font-semibold mb-4">Aperçu</h2>
-        <PicturesLinkView bloc={bloc} isLink={true} />
+        <PicturesLinkView bloc={bloc} />
       </div>
     </div>
   );

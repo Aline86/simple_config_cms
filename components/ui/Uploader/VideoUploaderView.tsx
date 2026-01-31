@@ -1,8 +1,8 @@
 // ==================== UI COMPONENTS ====================
 
 import Image from "next/image";
-import VideoUploader from "@/lib/mediaUploader/VideoUploader";
-import { MediaObject } from "@/model/bloc/MediaObject";
+import { MediaObject } from "../../../model/bloc/MediaObject";
+import VideoUploader from "../../../lib/mediaUploader/VideoUploader";
 
 interface UploadedImage {
   file: File;
@@ -279,7 +279,7 @@ function PreviewItem({ item, onRemove }: PreviewItemProps) {
   if (item.type === "youtube") {
     return (
       <div className="preview-item youtube-item">
-        <YouTubePreview url={item.url} videoid={item.VIDEOid} />
+        <YouTubePreview url={item.url} videoid={item.videoid} />
         <div className="preview-overlay">
           <button
             type="button"

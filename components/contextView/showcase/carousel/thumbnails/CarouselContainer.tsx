@@ -1,7 +1,7 @@
-import { MediaObject } from "@/model/bloc/MediaObject";
 import { useEffect, useState } from "react";
 import BigCard from "./BigCard";
 import Card from "./Card";
+import { MediaObject } from "../../../../../model/bloc/MediaObject";
 
 export default function CarouselContainer({
   medias,

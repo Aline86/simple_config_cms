@@ -1,8 +1,8 @@
 "use client";
 
-import { MediaObject } from "@/model/bloc/MediaObject";
-import { FieldRenderer } from "@/validators/renderer/TextRenderer";
 import { useState } from "react";
+import { MediaObject } from "../../../../../model/bloc/MediaObject";
+import { FieldRenderer } from "../../../../../validators/renderer/TextRenderer";
 
 interface MediaEditorProps<T> {
   media: MediaObject;

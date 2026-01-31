@@ -4,7 +4,7 @@ import { EmblaOptionsType } from "embla-carousel";
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
-import { BlocObject } from "@/model/Bloc";
+import { BlocObject } from "../../../../../model/Bloc";
 
 type CardDatas = {
   options?: EmblaOptionsType;
@@ -17,7 +17,6 @@ const CarouselAutoView: React.FC<CardDatas> = ({
   options,
 }: CardDatas) => {
   const [emblaRef] = useEmblaCarousel(options, [Autoplay()]);
-  console.log("bloc 2", bloc);
   return bloc !== undefined ? (
     <section className="embla w-full">
       <h2 className="text-2xl text-center font-bold text-slate-800">

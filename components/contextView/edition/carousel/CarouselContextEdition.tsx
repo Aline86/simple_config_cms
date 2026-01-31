@@ -1,6 +1,6 @@
 import React from "react";
-import { BlocObject } from "@/model/Bloc";
-import { carouselToRender } from "@/config/componentsView";
+import { BlocObject } from "../../../../model/Bloc";
+import { carouselToRender } from "../../../../config/componentsView";
 
 interface CarouselContextEditionProps {
   bloc: BlocObject;

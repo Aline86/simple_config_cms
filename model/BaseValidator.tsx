@@ -1,4 +1,7 @@
-import { createValidator, FieldConfigsMap } from "@/lib/utils/validators.utils";
+import {
+  createValidator,
+  FieldConfigsMap,
+} from "../lib/utils/validators.utils";
 
 export abstract class BaseValidatable {
   validateAll(): boolean {
@@ -31,7 +34,6 @@ export abstract class BaseValidatable {
             fieldName as keyof FieldConfigsMap,
             value,
           );
-          console.log("fieldName", fieldName, validator.isValid());
           return validator.isValid();
         }
       }

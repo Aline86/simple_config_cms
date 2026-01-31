@@ -1,4 +1,3 @@
-import { PageObject } from "@/model/Page";
 import * as Dialog from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
 import React from "react";
@@ -31,7 +30,11 @@ export const Modal: React.FC<ModalProps> = ({
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed z-90 inset-0 bg-black/40 backdrop-blur-sm" />
-        <Dialog.Content className="fixed z-100 top-1/2 left-1/2 w-[100%] max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-lg bg-white p-6 shadow-lg max-h-[90vh]  overflow-y-auto">
+        <Dialog.Content
+          onInteractOutside={(e) => e.preventDefault()}
+          onPointerDownOutside={(e) => e.preventDefault()}
+          className="fixed z-[1000] top-1/2 left-1/2 w-[100%] max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-lg bg-white p-6 shadow-lg max-h-[90vh]  overflow-y-auto"
+        >
           <div className="flex justify-between items-center mb-4">
             <Dialog.Title className="text-lg font-semibold">
               {title}

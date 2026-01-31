@@ -1,22 +1,18 @@
 "use client";
 
-import { TypeBloc } from "@/model/Page";
-import { CreateBlocOptions, createNewBloc } from "@/lib/factories/Bloc.factory";
-import { useEffect, useState } from "react";
-import { MediaObject } from "@/model/bloc/MediaObject";
-import { updateObjectBySetter } from "@/lib/utils/functions";
+import { useState } from "react";
+import { cloneBlocWithMedias } from "../../../../../helpers/bloc.helper";
+import { reorderArray } from "../../../../../helpers/changeComponentPosition";
 import {
-  deleteItemAndReorder,
-  reorderArray,
-} from "@/helpers/changeComponentPosition";
-import { BlocObject } from "@/model/Bloc";
-
-import { cloneBlocWithMedias } from "@/helpers/bloc.helper";
-import { cloneMediaWithPosition, createMedia } from "@/helpers/media.helper";
-import { updateBlocImages } from "@/helpers/bloc.media.helper";
-import CarouselAutoView from "@/components/contextView/showcase/carousel/automatic/CarouselAutoView";
+  cloneMediaWithPosition,
+  createMedia,
+} from "../../../../../helpers/media.helper";
+import { updateObjectBySetter } from "../../../../../lib/utils/functions";
+import { BlocObject } from "../../../../../model/Bloc";
+import { MediaObject } from "../../../../../model/bloc/MediaObject";
+import PicturesgridView from "../../../showcase/grid/picturesView/PicturesGridView";
 import PicturesLinkEdit from "../image_group/PicturesLinkEdit";
-import PicturesgridView from "@/components/contextView/showcase/grid/picturesView/PicturesGridView";
+
 interface ImageGridContextEditionProps {
   bloc: BlocObject;
   onChange: (bloc: BlocObject) => void;

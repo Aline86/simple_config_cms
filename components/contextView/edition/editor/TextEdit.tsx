@@ -1,13 +1,12 @@
 "use client";
 
-import { BlocObject } from "@/model/Bloc";
-import { MediaObject } from "@/model/bloc/MediaObject";
-import { FieldRenderer } from "@/validators/renderer/TextRenderer";
-
 import { Tiptap } from "./TipTapEditor";
 import { PlusIcon } from "lucide-react";
 import { useState } from "react";
 import { PictureEditor } from "../grid/image_grid/PictureEditor";
+import { MediaObject } from "../../../../model/bloc/MediaObject";
+import { BlocObject } from "../../../../model/Bloc";
+import { FieldRenderer } from "../../../../validators/renderer/TextRenderer";
 
 interface TextEditorProps {
   bloc: BlocObject;
@@ -48,16 +47,16 @@ export default function TextEditor({
     onChange(`articles.0.text_images_position` as string, newValidatorKey);
   };
   return (
-    <div className="mx-auto max-w-4xl space-y-6 p-6">
+    <div className="mx-auto w-full space-y-6 p-6">
       {/* Header Section */}
-      <header className="space-y-2">
+      <div className="space-y-2">
         <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
           Configuration du composant "Texte avec images associées"
         </h2>
         <p className="text-sm text-slate-500 dark:text-slate-400">
           Configurez les différentes images de votre composant
         </p>
-      </header>
+      </div>
 
       {/* Main Content */}
       <section className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-950">

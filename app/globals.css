@@ -10,6 +10,10 @@ h2,
 select,
 option {
   color: rgb(20, 20, 20);
+  word-break: break-word;
+}
+h1 {
+  word-break: break-word;
 }
 :root {
   color-scheme: light;
@@ -394,4 +398,8 @@ h2.tiptap_heading {
   background-color: var(--background) !important;
   color: var(--foreground) !important;
   appearance: none;
+}
+iframe {
+  z-index: 2000 !important;
+  pointer-events: auto !important;
 }

@@ -1,66 +1,56 @@
 "use client";
 
-import { useEffect, useState } from "react";
-
-import { MediaObject } from "@/model/bloc/MediaObject";
-
-import { updateObjectBySetter } from "@/lib/utils/functions";
-
-import { deleteItemAndReorder } from "@/helpers/changeComponentPosition";
-import { cloneMediaWithPosition, createMedia } from "@/helpers/media.helper";
-
-import { FooterObject } from "@/model/bloc/Footer";
+import { deleteItemAndReorder } from "../../../../helpers/changeComponentPosition";
 import {
   cloneFooterWithReseau,
   cloneFooterWithReseaux,
-  mockFooter,
-} from "@/helpers/footer.helper";
-import FooterEdit from "@/components/contextView/edition/footer/FooterEdit";
-import FooterView from "@/components/contextView/showcase/footer/FooterView";
+} from "../../../../helpers/footer.helper";
+import {
+  cloneMediaWithPosition,
+  createMedia,
+} from "../../../../helpers/media.helper";
+import { updateObjectBySetter } from "../../../../lib/utils/functions";
+import { FooterObject } from "../../../../model/bloc/Footer";
+import { MediaObject } from "../../../../model/bloc/MediaObject";
+import FooterView from "../../showcase/footer/FooterView";
+import FooterEdit from "./FooterEdit";
 
-export default function FooterContextEdition() {
-  const [FooterData, setFooter] = useState<FooterObject | null>(null);
-  const idBloc = nanoid();
-  // Initialiser les données côté client uniquement
-  useEffect(() => {
-    setFooter(mockFooter(idBloc));
-  }, []);
-  useEffect(() => {}, [FooterData]);
+interface FooterContextEditionProps {
+  bloc: FooterObject;
+  onChange: (bloc: FooterObject) => void;
+}
+
+const FooterContextEdition: React.FC<FooterContextEditionProps> = ({
+  bloc,
+  onChange,
+}: FooterContextEditionProps) => {
   const updateMediaObject = (fieldName: string, newValue: any) => {
-    if (!FooterData) return;
-    const newObj = updateObjectBySetter(FooterData, fieldName, newValue);
-    console.log("newObj.data", newObj.data);
-    setFooter(newObj.data);
+    if (!bloc) return;
+    const newObj = updateObjectBySetter(bloc, fieldName, newValue);
+    onChange(newObj.data);
   };
 
   const handleRemove = (model: MediaObject) => {
-    setFooter((prev) => {
-      if (!prev) return prev;
-      const res = deleteItemAndReorder(
-        prev.reseaux,
-        model,
-        "number_position_image",
-      );
-      const cleanReseaux = res.map((reseau, index) => {
-        return cloneMediaWithPosition(reseau, index);
-      });
-      const updatedFooter = cloneFooterWithReseaux(prev, cleanReseaux);
-
-      return updatedFooter;
+    const res = deleteItemAndReorder(
+      bloc.reseaux,
+      model,
+      "number_position_image",
+    );
+    const cleanReseaux = res.map((reseau, index) => {
+      return cloneMediaWithPosition(reseau, index);
     });
+    const updatedHeader = cloneFooterWithReseaux(bloc, cleanReseaux);
+
+    onChange(updatedHeader);
   };
   const handleAdd = () => {
-    setFooter((prev) => {
-      if (!prev) return prev;
-      const newMedia = createMedia(prev.reseaux.length, prev.id);
-      const updatedFooter = cloneFooterWithReseau(prev, newMedia);
-
-      return updatedFooter;
-    });
+    const newMedia = createMedia(bloc.reseaux.length, 1);
+    const updatedHeader = cloneFooterWithReseau(bloc, newMedia);
+    onChange(updatedHeader);
   };
 
   // Afficher un placeholder pendant le chargement
-  if (!FooterData) {
+  if (!bloc) {
     return (
       <div className="flex flex-col lg:flex-row gap-6">
         <div className="flex-1 rounded-lg border p-4 bg-background shadow-sm">
@@ -86,7 +76,7 @@ export default function FooterContextEdition() {
       <div className="flex-1 rounded-lg border p-4 bg-background shadow-sm">
         <h2 className="text-lg font-semibold mb-4">Éditeur</h2>
         <FooterEdit
-          footer={FooterData}
+          footer={bloc}
           onChange={updateMediaObject}
           addElement={handleAdd}
           removeElement={handleRemove}
@@ -95,8 +85,9 @@ export default function FooterContextEdition() {
 
       <div className="flex-1 rounded-lg border p-4 bg-background shadow-sm">
         <h2 className="text-lg font-semibold mb-4">Aperçu</h2>
-        <FooterView footer={FooterData} />
+        <FooterView footer={bloc} />
       </div>
     </div>
   );
-}
+};
+export default FooterContextEdition;

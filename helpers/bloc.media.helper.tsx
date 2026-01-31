@@ -1,6 +1,5 @@
-import { BlocObject } from "@/model/Bloc";
-import { ArticleObject } from "@/model/bloc/Article";
-import { MediaObject } from "@/model/bloc/MediaObject";
+import { BlocObject } from "../model/Bloc";
+import { MediaObject } from "../model/bloc/MediaObject";
 
 export function updateBlocImages(
   bloc: BlocObject,

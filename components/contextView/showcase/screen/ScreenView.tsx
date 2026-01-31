@@ -1,11 +1,11 @@
 // PicturesLinkItemView.tsx
-import { ArrowRight } from "lucide-react";
-import FIELD_CONFIGS from "@/config/fieldConfig";
+
+import Image from "next/image";
+import FIELD_CONFIGS from "../../../../config/fieldConfig";
+import { BlocObject } from "../../../../model/Bloc";
 import CloudinaryValidator, {
   CloudinaryParameter,
-} from "@/validators/MediaValidator";
-import { BlocObject } from "@/model/Bloc";
-import Image from "next/image";
+} from "../../../../validators/MediaValidator";
 export default function ScreenView({ bloc }: { bloc: BlocObject }) {
   const picture = bloc.image_medias[0];
   const isValid = new CloudinaryValidator(
@@ -15,35 +15,45 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
       : new CloudinaryParameter(),
   ).validate();
 
-  return bloc.mode !== "edition" && bloc.bloc_position === 0 ? (
-    <div className={"absolute inset-0 "}>
-      <div className="absolute bottom-[100px] left-[10%] z-10 title text-white ">
-        <h1 className="relative">{bloc.text_titre}</h1>
-        <h2 className="relative">{bloc.text_description}</h2>
+  return bloc.bloc_position === 0 && bloc.mode === "edition" ? (
+    <section className="mt-[-95px] relative w-screen h-screen ">
+      <div className="relative w-screen h-screen  left-[10%] z-10 title text-white flex flex-col justify-end pb-24">
+        <h1>{bloc.text_titre}</h1>
+        <h2 style={{ color: "white" }} className="text-white">
+          {bloc.text_description}
+        </h2>
       </div>
 
       <Image
-        className={"absolute inset-0 z-0 object-cover"}
         src={bloc.image_medias[0].image_url}
-        fill
         alt={bloc.text_titre}
+        fill
+        className="absolute  w-[100vw] h-[100vh] inset-0 top-0 object-cover"
+        priority
       />
-      <span className="absolute bg-black/20 inset-0"></span>
-    </div>
+
+      <span className="absolute inset-0 bg-black/20"></span>
+    </section>
   ) : (
-    <div className={"relative z-10 h-[100vh] bottom-[5px]"}>
-      <Image
-        className={"absolute h-full z-0 object-cover "}
-        src={bloc.image_medias[0].image_url}
-        fill
-        alt={bloc.text_titre}
+    <section className="mt-24 relative h-[300px] w-screen overflow-hidden">
+      {/* Background parallaxe */}
+      <div
+        className="absolute inset-0 bg-center bg-cover bg-fixed"
+        style={{
+          backgroundImage: `url(${bloc.image_medias[0].image_url})`,
+        }}
       />
-      <div className="h-full  left-[10%] z-10 title text-white flex flex-col justify-end p-24 ">
-        <h1 className="relative z-10">{bloc.text_titre}</h1>
-        <h2 className="relative z-10 ">{bloc.text_description}</h2>
-      </div>
 
-      <span className="absolute bg-black/20 inset-0"></span>
-    </div>
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/30"></div>
+
+      {/* Contenu texte */}
+      <div className="relative z-10 h-full flex flex-col justify-end p-24 text-white">
+        <h1 className="text-5xl font-bold">{bloc.text_titre}</h1>
+        <h2 style={{ color: "white" }} className="text-2xl mt-4">
+          {bloc.text_description}
+        </h2>
+      </div>
+    </section>
   );
 }

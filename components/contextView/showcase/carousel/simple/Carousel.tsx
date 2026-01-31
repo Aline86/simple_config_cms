@@ -1,16 +1,15 @@
 "use client";
 
 import Image from "next/image";
-import { BlocObject } from "@/model/Bloc";
-import { MediaObject } from "@/model/bloc/MediaObject";
-
+import { BlocObject } from "../../../../../model/Bloc";
+import { MediaObject } from "../../../../../model/bloc/MediaObject";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel";
+  CarouselNext,
+} from "../../../../ui/carousel";
 
 interface CustomCarouselInfo {
   bloc: BlocObject;
@@ -18,7 +17,6 @@ interface CustomCarouselInfo {
 
 export default function CarouselSimple({ bloc }: CustomCarouselInfo) {
   if (!bloc?.image_medias?.length) return null;
-  console.log("bloc111", bloc);
   return (
     <div className="relative w-full flex-col justify-center align-center m-auto overflow-hidden">
       <h2 className="text-2xl text-center font-bold text-slate-800 mb-6">

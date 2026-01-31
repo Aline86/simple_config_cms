@@ -12,8 +12,8 @@ export class HeaderObject extends BaseValidatable {
   public text_background_url: string | null;
 
   // Relations
-  public image_logo: MediaObject | null;
-  public image_favicon: MediaObject | null;
+  public logo: MediaObject | null;
+  public favicon: MediaObject | null;
   public reseaux: MediaObject[];
   public mode: string;
   constructor(
@@ -22,8 +22,8 @@ export class HeaderObject extends BaseValidatable {
 
       text_nom_site?: string | null;
       text_background_url?: string | null;
-      image_logo?: MediaObject | any;
-      image_favicon?: MediaObject | any;
+      logo?: MediaObject | any;
+      favicon?: MediaObject | any;
       reseaux?: MediaObject[] | any[];
     } = {},
     mode: string,
@@ -34,25 +34,25 @@ export class HeaderObject extends BaseValidatable {
     this.text_background_url = data.text_background_url ?? null;
     this.mode = mode ?? "edition";
     // Réhydrater le logo
-    if (data.image_logo) {
-      this.image_logo =
-        data.image_logo instanceof MediaObject
-          ? data.image_logo
-          : new MediaObject(data.image_logo);
+    if (data.logo) {
+      this.logo =
+        data.logo instanceof MediaObject
+          ? data.logo
+          : new MediaObject(data.logo);
     } else {
-      this.image_logo = new MediaObject({
+      this.logo = new MediaObject({
         text_bloc_id: data.number_id as number,
       });
     }
 
     // Réhydrater le favicon
-    if (data.image_favicon) {
-      this.image_favicon =
-        data.image_favicon instanceof MediaObject
-          ? data.image_favicon
-          : new MediaObject(data.image_favicon);
+    if (data.favicon) {
+      this.favicon =
+        data.favicon instanceof MediaObject
+          ? data.favicon
+          : new MediaObject(data.favicon);
     } else {
-      this.image_favicon = new MediaObject({
+      this.favicon = new MediaObject({
         text_bloc_id: data.number_id as number,
       });
     }
@@ -75,8 +75,8 @@ export class HeaderObject extends BaseValidatable {
 
       nom_site: this.text_nom_site,
       background_url: this.text_background_url,
-      logo: this.image_logo?.toJSON() ?? null,
-      favicon: this.image_favicon?.toJSON() ?? null,
+      logo: this.logo?.toJSON() ?? null,
+      favicon: this.favicon?.toJSON() ?? null,
       reseaux: this.reseaux.map((r) => r.toJSON()),
     };
   }

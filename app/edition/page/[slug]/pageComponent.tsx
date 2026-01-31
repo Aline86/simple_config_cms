@@ -1,8 +1,8 @@
 "use client";
 
-import { BlocObject } from "@/model/Bloc";
-import { PageObject } from "@/model/Page";
-import ComponentBloc from "@/components/contextView/ComponentBloc";
+import ComponentBloc from "../../../../components/contextView/ComponentBloc";
+import { BlocObject } from "../../../../model/Bloc";
+import { PageObject } from "../../../../model/Page";
 
 interface PageCrudProps {
   page_data: PageObject;
@@ -22,10 +22,10 @@ export default function PageBlocs({
   onDrop,
   draggableEnabled,
 }: PageCrudProps) {
-  const show_debug = true;
+  const show_debug = false;
 
   return (
-    <div className="p-6 space-y-6 ">
+    <div className="p-6  space-y-6 ">
       {page_data !== undefined &&
         page_data !== null &&
         page_data.blocs !== undefined &&

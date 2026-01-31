@@ -1,14 +1,9 @@
 "use client";
 
-import { MediaObject } from "@/model/bloc/MediaObject";
-import { DynamicValidatorDropDown } from "@/validators/DynamicValidatorDropDown";
-import { FieldRenderer } from "@/validators/renderer/TextRenderer";
-import { useEffect } from "react";
-
-import { MediaEditor } from "../media/Media";
-import { Modal } from "@/components/modals/Modal";
-import { SocialMediaModal } from "@/components/modals/SocialMediaModal";
-import { FooterObject } from "@/model/bloc/Footer";
+import { FooterObject } from "../../../../model/bloc/Footer";
+import { MediaObject } from "../../../../model/bloc/MediaObject";
+import { FieldRenderer } from "../../../../validators/renderer/TextRenderer";
+import { SocialMediaModal } from "../../../modals/SocialMediaModal";
 
 interface MediaEditorProps<T> {
   footer: FooterObject;

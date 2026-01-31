@@ -1,14 +1,10 @@
 "use client";
 
-import { HeaderObject } from "@/model/bloc/Header";
-import { MediaObject } from "@/model/bloc/MediaObject";
-import { DynamicValidatorDropDown } from "@/validators/DynamicValidatorDropDown";
-import { FieldRenderer } from "@/validators/renderer/TextRenderer";
-import { useEffect } from "react";
-
-import { MediaEditor } from "../media/Media";
-import { Modal } from "@/components/modals/Modal";
-import { SocialMediaModal } from "@/components/modals/SocialMediaModal";
+import { HeaderObject } from "../../../../model/bloc/Header";
+import { MediaObject } from "../../../../model/bloc/MediaObject";
+import { DynamicValidatorDropDown } from "../../../../validators/DynamicValidatorDropDown";
+import { FieldRenderer } from "../../../../validators/renderer/TextRenderer";
+import { SocialMediaModal } from "../../../modals/SocialMediaModal";
 
 interface MediaEditorProps<T> {
   header: HeaderObject;
@@ -23,7 +19,7 @@ export default function HeaderEdit<T>({
   addElement,
   removeElement,
 }: MediaEditorProps<T>) {
-  const debug = true;
+  const debug = false;
 
   return (
     <div className="mx-auto max-w-2xl space-y-6 p-6">
@@ -45,20 +41,14 @@ export default function HeaderEdit<T>({
             label={"Nom du site"}
           />
           <FieldRenderer
-            fieldName="image_logo.image_url"
-            model={
-              header.image_logo !== null ? header.image_logo : new MediaObject()
-            }
+            fieldName="logo.image_url"
+            model={header.logo !== null ? header.logo : new MediaObject()}
             setField={onChange}
             label={"Logo du site"}
           />
           <FieldRenderer
-            fieldName="image_favicon.image_url"
-            model={
-              header.image_favicon !== null
-                ? header.image_favicon
-                : new MediaObject()
-            }
+            fieldName="favicon.image_url"
+            model={header.favicon !== null ? header.favicon : new MediaObject()}
             setField={onChange}
             label={"Favicon du site"}
           />

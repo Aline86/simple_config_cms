@@ -1,4 +1,4 @@
-import { getPageBySlug, getPageHeader } from "./callPages";
+import { getPageBySlug, getPageFooter, getPageHeader } from "./callPages";
 import PageClient from "./PageClient";
 
 interface PageProps {
@@ -18,5 +18,10 @@ export default async function Page({ params }: PageProps) {
   if (!header) {
     return <div>PB lors du chargement du header</div>;
   }
-  return <PageClient initialpage={page} header={header} />;
+  const footer = await getPageFooter();
+
+  if (!footer) {
+    return <div>PB lors du chargement du header</div>;
+  }
+  return <PageClient initialpage={page} header={header} footer={footer} />;
 }

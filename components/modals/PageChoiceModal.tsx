@@ -1,10 +1,9 @@
 "use client";
 
+import { useState } from "react";
+import { CreateBlocOptions } from "../../lib/factories/Bloc.factory";
+import { PageObject, TypeBloc } from "../../model/Page";
 import { Modal } from "./Modal";
-import { PageObject, TypeBloc } from "@/model/Page";
-import { CreateBlocOptions, createNewBloc } from "@/lib/factories/Bloc.factory";
-import { useEffect, useState } from "react";
-import PageCrud from "@/app/edition/page/[slug]/pageComponent";
 
 export default function BlocChoiceModal({
   page,

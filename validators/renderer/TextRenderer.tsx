@@ -1,20 +1,18 @@
 // components/FieldRenderer.tsx
 "use client";
 
-import { TextParameter, TextValidator } from "@/validators/TextValidator";
-
-import { NumberValidator } from "@/validators/NumberValidator";
-import { useEffect, useState } from "react";
-import ImageUploaderView from "@/components/ui/Uploader/ImageUploaderView";
-import { ColorInput } from "@/components/ui/Text/ColorInput";
-import TextInput from "@/components/ui/Text/TextInput";
-import FIELD_CONFIGS from "@/config/fieldConfig";
-import firstLetterToUperCase from "@/helpers/firstLetterToUpperCase";
-import { MediaObject } from "@/model/bloc/MediaObject";
-import CloudinaryValidator from "../MediaValidator";
-import NumberInput from "@/components/ui/Text/RangeInput";
-import VideoUploaderView from "@/components/ui/Uploader/VideoUploaderView";
-import { createValidator, extractPrefix } from "@/lib/utils/validators.utils";
+import { ColorInput } from "../../components/ui/Text/ColorInput";
+import NumberInput from "../../components/ui/Text/RangeInput";
+import TextInput from "../../components/ui/Text/TextInput";
+import ImageUploaderView from "../../components/ui/Uploader/ImageUploaderView";
+import VideoUploaderView from "../../components/ui/Uploader/VideoUploaderView";
+import {
+  createValidator,
+  extractPrefix,
+} from "../../lib/utils/validators.utils";
+import { MediaObject } from "../../model/bloc/MediaObject";
+import { NumberValidator } from "../NumberValidator";
+import { TextValidator } from "../TextValidator";
 
 type FieldRendererProps<T> = {
   label: string;

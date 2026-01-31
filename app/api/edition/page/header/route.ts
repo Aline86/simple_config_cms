@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma/prisma";
+import { prisma } from "./../../../../../lib/prisma/prisma";
 
 export async function GET() {
   try {
@@ -99,8 +99,6 @@ export async function PUT(request: NextRequest) {
     if (!id) {
       return NextResponse.json({ error: "Header ID missing" }, { status: 400 });
     }
-    console.log("text_nom_site", body);
-    // Récupérer le header existant
     const existingHeader = await prisma.header.findFirst({
       where: { number_id: Number(id) },
       include: {

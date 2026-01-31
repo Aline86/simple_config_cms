@@ -1,8 +1,8 @@
 "use client";
 
-import { BlocObject } from "@/model/Bloc";
-import { PageObject } from "@/model/Page";
-import ComponentBloc from "@/components/contextView/ComponentBloc";
+import { BlocObject } from "../../model/Bloc";
+import { PageObject } from "../../model/Page";
+import ComponentBloc from "./BlocComponent";
 
 interface PageCrudProps {
   page_data: PageObject;
@@ -22,7 +22,7 @@ export default function PageBlocs({
   onDrop,
   draggableEnabled,
 }: PageCrudProps) {
-  const show_debug = true;
+  const show_debug = false;
 
   return (
     <div className="p-6 space-y-6 ">
@@ -41,11 +41,7 @@ export default function PageBlocs({
               onDrop={() => onDrop(bloc)}
               className="grid  lg:grid-cols-1 gap-6  cursor-grab active:cursor-grabbing"
             >
-              <ComponentBloc
-                bloc={bloc}
-                onDelete={onDelete}
-                updateBloc={updateBloc}
-              />
+              <ComponentBloc bloc={bloc} />
             </div>
           );
         })}

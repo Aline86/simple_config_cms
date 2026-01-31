@@ -1,12 +1,8 @@
 "use client";
 
-import FIELD_CONFIGS from "@/config/fieldConfig";
-import { HeaderObject } from "@/model/bloc/Header";
-import { TextValidator } from "@/validators/TextValidator";
-import Image from "next/image";
-
 import { useEffect, useRef, useState } from "react";
 import SocialTab from "./SocialTab";
+import { HeaderObject } from "../../../../model/bloc/Header";
 
 interface MediaViewProps {
   header: HeaderObject;
@@ -94,7 +90,7 @@ export default function HeaderView({ header }: MediaViewProps) {
 
   if (!isMounted) {
     return (
-      <header className="bg-white shadow">
+      <header className="bg-white shadow ">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
           <span className="text-xl font-bold text-indigo-600">MonSite</span>
           <div className="w-6 h-6" />
@@ -122,15 +118,15 @@ export default function HeaderView({ header }: MediaViewProps) {
         className={
           header.mode === "edition"
             ? `shadow ${isSticky ? "sticky" : "relative"} top-0 left-0 right-0 z-20`
-            : "shadow fixed  top-0 left-0 right-0 z-20"
+            : " shadow fixed  top-0 left-0 right-0 z-20"
         }
       >
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-between h-16 ">
             <span className="text-xl font-bold text-indigo-600 relative  flex-shrink-0 z-0">
-              {header?.image_logo?.image_url ? (
+              {header?.logo?.image_url ? (
                 <img
-                  src={header.image_logo.image_url}
+                  src={header.logo.image_url}
                   className="logo-site"
                   alt={header.text_nom_site || "Logo"}
                 />
@@ -205,7 +201,7 @@ export default function HeaderView({ header }: MediaViewProps) {
           className={
             header.mode === "edition"
               ? ` ${isSticky ? "fixed w-fit h-fit mt-5 right-[30px] z-0" : "absolute w-fit h-fit mt-20 right-[30px] z-0"}`
-              : "fixed w-fit h-fit mt-5 right-[30px] z-15 mt-24"
+              : "fixed w-fit h-fit mt-5 right-[15px] z-15 "
           }
         >
           <div className="social-media absolute mb-2 right-[0px] ">

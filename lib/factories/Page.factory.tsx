@@ -1,5 +1,6 @@
 // lib/factories/page.factory.ts
-import { PageObject } from "@/model/Page";
+
+import { PageObject } from "../../model/Page";
 
 export function createNewPage(
   number_page_position: number,

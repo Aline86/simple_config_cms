@@ -1,5 +1,5 @@
-import { BlocObject } from "@/model/Bloc";
-import { PageObject } from "@/model/Page";
+import { BlocObject } from "../model/Bloc";
+import { PageObject } from "../model/Page";
 
 export function clonePageWithBlocs(
   page: PageObject,

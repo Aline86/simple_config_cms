@@ -1,9 +1,8 @@
 "use client";
 
-import { MediaObject } from "@/model/bloc/MediaObject";
-import { BlocObject } from "@/model/Bloc";
-
-import { FieldRenderer } from "@/validators/renderer/TextRenderer";
+import { BlocObject } from "../../../../../model/Bloc";
+import { MediaObject } from "../../../../../model/bloc/MediaObject";
+import { FieldRenderer } from "../../../../../validators/renderer/TextRenderer";
 import { PictureEditor } from "../../grid/image_grid/PictureEditor";
 
 interface CarouselThumbnailsProps<T> {
@@ -27,9 +26,9 @@ export default function CarouselThumbnailsEdit<T>({
   isLink,
   showWidth,
 }: CarouselThumbnailsProps<T>) {
-  const debug = true;
+  const debug = false;
   return (
-    <div className="mx-auto max-w-2xl space-y-6 p-6">
+    <div className="mx-auto w-full min-w-[43vw] space-y-6 p-6">
       <div className="space-y-2">
         <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
           Configuration du composant "Groupe d'images"

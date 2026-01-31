@@ -1,21 +1,17 @@
 "use client";
 
-import { TypeBloc } from "@/model/Page";
-import { CreateBlocOptions, createNewBloc } from "@/lib/factories/Bloc.factory";
-import { useEffect, useState } from "react";
-import { MediaObject } from "@/model/bloc/MediaObject";
-import { updateObjectBySetter } from "@/lib/utils/functions";
+import { useState } from "react";
+import { BlocObject } from "../../../../model/Bloc";
+import { MediaObject } from "../../../../model/bloc/MediaObject";
+import { reorderArray } from "../../../../helpers/changeComponentPosition";
+import { cloneBlocWithMedias } from "../../../../helpers/bloc.helper";
 import {
-  deleteItemAndReorder,
-  reorderArray,
-} from "@/helpers/changeComponentPosition";
-import { BlocObject } from "@/model/Bloc";
-import PicturesLinkView from "@/components/contextView/showcase/grid/picturesLink/PicturesLinkView";
-import { cloneBlocWithMedias } from "@/helpers/bloc.helper";
-import { cloneMediaWithPosition, createMedia } from "@/helpers/media.helper";
-import { updateBlocImages } from "@/helpers/bloc.media.helper";
-import ButtonEdit from "@/components/contextView/edition/button/ButtonEdit";
-import ButtonView from "@/components/contextView/showcase/button/ButtonView";
+  cloneMediaWithPosition,
+  createMedia,
+} from "../../../../helpers/media.helper";
+import { updateObjectBySetter } from "../../../../lib/utils/functions";
+import ButtonView from "../../showcase/button/ButtonView";
+import ButtonEdit from "./ButtonEdit";
 
 interface ButtonContextEditionProps {
   bloc: BlocObject;
@@ -53,7 +49,6 @@ const ButtonContextEdition: React.FC<ButtonContextEditionProps> = ({
   };
 
   const updateField = (field: string, value: any) => {
-    console.log("updateField", field, value);
     const updatedBloc = updateObjectBySetter(bloc, field, value);
     onChange(updatedBloc.data);
   };

@@ -1,5 +1,6 @@
 "use client";
 
+import { Trash } from "lucide-react";
 import {
   Card,
   CardHeader,
@@ -7,14 +8,10 @@ import {
   Cardtext_description,
   CardContent,
   CardFooter,
-} from "@/components/ui/card";
-import { Save, Trash } from "lucide-react";
-import { FieldRenderer } from "@/validators/renderer/ValidatorRenderer";
-import { Move, Lock, Unlock } from "lucide-react";
-import { PageObject } from "@/model/Page";
-import { useEffect, useState } from "react";
-import Draggable from "@/components/ui/Draggable";
-import { RedirectButton } from "@/components/ui/RedirectButton";
+} from "../../../components/ui/card";
+import { RedirectButton } from "../../../components/ui/RedirectButton";
+import { PageObject } from "../../../model/Page";
+import { FieldRenderer } from "../../../validators/renderer/TextRenderer";
 
 interface PageCrudProps {
   page_data: PageObject;
@@ -38,7 +35,7 @@ export default function PageCrud({
   onDrop,
   draggableEnabled,
 }: PageCrudProps) {
-  const show_debug = true;
+  const show_debug = false;
   const handleEdit = (fieldName: string, newValue: any) => {
     onEdit(page_data, fieldName as keyof PageObject, newValue);
   };
@@ -65,10 +62,10 @@ export default function PageCrud({
           <CardContent>
             <div className="text-sm text-muted-foreground">
               <FieldRenderer
-                selectedValidatorKey={"text_titre"}
                 fieldName={"text_titre"}
                 model={page_data}
                 setField={handleEdit}
+                label={""}
               />
             </div>
           </CardContent>

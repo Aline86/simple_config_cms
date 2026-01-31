@@ -1,27 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma/prisma";
-import { PageObject } from "@/model/Page";
+import { prisma } from "./../../../../../lib/prisma/prisma";
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
-    const { searchParams } = new URL(request.url);
-    const slug = searchParams.get("slug");
-
-    if (!slug) {
-      return NextResponse.json({ error: "Slug missing" }, { status: 400 });
-    }
-
-    const dbPage = await prisma.page.findFirst({
-      where: { text_slug: slug },
+    const footer = await prisma.footer.findFirst({
+      orderBy: {
+        number_id: "asc",
+      },
+      include: {
+        reseaux: true,
+      },
     });
 
-    if (!dbPage) {
-      return NextResponse.json({ error: "Page not found" }, { status: 404 });
-    }
-
-    return NextResponse.json(dbPage, { status: 200 });
+    return NextResponse.json(footer, { status: 200 });
   } catch (err) {
-    console.error("GET /api/page error:", err);
+    console.error("GET /api/footer error:", err);
     return NextResponse.json(
       {
         error: "Server error",
@@ -32,22 +25,51 @@ export async function GET(request: NextRequest) {
   }
 }
 
-export async function DELETE(request: NextRequest) {
+/* =====================================================
+   POST – créer le footer
+===================================================== */
+export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { id } = body;
+    const {
+      color_background_color,
+      text_nom_site_adresse,
+      text_adresse_footer,
+      text_code_postal,
+      reseaux,
+    } = body;
 
-    if (!id) {
-      return NextResponse.json({ error: "id missing" }, { status: 400 });
-    }
+    const newFooter = await prisma.footer.create({
+      data: {
+        color_background_color,
+        text_nom_site_adresse,
+        text_adresse_footer,
+        text_code_postal,
 
-    const deletedPage = await prisma.page.delete({
-      where: { number_id: Number(id) },
+        ...(reseaux &&
+          reseaux.length > 0 && {
+            reseaux: {
+              create: reseaux.map((reseau: any) => ({
+                text_titre: reseau.text_titre,
+                image_url: reseau.image_url,
+                color_couleur_bg: reseau.color_couleur_bg,
+                text_image_lien: reseau.text_image_lien,
+                number_position_image: reseau.number_position_image,
+              })),
+            },
+          }),
+      },
+      include: {
+        reseaux: true,
+      },
     });
 
-    return NextResponse.json(deletedPage, { status: 200 });
+    return NextResponse.json(
+      { message: "Footer créé", data: newFooter },
+      { status: 201 },
+    );
   } catch (err) {
-    console.error("DELETE /api/page error:", err);
+    console.error("POST /api/footer error:", err);
     return NextResponse.json(
       {
         error: "Server error",
@@ -58,30 +80,71 @@ export async function DELETE(request: NextRequest) {
   }
 }
 
+/* =====================================================
+   PUT – mettre à jour le footer
+===================================================== */
 export async function PUT(request: NextRequest) {
   try {
     const body = await request.json();
-    const rawPage = body.data;
-    const w = JSON.stringify(rawPage.blocs);
-    rawPage.blocs = w;
-    const page = new PageObject(rawPage);
+    const {
+      id,
+      color_background_color,
+      text_nom_site_adresse,
+      text_adresse_footer,
+      text_code_postal,
+      reseaux,
+    } = body.data ?? body;
 
-    if (!page.validateAll()) {
-      return NextResponse.json({ error: "Validation failed" }, { status: 400 });
+    const footerId = Number(id);
+
+    if (Number.isNaN(footerId)) {
+      return NextResponse.json(
+        { error: "Footer ID missing or invalid" },
+        { status: 400 },
+      );
     }
 
-    await prisma.page.update({
-      where: { number_id: Number(rawPage.number_id) },
-      data: rawPage,
+    const existingFooter = await prisma.footer.findFirst({
+      where: { number_id: footerId },
+      include: { reseaux: true },
     });
 
-    return NextResponse.json(
-      { message: "Page mise à jour", blocs: rawPage },
-      { status: 200 },
-    );
-  } catch (err) {
-    console.error("PUT /api/page error:", err);
+    if (!existingFooter) {
+      return NextResponse.json({ error: "Footer not found" }, { status: 404 });
+    }
 
+    const updatedFooter = await prisma.footer.update({
+      where: {
+        number_id: footerId,
+      },
+      data: {
+        color_background_color,
+        text_nom_site_adresse,
+        text_adresse_footer,
+        text_code_postal,
+
+        // ===== RÉSEAUX (1–N) =====
+        ...(reseaux && {
+          reseaux: {
+            deleteMany: {}, // supprime tous les réseaux existants
+            create: reseaux.map((reseau: any) => ({
+              text_titre: reseau.text_titre,
+              image_url: reseau.image_url,
+              color_couleur_bg: reseau.color_couleur_bg,
+              text_image_lien: reseau.text_image_lien,
+              number_position_image: reseau.number_position_image,
+            })),
+          },
+        }),
+      },
+      include: {
+        reseaux: true,
+      },
+    });
+
+    return NextResponse.json(updatedFooter, { status: 200 });
+  } catch (err) {
+    console.error("PUT /api/footer error:", err);
     return NextResponse.json(
       {
         error: "Server error",

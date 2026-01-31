@@ -1,11 +1,9 @@
-// helpers/validatorHelper.ts
-import { TextParameter, TextValidator } from "@/validators/TextValidator";
-import {
-  CloudinaryValidator,
+import FIELD_CONFIGS from "../config/fieldConfig";
+import CloudinaryValidator, {
   CloudinaryParameter,
-} from "@/validators/MediaValidator";
-import { NumberValidator, Parameter } from "@/validators/NumberValidator";
-import FIELD_CONFIGS from "@/config/fieldConfig";
+} from "../validators/MediaValidator";
+import { NumberValidator, Parameter } from "../validators/NumberValidator";
+import { TextValidator, TextParameter } from "../validators/TextValidator";
 
 // Types
 export type FieldPrefix = "text" | "image" | "number" | "color";

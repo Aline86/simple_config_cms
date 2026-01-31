@@ -1,14 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma/prisma";
-import { PageObject } from "@/model/Page";
-import { BlocObject } from "@/model/Bloc";
-import {
-  cloneBlocWithArticles,
-  cloneBlocWithArticlesAndMedia,
-} from "@/helpers/bloc.helper";
-import { ArticleObject } from "@/model/bloc/Article";
-import { MediaObject } from "@/model/bloc/MediaObject";
-
+import { PageObject } from "../../../../model/Page";
+import { prisma } from "./../../../../lib/prisma/prisma";
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);

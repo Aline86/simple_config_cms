@@ -1,15 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { MediaObject } from "@/model/bloc/MediaObject";
-import { updateObjectBySetter } from "@/lib/utils/functions";
-import { reorderArray } from "@/helpers/changeComponentPosition";
-import { BlocObject } from "@/model/Bloc";
-import { cloneBlocWithMedias } from "@/helpers/bloc.helper";
-import { cloneMediaWithPosition, createMedia } from "@/helpers/media.helper";
-
-import ScreenEdit from "@/components/contextView/edition/screen/ScreenEdit";
-import ScreenView from "@/components/contextView/showcase/screen/ScreenView";
+import { cloneBlocWithMedias } from "../../../../helpers/bloc.helper";
+import { reorderArray } from "../../../../helpers/changeComponentPosition";
+import {
+  cloneMediaWithPosition,
+  createMedia,
+} from "../../../../helpers/media.helper";
+import { updateObjectBySetter } from "../../../../lib/utils/functions";
+import { BlocObject } from "../../../../model/Bloc";
+import { MediaObject } from "../../../../model/bloc/MediaObject";
+import ScreenView from "../../showcase/screen/ScreenView";
+import ScreenEdit from "./ScreenEdit";
 
 interface ScreenContextEditionProps {
   bloc: BlocObject;
@@ -47,7 +49,6 @@ const ScreenContextEdition: React.FC<ScreenContextEditionProps> = ({
   };
 
   const updateField = (field: string, value: any) => {
-    console.log("updateField", field, value);
     const updatedBloc = updateObjectBySetter(bloc, field, value);
     onChange(updatedBloc.data);
   };

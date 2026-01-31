@@ -1,8 +1,9 @@
 "use client";
 
 import React, { JSX, useEffect, useState } from "react";
-import { TextValidator } from "@/validators/TextValidator";
+
 import { ColorInput } from "./ColorInput";
+import { TextValidator } from "../../../validators/TextValidator";
 
 interface BaseInputProps<T> {
   label?: string;
@@ -34,7 +35,6 @@ export default function TextInput<T>({
 }: ValidatedTextInputProps<T>) {
   const [touched, setTouched] = useState(false);
   const [localValue, setLocalValue] = useState(value);
-  console.log("value", value);
   const params = validator.getParams();
 
   // Sync localValue si le modèle change depuis l'extérieur

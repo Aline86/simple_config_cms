@@ -1,6 +1,7 @@
-import { CloudinaryParameter } from "@/validators/MediaValidator";
-import { Parameter } from "@/validators/NumberValidator";
-import { TextParameter } from "@/validators/TextValidator";
+import { CloudinaryParameter } from "../validators/MediaValidator";
+import { Parameter } from "../validators/NumberValidator";
+import { TextParameter } from "../validators/TextValidator";
+
 type FieldParameter = TextParameter | CloudinaryParameter | Parameter;
 
 const FIELD_CONFIGS: Record<string, FieldParameter> = {
@@ -161,7 +162,21 @@ const FIELD_CONFIGS: Record<string, FieldParameter> = {
       required: "Le text_titre est obligatoire",
     },
   }),
-
+  color_background_color: new TextParameter({
+    maxLength: 7,
+    required: true,
+    trim: true,
+  }),
+  text_nom_site: new TextParameter({
+    maxLength: 100,
+    required: true,
+    trim: true,
+    placeholder: "Entrez le nom du site",
+    errorMessages: {
+      maxLength: "Le text_titre ne peut pas dépasser 255 caractères",
+      required: "Le text_titre est obligatoire",
+    },
+  }),
   text_email: new TextParameter({
     email: true,
     required: true,

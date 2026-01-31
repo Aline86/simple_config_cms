@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from "react";
-import { MediaObject } from "@/model/bloc/MediaObject";
-import { BlocObject } from "@/model/Bloc";
+import { useState, useRef, useEffect } from "react";
+import { useIsSmScreen } from "../../../../../hooks/screenSize/useIsSmScreen";
+import { BlocObject } from "../../../../../model/Bloc";
+import { MediaObject } from "../../../../../model/bloc/MediaObject";
 import CarouselContainer from "./CarouselContainer";
-import { useIsSmScreen } from "@/hooks/screenSize/useIsSmScreen";
 
 export default function CarouselThumbnailsView({ bloc }: { bloc: BlocObject }) {
   const [medias, setMedias] = useState<MediaObject[]>([
@@ -51,7 +51,7 @@ export default function CarouselThumbnailsView({ bloc }: { bloc: BlocObject }) {
       ...bloc.image_medias,
       ...bloc.image_medias,
     ]);
-  }, [cardNumber]);
+  }, [cardNumber, bloc]);
   return (
     <section className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
       <h2 className="text-2xl text-center font-bold text-slate-800 mb-6">

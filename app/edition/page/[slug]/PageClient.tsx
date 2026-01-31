@@ -2,31 +2,37 @@
 
 import { Plus, Save } from "lucide-react";
 
-import { PageObject } from "@/model/Page";
 import { useEffect, useState } from "react";
 import PageBlocs from "./pageComponent";
-import { reorderArray } from "@/helpers/changeComponentPosition";
-import { BlocObject } from "@/model/Bloc";
-import { cloneBlocWithMedias } from "@/helpers/bloc.helper";
-import { clonePageWithBlocs } from "@/helpers/page.helper";
-import BlocChoiceModal from "@/components/modals/PageChoiceModal";
-import { CreateBlocOptions, createNewBloc } from "@/lib/factories/Bloc.factory";
-import { HeaderObject } from "@/model/bloc/Header";
-import HeaderView from "@/components/contextView/showcase/header/HeaderView";
-import HeaderContextEdition from "@/components/contextView/edition/header/HeaderContextEdition";
+import { PageObject } from "../../../../model/Page";
+import { HeaderObject } from "../../../../model/bloc/Header";
+import { FooterObject } from "../../../../model/bloc/Footer";
+import {
+  CreateBlocOptions,
+  createNewBloc,
+} from "../../../../lib/factories/Bloc.factory";
+import { BlocObject } from "../../../../model/Bloc";
+import { clonePageWithBlocs } from "../../../../helpers/page.helper";
+import HeaderContextEdition from "../../../../components/contextView/edition/header/HeaderContextEdition";
+import BlocChoiceModal from "../../../../components/modals/PageChoiceModal";
+import FooterContextEdition from "../../../../components/contextView/edition/footer/FooterContextEdition";
+import { reorderArray } from "../../../../helpers/changeComponentPosition";
 
 export default function PageClient({
   initialpage,
   header,
+  footer,
 }: {
   initialpage: PageObject;
   header: HeaderObject;
+  footer: FooterObject;
 }) {
   const [page, setPage] = useState(new PageObject(initialpage));
-  const [headerData, setHeader] = useState(new HeaderObject(header));
+  const [headerData, setHeader] = useState(new HeaderObject(header, "edition"));
+  const [footerData, setFooter] = useState(new FooterObject(footer, "edition"));
   const [dragged, setDragged] = useState<BlocObject | null>(null);
   const [draggableEnabled, setDraggableEnabled] = useState(false);
-  console.log("header", headerData);
+
   const onDragStart = (bloc: BlocObject) => {
     if (bloc !== null) {
       setDragged(bloc);
@@ -72,9 +78,8 @@ export default function PageClient({
   };
   const handleSavePage = async () => {
     try {
-      console.log(headerData);
       // Exécuter les 2 requêtes en parallèle
-      const [pageRes, headerRes] = await Promise.all([
+      const [pageRes, headerRes, footerRes] = await Promise.all([
         // Promise 1 : Sauvegarder la page
         fetch("/api/edition/page", {
           method: "PUT",
@@ -96,6 +101,16 @@ export default function PageClient({
             data: headerData,
           }), // Assurez-vous d'avoir un state 'header'
         }),
+        // Promise 3 : Sauvegarder le footer
+        fetch("/api/edition/page/footer", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            data: footerData,
+          }), // Assurez-vous d'avoir un state 'header'
+        }),
       ]);
 
       // Vérifier les deux réponses
@@ -107,21 +122,21 @@ export default function PageClient({
       }
 
       // Parser les résultats
-      const [pageResult, headerResult] = await Promise.all([
+      const [pageResult, headerResult, footerResult] = await Promise.all([
         pageRes.json(),
         headerRes.json(),
+        footerRes.json(),
       ]);
-
-      console.log("Page enregistrée :", pageResult);
-      console.log("Header enregistré :", headerResult);
 
       // Mettre à jour les states
       if (pageResult !== undefined) {
         setPage(new PageObject(pageResult.blocs));
       }
       if (headerResult !== undefined) {
-        console.log("header.data", headerResult);
-        setHeader(new HeaderObject(headerResult)); // Assurez-vous d'avoir un setHeader
+        setHeader(new HeaderObject(headerResult, "edition")); // Assurez-vous d'avoir un setHeader
+      }
+      if (footerResult !== undefined) {
+        setFooter(new FooterObject(footerResult, "edition")); // Assurez-vous d'avoir un setHeader
       }
     } catch (error) {
       console.error("Erreur sauvegarde :", error);
@@ -138,19 +153,22 @@ export default function PageClient({
   const updateHeader = (updatedBloc: HeaderObject) => {
     setHeader(updatedBloc);
   };
-  useEffect(() => {}, [headerData]);
+  const updateFooter = (updatedBloc: FooterObject) => {
+    setFooter(updatedBloc);
+  };
+  useEffect(() => {}, [headerData, footerData]);
   return (
     <div className="p-6 space-y-6">
+      <button
+        onClick={() => handleSavePage()}
+        className="cursor-pointer shadow-lg fixed top-[50px]   z-100 flex items-center gap-2 px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-600 transition "
+      >
+        <Save size={14} /> Enregistrer la page
+      </button>
       <HeaderContextEdition bloc={headerData} onChange={updateHeader} />
       {page !== undefined && (
-        <div>
+        <div className="">
           <BlocChoiceModal page={page} addBlocToPage={addBlocToPage} />
-          <button
-            onClick={() => handleSavePage()}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-600 transition"
-          >
-            <Save size={14} /> Enregistrer les pages
-          </button>
         </div>
       )}
 
@@ -162,6 +180,7 @@ export default function PageClient({
         onDrop={onDrop}
         draggableEnabled={draggableEnabled}
       />
+      <FooterContextEdition bloc={footerData} onChange={updateFooter} />
     </div>
   );
 }

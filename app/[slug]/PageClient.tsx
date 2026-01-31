@@ -1,38 +1,33 @@
 "use client";
 
-import { Plus, Save } from "lucide-react";
-
-import { PageObject } from "@/model/Page";
-import { useEffect, useState } from "react";
-import PageBlocs from "./pageComponent";
-import { reorderArray } from "@/helpers/changeComponentPosition";
-import { BlocObject } from "@/model/Bloc";
-import { cloneBlocWithMedias } from "@/helpers/bloc.helper";
-import { clonePageWithBlocs } from "@/helpers/page.helper";
-import BlocChoiceModal from "@/components/modals/PageChoiceModal";
-import { CreateBlocOptions, createNewBloc } from "@/lib/factories/Bloc.factory";
+import FooterView from "../../components/contextView/showcase/footer/FooterView";
+import HeaderView from "../../components/contextView/showcase/header/HeaderView";
+import { FooterObject } from "../../model/bloc/Footer";
+import { HeaderObject } from "../../model/bloc/Header";
+import { PageObject } from "../../model/Page";
 import ComponentBloc from "./BlocComponent";
-import { HeaderObject } from "@/model/bloc/Header";
-import HeaderView from "@/components/contextView/showcase/header/HeaderView";
 
 export default function PageClient({
   initialpage,
   header,
+  footer,
 }: {
   initialpage: PageObject;
   header: HeaderObject;
+  footer: FooterObject;
 }) {
   const page = new PageObject(initialpage);
   const headerData = new HeaderObject(header, "view");
-  console.log("headerData", headerData);
+  const footerData = new FooterObject(footer, "view");
   return (
-    <>
+    <div>
       <HeaderView header={headerData} />
-      <div className="p-6 space-y-6">
+      <div className="mt-24">
         {page.blocs.map((bloc, index) => {
           return <ComponentBloc key={index} bloc={bloc} />;
         })}
       </div>
-    </>
+      <FooterView footer={footerData} />
+    </div>
   );
 }

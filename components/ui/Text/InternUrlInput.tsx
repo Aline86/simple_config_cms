@@ -1,7 +1,7 @@
 "use client";
 
-import usePages from "@/hooks/dropdown/usePages";
 import React from "react";
+import usePages from "../../../hooks/dropdown/usePages";
 interface InternUrlInputProps<T> {
   value: string;
   model: T;

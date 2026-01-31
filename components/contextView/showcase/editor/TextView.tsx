@@ -2,24 +2,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import {
-  useEffect,
-  useState,
-  Suspense,
-  CSSProperties,
-  useCallback,
-} from "react";
-
-import { ArticleObject } from "@/model/bloc/Article";
 import { JSONContent } from "@tiptap/core";
-import DOMPurify from "dompurify";
-import { getgridClasses, output } from "@/lib/utils/functions";
-import PicturesLinkItemView from "../grid/picturesLink/PictureLinkItemView";
-import { BlocObject } from "@/model/Bloc";
-import ArticleView from "./ArtcleView";
 import clsx from "clsx";
+import { getgridClasses } from "../../../../lib/utils/functions";
+import { BlocObject } from "../../../../model/Bloc";
+import { MediaObject } from "../../../../model/bloc/MediaObject";
+import PicturesLinkItemView from "../grid/picturesLink/PictureLinkItemView";
+import ArticleView from "./ArtcleView";
 import ContentLayout from "./ContentLayout";
-import { MediaObject } from "@/model/bloc/MediaObject";
 
 interface BlocParams {
   bloc: BlocObject;
@@ -38,7 +28,7 @@ export default function TextView({ bloc }: BlocParams) {
   const imagesNode = hasImages ? (
     <div
       className={clsx(
-        "grid gap-4 min-w-[280px]",
+        "grid gap-4 min-w-[200px]",
         imagePosition === "top"
           ? getgridClasses(bloc.number_columns || 3)
           : "grid-cols-1",

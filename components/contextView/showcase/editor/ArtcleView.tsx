@@ -4,7 +4,7 @@
 
 import { useEffect, useState, Suspense } from "react";
 import { JSONContent } from "@tiptap/core";
-import { output } from "@/lib/utils/functions";
+import { output } from "../../../../lib/utils/functions";
 
 interface BlocParams {
   index: number;
@@ -17,11 +17,9 @@ function ArticleView({ bloc }: BlocParams) {
   useEffect(() => {
     bloc !== null && setHTML(output(bloc) ?? []);
   }, [bloc]);
-  useEffect(() => {
-    console.log("html", html);
-  }, [html]);
+  useEffect(() => {}, [html]);
   return (
-    <div className="min-w-sm">
+    <div className="w-full ">
       <Suspense fallback={<div>Chargement...</div>}>
         {html !== undefined &&
           typeof html === "object" &&

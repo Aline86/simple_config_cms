@@ -1,7 +1,8 @@
 // PicturesgridView.tsx
-import React, { useState } from "react";
-import { BlocObject } from "@/model/Bloc";
+import { useState } from "react";
+
 import Image from "next/image";
+import { BlocObject } from "../../../../../model/Bloc";
 
 export default function PicturesgridView({ bloc }: { bloc: BlocObject }) {
   const [activeImage, setActiveImage] = useState<string | null>(null);

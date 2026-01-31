@@ -1,13 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma/prisma";
-import { BlocObject } from "@/model/Bloc";
-import { PageObject } from "@/model/Page";
-
+import { BlocObject } from "../../../../model/Bloc";
+import { PageObject } from "../../../../model/Page";
+import { prisma } from "./../../../../lib/prisma/prisma";
 export async function GET() {
   try {
     const dbPages = await prisma.page.findMany({
       orderBy: {
-        number_page_position: "asc", // ✅ Changé de number_page_position
+        number_page_position: "asc",
       },
     });
 
@@ -56,12 +55,6 @@ export async function POST(request: NextRequest) {
 
     for (const p of pagesPayload) {
       const page = p instanceof PageObject ? p : new PageObject(p);
-
-      console.log("🔍 Processing page:", {
-        number_id: page.number_id,
-        text_titre: page.text_titre,
-        text_slug: page.text_slug,
-      });
 
       if (!page.validateAll()) {
         console.error("❌ Validation failed for page:", page);

@@ -1,19 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { HeaderObject } from "@/model/bloc/Header";
-import { MediaObject } from "@/model/bloc/MediaObject";
-import HeaderEdit from "@/components/contextView/edition/header/HeaderEdit";
-import { updateObjectBySetter } from "@/lib/utils/functions";
-import HeaderView from "@/components/contextView/showcase/header/HeaderView";
-import { deleteItemAndReorder } from "@/helpers/changeComponentPosition";
-import { cloneMediaWithPosition, createMedia } from "@/helpers/media.helper";
+import { HeaderObject } from "../../../../model/bloc/Header";
+import { updateObjectBySetter } from "../../../../lib/utils/functions";
 import {
   cloneHeaderWithReseau,
   cloneHeaderWithReseaux,
-  mockHeader,
-} from "@/helpers/header.helper";
-import { nanoid } from "nanoid";
+} from "../../../../helpers/header.helper";
+import {
+  cloneMediaWithPosition,
+  createMedia,
+} from "../../../../helpers/media.helper";
+import { deleteItemAndReorder } from "../../../../helpers/changeComponentPosition";
+import { MediaObject } from "../../../../model/bloc/MediaObject";
+import HeaderView from "../../showcase/header/HeaderView";
+import HeaderEdit from "./HeaderEdit";
 
 interface HeaderContextEditionProps {
   bloc: HeaderObject;
@@ -27,7 +28,6 @@ const HeaderContextEdition: React.FC<HeaderContextEditionProps> = ({
   const updateMediaObject = (fieldName: string, newValue: any) => {
     if (!bloc) return;
     const newObj = updateObjectBySetter(bloc, fieldName, newValue);
-    console.log("newObj.data", newObj.data);
     onChange(newObj.data);
   };
 

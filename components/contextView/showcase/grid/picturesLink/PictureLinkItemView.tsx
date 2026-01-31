@@ -1,12 +1,12 @@
 // PicturesLinkItemView.tsx
-import React from "react";
+
 import { ArrowRight, Heart } from "lucide-react";
-import { MediaObject } from "@/model/bloc/MediaObject";
-import Image from "next/image";
-import FIELD_CONFIGS from "@/config/fieldConfig";
+import FIELD_CONFIGS from "../../../../../config/fieldConfig";
+import { MediaObject } from "../../../../../model/bloc/MediaObject";
 import CloudinaryValidator, {
   CloudinaryParameter,
-} from "@/validators/MediaValidator";
+} from "../../../../../validators/MediaValidator";
+import Image from "next/image";
 
 export default function PicturesLinkItemView({
   mediaObject,

@@ -1,14 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { MediaObject } from "@/model/bloc/MediaObject";
-import { updateObjectBySetter } from "@/lib/utils/functions";
-import { reorderArray } from "@/helpers/changeComponentPosition";
-import { BlocObject } from "@/model/Bloc";
-import { cloneBlocWithMedias } from "@/helpers/bloc.helper";
-import { cloneMediaWithPosition, createMedia } from "@/helpers/media.helper";
-import VideoEdit from "@/components/contextView/edition/video/VideoEdit";
-import VideoView from "@/components/contextView/showcase/video/VideoView";
+import { cloneBlocWithMedias } from "../../../../helpers/bloc.helper";
+import { reorderArray } from "../../../../helpers/changeComponentPosition";
+import {
+  cloneMediaWithPosition,
+  createMedia,
+} from "../../../../helpers/media.helper";
+import { updateObjectBySetter } from "../../../../lib/utils/functions";
+import { BlocObject } from "../../../../model/Bloc";
+import { MediaObject } from "../../../../model/bloc/MediaObject";
+import VideoView from "../../showcase/video/VideoView";
+import VideoEdit from "./VideoEdit";
 
 interface VideoContextEditionProps {
   bloc: BlocObject;
@@ -46,7 +49,6 @@ const VideoContextEdition: React.FC<VideoContextEditionProps> = ({
   };
 
   const updateField = (field: string, value: any) => {
-    console.log("updateField", field, value);
     const updatedBloc = updateObjectBySetter(bloc, field, value);
     onChange(updatedBloc.data);
   };

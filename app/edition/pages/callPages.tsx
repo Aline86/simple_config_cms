@@ -7,7 +7,6 @@ export default async function getPages() {
       cache: "no-store", // important pour SSR dynamique
     },
   );
-  console.log("res", res);
   if (!res.ok) {
     throw new Error("Erreur chargement pages");
   }

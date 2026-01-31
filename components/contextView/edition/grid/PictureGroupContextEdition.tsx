@@ -1,6 +1,6 @@
 import React from "react";
-import { BlocObject } from "@/model/Bloc";
-import { pictureGroupToRender } from "@/config/componentsView";
+import { BlocObject } from "../../../../model/Bloc";
+import { pictureGroupToRender } from "../../../../config/componentsView";
 
 interface PictureGroupContextEditionProps {
   bloc: BlocObject;

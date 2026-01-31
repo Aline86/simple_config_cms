@@ -5,10 +5,10 @@ import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
 import Highlight from "@tiptap/extension-highlight";
 import TextAlign from "@tiptap/extension-text-align";
-import { TextStyle } from "@tiptap/extension-text-style";
+import { FontSize, TextStyle } from "@tiptap/extension-text-style";
 import Underline from "@tiptap/extension-underline";
 import Paragraph from "@tiptap/extension-paragraph";
-import { FontSize } from "@/lib/extensions/FontSize";
+
 import {
   DISALLOWED_LINK_PROTOCOLS,
   DISALLOWED_LINK_DOMAINS,

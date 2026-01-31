@@ -1,4 +1,3 @@
-import { ArticleObject } from "@/model/bloc/Article";
 import { JSONContent } from "@tiptap/core";
 import { produce } from "immer";
 import DOMPurify from "dompurify";
@@ -14,7 +13,6 @@ export function updateObjectBySetter<T>(
 ): UpdateResult<T> {
   const keys = path.split(".");
   let updated = false;
-  console.log("keys", obj, keys);
   const result = produce(obj, (draft: any) => {
     let current = draft;
 
@@ -39,7 +37,6 @@ export function updateObjectBySetter<T>(
       updated = true;
     }
   });
-  console.log("result", result);
   return {
     updated,
     data: result,

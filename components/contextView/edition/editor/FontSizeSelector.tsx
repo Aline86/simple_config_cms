@@ -1,7 +1,7 @@
 // ============================================
 // 5. components/editor/FontSizeSelector.tsx
 // ============================================
-import { FONT_SIZES } from "@/config/editorTypesConfig";
+
 import {
   Listbox,
   ListboxButton,
@@ -10,6 +10,7 @@ import {
 } from "@headlessui/react";
 import { ChevronUpDownIcon } from "@heroicons/react/16/solid";
 import { Editor } from "@tiptap/react";
+import { FONT_SIZES } from "../../../../config/editorTypesConfig";
 
 interface FontSizeSelectorProps {
   editor: Editor;

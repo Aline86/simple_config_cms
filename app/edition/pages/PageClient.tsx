@@ -1,16 +1,12 @@
 "use client";
 
 import { Plus, Save } from "lucide-react";
-
-import { PageObject } from "@/model/Page";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import Draggable from "../../../components/ui/Draggable";
+import { reorderArray } from "../../../helpers/changeComponentPosition";
+import { BlocObject } from "../../../model/Bloc";
+import { PageObject } from "../../../model/Page";
 import PageCrud from "./pageComponent";
-
-import { reorderArray } from "@/helpers/changeComponentPosition";
-
-import Draggable from "@/components/ui/Draggable";
-import { clonePageWithBlocs } from "@/helpers/page.helper";
-import { BlocObject } from "@/model/Bloc";
 
 export default function PageClient({
   initialPages,
@@ -35,7 +31,6 @@ export default function PageClient({
       target,
       "number_page_position",
     );
-    console.log("pages_result", pages_result);
     setPages(
       pages_result.map((p: PageObject, index: number) => {
         return new PageObject(
@@ -76,8 +71,6 @@ export default function PageClient({
 
       // Supprime la page du state
       setPages((prev) => prev.filter((p) => p.number_id !== page.number_id));
-
-      console.log("Page supprimée :", result);
     } catch (error) {
       console.error(error);
     }
@@ -126,10 +119,8 @@ export default function PageClient({
           });
         });
 
-        setPages(updatedPages); // ✅ Remplacer tout l'état
+        setPages(updatedPages);
       }
-
-      console.log("✅ Pages enregistrées avec succès");
     } catch (error) {
       console.error("❌ Erreur lors de la sauvegarde:", error);
     }

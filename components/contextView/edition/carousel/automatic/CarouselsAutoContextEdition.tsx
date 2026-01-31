@@ -1,14 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { MediaObject } from "@/model/bloc/MediaObject";
-import { updateObjectBySetter } from "@/lib/utils/functions";
-import { reorderArray } from "@/helpers/changeComponentPosition";
-import { BlocObject } from "@/model/Bloc";
-import { cloneBlocWithMedias } from "@/helpers/bloc.helper";
-import { cloneMediaWithPosition, createMedia } from "@/helpers/media.helper";
-import CarouselThumbnailsEdit from "@/components/contextView/edition/carousel/thumbnails/CarouselThumbnailsEdit";
-import CarouselAutoView from "@/components/contextView/showcase/carousel/automatic/CarouselAutoView";
+import { useState } from "react";
+import { cloneBlocWithMedias } from "../../../../../helpers/bloc.helper";
+import { reorderArray } from "../../../../../helpers/changeComponentPosition";
+import {
+  cloneMediaWithPosition,
+  createMedia,
+} from "../../../../../helpers/media.helper";
+import { updateObjectBySetter } from "../../../../../lib/utils/functions";
+import { BlocObject } from "../../../../../model/Bloc";
+import { MediaObject } from "../../../../../model/bloc/MediaObject";
+import CarouselAutoView from "../../../showcase/carousel/automatic/CarouselAutoView";
+import CarouselThumbnailsEdit from "../thumbnails/CarouselThumbnailsEdit";
+
 interface CarouselsAutoContextEditionProps {
   bloc: BlocObject;
   onChange: (bloc: BlocObject) => void;

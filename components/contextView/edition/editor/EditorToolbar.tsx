@@ -19,7 +19,7 @@ import {
   UndoIcon,
   UnlinkIcon,
 } from "lucide-react";
-import { BulletListIcon, H2Icon } from "@/icons/EditorIcons";
+import { BulletListIcon, H2Icon } from "../../../../icons/EditorIcons";
 
 interface EditorToolbarProps {
   editor: Editor;

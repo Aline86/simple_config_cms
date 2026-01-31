@@ -1,8 +1,9 @@
 import { Modal } from "./Modal";
-import { useEffect, useState } from "react";
-import { MediaObject } from "@/model/bloc/MediaObject";
+import { useState } from "react";
+
 import { Heart, PlusIcon } from "lucide-react";
 import { MediaEditor } from "../contextView/edition/media/Media";
+import { MediaObject } from "../../model/bloc/MediaObject";
 
 interface MediaEditorProps<T> {
   socialMedia: T[];

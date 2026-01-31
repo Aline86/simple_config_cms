@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { FooterObject } from "@/model/bloc/Footer";
+
 import Image from "next/image";
+import { FooterObject } from "../../../../model/bloc/Footer";
 interface MediaViewProps {
   footer: FooterObject;
 }

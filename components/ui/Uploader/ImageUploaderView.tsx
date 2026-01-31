@@ -1,8 +1,10 @@
 // ==================== UI COMPONENTS ====================
 
 import Image from "next/image";
-import ImageUploader from "@/lib/mediaUploader/ImageUploader";
-import { MediaObject } from "@/model/bloc/MediaObject";
+
+import UploadButton from "../UploadButton";
+import ImageUploader from "../../../lib/mediaUploader/ImageUploader";
+import { MediaObject } from "../../../model/bloc/MediaObject";
 
 export default function ImageUploaderView<T>({
   value,
@@ -33,15 +35,10 @@ export default function ImageUploaderView<T>({
     <div className={`image-uploader ${className}`}>
       <UploaderLabel label={label} />
 
-      <DropZone
-        isDragging={uploader.isDragging}
-        fileInputRef={uploader.fileInputRef}
-        onDragEnter={uploader.handleDragEnter}
-        onDragLeave={uploader.handleDragLeave}
-        onDragOver={uploader.handleDragOver}
-        onDrop={uploader.handleDrop}
-        onFileInput={uploader.handleFileInput}
-        onClick={uploader.handleClick}
+      <UploadButton
+        onChangeValue={onChangeValue}
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+        fieldName={field}
       />
 
       {uploader.errors.length > 0 && <ErrorBox errors={uploader.errors} />}
@@ -71,56 +68,6 @@ export default function ImageUploaderView<T>({
 
 function UploaderLabel({ label }: { label: string }) {
   return <label className="uploader-label">{label}</label>;
-}
-
-interface DropZoneProps {
-  isDragging: boolean;
-  fileInputRef: React.RefObject<HTMLInputElement | null>;
-
-  onDragEnter: (e: React.DragEvent<HTMLDivElement>) => void;
-  onDragLeave: (e: React.DragEvent<HTMLDivElement>) => void;
-  onDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
-  onDrop: (e: React.DragEvent<HTMLDivElement>) => void;
-  onFileInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onClick: () => void;
-}
-
-function DropZone({
-  isDragging,
-  fileInputRef,
-
-  onDragEnter,
-  onDragLeave,
-  onDragOver,
-  onDrop,
-  onFileInput,
-  onClick,
-}: DropZoneProps) {
-  return (
-    <div
-      className={`drop-zone ${isDragging ? "dragging" : ""}`}
-      onDragEnter={onDragEnter}
-      onDragLeave={onDragLeave}
-      onDragOver={onDragOver}
-      onDrop={onDrop}
-      onClick={onClick}
-    >
-      <input
-        ref={fileInputRef}
-        type="file"
-        onChange={onFileInput}
-        style={{ display: "none" }}
-      />
-
-      <div className="drop-zone-content">
-        <UploadIcon />
-        <p className="drop-zone-text">
-          <strong>Cliquez pour sélectionner</strong> ou glissez-déposez vos
-          images
-        </p>
-      </div>
-    </div>
-  );
 }
 
 function UploadIcon() {

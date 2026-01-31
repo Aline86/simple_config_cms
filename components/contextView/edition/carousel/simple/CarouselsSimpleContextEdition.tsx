@@ -1,14 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { MediaObject } from "@/model/bloc/MediaObject";
-import { updateObjectBySetter } from "@/lib/utils/functions";
-import { reorderArray } from "@/helpers/changeComponentPosition";
-import { BlocObject } from "@/model/Bloc";
-import { cloneBlocWithMedias } from "@/helpers/bloc.helper";
-import { cloneMediaWithPosition, createMedia } from "@/helpers/media.helper";
-import CarouselThumbnailsEdit from "@/components/contextView/edition/carousel/thumbnails/CarouselThumbnailsEdit";
-import CarouselSimple from "@/components/contextView/showcase/carousel/simple/Carousel";
+import { cloneBlocWithMedias } from "../../../../../helpers/bloc.helper";
+import { reorderArray } from "../../../../../helpers/changeComponentPosition";
+import {
+  cloneMediaWithPosition,
+  createMedia,
+} from "../../../../../helpers/media.helper";
+import { updateObjectBySetter } from "../../../../../lib/utils/functions";
+import { BlocObject } from "../../../../../model/Bloc";
+import { MediaObject } from "../../../../../model/bloc/MediaObject";
+import CarouselSimple from "../../../showcase/carousel/simple/Carousel";
+import CarouselThumbnailsEdit from "../thumbnails/CarouselThumbnailsEdit";
 
 interface CarouselsSimpleContextEditionProps {
   bloc: BlocObject;
@@ -45,7 +48,6 @@ const CarouselsSimpleContextEdition: React.FC<
   };
 
   const updateField = (field: string, value: any) => {
-    console.log("updateField", field, value);
     const updatedBloc = updateObjectBySetter(bloc, field, value);
     onChange(updatedBloc.data);
   };
