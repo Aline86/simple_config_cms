@@ -20,6 +20,7 @@ import { reorderArray } from "../../../../helpers/changeComponentPosition";
 import NavBarEdition from "../../../../components/ui/NavBarEdition";
 import ErrorMessage from "../../../../components/ui/ErrorMessage";
 import { Accordion } from "../../../../components/ui/Accordeon";
+import { cloneBlocWithArticlesAndMedia } from "../../../../helpers/bloc.helper";
 
 export default function PageClient({
   initialpage,
@@ -78,7 +79,13 @@ export default function PageClient({
   const updateBloc = (updatedBloc: BlocObject) => {
     setPage((prevPage) => {
       const newBlocs = prevPage.blocs.map((bloc) =>
-        bloc.id === updatedBloc.id ? updatedBloc : bloc,
+        bloc.id === updatedBloc.id
+          ? cloneBlocWithArticlesAndMedia(
+              updatedBloc,
+              updatedBloc.articles,
+              updatedBloc.image_medias,
+            )
+          : bloc,
       );
       const up = clonePageWithBlocs(prevPage, newBlocs);
 

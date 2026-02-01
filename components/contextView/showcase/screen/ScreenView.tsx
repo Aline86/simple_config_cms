@@ -45,7 +45,7 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
       <span className="absolute inset-0 bg-black/20"></span>
     </section>
   ) : (
-    <section className="mt-24 relative h-[400px] w-screen overflow-hidden">
+    <section className=" relative h-[400px] w-screen overflow-hidden">
       {/* Background parallaxe */}
       <div
         className="absolute inset-0 bg-center bg-cover bg-fixed"
