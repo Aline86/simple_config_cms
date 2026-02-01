@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { HeaderObject } from "../../../../model/bloc/Header";
 import { updateObjectBySetter } from "../../../../lib/utils/functions";
 import {
@@ -25,33 +25,56 @@ const HeaderContextEdition: React.FC<HeaderContextEditionProps> = ({
   bloc,
   onChange,
 }: HeaderContextEditionProps) => {
-  const updateMediaObject = (fieldName: string, newValue: any) => {
-    if (!bloc) return;
-    const newObj = updateObjectBySetter(bloc, fieldName, newValue);
-    onChange(newObj.data);
-  };
+  const [localBloc, setLocalBloc] = useState(bloc);
 
-  const handleRemove = (model: MediaObject) => {
-    const res = deleteItemAndReorder(
-      bloc.reseaux,
-      model,
-      "number_position_image",
-    );
-    const cleanReseaux = res.map((reseau, index) => {
-      return cloneMediaWithPosition(reseau, index);
+  // Sync avec le parent uniquement quand l'ID change
+  useEffect(() => {
+    setLocalBloc(bloc);
+  }, [bloc.number_id]);
+
+  const updateMediaObject = useCallback(
+    (fieldName: string, newValue: any) => {
+      setLocalBloc((prev) => {
+        if (!prev) return prev;
+        const newObj = updateObjectBySetter(prev, fieldName, newValue);
+        onChange(newObj.data);
+        return newObj.data;
+      });
+    },
+    [onChange],
+  );
+
+  const handleRemove = useCallback(
+    (model: MediaObject) => {
+      setLocalBloc((prev) => {
+        const res = deleteItemAndReorder(
+          prev.reseaux,
+          model,
+          "number_position_image",
+        );
+        const cleanReseaux = res.map((reseau, index) => {
+          return cloneMediaWithPosition(reseau, index);
+        });
+        const updatedHeader = cloneHeaderWithReseaux(prev, cleanReseaux);
+
+        onChange(updatedHeader);
+        return updatedHeader;
+      });
+    },
+    [onChange],
+  );
+
+  const handleAdd = useCallback(() => {
+    setLocalBloc((prev) => {
+      const newMedia = createMedia(prev.reseaux.length, 1);
+      const updatedHeader = cloneHeaderWithReseau(prev, newMedia);
+      onChange(updatedHeader);
+      return updatedHeader;
     });
-    const updatedHeader = cloneHeaderWithReseaux(bloc, cleanReseaux);
-
-    onChange(updatedHeader);
-  };
-  const handleAdd = () => {
-    const newMedia = createMedia(bloc.reseaux.length, 1);
-    const updatedHeader = cloneHeaderWithReseau(bloc, newMedia);
-    onChange(updatedHeader);
-  };
+  }, [onChange]);
 
   // Afficher un placeholder pendant le chargement
-  if (!bloc) {
+  if (!localBloc) {
     return (
       <div className="flex flex-col lg:flex-row gap-6">
         <div className="flex-1 rounded-lg  p-4 shadow-sm">
@@ -77,7 +100,7 @@ const HeaderContextEdition: React.FC<HeaderContextEditionProps> = ({
       <div className="flex-1 rounded-lg  p-4 shadow-sm">
         <h2 className="text-lg font-semibold mb-4">Éditeur</h2>
         <HeaderEdit
-          header={bloc}
+          header={localBloc}
           onChange={updateMediaObject}
           addElement={handleAdd}
           removeElement={handleRemove}
@@ -86,7 +109,7 @@ const HeaderContextEdition: React.FC<HeaderContextEditionProps> = ({
 
       <div className="flex-1  rounded-lg border  p-4 shadow-sm">
         <h2 className="text-lg font-semibold mb-4">Aperçu</h2>
-        <HeaderView header={bloc} />
+        <HeaderView header={localBloc} />
       </div>
     </div>
   );

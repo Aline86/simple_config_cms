@@ -1,7 +1,5 @@
 "use client";
-
-import { useState } from "react";
-
+import { useCallback, useState, useEffect } from "react";
 import PicturesLinkEdit from "./PicturesLinkEdit";
 import { cloneBlocWithMedias } from "../../../../../helpers/bloc.helper";
 import { reorderArray } from "../../../../../helpers/changeComponentPosition";
@@ -24,69 +22,93 @@ const ImageGroupContextEdition: React.FC<ImageGroupContextEditionProps> = ({
   onChange,
 }: ImageGroupContextEditionProps) => {
   const [dragged, setDragged] = useState<MediaObject | null>(null);
+  const [localBloc, setLocalBloc] = useState(bloc);
+
+  // Sync avec le parent uniquement quand l'ID change
+  useEffect(() => {
+    setLocalBloc(bloc);
+  }, [bloc.id]);
 
   const onDragStart = (media: MediaObject) => {
     setDragged(media);
   };
 
-  const onDrop = (target: MediaObject) => {
-    if (!dragged) return;
+  const onDrop = useCallback(
+    (target: MediaObject) => {
+      if (!dragged) return;
 
-    const reordered = reorderArray(
-      bloc.image_medias,
-      dragged,
-      target,
-      "number_position_image",
-    );
-    const cleanimage_medias = reordered.map(cloneMediaWithPosition);
-    const updatedBloc = cloneBlocWithMedias(
-      bloc,
+      setLocalBloc((prev) => {
+        const reordered = reorderArray(
+          prev.image_medias, // ✅ Utiliser prev (localBloc)
+          dragged,
+          target,
+          "number_position_image",
+        );
+        const cleanimage_medias = reordered.map(cloneMediaWithPosition);
+        const updatedBloc = cloneBlocWithMedias(prev, cleanimage_medias);
 
-      cleanimage_medias,
-    );
+        onChange(updatedBloc);
+        return updatedBloc;
+      });
 
-    onChange(updatedBloc); // <-- remonte le bloc mis à jour dans la page
-    setDragged(null);
-  };
+      setDragged(null);
+    },
+    [dragged, onChange],
+  );
 
-  const updateField = (field: string, value: any) => {
-    const updatedBloc = updateObjectBySetter(bloc, field, value);
-    onChange(updatedBloc.data);
-  };
+  const updateField = useCallback(
+    (field: string, value: any) => {
+      setLocalBloc((prev) => {
+        const updatedBloc = updateObjectBySetter(prev, field, value);
+        onChange(updatedBloc.data);
+        return updatedBloc.data;
+      });
+    },
+    [onChange],
+  );
 
-  const handleAdd = () => {
-    const newMedia = createMedia(bloc.image_medias.length, bloc.id);
-    const updatedBloc = cloneBlocWithMedias(bloc, [
-      ...bloc.image_medias,
-      newMedia,
-    ]);
+  const handleAdd = useCallback(() => {
+    setLocalBloc((prev) => {
+      const newMedia = createMedia(prev.image_medias.length, prev.id);
+      const updatedBloc = cloneBlocWithMedias(prev, [
+        ...prev.image_medias,
+        newMedia,
+      ]);
 
-    onChange(updatedBloc);
-  };
+      onChange(updatedBloc);
+      return updatedBloc;
+    });
+  }, [onChange]);
 
-  const handleRemove = (media: MediaObject) => {
-    const filteredimage_medias = bloc.image_medias.filter(
-      (img) => img.id !== media.id,
-    );
-    const cleanimage_medias = filteredimage_medias.map(cloneMediaWithPosition);
-    const updatedBloc = cloneBlocWithMedias(bloc, cleanimage_medias);
+  const handleRemove = useCallback(
+    (media: MediaObject) => {
+      setLocalBloc((prev) => {
+        const filteredimage_medias = prev.image_medias.filter(
+          (img) => img.id !== media.id,
+        );
+        const cleanimage_medias = filteredimage_medias.map(
+          cloneMediaWithPosition,
+        );
+        const updatedBloc = cloneBlocWithMedias(prev, cleanimage_medias);
 
-    onChange(updatedBloc);
-  };
+        onChange(updatedBloc);
+        return updatedBloc;
+      });
+    },
+    [onChange],
+  );
 
-  // Afficher un placeholder pendant le chargement
-  if (!bloc) {
+  if (!localBloc) {
     return (
       <div className="flex flex-col lg:flex-row gap-6">
-        <div className="flex-1 rounded-lg  p-4 shadow-sm">
+        <div className="flex-1 rounded-lg p-4 shadow-sm">
           <h2 className="text-lg font-semibold mb-4">Éditeur</h2>
           <div className="animate-pulse space-y-4">
             <div className="h-4 bg-gray-200 rounded w-3/4"></div>
             <div className="h-4 bg-gray-200 rounded w-1/2"></div>
           </div>
         </div>
-
-        <div className="flex-1 rounded-lg  p-4 shadow-sm">
+        <div className="flex-1 rounded-lg p-4 shadow-sm">
           <h2 className="text-lg font-semibold mb-4">Aperçu</h2>
           <div className="animate-pulse space-y-4">
             <div className="h-16 bg-gray-200 rounded"></div>
@@ -98,10 +120,10 @@ const ImageGroupContextEdition: React.FC<ImageGroupContextEditionProps> = ({
 
   return (
     <div className="flex flex-col lg:flex-row gap-6">
-      <div className="flex-1 rounded-lg  p-4 shadow-sm">
+      <div className="flex-1 rounded-lg p-4 shadow-sm">
         <h2 className="text-lg font-semibold mb-4">Éditeur</h2>
         <PicturesLinkEdit
-          images_group={bloc}
+          images_group={localBloc} // ✅ Passer localBloc
           onChange={updateField}
           addElement={handleAdd}
           removeElement={handleRemove}
@@ -110,12 +132,12 @@ const ImageGroupContextEdition: React.FC<ImageGroupContextEditionProps> = ({
           isLink={true}
         />
       </div>
-
-      <div className="flex-1 rounded-lg  p-4 shadow-sm">
+      <div className="flex-1 rounded-lg p-4 shadow-sm">
         <h2 className="text-lg font-semibold mb-4">Aperçu</h2>
-        <PicturesLinkView bloc={bloc} />
+        <PicturesLinkView bloc={localBloc} /> {/* ✅ Passer localBloc */}
       </div>
     </div>
   );
 };
+
 export default ImageGroupContextEdition;

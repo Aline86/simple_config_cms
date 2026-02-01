@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { cloneBlocWithMedias } from "../../../../../helpers/bloc.helper";
 import { reorderArray } from "../../../../../helpers/changeComponentPosition";
 import {
@@ -23,56 +23,81 @@ const ImageGridContextEdition: React.FC<ImageGridContextEditionProps> = ({
   onChange,
 }: ImageGridContextEditionProps) => {
   const [dragged, setDragged] = useState<MediaObject | null>(null);
+  const [localBloc, setLocalBloc] = useState(bloc);
+
+  // Sync avec le parent uniquement quand l'ID change
+  useEffect(() => {
+    setLocalBloc(bloc);
+  }, [bloc.id]);
 
   const onDragStart = (media: MediaObject) => {
     setDragged(media);
   };
 
-  const onDrop = (target: MediaObject) => {
-    if (!dragged) return;
+  const onDrop = useCallback(
+    (target: MediaObject) => {
+      if (!dragged) return;
 
-    const reordered = reorderArray(
-      bloc.image_medias,
-      dragged,
-      target,
-      "number_position_image",
-    );
-    const cleanimage_medias = reordered.map(cloneMediaWithPosition);
-    const updatedBloc = cloneBlocWithMedias(
-      bloc,
+      setLocalBloc((prev) => {
+        const reordered = reorderArray(
+          prev.image_medias, // ✅ Utiliser prev (localBloc)
+          dragged,
+          target,
+          "number_position_image",
+        );
+        const cleanimage_medias = reordered.map(cloneMediaWithPosition);
+        const updatedBloc = cloneBlocWithMedias(prev, cleanimage_medias);
 
-      cleanimage_medias,
-    );
+        onChange(updatedBloc);
+        return updatedBloc;
+      });
 
-    onChange(updatedBloc); // <-- remonte le bloc mis à jour dans la page
-    setDragged(null);
-  };
+      setDragged(null);
+    },
+    [dragged, onChange],
+  );
 
-  const updateField = (field: string, value: any) => {
-    const updatedBloc = updateObjectBySetter(bloc, field, value);
-    onChange(updatedBloc.data);
-  };
+  const updateField = useCallback(
+    (field: string, value: any) => {
+      setLocalBloc((prev) => {
+        const updatedBloc = updateObjectBySetter(prev, field, value);
+        onChange(updatedBloc.data);
+        return updatedBloc.data;
+      });
+    },
+    [onChange],
+  );
 
-  const handleAdd = () => {
-    const newMedia = createMedia(bloc.image_medias.length, bloc.id);
-    const updatedBloc = cloneBlocWithMedias(bloc, [
-      ...bloc.image_medias,
-      newMedia,
-    ]);
+  const handleAdd = useCallback(() => {
+    setLocalBloc((prev) => {
+      const newMedia = createMedia(prev.image_medias.length, prev.id);
+      const updatedBloc = cloneBlocWithMedias(prev, [
+        ...prev.image_medias,
+        newMedia,
+      ]);
 
-    onChange(updatedBloc);
-  };
+      onChange(updatedBloc);
+      return updatedBloc;
+    });
+  }, [onChange]);
 
-  const handleRemove = (media: MediaObject) => {
-    const filteredimage_medias = bloc.image_medias.filter(
-      (img) => img.id !== media.id,
-    );
-    const cleanimage_medias = filteredimage_medias.map(cloneMediaWithPosition);
-    const updatedBloc = cloneBlocWithMedias(bloc, cleanimage_medias);
+  const handleRemove = useCallback(
+    (media: MediaObject) => {
+      setLocalBloc((prev) => {
+        const filteredimage_medias = prev.image_medias.filter(
+          (img) => img.id !== media.id,
+        );
+        const cleanimage_medias = filteredimage_medias.map(
+          cloneMediaWithPosition,
+        );
+        const updatedBloc = cloneBlocWithMedias(prev, cleanimage_medias);
 
-    onChange(updatedBloc);
-  };
-
+        onChange(updatedBloc);
+        return updatedBloc;
+      });
+    },
+    [onChange],
+  );
   // Afficher un placeholder pendant le chargement
   if (!bloc) {
     return (

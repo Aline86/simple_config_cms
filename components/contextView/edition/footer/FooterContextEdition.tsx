@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect, useCallback } from "react";
 import { deleteItemAndReorder } from "../../../../helpers/changeComponentPosition";
 import {
   cloneFooterWithReseau,
@@ -24,33 +25,56 @@ const FooterContextEdition: React.FC<FooterContextEditionProps> = ({
   bloc,
   onChange,
 }: FooterContextEditionProps) => {
-  const updateMediaObject = (fieldName: string, newValue: any) => {
-    if (!bloc) return;
-    const newObj = updateObjectBySetter(bloc, fieldName, newValue);
-    onChange(newObj.data);
-  };
+  const [localBloc, setLocalBloc] = useState(bloc);
 
-  const handleRemove = (model: MediaObject) => {
-    const res = deleteItemAndReorder(
-      bloc.reseaux,
-      model,
-      "number_position_image",
-    );
-    const cleanReseaux = res.map((reseau, index) => {
-      return cloneMediaWithPosition(reseau, index);
+  // Sync avec le parent uniquement quand l'ID change
+  useEffect(() => {
+    setLocalBloc(bloc);
+  }, [bloc.number_id]);
+
+  const updateMediaObject = useCallback(
+    (fieldName: string, newValue: any) => {
+      setLocalBloc((prev) => {
+        if (!prev) return prev;
+        const newObj = updateObjectBySetter(prev, fieldName, newValue);
+        onChange(newObj.data);
+        return newObj.data;
+      });
+    },
+    [onChange],
+  );
+
+  const handleRemove = useCallback(
+    (model: MediaObject) => {
+      setLocalBloc((prev) => {
+        const res = deleteItemAndReorder(
+          prev.reseaux,
+          model,
+          "number_position_image",
+        );
+        const cleanReseaux = res.map((reseau, index) => {
+          return cloneMediaWithPosition(reseau, index);
+        });
+        const updatedFooter = cloneFooterWithReseaux(prev, cleanReseaux);
+
+        onChange(updatedFooter);
+        return updatedFooter;
+      });
+    },
+    [onChange],
+  );
+
+  const handleAdd = useCallback(() => {
+    setLocalBloc((prev) => {
+      const newMedia = createMedia(prev.reseaux.length, 1);
+      const updatedFooter = cloneFooterWithReseau(prev, newMedia);
+      onChange(updatedFooter);
+      return updatedFooter;
     });
-    const updatedHeader = cloneFooterWithReseaux(bloc, cleanReseaux);
-
-    onChange(updatedHeader);
-  };
-  const handleAdd = () => {
-    const newMedia = createMedia(bloc.reseaux.length, 1);
-    const updatedHeader = cloneFooterWithReseau(bloc, newMedia);
-    onChange(updatedHeader);
-  };
+  }, [onChange]);
 
   // Afficher un placeholder pendant le chargement
-  if (!bloc) {
+  if (!localBloc) {
     return (
       <div className="flex flex-col lg:flex-row gap-6">
         <div className="flex-1 rounded-lg  p-4 shadow-sm">
@@ -76,7 +100,7 @@ const FooterContextEdition: React.FC<FooterContextEditionProps> = ({
       <div className="flex-1 rounded-lg  p-4 shadow-sm">
         <h2 className="text-lg font-semibold mb-4">Éditeur</h2>
         <FooterEdit
-          footer={bloc}
+          footer={localBloc}
           onChange={updateMediaObject}
           addElement={handleAdd}
           removeElement={handleRemove}
@@ -85,7 +109,7 @@ const FooterContextEdition: React.FC<FooterContextEditionProps> = ({
 
       <div className="flex-1 rounded-lg  p-4 shadow-sm">
         <h2 className="text-lg font-semibold mb-4">Aperçu</h2>
-        <FooterView footer={bloc} />
+        <FooterView footer={localBloc} />
       </div>
     </div>
   );

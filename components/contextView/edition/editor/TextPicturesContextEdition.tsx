@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { cloneArticleWithImages } from "../../../../helpers/article.helper";
 import { updateArticleImages } from "../../../../helpers/article.media.helper";
 import { cloneBlocWithArticles } from "../../../../helpers/bloc.helper";
@@ -25,66 +25,101 @@ const TextPicturesContextEdition: React.FC<TextPicturesContextEditionProps> = ({
   onChange,
 }: TextPicturesContextEditionProps) => {
   const [dragged, setDragged] = useState<MediaObject | null>(null);
+  const [localBloc, setLocalBloc] = useState(bloc);
+
+  // Sync avec le parent uniquement quand l'ID change
+  useEffect(() => {
+    setLocalBloc(bloc);
+  }, [bloc.id]);
+
   const onDragStart = (media: MediaObject) => setDragged(media);
 
-  const onDrop = (target: MediaObject) => {
-    if (!dragged) return;
+  const onDrop = useCallback(
+    (target: MediaObject) => {
+      if (!dragged) return;
 
-    const article = bloc.articles?.[0];
-    if (!article) return;
+      setLocalBloc((prev) => {
+        const article = prev.articles?.[0];
+        if (!article) return prev;
 
-    const reordered = reorderArray(
-      article.images,
-      dragged,
-      target,
-      "number_position_image",
-    );
-    const cleanImages = reordered.map(cloneMediaWithPosition);
-    const updatedArticles = updateArticleImages(bloc.articles, 0, cleanImages);
-    const updatedBloc = cloneBlocWithArticles(bloc, updatedArticles);
+        const reordered = reorderArray(
+          article.images,
+          dragged,
+          target,
+          "number_position_image",
+        );
+        const cleanImages = reordered.map(cloneMediaWithPosition);
+        const updatedArticles = updateArticleImages(
+          prev.articles,
+          0,
+          cleanImages,
+        );
+        const updatedBloc = cloneBlocWithArticles(prev, updatedArticles);
 
-    onChange(updatedBloc); // <-- remonte le bloc mis à jour dans la page
-    setDragged(null);
-  };
+        onChange(updatedBloc);
+        return updatedBloc;
+      });
 
-  const updateField = (field: string, value: any) => {
-    const updatedBloc = updateObjectBySetter(bloc, field, value);
-    onChange(updatedBloc.data);
-  };
+      setDragged(null);
+    },
+    [dragged, onChange],
+  );
 
-  const handleAdd = () => {
-    const article = bloc.articles?.[0];
-    if (!article) return;
+  const updateField = useCallback(
+    (field: string, value: any) => {
+      setLocalBloc((prev) => {
+        const updatedBloc = updateObjectBySetter(prev, field, value);
+        onChange(updatedBloc.data);
+        return updatedBloc.data;
+      });
+    },
+    [onChange],
+  );
 
-    const newMedia = createMedia(article.images.length, bloc.id);
-    const updatedArticles = [
-      cloneArticleWithImages(article, [...article.images, newMedia]),
-    ];
-    const updatedBloc = cloneBlocWithArticles(bloc, updatedArticles);
+  const handleAdd = useCallback(() => {
+    setLocalBloc((prev) => {
+      const article = prev.articles?.[0];
+      if (!article) return prev;
 
-    onChange(updatedBloc);
-  };
+      const newMedia = createMedia(article.images.length, prev.id);
+      const updatedArticles = [
+        cloneArticleWithImages(article, [...article.images, newMedia]),
+      ];
+      const updatedBloc = cloneBlocWithArticles(prev, updatedArticles);
 
-  const handleRemove = (media: MediaObject) => {
-    const article = bloc.articles?.[0];
-    if (!article) return;
+      onChange(updatedBloc);
+      return updatedBloc;
+    });
+  }, [onChange]);
 
-    const filteredImages = article.images.filter((img) => img.id !== media.id);
-    const cleanImages = filteredImages.map(cloneMediaWithPosition);
-    const updatedArticles = [cloneArticleWithImages(article, cleanImages)];
-    const updatedBloc = cloneBlocWithArticles(bloc, updatedArticles);
+  const handleRemove = useCallback(
+    (media: MediaObject) => {
+      setLocalBloc((prev) => {
+        const article = prev.articles?.[0];
+        if (!article) return prev;
 
-    onChange(updatedBloc);
-  };
+        const filteredImages = article.images.filter(
+          (img) => img.id !== media.id,
+        );
+        const cleanImages = filteredImages.map(cloneMediaWithPosition);
+        const updatedArticles = [cloneArticleWithImages(article, cleanImages)];
+        const updatedBloc = cloneBlocWithArticles(prev, updatedArticles);
 
-  if (!bloc) return null;
+        onChange(updatedBloc);
+        return updatedBloc;
+      });
+    },
+    [onChange],
+  );
+
+  if (!localBloc) return null;
 
   return (
     <div className="flex flex-col lg:flex-row gap-6 ">
       <div className="flex-1 rounded-lg  bg-transparent p-4 shadow-sm max-w-[48vw]">
         <h2 className="text-lg font-semibold mb-4">Éditeur</h2>
         <TextEditor
-          bloc={bloc}
+          bloc={localBloc}
           onChange={updateField}
           addElement={handleAdd}
           removeElement={handleRemove}
@@ -95,7 +130,7 @@ const TextPicturesContextEdition: React.FC<TextPicturesContextEditionProps> = ({
 
       <div className="flex-1 rounded-lg  p-4 shadow-sm">
         <h2 className="text-lg font-semibold mb-4">Aperçu</h2>
-        <TextView bloc={bloc} />
+        <TextView bloc={localBloc} />
       </div>
     </div>
   );
