@@ -10,7 +10,6 @@ interface BlocParams {
 }
 
 function ArticleView({ bloc }: BlocParams) {
-  // ✅ Calculer directement, pas dans useEffect
   const html = useMemo(() => {
     if (!bloc) return [];
     return output(bloc) ?? [];
