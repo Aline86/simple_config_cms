@@ -42,7 +42,7 @@ export default function ContentLayout({
   };
 
   return (
-    <section className="max-w-[1250px] w-full mx-auto p-8">
+    <section className="max-w-[950px] w-full mx-auto p-8">
       <h2 className="text-2xl font-bold text-slate-800 mb-6 text-center">
         {title}
       </h2>
