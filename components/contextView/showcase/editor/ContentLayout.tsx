@@ -34,7 +34,7 @@ export default function ContentLayout({
       </div>
     ),
     left: (
-      <div className="flex flex-col lg:flex-row gap-8 items-start">
+      <div className="flex flex-col lg:flex-row gap-8 items-center">
         {hasImages && <div className="w-full lg:w-1/3">{images}</div>}
         {hasText && <div className="flex-1">{text}</div>}
       </div>
