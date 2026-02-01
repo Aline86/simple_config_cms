@@ -97,14 +97,7 @@ export default function HeaderView({ header }: MediaViewProps) {
   }, [header?.text_background_url]);
 
   if (!pages) {
-    return (
-      <header className="bg-white shadow ">
-        <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-          <span className="text-xl font-bold text-indigo-600">MonSite</span>
-          <div className="w-6 h-6" />
-        </div>
-      </header>
-    );
+    return <header className="bg-white shadow "></header>;
   }
 
   return (

@@ -1,5 +1,5 @@
 import type { NextConfig } from "next";
-
+const isDev = true;
 /** @type {import('next').NextConfig} */
 const nextConfig: NextConfig = {
   async headers() {
@@ -13,8 +13,9 @@ const nextConfig: NextConfig = {
           },
           {
             key: "X-Frame-Options",
-            value: "DENY", // or "SAMEORIGIN" if you want to allow embedding in your own site
+            value: "SAMEORIGIN",
           },
+
           {
             key: "Access-Control-Allow-Origin",
             value: process.env.NEXT_PUBLIC_APP_URL ?? "",
@@ -48,7 +49,11 @@ const nextConfig: NextConfig = {
               "style-src-elem 'self' 'unsafe-inline';",
               "style-src-attr 'self' 'unsafe-inline';",
               `connect-src 'self' https://upload-widget.cloudinary.com https://www.google-analytics.com https://play.google.com https://www.youtube.com https://vercel.live;`,
-              "frame-src https://upload-widget.cloudinary.com https://www.youtube.com;",
+              `frame-src ${
+                isDev
+                  ? "http://localhost:3000 https://upload-widget.cloudinary.com https://www.youtube.com"
+                  : "https://simple-config-cms.vercel.app https://upload-widget.cloudinary.com https://www.youtube.com"
+              };`,
               "object-src 'none';",
               "base-uri 'self';",
             ]

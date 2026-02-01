@@ -24,7 +24,9 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
             {bloc.text_titre}
           </h2>
         ) : (
-          <h1>{bloc.text_titre}</h1>
+          <h1 style={{ color: "white", fontSize: "65px" }}>
+            {bloc.text_titre}
+          </h1>
         )}
 
         <h2 style={{ color: "white" }} className="text-white">
@@ -62,7 +64,9 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
             {bloc.text_titre}
           </h2>
         ) : (
-          <h1>{bloc.text_titre}</h1>
+          <h1 style={{ color: "white", fontSize: "65px" }}>
+            {bloc.text_titre}
+          </h1>
         )}
         <h2 style={{ color: "white" }} className="text-2xl mt-4">
           {bloc.text_description}
