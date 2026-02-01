@@ -8,7 +8,7 @@ export default async function getHomePage() {
     },
   );
   if (!res.ok) {
-    throw new Error("Erreur chargement pages");
+    return false;
   }
 
   return res.json();

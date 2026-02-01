@@ -17,7 +17,7 @@ const nextConfig: NextConfig = {
           },
           {
             key: "Access-Control-Allow-Origin",
-            value: process.env.NEXT_BACKEND_DOMAIN ?? "",
+            value: process.env.NEXT_PUBLIC_APP_URL ?? "",
           },
           {
             key: "Access-Control-Allow-Credentials",

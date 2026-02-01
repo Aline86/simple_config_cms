@@ -23,7 +23,6 @@ export default function ImageUploaderView<T>({
   field: string;
   onChangeValue: (fieldName: string, value: any) => void;
 }) {
-  console.log("value", value, field.split(".")[1]);
   const uploader = ImageUploader({
     value: value,
     model: model,
@@ -116,7 +115,6 @@ function PreviewSection({
   onRemove,
   onClearAll,
 }: PreviewSectionProps) {
-  console.log("value", value);
   return (
     <div className="preview-section">
       <div className="preview-header">

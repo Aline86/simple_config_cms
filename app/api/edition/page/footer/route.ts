@@ -70,13 +70,7 @@ export async function POST(request: NextRequest) {
     );
   } catch (err) {
     console.error("POST /api/footer error:", err);
-    return NextResponse.json(
-      {
-        error: "Server error",
-        details: err instanceof Error ? err.message : "Unknown error",
-      },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: "Footer not found" }, { status: 404 });
   }
 }
 

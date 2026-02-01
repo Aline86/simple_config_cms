@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   ) {
     const pageData = new PageObject(page);
     const haederData = new HeaderObject(header, "view");
-    console.log("haederData", haederData.favicon.image_url);
+
     return {
       title: pageData.text_titre,
       description: pageData.text_description,

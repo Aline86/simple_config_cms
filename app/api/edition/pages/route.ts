@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const pagesPayload = Array.isArray(body) ? body : body.data;
-    console.log(pagesPayload);
+
     if (!Array.isArray(pagesPayload)) {
       return NextResponse.json(
         { error: "Payload must be an array of pages" },
@@ -131,7 +131,6 @@ export async function POST(request: NextRequest) {
       status: 201,
     });
   } catch (err) {
-    // ✅ Gérer l'erreur de slug unique
     if (err.code === "P2002") {
       return NextResponse.json(
         { error: "Un slug en doublon a été détecté" },
@@ -139,12 +138,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    return NextResponse.json(
-      {
-        error: "Server error",
-        details: err instanceof Error ? err.message : "Unknown error",
-      },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: "Pages non trouvée" }, { status: 404 });
   }
 }

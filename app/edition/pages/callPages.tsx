@@ -9,7 +9,7 @@ export default async function getPages(with_homepage: string = "all_pages") {
     },
   );
   if (!res.ok) {
-    throw new Error("Erreur chargement pages");
+    return false;
   }
 
   return res.json();

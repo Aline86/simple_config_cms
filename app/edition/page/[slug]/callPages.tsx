@@ -6,7 +6,7 @@ export async function getPageBySlug(slug: string) {
     },
   );
   if (!res.ok) {
-    throw new Error("Erreur chargement page");
+    return false;
   }
   const page = await res.json();
 

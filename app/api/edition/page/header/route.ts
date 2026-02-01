@@ -16,13 +16,7 @@ export async function GET() {
     return NextResponse.json(header, { status: 200 });
   } catch (err) {
     console.error("GET /api/header error:", err);
-    return NextResponse.json(
-      {
-        error: "Server error",
-        details: err instanceof Error ? err.message : "Unknown error",
-      },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: "Header not found" }, { status: 404 });
   }
 }
 

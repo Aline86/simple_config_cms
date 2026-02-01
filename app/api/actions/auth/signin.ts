@@ -2,14 +2,8 @@
 
 import bcrypt from "bcryptjs";
 
-import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
 import { NextResponse } from "next/server";
-
-type SignInData = {
-  email: string;
-  password: string;
-};
 
 export async function signin(formData: FormData) {
   const email = formData.get("email")?.toString() || "";

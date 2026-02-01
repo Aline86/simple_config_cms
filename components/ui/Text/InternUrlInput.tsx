@@ -23,7 +23,7 @@ export default function InternUrlInput<T>({
   className = "",
 }: InternUrlInputProps<T>) {
   const { pages, loading } = usePages();
-  console.log("value", value);
+
   if (loading) return <div>Loading...</div>;
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

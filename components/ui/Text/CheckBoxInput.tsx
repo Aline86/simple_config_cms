@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import { TextValidator } from "../../../validators/TextValidator";
-import usePages from "../../../hooks/dropdown/usePages";
 import { PageObject } from "../../../model/Page";
 
 interface BaseInputProps<T> {
@@ -33,7 +32,7 @@ export default function CheckboxInput<T>({
 }: ValidatedCheckboxInputProps<T>) {
   const [touched, setTouched] = useState(false);
   const [localValue, setLocalValue] = useState<boolean>(value);
-  console.log("localValue", pages);
+
   // Sync avec le parent
   useEffect(() => {
     setLocalValue(!!value);
