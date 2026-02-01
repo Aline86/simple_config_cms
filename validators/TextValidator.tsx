@@ -1,4 +1,3 @@
-import TextInput from "@/components/ui/Text/TextInput";
 import { z } from "zod";
 
 export class TextParameter {

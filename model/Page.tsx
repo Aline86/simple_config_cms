@@ -133,6 +133,7 @@ export class PageObject extends BaseValidatable {
       checkbox_published: this.checkbox_published,
       checkbox_home_page: this.checkbox_home_page,
       text_titre: this.text_titre,
+      text_description: this.text_description,
       text_slug: this.text_slug,
       number_page_position: this.number_page_position,
       text_langue: this.text_langue,

@@ -17,10 +17,11 @@ type ValidatorClass =
   | typeof TextValidator
   | typeof CloudinaryValidator
   | typeof NumberValidator;
+
 type ParameterClass = CloudinaryParameter | TextParameter | Parameter;
 
 // Map des classes de validators par préfixe
-const VALidATOR_MAP: Record<FieldPrefix, ValidatorClass> = {
+const VALIDATOR_MAP: Record<FieldPrefix, ValidatorClass> = {
   text: TextValidator,
   image: CloudinaryValidator,
   number: NumberValidator,
@@ -41,7 +42,7 @@ const DEFAULT_PARAMS: Record<FieldPrefix, ParameterClass> = {
  * @returns Le préfixe (ex: "text", "image")
  */
 export const extractPrefix = (fieldName: string): FieldPrefix => {
-  const match = fieldName.match(/^(text|image|number|color)_/);
+  const match = fieldName.match(/^(text|image|number|color|checkbox)_/);
 
   if (!match) {
     throw new Error(
@@ -58,7 +59,7 @@ export const extractPrefix = (fieldName: string): FieldPrefix => {
  * @returns La configuration du champ ou une config par défaut
  */
 export const getFieldConfig = (fieldName: string): ParameterClass => {
-  const config = FIELD_CONFIGS[fieldName] as ParameterClass;
+  const config = FIELD_CONFIGS[fieldName];
 
   if (!config) {
     const prefix = extractPrefix(fieldName);
@@ -86,7 +87,7 @@ export const createValidatorForField = (
     const prefix = extractPrefix(fieldName);
 
     // 2. Récupérer la classe de validator
-    const ValidatorClass = VALidATOR_MAP[prefix];
+    const ValidatorClass = VALIDATOR_MAP[prefix];
 
     if (!ValidatorClass) {
       throw new Error(`No validator found for prefix: "${prefix}"`);
@@ -96,7 +97,7 @@ export const createValidatorForField = (
     const config = getFieldConfig(fieldName);
 
     // 4. Instancier le validator
-    return new ValidatorClass(value, config);
+    return new ValidatorClass(value, config as any);
   } catch (error) {
     console.error(`Error creating validator for field "${fieldName}":`, error);
     throw error;

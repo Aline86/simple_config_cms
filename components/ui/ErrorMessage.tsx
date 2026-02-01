@@ -29,8 +29,8 @@ export default function ErrorMessage({
     <div
       className={
         hasSucceeded
-          ? "fixed top-[100px] left-0 right-0 flex justify-center gap-3 rounded-md border border-green-300  bg-green-50 px-4 py-3 text-sm text-green-700"
-          : "fixed top-[100px] left-0 right-0 flex justify-centers gap-3 rounded-md border border-red-300  bg-red-50 px-4 py-3 text-sm text-red-700"
+          ? "fixed top-[100px] z-100 left-0 right-0 flex justify-center gap-3 rounded-md border border-green-300  bg-green-50 px-4 py-3 text-sm text-green-700"
+          : "fixed top-[100px] z-100 left-0 right-0 flex justify-centers gap-3 rounded-md border border-red-300  bg-red-50 px-4 py-3 text-sm text-red-700"
       }
       role="alert"
     >

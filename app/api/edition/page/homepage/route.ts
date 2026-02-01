@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { prisma } from "./../../../../../lib/prisma/prisma";
 
 export async function GET() {
@@ -13,7 +13,6 @@ export async function GET() {
 
     return NextResponse.json(dbPage, { status: 200 });
   } catch (err) {
-    console.error("GET /api/page error:", err);
     return NextResponse.json(
       {
         error: "Server error",

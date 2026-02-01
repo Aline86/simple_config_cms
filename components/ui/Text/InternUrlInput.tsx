@@ -2,6 +2,7 @@
 
 import React from "react";
 import usePages from "../../../hooks/dropdown/usePages";
+import { PageObject } from "../../../model/Page";
 interface InternUrlInputProps<T> {
   value: string;
   model: T;
@@ -34,16 +35,14 @@ export default function InternUrlInput<T>({
     <div className={`validated-input-wrapper ${className} mb-4`}>
       {label && <label className="input-label">{label}</label>}
       <select onChange={handleChange}>
-        <option key="0" value="">
-          - Page -
-        </option>
+        <option key="0">- Page -</option>
         {pages.map((p) => (
           <option
-            key={p.text_titre}
-            value={p.text_slug}
-            selected={p.text_slug === value}
+            key={new PageObject(p).text_titre}
+            value={new PageObject(p).text_slug}
+            selected={new PageObject(p).text_slug === value}
           >
-            {p.text_titre}
+            {new PageObject(p).text_titre}
           </option>
         ))}
       </select>

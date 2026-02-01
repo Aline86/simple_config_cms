@@ -12,6 +12,7 @@ import {
 import { RedirectButton } from "../../../components/ui/RedirectButton";
 import { PageObject } from "../../../model/Page";
 import { FieldRenderer } from "../../../validators/renderer/TextRenderer";
+import { Accordion } from "../../../components/ui/Accordeon";
 
 interface PageCrudProps {
   page_data: PageObject;
@@ -41,63 +42,78 @@ export default function PageCrud({
   const handleEdit = (fieldName: string, newValue: any) => {
     onEdit(page_data, fieldName as keyof PageObject, newValue);
   };
-
+  const num = Number(page_data.number_page_position);
   return (
-    <div className="p-6 space-y-6 ">
-      <div className="grid  lg:grid-cols-1 gap-6 ">
-        <Card
-          draggable={draggableEnabled}
-          onDragStart={() => onDragStart(page_data)}
-          onDragOver={(e) => e.preventDefault()}
-          onDrop={() => onDrop(page_data)}
-          className="cursor-grab active:cursor-grabbing"
-        >
-          <CardHeader>
-            <CardTitle>{page_data.text_titre}</CardTitle>
-            <Cardtext_description>
-              Créé le{" "}
-              {page_data !== null && page_data !== undefined
-                ? page_data.text_createdAt?.toString()
-                : ""}
-            </Cardtext_description>
-          </CardHeader>
-          <CardContent>
-            <div className="text-sm text-muted-foreground">
-              <FieldRenderer
-                fieldName={"text_titre"}
-                model={page_data}
-                setField={handleEdit}
-                label={""}
-              />
-            </div>
-            <div className="text-sm text-muted-foreground">
-              <FieldRenderer
-                fieldName={"checkbox_home_page"}
-                model={page_data}
-                setField={handleEdit}
-                label={""}
-                pages={pages}
-              />
-            </div>
-          </CardContent>
-          <CardFooter className="flex justify-end items-center">
-            <div className="flex gap-2">
-              {/* Bouton Delete */}
-              <button
-                onClick={() => onDelete(page_data)}
-                className="flex items-center gap-1 px-3 py-1 rounded bg-red-500 text-white hover:bg-red-600 transition"
-              >
-                <Trash size={14} /> Supprimer
-              </button>
-            </div>
-            <div className="flex gap-2">
-              <RedirectButton slug={page_data.text_slug ?? ""} />
-            </div>
-            <span className="text-xs text-muted-foreground">
-              id: {page_data.number_id}
-            </span>
-          </CardFooter>
-        </Card>
+    <div className=" ">
+      <div
+        className="cursor-grab active:cursor-grabbing grid  gap-6 "
+        draggable={draggableEnabled}
+        onDragStart={() => onDragStart(page_data)}
+        onDragOver={(e) => e.preventDefault()}
+        onDrop={() => onDrop(page_data)}
+      >
+        <Accordion
+          children={
+            <Card>
+              <CardHeader>
+                <CardTitle>{page_data.text_titre}</CardTitle>
+                <Cardtext_description>
+                  Créé le{" "}
+                  {page_data !== null && page_data !== undefined
+                    ? page_data.text_createdAt?.toString()
+                    : ""}
+                </Cardtext_description>
+              </CardHeader>
+              <CardContent>
+                <div className="text-sm text-muted-foreground">
+                  <FieldRenderer
+                    fieldName={"text_titre"}
+                    model={page_data}
+                    setField={handleEdit}
+                    label={"Titre de la page"}
+                  />
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  <FieldRenderer
+                    fieldName={"text_description"}
+                    model={page_data}
+                    setField={handleEdit}
+                    label={
+                      "Description de la page - mots-clés pour l'indexation dans les moteurs de recherche - SEO"
+                    }
+                  />
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  <FieldRenderer
+                    fieldName={"checkbox_home_page"}
+                    model={page_data}
+                    setField={handleEdit}
+                    label={"Page d'accueil"}
+                    pages={pages}
+                  />
+                </div>
+              </CardContent>
+              <CardFooter className="flex justify-end items-center">
+                <div className="flex gap-2">
+                  {/* Bouton Delete */}
+                  <button
+                    onClick={() => onDelete(page_data)}
+                    className="flex items-center gap-1 px-3 py-1 rounded bg-red-500 text-white hover:bg-red-600 transition"
+                  >
+                    <Trash size={14} /> Supprimer
+                  </button>
+                </div>
+                <div className="flex gap-2">
+                  <RedirectButton slug={page_data.text_slug ?? ""} />
+                </div>
+                <span className="text-xs text-muted-foreground">
+                  id: {page_data.number_id}
+                </span>
+              </CardFooter>
+            </Card>
+          }
+          header={" Page n° : " + num}
+        />
       </div>
       {show_debug ? (
         <div className="mx-auto max-w-2xl mt-6 p-6">

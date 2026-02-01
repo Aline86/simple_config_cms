@@ -208,7 +208,10 @@ export default function PageClient({
           hasSucceeded={hasSucceeded}
         />
       )}
-      <div className="pt-24">
+      <h1 className="text-3xl font-bold mt-24 text-center">
+        {page.text_titre}
+      </h1>
+      <div className="">
         <Accordion
           children={
             <HeaderContextEdition bloc={headerData} onChange={updateHeader} />

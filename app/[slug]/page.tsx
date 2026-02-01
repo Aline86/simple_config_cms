@@ -1,3 +1,5 @@
+import { HeaderObject } from "../../model/bloc/Header";
+import { PageObject } from "../../model/Page";
 import {
   getPageBySlug,
   getPageFooter,
@@ -5,12 +7,43 @@ import {
 } from "../edition/page/[slug]/callPages";
 
 import PageClient from "./PageClient";
+import type { Metadata, ResolvingMetadata } from "next";
 
-interface PageProps {
+type Props = {
   params: Promise<{ slug: string }>;
-}
+  searchParams: Promise<PageObject>;
+};
 
-export default async function Page({ params }: PageProps) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const slug = (await params).slug;
+  const [page, header] = await Promise.all([
+    await getPageBySlug(slug),
+    await getPageHeader(),
+  ]);
+
+  if (
+    page !== undefined &&
+    page !== null &&
+    header !== undefined &&
+    header !== null
+  ) {
+    const pageData = new PageObject(page);
+    const haederData = new HeaderObject(header, "view");
+    console.log("haederData", haederData.favicon.image_url);
+    return {
+      title: pageData.text_titre,
+      description: pageData.text_description,
+      icons: {
+        icon: haederData.favicon.image_url,
+      },
+    };
+  }
+  return {
+    title: "CMS",
+    description: "Ceci est une page",
+  };
+}
+export default async function Page({ params, searchParams }: Props) {
   const { slug } = await params;
 
   const page = await getPageBySlug(slug);

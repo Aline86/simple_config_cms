@@ -17,7 +17,7 @@ export type ValidatorInstance =
   | CloudinaryValidator
   | NumberValidator;
 // Map des classes de validators par préfixe
-export const VALidATOR_MAP: Record<FieldPrefix, any> = {
+export const VALIDATOR_MAP: Record<FieldPrefix, any> = {
   color: TextValidator,
   text: TextValidator,
   checkbox: TextValidator,
@@ -44,7 +44,7 @@ export const createValidator = <K extends keyof FieldConfigsMap>(
   value: unknown,
 ): ValidatorInstance => {
   const prefix = extractPrefix(fieldName);
-  const ValidatorClass = VALidATOR_MAP[prefix];
+  const ValidatorClass = VALIDATOR_MAP[prefix];
   const config = FIELD_CONFIGS[fieldName];
 
   if (!config) {

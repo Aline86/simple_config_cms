@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
+import { NextResponse } from "next/server";
 
 type SignInData = {
   email: string;
@@ -36,13 +37,15 @@ export async function signin(formData: FormData) {
     expiresIn: "7d",
   });
 
-  // Set httpOnly cookie
-  cookies().set("session", token, {
+  const response = NextResponse.json({ ok: true });
+
+  response.cookies.set("token", "123", {
     httpOnly: true,
+    secure: true,
     path: "/",
-    secure: process.env.NODE_ENV === "production",
-    maxAge: 60 * 60 * 24 * 7,
   });
+
+  return response;
 
   // Redirect or return success
   return {

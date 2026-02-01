@@ -1,5 +1,3 @@
-// PAS de "use client"
-
 export async function getPageBySlug(slug: string) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_APP_URL}/api/edition/page?slug=${encodeURIComponent(slug)}`,

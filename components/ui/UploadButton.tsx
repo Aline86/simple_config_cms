@@ -2,7 +2,14 @@
 
 import { CldUploadWidget } from "next-cloudinary";
 import { useState } from "react";
+
 import type { CloudinaryUploadWidgetResults } from "next-cloudinary";
+
+type CloudinarySuccessResult = CloudinaryUploadWidgetResults & {
+  info?: {
+    secure_url?: string;
+  };
+};
 
 interface UploadButtonProps {
   onChangeValue: (fieldName: string | undefined, value: any) => void;
@@ -27,7 +34,7 @@ export default function UploadButton({
         onSuccess={(result: CloudinaryUploadWidgetResults) => {
           setLoading(false);
 
-          const url = result?.info?.secure_url;
+          const url = (result as CloudinarySuccessResult).info?.secure_url;
           if (url) {
             onChangeValue(fieldName, url);
           }

@@ -113,7 +113,6 @@ export default function PageClient({
             checkbox_home_page: dbPage.checkbox_home_page,
             text_titre: dbPage.text_titre,
             text_description: dbPage.text_description,
-
             text_slug: dbPage.text_slug,
             number_page_position: dbPage.number_page_position,
             text_langue: dbPage.text_langue,

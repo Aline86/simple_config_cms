@@ -29,7 +29,7 @@ export type FieldRendererProps<T extends Record<string, any>> = {
 // --------------------
 // VALidATOR MAP
 // --------------------
-export const VALidATOR_MAP: Record<FieldPrefix, any> = {
+export const VALIDATOR_MAP: Record<FieldPrefix, any> = {
   text: TextValidator,
   color: TextValidator,
   image: CloudinaryValidator,
@@ -51,7 +51,7 @@ const createValidator = (
   value: unknown,
 ): ValidatorInstance => {
   const prefix = extractPrefix(fieldName);
-  const ValidatorClass = VALidATOR_MAP[prefix];
+  const ValidatorClass = VALIDATOR_MAP[prefix];
   const config = FIELD_CONFIGS[fieldName];
 
   let safeValue: unknown;
@@ -93,13 +93,10 @@ export function FieldRenderer<T extends Record<string, any>>({
   model,
   setField,
 }: FieldRendererProps<T>) {
+  const field = fieldName.split(".")[fieldName.split(".").length - 1];
   const [currentValue, setCurrentValue] = useState<string>(
-    (model[fieldName as keyof typeof model] as string) || "",
+    (model[field] as string) || "",
   );
-
-  useEffect(() => {
-    setCurrentValue((model[fieldName as keyof typeof model] as string) || "");
-  }, [model, fieldName]);
 
   const validator = useMemo(
     () => createValidator(selectedValidatorKey, currentValue),
@@ -111,6 +108,9 @@ export function FieldRenderer<T extends Record<string, any>>({
   const errors = validationResult.errors ?? [];
 
   const prefix = extractPrefix(selectedValidatorKey);
+  useEffect(() => {
+    setCurrentValue((model[fieldName as keyof typeof model] as string) || "");
+  }, [model, fieldName]);
 
   const renderInput = () => {
     switch (prefix) {
@@ -118,14 +118,14 @@ export function FieldRenderer<T extends Record<string, any>>({
         return selectedValidatorKey.includes("url_interne") ? (
           <InternUrlInput
             model={model}
-            value={currentValue}
+            value={model[field]}
             field={fieldName as string}
             onChangeValue={setField}
             label="Lien vers une page"
           />
         ) : (
           <TextInput
-            value={currentValue}
+            value={model[field]}
             model={model}
             label=""
             field={fieldName}
@@ -137,7 +137,7 @@ export function FieldRenderer<T extends Record<string, any>>({
       case "video":
         return (
           <ImageUploaderView
-            value={currentValue}
+            value={model[field]}
             model={model as MediaObject}
             field={fieldName as string}
             onChangeValue={setField}
@@ -150,7 +150,7 @@ export function FieldRenderer<T extends Record<string, any>>({
           <ColorInput
             model={model}
             validator={validator}
-            value={currentValue}
+            value={model[field]}
             field={fieldName as string}
             onChange={setField}
             name=""
