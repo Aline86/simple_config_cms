@@ -44,10 +44,9 @@ const nextConfig: NextConfig = {
             key: "Content-Security-Policy",
             value: [
               "default-src 'self';",
-              "script-src 'self' 'unsafe-inline' https://upload-widget.cloudinary.com https://www.google-analytics.com https://play.google.com https://vercel.live;",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://upload-widget.cloudinary.com https://www.google-analytics.com https://play.google.com https://vercel.live;",
               "style-src-elem 'self' 'unsafe-inline';",
-              "style-src-attr 'self' 'unsafe-inline';", // Nouvelle ligne
-
+              "style-src-attr 'self' 'unsafe-inline';",
               `connect-src 'self' https://upload-widget.cloudinary.com https://www.google-analytics.com https://play.google.com https://www.youtube.com https://vercel.live;`,
               "frame-src https://upload-widget.cloudinary.com https://www.youtube.com;",
               "object-src 'none';",
@@ -56,6 +55,7 @@ const nextConfig: NextConfig = {
               .filter(Boolean)
               .join(" "),
           },
+
           // ... autres headers
         ],
       },
@@ -63,21 +63,9 @@ const nextConfig: NextConfig = {
   },
   images: {
     remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "res.cloudinary.com",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "picsum.photos",
-        pathname: "/**",
-      },
-      {
-        protocol: "https",
-        hostname: "img.youtube.com",
-        pathname: "/**",
-      },
+      { protocol: "https", hostname: "res.cloudinary.com", pathname: "/**" },
+      { protocol: "https", hostname: "picsum.photos", pathname: "/**" },
+      { protocol: "https", hostname: "img.youtube.com", pathname: "/**" },
     ],
   },
   reactStrictMode: false,

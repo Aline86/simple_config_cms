@@ -16,7 +16,7 @@ export default function ComponentBloc({
   updateBloc,
 }: PageCrudProps) {
   const Renderer = blocksToRender[bloc.type].backend;
-  if (!Renderer) return null; // fallback si type inconnu
+  if (!Renderer) return null;
 
   return (
     <div className="flex flex-col ">

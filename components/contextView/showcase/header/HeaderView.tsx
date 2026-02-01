@@ -56,9 +56,8 @@ export default function HeaderView({ header }: MediaViewProps) {
   };
   const showPages = async () => {
     const pages = await getPages("without_homepage");
-    if (pages !== undefined) {
-      setPages(pages);
-    }
+
+    setPages(pages ?? []);
   };
 
   const handleScroll = () => {
@@ -109,8 +108,7 @@ export default function HeaderView({ header }: MediaViewProps) {
   }
 
   return (
-    pages !== undefined &&
-    pages.length > 0 && (
+    pages !== undefined && (
       <>
         <header
           ref={scrollRef}
