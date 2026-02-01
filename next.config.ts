@@ -13,7 +13,7 @@ const nextConfig: NextConfig = {
           },
           {
             key: "X-Frame-Options",
-            value: isDev ? "SAMEORIGIN" : "DENY",
+            value: "SAMEORIGIN",
           },
 
           {
