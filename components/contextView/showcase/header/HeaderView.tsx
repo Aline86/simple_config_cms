@@ -6,7 +6,7 @@ import { HeaderObject } from "../../../../model/bloc/Header";
 import getPages from "../../../../app/edition/pages/callPages";
 import { PageObject } from "../../../../model/Page";
 import { useAppContext } from "../../../../app/context/DomDataProvider";
-
+import Image from "next/image";
 interface MediaViewProps {
   header: HeaderObject;
 }
@@ -136,10 +136,11 @@ export default function HeaderView({ header }: MediaViewProps) {
             <div className="flex items-center justify-between h-16 ">
               <span className="text-xl font-bold text-indigo-600 relative  flex-shrink-0 z-0">
                 {header?.logo?.image_url ? (
-                  <img
+                  <Image
                     src={header.logo.image_url}
-                    className="logo-site"
                     alt={header.text_nom_site || "Logo"}
+                    height="100"
+                    width="100"
                   />
                 ) : (
                   "Mon Site"
