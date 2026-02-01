@@ -354,7 +354,7 @@ header {
 }
 /* TIP TAP */
 h2.tiptap_heading {
-  font-size: 45px !important;
+  font-size: 65px !important;
 }
 /* grid component */
 
@@ -384,7 +384,7 @@ h2.tiptap_heading {
 }
 /* slider automatic */
 .embla {
-  max-width: 48rem;
+  max-width: 100rem;
   margin: auto;
   --slide-height: 19rem;
   --slide-spacing: 1rem;
@@ -396,7 +396,7 @@ h2.tiptap_heading {
 .embla__container {
   display: flex;
   touch-action: pan-y pinch-zoom;
-  margin-left: calc(var(--slide-spacing) * -1);
+  /*margin-left: calc(var(--slide-spacing) * -1);*/
 }
 .embla__slide {
   transform: translate3d(0, 0, 0);

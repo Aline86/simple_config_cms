@@ -8,10 +8,10 @@ import "./globals.css";
 import "./theme.css";
 import { ReactNode } from "react";
 import ThemeToggle from "../components/ui/ThemeToggle";
+import { DomDataProvider } from "./context/DomDataProvider";
 
 interface RootLayoutProps {
   children: ReactNode;
-  // Ici tu peux passer le theme depuis cookie ou props
   theme?: "light" | "dark";
 }
 
@@ -25,8 +25,10 @@ export default function RootLayout({
       <body
         className={`bg-white dark:bg-gray-900 text-gray-900 dark:text-white ${theme}`}
       >
-        <ThemeToggle />
-        {children}
+        <DomDataProvider>
+          <ThemeToggle />
+          {children}
+        </DomDataProvider>
       </body>
     </html>
   );

@@ -18,7 +18,7 @@ const CarouselAutoView: React.FC<CardDatas> = ({
 }: CardDatas) => {
   const [emblaRef] = useEmblaCarousel(options, [Autoplay()]);
   return bloc !== undefined ? (
-    <section className="embla w-full">
+    <section className="embla max-w-[1650px] p-4 w-full mx-auto">
       <h2 className="text-2xl text-center font-bold text-slate-800">
         {bloc.text_titre}
       </h2>

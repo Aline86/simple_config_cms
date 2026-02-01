@@ -5,6 +5,7 @@ import SocialTab from "./SocialTab";
 import { HeaderObject } from "../../../../model/bloc/Header";
 import getPages from "../../../../app/edition/pages/callPages";
 import { PageObject } from "../../../../model/Page";
+import { useAppContext } from "../../../../app/context/DomDataProvider";
 
 interface MediaViewProps {
   header: HeaderObject;
@@ -38,13 +39,12 @@ const getBackgroundType = (url?: string): "color" | "image" | "empty" => {
 export default function HeaderView({ header }: MediaViewProps) {
   const navRef = useRef<HTMLElement>(null);
   const scrollRef = useRef<HTMLElement>(null);
-
   const [isSticky, setIsSticky] = useState(true);
-  // const [pages, setpages] = useState(false);
   const [isBurger, setIsBurger] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [stateBG, setStateBG] = useState<"color" | "image" | "empty">("empty");
   const [pages, setPages] = useState<PageObject[]>();
+  const { setHasH1InPage } = useAppContext();
 
   const checkOverflow = () => {
     if (!scrollRef.current || !navRef.current) return;
@@ -67,14 +67,13 @@ export default function HeaderView({ header }: MediaViewProps) {
     const scrollY = window.scrollY;
     setIsSticky(scrollY < window.innerHeight * 2);
   };
-
   useEffect(() => {
     showPages();
   }, []);
   useEffect(() => {
-    // setpages(true);
-    console.log("pages", pages);
-  }, [pages]);
+    setHasH1InPage(header.text_nom_site.trim().length > 0);
+  }, [header]);
+  useEffect(() => {}, [pages]);
   useEffect(() => {
     if (!pages) return;
 
@@ -153,7 +152,7 @@ export default function HeaderView({ header }: MediaViewProps) {
 
               <nav
                 ref={navRef}
-                className={`cursor-pointer flex flex-shrink space-x-8 whitespace-nowrap ${
+                className={`open-nav cursor-pointer flex flex-shrink space-x-8 whitespace-nowrap ${
                   isBurger && isOpen
                     ? "nav-dynamique nav-dynamique--open"
                     : isBurger

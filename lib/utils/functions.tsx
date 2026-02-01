@@ -241,7 +241,7 @@ function convertTiptapToHTML(nodes: JSONContent): string {
     if (nodes?.type === "heading" && nodes?.content !== undefined) {
       paragraphHTML += `<h2 style="text-align: ${
         nodes.attrs?.textAlign || "left"
-      }; font-size: 45px"> ${extractTextFromNode(nodes?.content)}</h2>`;
+      }; font-size: 65px"> ${extractTextFromNode(nodes?.content)}</h2>`;
 
       html += paragraphHTML;
     }

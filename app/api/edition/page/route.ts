@@ -46,7 +46,6 @@ export async function DELETE(request: NextRequest) {
 
     return NextResponse.json(deletedPage, { status: 200 });
   } catch (err) {
-    console.error("DELETE /api/page error:", err);
     return NextResponse.json(
       {
         error: "Server error",
@@ -80,8 +79,6 @@ export async function PUT(request: NextRequest) {
       { status: 200 },
     );
   } catch (err) {
-    console.error("PUT /api/page error:", err);
-
     return NextResponse.json(
       {
         error: "Server error",

@@ -22,18 +22,31 @@ body > .light {
   color: rgb(20, 20, 20);
   word-break: break-word;
 }
-h1 {
+header h1 {
   word-break: break-word;
 
-  font-size: 45px;
+  font-size: 40px;
   text-transform: uppercase;
 }
 h2 {
   font-size: 25px;
 }
 .light select {
-  color: black !important;
+  color: rgb(20, 20, 20) !important;
 }
 .light select option {
-  color: black !important;
+  color: rgb(20, 20, 20) !important;
+}
+
+.dark .nav-dynamique--open {
+  background-color: rgb(20, 20, 20);
+}
+.dark .nav-dynamique--open a {
+  background-color: rgb(20, 20, 20);
+  color: white !important;
+}
+
+.dark .open-nav a:hover {
+  background-color: white;
+  color: rgb(20, 20, 20) !important;
 }

@@ -19,7 +19,7 @@ function ArticleView({ bloc }: BlocParams) {
   }, [bloc]);
   useEffect(() => {}, [html]);
   return (
-    <div className="w-full ">
+    <div className="w-full">
       <Suspense fallback={<div>Chargement...</div>}>
         {html !== undefined &&
           typeof html === "object" &&
