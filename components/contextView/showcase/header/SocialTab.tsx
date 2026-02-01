@@ -4,7 +4,7 @@ import { MediaObject } from "../../../../model/bloc/MediaObject";
 
 export default function SocialTab({ network }: { network: MediaObject }) {
   const [isHovered, setIsHovered] = useState(false);
-
+  console.log(network.image_url);
   return (
     <div
       className="relative  mb-2 flex flex-col gap-2"
@@ -30,8 +30,8 @@ export default function SocialTab({ network }: { network: MediaObject }) {
             !isHovered ? (
               <Image
                 className={`inset-0 bg-cover ml-2 bg-center w-12 h-12 flex items-center justify-center fit-contain rounded`}
-                src={network?.image_url}
-                alt={network?.text_titre}
+                src={(network as MediaObject).image_url}
+                alt={(network as MediaObject).text_titre}
                 width="45"
                 height="45"
               />

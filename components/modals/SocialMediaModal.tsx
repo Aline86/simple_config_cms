@@ -1,6 +1,6 @@
 import { Modal } from "./Modal";
 import { useState } from "react";
-
+import Image from "next/image";
 import { Heart, PlusIcon } from "lucide-react";
 import { MediaEditor } from "../contextView/edition/media/Media";
 import { MediaObject } from "../../model/bloc/MediaObject";
@@ -40,10 +40,11 @@ export const SocialMediaModal = <T,>({
                   {/* Image */}
                   <div className="relative h-48 bg-gradient-to-br from-slate-300 to-slate-400 overflow-hidden">
                     {(reseau as MediaObject)?.image_url !== null ? (
-                      <img
+                      <Image
+                        className="object-cover"
                         src={(reseau as MediaObject).image_url}
-                        alt="Item preview"
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        alt={(reseau as MediaObject).text_titre}
+                        fill
                       />
                     ) : (
                       <></>
