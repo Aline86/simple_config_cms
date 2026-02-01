@@ -55,7 +55,7 @@ export default function HeaderView({ header }: MediaViewProps) {
     setIsBurger(navWidth > containerWidth - containerWidth * 0.5);
   };
   const showPages = async () => {
-    const pages = await getPages("without_homepage");
+    const pages = await getPages();
 
     setPages(pages ?? []);
   };
