@@ -1,5 +1,5 @@
 import type { NextConfig } from "next";
-const isDev = true;
+const isDev = false;
 /** @type {import('next').NextConfig} */
 const nextConfig: NextConfig = {
   async headers() {
