@@ -1,8 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-
-import { useEffect, useState, Suspense } from "react";
+import { useMemo } from "react";
 import { JSONContent } from "@tiptap/core";
 import { output } from "../../../../lib/utils/functions";
 
@@ -12,29 +10,26 @@ interface BlocParams {
 }
 
 function ArticleView({ bloc }: BlocParams) {
-  const [html, setHTML] = useState<Array<string>>();
-
-  useEffect(() => {
-    bloc !== null && setHTML(output(bloc) ?? []);
+  // ✅ Calculer directement, pas dans useEffect
+  const html = useMemo(() => {
+    if (!bloc) return [];
+    return output(bloc) ?? [];
   }, [bloc]);
-  useEffect(() => {}, [html]);
+
+  // Si pas de contenu, retourner null
+  if (!html || html.length === 0) {
+    return null;
+  }
+
   return (
     <div className="w-full">
-      <Suspense fallback={<div>Chargement...</div>}>
-        {html !== undefined &&
-          typeof html === "object" &&
-          Array.isArray(html) &&
-          html.length > 0 &&
-          html.map((out, index) => {
-            return (
-              <div
-                key={index}
-                className="tiptap none"
-                dangerouslySetInnerHTML={{ __html: out }}
-              />
-            );
-          })}
-      </Suspense>
+      {html.map((out, index) => (
+        <div
+          key={index}
+          className="tiptap none"
+          dangerouslySetInnerHTML={{ __html: out }}
+        />
+      ))}
     </div>
   );
 }
