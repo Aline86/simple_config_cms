@@ -452,7 +452,7 @@ iframe {
   border-color: #2563eb;
 }
 /* Pour les écrans de plus de 768px */
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   h1 {
     font-size: 25px !important;
   }
