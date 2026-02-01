@@ -18,7 +18,7 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
   const { hasH1InPage } = useAppContext();
   return bloc.bloc_position === 0 && bloc.mode === "edition" ? (
     <section className="mt-[-95px] relative w-screen h-screen ">
-      <div className="relative w-screen h-screen  left-[10%] z-10 title text-white flex flex-col justify-end pb-24">
+      <div className="relative w-screen h-screen  p-24 z-10 title text-white flex flex-col justify-end pb-24">
         {hasH1InPage ? (
           <h2 style={{ color: "white", fontSize: "65px" }}>
             {bloc.text_titre}
@@ -45,7 +45,7 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
       <span className="absolute inset-0 bg-black/20"></span>
     </section>
   ) : (
-    <section className="mt-24 relative h-[300px] w-screen overflow-hidden">
+    <section className="mt-24 relative h-[400px] w-screen overflow-hidden">
       {/* Background parallaxe */}
       <div
         className="absolute inset-0 bg-center bg-cover bg-fixed"

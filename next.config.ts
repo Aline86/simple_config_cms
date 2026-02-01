@@ -45,6 +45,7 @@ const nextConfig: NextConfig = {
             key: "Content-Security-Policy",
             value: [
               "default-src 'self';",
+              "img-src 'self' https://res.cloudinary.com https://picsum.photos data:;",
               "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://upload-widget.cloudinary.com https://www.google-analytics.com https://play.google.com https://vercel.live;",
               "style-src-elem 'self' 'unsafe-inline';",
               "style-src-attr 'self' 'unsafe-inline';",
