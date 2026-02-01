@@ -44,12 +44,12 @@ const nextConfig: NextConfig = {
             key: "Content-Security-Policy",
             value: [
               "default-src 'self';",
-              "script-src 'self' 'unsafe-inline' https://www.google-analytics.com https://play.google.com https://vercel.live;",
+              "script-src 'self' 'unsafe-inline' https://upload-widget.cloudinary.com https://www.google-analytics.com https://play.google.com https://vercel.live;",
               "style-src-elem 'self' 'unsafe-inline';",
               "style-src-attr 'self' 'unsafe-inline';", // Nouvelle ligne
 
-              `connect-src 'self'  https://www.google-analytics.com https://play.google.com https://www.youtube.com https://vercel.live;`,
-              "frame-src https://www.youtube.com;",
+              `connect-src 'self' https://upload-widget.cloudinary.com https://www.google-analytics.com https://play.google.com https://www.youtube.com https://vercel.live;`,
+              "frame-src https://upload-widget.cloudinary.com https://www.youtube.com;",
               "object-src 'none';",
               "base-uri 'self';",
             ]
