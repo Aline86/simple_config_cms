@@ -2,6 +2,7 @@
 
 import FooterView from "../../components/contextView/showcase/footer/FooterView";
 import HeaderView from "../../components/contextView/showcase/header/HeaderView";
+import ThemeToggle from "../../components/ui/ThemeToggle";
 import { FooterObject } from "../../model/bloc/Footer";
 import { HeaderObject } from "../../model/bloc/Header";
 import { PageObject } from "../../model/Page";
@@ -20,14 +21,15 @@ export default function PageClient({
   const headerData = new HeaderObject(header, "view");
   const footerData = new FooterObject(footer, "view");
   return (
-    <div>
+    <body className="mt-[-1px]">
       <HeaderView header={headerData} />
-      <div className="mt-24">
+      <ThemeToggle />
+      <div className="mt-24 ">
         {page.blocs.map((bloc, index) => {
           return <ComponentBloc key={index} bloc={bloc} />;
         })}
       </div>
       <FooterView footer={footerData} />
-    </div>
+    </body>
   );
 }

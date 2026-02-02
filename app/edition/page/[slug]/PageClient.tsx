@@ -21,6 +21,7 @@ import NavBarEdition from "../../../../components/ui/NavBarEdition";
 import ErrorMessage from "../../../../components/ui/ErrorMessage";
 import { Accordion } from "../../../../components/ui/Accordeon";
 import { cloneBlocWithArticlesAndMedia } from "../../../../helpers/bloc.helper";
+import ThemeToggle from "../../../../components/ui/ThemeToggle";
 
 export default function PageClient({
   initialpage,
@@ -215,6 +216,7 @@ export default function PageClient({
           hasSucceeded={hasSucceeded}
         />
       )}
+      <ThemeToggle />
       <h1 className="text-3xl font-bold mt-24 text-center">
         {page.text_titre}
       </h1>

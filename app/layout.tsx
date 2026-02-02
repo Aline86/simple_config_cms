@@ -22,14 +22,7 @@ export default function RootLayout({
 }: RootLayoutProps) {
   return (
     <html lang="en" className={theme}>
-      <body
-        className={`bg-white dark:bg-gray-900 text-gray-900 dark:text-white ${theme}`}
-      >
-        <DomDataProvider>
-          <ThemeToggle />
-          {children}
-        </DomDataProvider>
-      </body>
+      <DomDataProvider>{children}</DomDataProvider>
     </html>
   );
 }
