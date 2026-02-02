@@ -22,6 +22,7 @@ import ErrorMessage from "../../../../components/ui/ErrorMessage";
 import { Accordion } from "../../../../components/ui/Accordeon";
 import { cloneBlocWithArticlesAndMedia } from "../../../../helpers/bloc.helper";
 import ThemeToggle from "../../../../components/ui/ThemeToggle";
+import { useRouter } from "next/router";
 
 export default function PageClient({
   initialpage,
@@ -187,7 +188,8 @@ export default function PageClient({
       credentials: "include",
     });
 
-    window.location.href = "/login";
+    const router = useRouter();
+    router.push("/login");
   };
   useEffect(() => {}, [
     headerData,

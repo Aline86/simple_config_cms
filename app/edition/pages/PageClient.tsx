@@ -1,15 +1,15 @@
 "use client";
 
-import { Plus, Save } from "lucide-react";
 import { useState, useEffect } from "react";
-import Draggable from "../../../components/ui/Draggable";
+
 import { reorderArray } from "../../../helpers/changeComponentPosition";
 import { BlocObject } from "../../../model/Bloc";
 import { PageObject } from "../../../model/Page";
 import PageCrud from "./pageComponent";
-import LogoutButton from "../../../components/ui/LogoutButton";
+
 import NavBarEdition from "../../../components/ui/NavBarEdition";
 import ErrorMessage from "../../../components/ui/ErrorMessage";
+import { useRouter } from "next/router";
 
 export default function PageClient({
   initialPages,
@@ -179,7 +179,8 @@ export default function PageClient({
       credentials: "include",
     });
 
-    window.location.href = "/login";
+    const router = useRouter();
+    router.push("/login");
   };
   useEffect(() => {
     const result = initialPages.map((page) => new PageObject(page));
