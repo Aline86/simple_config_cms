@@ -131,7 +131,7 @@ export default function PageClient({
       setHasSucceeded(true);
     } catch (error) {
       setMessage("L'action n'a pas réussi !");
-      logout();
+      void logout();
     }
   };
 

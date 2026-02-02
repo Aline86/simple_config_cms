@@ -160,7 +160,7 @@ export default function PageClient({
       setShowErrorMessage(!showErrorMessage);
       setHasSucceeded(true);
     } catch (error) {
-      logout();
+      void logout();
     }
   };
   const handleRemove = (model: BlocObject) => {
