@@ -48,8 +48,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function Page({ params, searchParams }: Props) {
   const { slug } = await params;
   if (slug === "/") {
-    return;
+    return {
+      title: "Accueil",
+      description: "Page d’accueil",
+    };
   }
+
   const page = await getPageBySlug(slug);
 
   if (!page) {
