@@ -5,7 +5,7 @@ import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
 import Highlight from "@tiptap/extension-highlight";
 import TextAlign from "@tiptap/extension-text-align";
-import { FontSize, TextStyle } from "@tiptap/extension-text-style";
+import { TextStyle } from "@tiptap/extension-text-style";
 import Underline from "@tiptap/extension-underline";
 import Paragraph from "@tiptap/extension-paragraph";
 
@@ -13,6 +13,7 @@ import {
   DISALLOWED_LINK_PROTOCOLS,
   NO_AUTOLINK_DOMAINS,
 } from "./editorTypesConfig";
+import { FontSize } from "../lib/extensions/FontSize";
 
 export const getEditorExtensions = () => [
   StarterKit.configure({

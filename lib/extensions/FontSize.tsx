@@ -1,30 +1,27 @@
 import { Extension } from "@tiptap/core";
 
 export const FontSize = Extension.create({
-  name: "fontSize",
+  name: "FontSize",
 
   addOptions() {
     return {
       types: ["textStyle"],
     };
   },
+
   addGlobalAttributes() {
     return [
       {
-        types: this.options.types,
+        types: ["textStyle"],
         attributes: {
           fontSize: {
             default: null,
-            parseHTML: (element) => {
-              const fontSize = element.style.fontSize;
-              return fontSize ? fontSize.replace(/['"]+/g, "") : null;
-            },
+            parseHTML: (element) => element.style.fontSize,
             renderHTML: (attributes) => {
-              if (!attributes.fontSize) {
-                return {};
-              }
+              if (!attributes.fontSize) return {};
+              console.log("attributes", attributes);
               return {
-                style: `font-size: ${attributes.fontSize}`,
+                style: `font-size: ${attributes.fontSize}px;`,
               };
             },
           },

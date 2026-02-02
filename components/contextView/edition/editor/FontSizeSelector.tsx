@@ -40,11 +40,12 @@ export const FontSizeSelector = ({ editor }: FontSizeSelectorProps) => (
               editor
                 .chain()
                 .focus()
-                .setMark("textStyle", { fontSize: size.value + "px" })
+                .setMark("textStyle", { fontSize: size.value })
+                //.setFontSize(size.value)
                 .run()
             }
-            className="group relative cursor-default py-2 pr-9 pl-3 text-gray-900 select-none data-focus:bg-indigo-600 data-focus:text-white data-focus:outline-hidden"
             value={size.value}
+            className="group relative cursor-default py-2 pr-9 pl-3 text-gray-900 select-none data-focus:bg-indigo-600 data-focus:text-white data-focus:outline-hidden"
           >
             <div className="flex items-center">{size.label}</div>
           </ListboxOption>

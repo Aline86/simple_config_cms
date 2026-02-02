@@ -37,7 +37,7 @@ export default async function Page() {
   const page = await getHomePage();
 
   if (!page) {
-    return <div>Page non trouvée</div>;
+    return <body>Page non trouvée</body>;
   }
 
   const [header, footer] = await Promise.all([

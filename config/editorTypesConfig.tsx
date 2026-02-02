@@ -5,10 +5,10 @@ const NO_AUTOLINK_DOMAINS = [
 ];
 
 const FONT_SIZES = [
-  { value: "16", label: "16px" },
-  { value: "18", label: "18px" },
-  { value: "20", label: "20px" },
-  { value: "24", label: "24px" },
+  { value: "16", label: "16" },
+  { value: "18", label: "18" },
+  { value: "20", label: "20" },
+  { value: "24", label: "24" },
 ] as const;
 
 export { DISALLOWED_LINK_PROTOCOLS, NO_AUTOLINK_DOMAINS, FONT_SIZES };

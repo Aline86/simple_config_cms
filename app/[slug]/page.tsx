@@ -57,7 +57,7 @@ export default async function Page({ params, searchParams }: Props) {
   const page = await getPageBySlug(slug);
 
   if (!page) {
-    return <div>Page non trouvée</div>;
+    return <body>Page non trouvée</body>;
   }
   const header = await getPageHeader();
 
