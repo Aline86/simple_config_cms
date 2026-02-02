@@ -22,9 +22,9 @@ export function reorderArray<T>(
   // Insérer à la nouvelle position
   newArray.splice(insertIndex, 0, dragged);
 
-  //  Mettre à jour les positions
+  // ✅ Mettre à jour les positions
   return newArray.map((item, index) => ({
-    ...item, //  Spread pour copier toutes les propriétés
+    ...item, // ✅ Spread pour copier toutes les propriétés
     [positionKey]: index,
   }));
 }

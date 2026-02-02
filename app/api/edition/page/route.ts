@@ -1,7 +1,8 @@
-import { Prisma } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 import { BlocObject } from "../../../../model/Bloc";
 import { PageObject } from "../../../../model/Page";
+import { prisma } from "./../../../../lib/prisma/prisma";
+import { Prisma } from "@prisma/client";
 
 export async function GET(request: NextRequest) {
   try {
@@ -116,11 +117,12 @@ export async function GET(request: NextRequest) {
     );
   }
 }
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
 
-    //  AJOUT : Vérifier que body existe
+    // ✅ AJOUT : Vérifier que body existe
     if (!body) {
       return NextResponse.json(
         { error: "Request body is required" },
@@ -137,7 +139,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    //  AJOUT : Vérifier que le tableau n'est pas vide
+    // ✅ AJOUT : Vérifier que le tableau n'est pas vide
     if (pagesPayload.length === 0) {
       return NextResponse.json(
         { error: "Pages array cannot be empty" },
@@ -145,7 +147,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    //  AMÉLIORATION : Validation unique (pas en double)
+    // ✅ AMÉLIORATION : Validation unique (pas en double)
     const validatedPages: PageObject[] = [];
 
     for (let i = 0; i < pagesPayload.length; i++) {
@@ -155,7 +157,7 @@ export async function POST(request: NextRequest) {
         const page = p instanceof PageObject ? p : new PageObject(p);
 
         if (!page.validateAll()) {
-          console.error(`Validation failed for page at index ${i}:`, page);
+          console.error(`❌ Validation failed for page at index ${i}:`, page);
           return NextResponse.json(
             {
               error: "Validation failed",
@@ -166,7 +168,7 @@ export async function POST(request: NextRequest) {
           );
         }
 
-        //  AJOUT : Vérifier que blocs est bien un tableau
+        // ✅ AJOUT : Vérifier que blocs est bien un tableau
         if (!Array.isArray(page.blocs)) {
           return NextResponse.json(
             {
@@ -177,7 +179,7 @@ export async function POST(request: NextRequest) {
           );
         }
 
-        //  AJOUT : Vérifier que chaque bloc a toJSON()
+        // ✅ AJOUT : Vérifier que chaque bloc a toJSON()
         for (const bloc of page.blocs) {
           if (typeof bloc.toJSON !== "function") {
             return NextResponse.json(
@@ -207,7 +209,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    //  AMÉLIORATION : Vérifier l'existence des pages à mettre à jour
+    // ✅ AMÉLIORATION : Vérifier l'existence des pages à mettre à jour
     const pagesToUpdate = validatedPages.filter(
       (page) =>
         page.number_id !== null &&
@@ -241,7 +243,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    //  AMÉLIORATION : Utiliser une transaction pour tout-ou-rien
+    // ✅ AMÉLIORATION : Utiliser une transaction pour tout-ou-rien
     const allPages = await prisma.$transaction(
       validatedPages.map((page) => {
         const isUpdate =
@@ -249,7 +251,7 @@ export async function POST(request: NextRequest) {
           page.number_id !== undefined &&
           page.number_id > 0;
 
-        //  AJOUT : Gestion d'erreur pour JSON.stringify
+        // ✅ AJOUT : Gestion d'erreur pour JSON.stringify
         let blocsJson: string;
         try {
           blocsJson = JSON.stringify(page.blocs.map((b) => b.toJSON()));
@@ -299,7 +301,7 @@ export async function POST(request: NextRequest) {
   } catch (err) {
     console.error("POST /api/pages error:", err);
 
-    //  AMÉLIORATION : Gestion d'erreur Prisma typée
+    // ✅ AMÉLIORATION : Gestion d'erreur Prisma typée
     if (err instanceof Prisma.PrismaClientKnownRequestError) {
       if (err.code === "P2002") {
         return NextResponse.json(
@@ -323,7 +325,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    //  CORRECTION CRITIQUE : Retourner 500 pour les vraies erreurs
+    // ✅ CORRECTION CRITIQUE : Retourner 500 pour les vraies erreurs
     return NextResponse.json(
       {
         error: "Server error",
