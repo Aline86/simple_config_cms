@@ -26,6 +26,10 @@ body > .light {
   color: rgb(20, 20, 20);
   word-break: break-word;
 }
+.dark section.button div h2,
+.dark section.button div p {
+  color: black !important;
+}
 header h1 {
   word-break: break-word;
 
