@@ -15,7 +15,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const slug = (await params).slug;
-  if (!slug) {
+  if (slug === "/") {
     return {
       title: "CMS",
       description: "Ceci est une page",
