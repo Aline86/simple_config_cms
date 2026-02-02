@@ -32,7 +32,7 @@ export default function PicturesgridView({ bloc }: { bloc: BlocObject }) {
               display: "inline-block",
             }}
           >
-            {img.image_url !== undefined && img.image_url !== null ? (
+            {img.image_url !== "" ? (
               <Image
                 src={img.image_url}
                 alt={img.text_titre || `img-${idx}`}

@@ -24,8 +24,6 @@ export default function ImageUploaderView<T>({
   onChangeValue: (fieldName: string, value: any) => void;
 }) {
   const uploader = ImageUploader({
-    value: value,
-    model: model,
     field: field,
     onChange: onChangeValue,
   });
@@ -39,8 +37,6 @@ export default function ImageUploaderView<T>({
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
         fieldName={field}
       />
-
-      {uploader.errors.length > 0 && <ErrorBox errors={uploader.errors} />}
 
       {previewImages && uploader.images.length > 0 ? (
         <PreviewSection
@@ -69,34 +65,6 @@ function UploaderLabel({ label }: { label: string }) {
   return <label className="uploader-label">{label}</label>;
 }
 
-function UploadIcon() {
-  return (
-    <svg
-      width="48"
-      height="48"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-    >
-      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-      <polyline points="17 8 12 3 7 8" />
-      <line x1="12" y1="3" x2="12" y2="15" />
-    </svg>
-  );
-}
-
-function ErrorBox({ errors }: { errors: string[] }) {
-  return (
-    <div className="error-box">
-      {errors.map((error, index) => (
-        <p key={index} className="error-text">
-          {error}
-        </p>
-      ))}
-    </div>
-  );
-}
 interface UploadedImage {
   file: File;
   preview: string;

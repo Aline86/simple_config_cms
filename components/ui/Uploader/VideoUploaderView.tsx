@@ -97,44 +97,6 @@ interface DropZoneProps {
   onClick: () => void;
 }
 
-function DropZone({
-  isDragging,
-  fileInputRef,
-  onDragEnter,
-  onDragLeave,
-  onDragOver,
-  onDrop,
-  onFileInput,
-  onClick,
-}: DropZoneProps) {
-  return (
-    <div
-      className={`drop-zone ${isDragging ? "dragging" : ""}`}
-      onDragEnter={onDragEnter}
-      onDragLeave={onDragLeave}
-      onDragOver={onDragOver}
-      onDrop={onDrop}
-      onClick={onClick}
-    >
-      <input
-        ref={fileInputRef}
-        type="file"
-        onChange={onFileInput}
-        style={{ display: "none" }}
-        accept="image/*,application/pdf"
-      />
-
-      <div className="drop-zone-content">
-        <UploadIcon />
-        <p className="drop-zone-text">
-          <strong>Cliquez pour sélectionner</strong> ou glissez-déposez vos
-          fichiers
-        </p>
-      </div>
-    </div>
-  );
-}
-
 interface YouTubeSectionProps {
   showInput: boolean;
   youtubeUrl: string;
