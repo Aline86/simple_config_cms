@@ -30,7 +30,7 @@ export default function Page() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center ">
+    <body className="min-h-screen flex items-center justify-center ">
       <form
         onSubmit={handleSubmit}
         className="p-8  rounded shadow-md w-full max-w-md"
@@ -64,6 +64,6 @@ export default function Page() {
           Login
         </button>
       </form>
-    </div>
+    </body>
   );
 }
