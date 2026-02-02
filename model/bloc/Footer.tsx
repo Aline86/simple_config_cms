@@ -24,7 +24,7 @@ export class FooterObject extends BaseValidatable {
       text_nom_site_adresse?: string | null;
       text_adresse_footer?: string | null;
       text_code_postal?: string | null;
-      reseaux?: MediaObject[] | any[];
+      reseaux?: MediaObject[];
     } = {},
     mode: string,
   ) {
@@ -37,10 +37,10 @@ export class FooterObject extends BaseValidatable {
     this.text_code_postal = data.text_code_postal ?? null;
 
     // Réhydrater les réseaux sociaux
-    this.reseaux = (data.reseaux ?? []).map((r: any) =>
+    this.reseaux = (data.reseaux ?? []).map((r: MediaObject) =>
       r instanceof MediaObject ? r : new MediaObject(r),
     );
-    this.mode = mode ?? "edition";
+    this.mode = mode;
   }
 
   addReseau(media: MediaObject): void {

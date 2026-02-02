@@ -22,9 +22,9 @@ export class HeaderObject extends BaseValidatable {
 
       text_nom_site?: string | null;
       text_background_url?: string | null;
-      logo?: MediaObject | any;
-      favicon?: MediaObject | any;
-      reseaux?: MediaObject[] | any[];
+      logo?: MediaObject;
+      favicon?: MediaObject;
+      reseaux?: MediaObject[];
     } = {},
     mode: string,
   ) {
@@ -32,7 +32,7 @@ export class HeaderObject extends BaseValidatable {
     this.number_id = data.number_id ?? null;
     this.text_nom_site = data.text_nom_site ?? null;
     this.text_background_url = data.text_background_url ?? null;
-    this.mode = mode ?? "edition";
+    this.mode = mode;
     // Réhydrater le logo
     if (data.logo) {
       this.logo =
@@ -58,7 +58,9 @@ export class HeaderObject extends BaseValidatable {
     }
 
     // Réhydrater les réseaux sociaux
-    this.reseaux = (data.reseaux ?? []).map((r: any) => new MediaObject(r));
+    this.reseaux = (data.reseaux ?? []).map(
+      (r: MediaObject) => new MediaObject(r),
+    );
   }
 
   addReseau(media: MediaObject): void {
