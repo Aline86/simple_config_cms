@@ -112,8 +112,6 @@ const TextPicturesContextEdition: React.FC<TextPicturesContextEditionProps> = ({
     [onChange],
   );
 
-  if (!localBloc) return null;
-
   return (
     <div className="flex flex-col lg:flex-row gap-6 ">
       <div className="flex-1 rounded-lg  bg-transparent p-4 shadow-sm max-w-[48vw]">
