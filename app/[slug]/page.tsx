@@ -1,5 +1,6 @@
 import { HeaderObject } from "../../model/bloc/Header";
 import { PageObject } from "../../model/Page";
+import getHomePage from "../callPages";
 import {
   getPageBySlug,
   getPageFooter,
@@ -15,11 +16,9 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const slug = (await params).slug;
-  if (slug === "/") {
-    return;
-  }
+
   const [page, header] = await Promise.all([
-    await getPageBySlug(slug),
+    slug === "/" ? await getHomePage() : await getPageBySlug(slug),
     await getPageHeader(),
   ]);
 
