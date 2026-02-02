@@ -6,6 +6,7 @@ type UpdateResult<T> = {
   updated: boolean;
   data: T;
 };
+
 export function updateObjectBySetter<T>(
   obj: T,
   path: string,
@@ -16,10 +17,8 @@ export function updateObjectBySetter<T>(
 
   const result = produce(obj, (draft: any) => {
     let current = draft;
-
     for (let i = 0; i < keys.length - 1; i++) {
       const key = keys[i];
-
       if (
         current[key] === undefined ||
         current[key] === null ||
@@ -27,17 +26,16 @@ export function updateObjectBySetter<T>(
       ) {
         current[key] = {};
       }
-
       current = current[key];
     }
 
     const lastKey = keys[keys.length - 1];
-
     if (current[lastKey] !== value) {
       current[lastKey] = value;
       updated = true;
     }
   });
+
   return {
     updated,
     data: result,
@@ -45,7 +43,6 @@ export function updateObjectBySetter<T>(
 }
 
 // Create texte for Editor view
-
 export interface Content {
   type: string;
   attrs?: {
@@ -62,6 +59,7 @@ export interface Content {
     marks: Mark[];
   }[];
 }
+
 type Mark = {
   type:
     | "bold"
@@ -88,11 +86,9 @@ function applyMarks(text: string, marks: Mark[] = []): string {
       case "bold":
         html = `<strong>${html}</strong>`;
         break;
-
       case "code":
         html = `<code>${html}</code>`;
         break;
-
       case "link": {
         const href = mark.attrs?.href || "#";
         const target = mark.attrs?.target || "_blank";
@@ -102,7 +98,6 @@ function applyMarks(text: string, marks: Mark[] = []): string {
       }
       case "fontSize": {
         let size = "";
-
         if (mark.attrs?.size === "16") {
           size = "text-sm";
         } else if (mark.attrs?.size === "18") {
@@ -112,26 +107,24 @@ function applyMarks(text: string, marks: Mark[] = []): string {
         } else if (mark.attrs?.size === "24") {
           size = "text-3xl";
         }
-
         html = `<span class="${size}">${html}</span>`;
         break;
       }
       case "italic":
         html = `<em>${html}</em>`;
         break;
-
       case "underline":
-        html = `<u>${html}</u>`;
+        html = `__${html}__`;
         break;
-
       case "strike":
-        html = `<strike>${html}</strike>`;
+        html = `~~${html}~~`;
         break;
     }
   });
 
   return html;
 }
+
 function extractTextFromNode(
   node:
     | { text?: string; content?: { text?: string; content?: unknown[] }[] }
@@ -156,7 +149,6 @@ function extractTextFromNode(
     if (node.text) {
       result += node.text + " ";
     }
-
     if (node.content) {
       result += extractTextFromNode(node.content);
     }
@@ -164,6 +156,7 @@ function extractTextFromNode(
 
   return result;
 }
+
 function extractTextFromNodeBullet(node: JSONContent, html: string): string[] {
   const result: string[] = [];
 
@@ -176,7 +169,6 @@ function extractTextFromNodeBullet(node: JSONContent, html: string): string[] {
       const res = createMarks(node, html);
       result.push(res);
     }
-
     if (node.content) {
       result.push(extractTextFromNodeBullet(node.content, html).join(""));
     }
@@ -184,9 +176,10 @@ function extractTextFromNodeBullet(node: JSONContent, html: string): string[] {
 
   return result;
 }
+
 function createMarks(nodes: JSONContent, html: string) {
   if (nodes?.type === "paragraph" && nodes?.content !== undefined) {
-    html += `<p style="text-align: ${nodes.attrs?.textAlign || "left"}">`;
+    html += `<p>`;
     nodes?.content.forEach((node: JSONContent) => {
       if (node.type === "text" && node.text !== undefined) {
         const text = node.text;
@@ -207,7 +200,6 @@ function createMarks(nodes: JSONContent, html: string) {
         );
       }
     });
-
     html += "</p>";
   } else if (nodes !== undefined) {
     if (nodes.type === "text" && nodes.text !== undefined) {
@@ -228,56 +220,117 @@ function createMarks(nodes: JSONContent, html: string) {
         ),
       );
     }
-
-    // html += "</p>";
   }
+
   return html;
 }
+
 // Function to convert the provided Tiptap JSON into HTML
 function convertTiptapToHTML(nodes: JSONContent): string {
   let html = "";
+
   if (nodes !== undefined) {
     let paragraphHTML = "";
-    if (nodes?.type === "heading" && nodes?.content !== undefined) {
-      paragraphHTML += `<h2 style="text-align: ${
-        nodes.attrs?.textAlign || "left"
-      }; font-size: 65px"> ${extractTextFromNode(nodes?.content)}</h2>`;
 
+    if (nodes?.type === "heading" && nodes?.content !== undefined) {
+      const textAlign = nodes?.attrs?.textAlign || "left";
+      const level = nodes?.attrs?.level || 1;
+
+      let alignClass = "";
+      let sizeClass = "";
+
+      if (textAlign === "center") {
+        alignClass = "text-center";
+      } else if (textAlign === "right") {
+        alignClass = "text-right";
+      } else if (textAlign === "justify") {
+        alignClass = "text-justify";
+      }
+
+      // Ajouter des classes de taille selon le niveau
+      switch (level) {
+        case 1:
+          sizeClass = "text-4xl ";
+          break;
+        case 2:
+          sizeClass = "text-3xl ";
+          break;
+        case 3:
+          sizeClass = "text-2xl ";
+          break;
+        case 4:
+          sizeClass = "text-xl ";
+          break;
+        case 5:
+          sizeClass = "text-lg ";
+          break;
+        case 6:
+          sizeClass = "text-base ";
+          break;
+        default:
+          sizeClass = "text-4xl ";
+      }
+
+      paragraphHTML += `<h${level} class="${sizeClass} ${alignClass}">${extractTextFromNode(nodes?.content)}</h${level}>`;
       html += paragraphHTML;
     }
+
     if (nodes?.type === "bulletList" && nodes?.content !== undefined) {
       const html_string = "";
       const list = extractTextFromNodeBullet(nodes?.content, html_string);
-
-      paragraphHTML += `<div class="ml-6 "><ul class="flex flex-col">`;
-
+      paragraphHTML += `<div class="ml-4">`;
       list.forEach((enf: string) => {
-        paragraphHTML += `<li class="mb-4 w-full"><span class="mr-2 mt-1">•</span>${enf}</li>`;
+        paragraphHTML += `<div class="ml-8">• ${enf}</div>`;
       });
-
-      paragraphHTML += "</ul></div>";
-
+      paragraphHTML += "</div>";
       html += paragraphHTML;
     }
+
     if (nodes?.type === "paragraph" && nodes?.content !== undefined) {
-      paragraphHTML += `<p style="text-align: ${
-        nodes.attrs?.textAlign || "left"
-      }">`;
-      paragraphHTML = createMarks(nodes, html);
+      const textAlign = nodes?.attrs?.textAlign || "left";
+      let alignClass = "";
+
+      if (textAlign === "center") {
+        alignClass = "text-center";
+      } else if (textAlign === "right") {
+        alignClass = "text-right";
+      } else if (textAlign === "justify") {
+        alignClass = "text-justify";
+      }
+
+      paragraphHTML += `<p class="${alignClass}">`;
+      nodes?.content.forEach((node: JSONContent) => {
+        if (node.type === "text" && node.text !== undefined) {
+          const text = node.text;
+          const marks = node.marks || [];
+          paragraphHTML += applyMarks(
+            text,
+            marks.filter((mark): mark is Mark =>
+              [
+                "bold",
+                "link",
+                "code",
+                "italic",
+                "underline",
+                "strike",
+                "fontSize",
+              ].includes(mark.type),
+            ),
+          );
+        }
+      });
       paragraphHTML += "</p>";
       html += paragraphHTML;
     }
   }
 
-  // your code
-  // bloc?.text !== undefined && (text = html);
   return html;
 }
 
+// Et dans la fonction output :
 export const output = (text_article: Record<string, any>) => {
   if (text_article !== undefined) {
     const html: string[] = [];
-
     if (
       text_article !== undefined &&
       text_article !== null &&
@@ -289,11 +342,15 @@ export const output = (text_article: Record<string, any>) => {
       text_article.content.map((value: object) => {
         html.push(convertTiptapToHTML(value));
       });
-      const safeHtmlArray = html.map((item) => item);
+      // Utiliser DOMPurify directement comme fonction
+      const safeHtmlArray = html.map((item) => {
+        return DOMPurify.sanitize(item);
+      });
       return safeHtmlArray;
     }
   }
 };
+
 // Déterminer les classes de grille en fonction du nombre de colonnes
 export const getgridClasses = (columns: number | null) => {
   switch (columns) {

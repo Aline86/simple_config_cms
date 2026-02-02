@@ -156,23 +156,4 @@ export class NumberValidator {
   set value(val: unknown) {
     this._value = val;
   }
-
-  /**
-   * Génère les attributs HTML pour l'input
-   */
-  getInputAttributes(): {
-    type: "number" | "range";
-    min?: number;
-    max?: number;
-    step?: number;
-    required?: boolean;
-  } {
-    return {
-      type: this.params.type === "range" ? "range" : "number",
-      ...(this.params.min !== undefined && { min: this.params.min }),
-      ...(this.params.max !== undefined && { max: this.params.max }),
-      ...(this.params.step !== undefined && { step: this.params.step }),
-      ...(this.params.required && { required: true }),
-    };
-  }
 }

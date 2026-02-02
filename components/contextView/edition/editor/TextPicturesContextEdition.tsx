@@ -117,7 +117,7 @@ const TextPicturesContextEdition: React.FC<TextPicturesContextEditionProps> = ({
       <div className="flex-1 rounded-lg  bg-transparent p-4 shadow-sm max-w-[48vw]">
         <h2 className="text-lg font-semibold mb-4">Éditeur</h2>
         <TextEditor
-          bloc={localBloc}
+          bloc={bloc}
           onChange={updateField}
           addElement={handleAdd}
           removeElement={handleRemove}
@@ -128,7 +128,7 @@ const TextPicturesContextEdition: React.FC<TextPicturesContextEditionProps> = ({
 
       <div className="flex-1 rounded-lg  p-4 shadow-sm">
         <h2 className="text-lg font-semibold mb-4">Aperçu</h2>
-        <TextView bloc={localBloc} />
+        <TextView bloc={bloc} />
       </div>
     </div>
   );
