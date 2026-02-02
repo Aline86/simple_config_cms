@@ -46,7 +46,7 @@ export default function PicturesLinkItemView({
           )}
           {isLink && (
             <>
-              <div className="relative z-100 p-6 flex h-full flex-col items-center justify-end gap-[30px]">
+              <div className="relative z-10 p-6 flex h-full flex-col items-center justify-end gap-[30px]">
                 <div className="card-bg">
                   <h3 className="text-lg font-semibold text-slate-100 text-center">
                     {mediaObject.text_titre}
