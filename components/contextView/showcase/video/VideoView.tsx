@@ -137,7 +137,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ bloc }) => {
 
   return (
     <div className="w-full max-w-4xl mx-auto">
-      {/* text_titre */}
       {bloc.text_titre && (
         <div className="mb-4">
           <h2 className=" text-2xl font-semibold text-slate-800">
@@ -151,23 +150,16 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ bloc }) => {
 
       {/* Conteneur vidéo */}
       <div className="relative group bg-black rounded-lg overflow-hidden shadow-lg">
-        {bloc !== undefined &&
-          bloc !== null &&
-          bloc.image_medias[0] !== undefined &&
-          bloc.image_medias[0] !== null &&
-          bloc.image_medias[0].image_url !== undefined &&
-          bloc.image_medias[0].image_url !== null && (
-            <video
-              ref={videoRef}
-              className="w-full aspect-video"
-              onTimeUpdate={handleTimeUpdate}
-              onLoadedMetadata={handleLoadedMetadata}
-              onClick={togglePlay}
-            >
-              <source src={bloc.image_medias[0]?.image_url} type="video/mp4" />
-              Votre navigateur ne supporte pas la vidéo.
-            </video>
-          )}
+        <video
+          ref={videoRef}
+          className="w-full aspect-video"
+          onTimeUpdate={handleTimeUpdate}
+          onLoadedMetadata={handleLoadedMetadata}
+          onClick={togglePlay}
+        >
+          <source src={bloc.image_medias[0]?.image_url} type="video/mp4" />
+          Votre navigateur ne supporte pas la vidéo.
+        </video>
 
         {/* Overlay play central */}
         {!isPlaying && (

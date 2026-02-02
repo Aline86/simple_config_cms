@@ -9,7 +9,7 @@ export const useEditorContent = (
   const handleEditorUpdate = useCallback(
     (editor: Editor) => {
       const jsonData = editor.getJSON();
-      if (bloc !== undefined && jsonData.content !== undefined) {
+      if (jsonData.content !== undefined) {
         updateComponent("text_article", jsonData.content);
       }
     },
