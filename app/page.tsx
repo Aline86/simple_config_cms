@@ -14,10 +14,9 @@ type Props = {
   searchParams: Promise<PageObject>;
 };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const slug = (await params).slug;
+export async function generateMetadata(): Promise<Metadata> {
   const [page, header] = await Promise.all([
-    await getPageBySlug(slug),
+    await getHomePage(),
     await getPageHeader(),
   ]);
 
