@@ -189,7 +189,7 @@ export default function PageClient({
     });
 
     const router = useRouter();
-    router.push("/login");
+    void router.push("/login");
   };
   useEffect(() => {}, [
     headerData,

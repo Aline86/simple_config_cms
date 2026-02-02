@@ -180,7 +180,7 @@ export default function PageClient({
     });
 
     const router = useRouter();
-    router.push("/login");
+    void router.push("/login");
   };
   useEffect(() => {
     const result = initialPages.map((page) => new PageObject(page));
