@@ -22,7 +22,6 @@ import ErrorMessage from "../../../../components/ui/ErrorMessage";
 import { Accordion } from "../../../../components/ui/Accordeon";
 import { cloneBlocWithArticlesAndMedia } from "../../../../helpers/bloc.helper";
 import ThemeToggle from "../../../../components/ui/ThemeToggle";
-import { useRouter } from "next/router";
 
 export default function PageClient({
   initialpage,
@@ -160,7 +159,7 @@ export default function PageClient({
       setShowErrorMessage(!showErrorMessage);
       setHasSucceeded(true);
     } catch (error) {
-      void logout();
+      logout();
     }
   };
   const handleRemove = (model: BlocObject) => {
@@ -188,8 +187,7 @@ export default function PageClient({
       credentials: "include",
     });
 
-    const router = useRouter();
-    void router.push("/login");
+    window.location.href = "/login";
   };
   useEffect(() => {}, [
     headerData,
