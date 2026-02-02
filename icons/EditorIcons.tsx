@@ -8,8 +8,8 @@ interface IconProps {
   className?: string;
 }
 
-type PathProps = SVGProps<SVGPathElement>;
-type CircleProps = SVGProps<SVGCircleElement>;
+type PathProps = Omit<SVGProps<SVGPathElement>, "ref">;
+type CircleProps = Omit<SVGProps<SVGCircleElement>, "ref">;
 
 type ShapeProps =
   | ({ type: "path" } & PathProps)
@@ -26,9 +26,9 @@ const createIcon = (shapes: ShapeProps[], viewBox: string = "0 0 24 24") => {
       {shapes.map((shape, index) => {
         const { type, ...props } = shape;
         if (type === "circle") {
-          return <circle key={index} {...props} />;
+          return <circle key={index} {...(props as CircleProps)} />;
         }
-        return <path key={index} {...props} />;
+        return <path key={index} {...(props as PathProps)} />;
       })}
     </svg>
   );
