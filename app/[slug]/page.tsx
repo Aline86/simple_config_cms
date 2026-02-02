@@ -46,14 +46,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 export default async function Page({ params, searchParams }: Props) {
   const { slug } = await params;
-  if (slug === "/") {
-    return {
-      title: "Accueil",
-      description: "Page d’accueil",
-    };
-  }
 
-  const page = await getPageBySlug(slug);
+  const page = slug === "/" ? await getHomePage() : await getPageBySlug(slug);
 
   if (!page) {
     return <div>Page non trouvée</div>;
