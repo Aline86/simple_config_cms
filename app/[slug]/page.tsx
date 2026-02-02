@@ -1,6 +1,5 @@
 import { HeaderObject } from "../../model/bloc/Header";
 import { PageObject } from "../../model/Page";
-import getHomePage from "../callPages";
 import {
   getPageBySlug,
   getPageFooter,
@@ -10,57 +9,58 @@ import PageClient from "./PageClient";
 import type { Metadata } from "next";
 
 type Props = {
-  params: Promise<{ slug: string }>;
-  searchParams: Promise<PageObject>;
+  params: { slug: string };
 };
 
+/* ===========================
+   METADATA
+=========================== */
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const slug = (await params).slug;
+  const { slug } = params;
 
   const [page, header] = await Promise.all([
-    slug === "/" ? await getHomePage() : await getPageBySlug(slug),
-    await getPageHeader(),
+    getPageBySlug(slug),
+    getPageHeader(),
   ]);
 
-  if (
-    page !== undefined &&
-    page !== null &&
-    header !== undefined &&
-    header !== null
-  ) {
-    const pageData = new PageObject(page);
-    const haederData = new HeaderObject(header, "view");
-
+  if (!page || !header) {
     return {
-      title: pageData.text_titre,
-      description: pageData.text_description,
-      icons: {
-        icon: haederData.favicon.image_url,
-      },
+      title: "CMS",
+      description: "Ceci est une page",
     };
   }
+
+  const pageData = new PageObject(page);
+  const headerData = new HeaderObject(header, "view");
+
   return {
-    title: "CMS",
-    description: "Ceci est une page",
+    title: pageData.text_titre,
+    description: pageData.text_description,
+    icons: headerData.favicon?.image_url
+      ? { icon: headerData.favicon.image_url }
+      : undefined,
   };
 }
-export default async function Page({ params, searchParams }: Props) {
-  const { slug } = await params;
 
-  const page = slug === "/" ? await getHomePage() : await getPageBySlug(slug);
+/* ===========================
+   PAGE
+=========================== */
+export default async function Page({ params }: Props) {
+  const { slug } = params;
 
+  const page = await getPageBySlug(slug);
   if (!page) {
     return <div>Page non trouvée</div>;
   }
-  const header = await getPageHeader();
 
-  if (!header) {
-    return <div>PB lors du chargement du header</div>;
-  }
-  const footer = await getPageFooter();
+  const [header, footer] = await Promise.all([
+    getPageHeader(),
+    getPageFooter(),
+  ]);
 
-  if (!footer) {
-    return <div>PB lors du chargement du header</div>;
+  if (!header || !footer) {
+    return <div>Erreur lors du chargement du layout</div>;
   }
+
   return <PageClient initialpage={page} header={header} footer={footer} />;
 }
