@@ -6,8 +6,7 @@ import ComponentBloc from "./BlocComponent";
 
 interface PageCrudProps {
   page_data: PageObject;
-  onDelete: (page: BlocObject) => void;
-  updateBloc: (updatedBloc: BlocObject) => void;
+
   onAdd?: () => void; // optionnel, si tu veux un bouton "Ajouter une page"
   onDragStart: (page: BlocObject) => void;
   onDrop: (page: BlocObject) => void;
@@ -16,8 +15,7 @@ interface PageCrudProps {
 
 export default function PageBlocs({
   page_data,
-  onDelete,
-  updateBloc,
+
   onDragStart,
   onDrop,
   draggableEnabled,
@@ -26,11 +24,7 @@ export default function PageBlocs({
 
   return (
     <div className="p-6 space-y-6 ">
-      {page_data !== undefined &&
-        page_data !== null &&
-        page_data.blocs !== undefined &&
-        page_data.blocs !== null &&
-        page_data.blocs.length > 0 &&
+      {page_data.blocs.length > 0 &&
         page_data.blocs.map((bloc, index) => {
           return (
             <div
