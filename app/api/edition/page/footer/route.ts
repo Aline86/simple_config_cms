@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
       reseaux,
     } = body;
 
-    //  AJOUT : Validation des champs requis (adaptez selon vos besoins)
+    // ✅ AJOUT : Validation des champs requis (adaptez selon vos besoins)
     if (!text_nom_site_adresse) {
       return NextResponse.json(
         { error: "text_nom_site_adresse is required" },
@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    //  AJOUT : Vérifier qu'un footer n'existe pas déjà (si unicité requise)
+    // ✅ AJOUT : Vérifier qu'un footer n'existe pas déjà (si unicité requise)
     const existingFooter = await prisma.footer.findFirst();
     if (existingFooter) {
       return NextResponse.json(
@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    //  AJOUT : Validation de reseaux
+    // ✅ AJOUT : Validation de reseaux
     if (reseaux && !Array.isArray(reseaux)) {
       return NextResponse.json(
         { error: "reseaux must be an array" },
@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    //  AJOUT : Validation des éléments du tableau reseaux
+    // ✅ AJOUT : Validation des éléments du tableau reseaux
     if (reseaux && reseaux.length > 0) {
       for (const reseau of reseaux) {
         if (!reseau.text_titre) {
@@ -125,7 +125,7 @@ export async function PUT(request: NextRequest) {
   try {
     const body = await request.json();
 
-    //  AMÉLIORATION : Gestion plus claire de la structure
+    // ✅ AMÉLIORATION : Gestion plus claire de la structure
     const data = body.data ?? body;
     const {
       id,
@@ -136,7 +136,7 @@ export async function PUT(request: NextRequest) {
       reseaux,
     } = data;
 
-    //  AJOUT : Vérifier que l'ID existe
+    // ✅ AJOUT : Vérifier que l'ID existe
     if (!id) {
       return NextResponse.json(
         { error: "Footer ID is required" },
@@ -152,7 +152,7 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    //  AJOUT : Validation de reseaux
+    // ✅ AJOUT : Validation de reseaux
     if (reseaux && !Array.isArray(reseaux)) {
       return NextResponse.json(
         { error: "reseaux must be an array" },
@@ -160,7 +160,7 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    //  AJOUT : Validation des éléments du tableau reseaux
+    // ✅ AJOUT : Validation des éléments du tableau reseaux
     if (reseaux && reseaux.length > 0) {
       for (const reseau of reseaux) {
         if (!reseau.text_titre) {

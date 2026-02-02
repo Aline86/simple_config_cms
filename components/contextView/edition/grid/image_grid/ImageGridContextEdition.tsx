@@ -40,7 +40,7 @@ const ImageGridContextEdition: React.FC<ImageGridContextEditionProps> = ({
 
       setLocalBloc((prev) => {
         const reordered = reorderArray(
-          prev.image_medias, // ✅ Utiliser prev (localBloc)
+          prev.image_medias, //  Utiliser prev (localBloc)
           dragged,
           target,
           "number_position_image",

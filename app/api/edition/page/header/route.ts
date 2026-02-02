@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { text_nom_site, text_background_url, favicon, logo, reseaux } = body;
 
-    //  AJOUT : Validation des champs requis
+    // ✅ AJOUT : Validation des champs requis
     if (!text_nom_site) {
       return NextResponse.json(
         { error: "text_nom_site is required" },
@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    //  AJOUT : Vérifier qu'un header n'existe pas déjà (si unicité requise)
+    // ✅ AJOUT : Vérifier qu'un header n'existe pas déjà (si unicité requise)
     const existingHeader = await prisma.header.findFirst();
     if (existingHeader) {
       return NextResponse.json(
@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    //  AJOUT : Validation basique des données imbriquées
+    // ✅ AJOUT : Validation basique des données imbriquées
     if (favicon && !favicon.text_titre) {
       return NextResponse.json(
         { error: "favicon.text_titre is required" },
@@ -136,7 +136,7 @@ export async function PUT(request: NextRequest) {
   try {
     const body = await request.json();
 
-    //  AJOUT : Vérifier que body.data existe
+    // ✅ AJOUT : Vérifier que body.data existe
     if (!body.data) {
       return NextResponse.json(
         { error: "data field is required" },
@@ -150,7 +150,7 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ error: "Header ID missing" }, { status: 400 });
     }
 
-    //  AJOUT : Vérifier que l'ID est un nombre valide
+    // ✅ AJOUT : Vérifier que l'ID est un nombre valide
     const numericId = Number(id);
     if (isNaN(numericId)) {
       return NextResponse.json({ error: "Invalid ID format" }, { status: 400 });
@@ -169,7 +169,7 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ error: "Header not found" }, { status: 404 });
     }
 
-    //  AJOUT : Validation des données imbriquées
+    // ✅ AJOUT : Validation des données imbriquées
     if (favicon && !favicon.text_titre) {
       return NextResponse.json(
         { error: "favicon.text_titre is required" },

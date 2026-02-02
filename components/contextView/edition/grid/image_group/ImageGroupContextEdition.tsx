@@ -39,7 +39,7 @@ const ImageGroupContextEdition: React.FC<ImageGroupContextEditionProps> = ({
 
       setLocalBloc((prev) => {
         const reordered = reorderArray(
-          prev.image_medias, // ✅ Utiliser prev (localBloc)
+          prev.image_medias, //  Utiliser prev (localBloc)
           dragged,
           target,
           "number_position_image",
@@ -123,7 +123,7 @@ const ImageGroupContextEdition: React.FC<ImageGroupContextEditionProps> = ({
       <div className="flex-1 rounded-lg p-4 shadow-sm">
         <h2 className="text-lg font-semibold mb-4">Éditeur</h2>
         <PicturesLinkEdit
-          images_group={localBloc} // ✅ Passer localBloc
+          images_group={localBloc} //  Passer localBloc
           onChange={updateField}
           addElement={handleAdd}
           removeElement={handleRemove}
@@ -134,7 +134,7 @@ const ImageGroupContextEdition: React.FC<ImageGroupContextEditionProps> = ({
       </div>
       <div className="flex-1 rounded-lg p-4 shadow-sm">
         <h2 className="text-lg font-semibold mb-4">Aperçu</h2>
-        <PicturesLinkView bloc={localBloc} /> {/* ✅ Passer localBloc */}
+        <PicturesLinkView bloc={localBloc} /> {/*  Passer localBloc */}
       </div>
     </div>
   );
