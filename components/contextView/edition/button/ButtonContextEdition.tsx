@@ -1,19 +1,17 @@
 "use client";
 
 import { BlocObject } from "../../../../model/Bloc";
-import ButtonView from "../../showcase/button/ButtonView";
-import ButtonEdit from "./ButtonEdit";
 import useUpdateUI from "../../../../hooks/editor/useUpdateUI";
+import EditionDoubleView from "../../../ui/EditionDoubleView";
+import ButtonEdit from "./ButtonEdit";
+import ButtonView from "../../showcase/button/ButtonView";
 
-interface ButtonContextEditionProps {
+interface EditionProps {
   bloc: BlocObject;
   onChange: (bloc: BlocObject) => void;
 }
 
-const ButtonContextEdition: React.FC<ButtonContextEditionProps> = ({
-  bloc,
-  onChange,
-}: ButtonContextEditionProps) => {
+const Edition: React.FC<EditionProps> = ({ bloc, onChange }) => {
   const {
     dragged,
     localBloc,
@@ -25,9 +23,8 @@ const ButtonContextEdition: React.FC<ButtonContextEditionProps> = ({
   } = useUpdateUI({ bloc, onChange });
 
   return (
-    <div className="flex flex-col lg:flex-row gap-6">
-      <div className="flex-1 rounded-lg  p-4 shadow-sm">
-        <h2 className="text-lg font-semibold mb-4">Éditeur</h2>
+    <EditionDoubleView
+      EditComponent={
         <ButtonEdit
           button={localBloc}
           onChange={updateField}
@@ -37,13 +34,10 @@ const ButtonContextEdition: React.FC<ButtonContextEditionProps> = ({
           onDragStart={onDragStart}
           isLink={true}
         />
-      </div>
-
-      <div className="flex-1 rounded-lg  p-4 shadow-sm">
-        <h2 className="text-lg font-semibold mb-4">Aperçu</h2>
-        <ButtonView bloc={bloc} />
-      </div>
-    </div>
+      }
+      ViewComponent={<ButtonView bloc={localBloc} />}
+    />
   );
 };
-export default ButtonContextEdition;
+
+export default Edition;

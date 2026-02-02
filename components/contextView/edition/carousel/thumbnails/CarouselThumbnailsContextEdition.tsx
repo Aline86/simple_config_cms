@@ -4,6 +4,7 @@ import { BlocObject } from "../../../../../model/Bloc";
 import CarouselThumbnailsView from "../../../showcase/carousel/thumbnails/CarouselThumbnailsView";
 import CarouselThumbnailsEdit from "./CarouselThumbnailsEdit";
 import useUpdateUI from "../../../../../hooks/editor/useUpdateUI";
+import EditionDoubleView from "../../../../ui/EditionDoubleView";
 
 interface CarouselThumbnailsContextEditionProps {
   bloc: BlocObject;
@@ -24,25 +25,20 @@ const CarouselThumbnailsContextEdition: React.FC<
   } = useUpdateUI({ bloc, onChange });
 
   return (
-    <div className="flex flex-col lg:flex-row gap-6 w-full">
-      <div className="w-full lg:w-1/2 rounded-lg border p-4 shadow-sm">
-        <h2 className="text-lg font-semibold mb-4">Éditeur</h2>
+    <EditionDoubleView
+      EditComponent={
         <CarouselThumbnailsEdit
-          bloc={bloc}
+          bloc={localBloc}
           onChange={updateField}
           addElement={handleAdd}
           removeElement={handleRemove}
           onDrop={onDrop}
           onDragStart={onDragStart}
-          showWidth={true}
+          isLink={true}
         />
-      </div>
-
-      <div className="flex-1 rounded-lg  p-4 shadow-sm">
-        <h2 className="text-lg font-semibold mb-4">Aperçu</h2>
-        {bloc !== undefined && <CarouselThumbnailsView bloc={bloc} />}
-      </div>
-    </div>
+      }
+      ViewComponent={<CarouselThumbnailsView bloc={bloc} />}
+    />
   );
 };
 export default CarouselThumbnailsContextEdition;

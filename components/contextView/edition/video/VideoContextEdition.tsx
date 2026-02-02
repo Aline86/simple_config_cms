@@ -12,6 +12,7 @@ import { BlocObject } from "../../../../model/Bloc";
 import { MediaObject } from "../../../../model/bloc/MediaObject";
 import VideoView from "../../showcase/video/VideoView";
 import VideoEdit from "./VideoEdit";
+import EditionDoubleView from "../../../ui/EditionDoubleView";
 
 interface VideoContextEditionProps {
   bloc: BlocObject;
@@ -96,9 +97,8 @@ const VideoContextEdition: React.FC<VideoContextEditionProps> = ({
   }
 
   return (
-    <div className="flex flex-col lg:flex-row number_gap-6 h-full">
-      <div className="flex-1 rounded-lg  p-4 shadow-sm">
-        <h2 className="text-lg font-semibold mb-4">Éditeur</h2>
+    <EditionDoubleView
+      EditComponent={
         <VideoEdit
           bloc={bloc}
           onChange={updateField}
@@ -108,13 +108,9 @@ const VideoContextEdition: React.FC<VideoContextEditionProps> = ({
           onDragStart={onDragStart}
           isLink={true}
         />
-      </div>
-
-      <div className="flex-1 rounded-lg  p-4 shadow-sm pb-16">
-        <h2 className="text-lg font-semibold mb-4">Aperçu</h2>
-        <VideoView bloc={bloc} />
-      </div>
-    </div>
+      }
+      ViewComponent={<VideoView bloc={bloc} />}
+    />
   );
 };
 export default VideoContextEdition;

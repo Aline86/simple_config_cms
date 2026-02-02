@@ -12,6 +12,7 @@ import { BlocObject } from "../../../../model/Bloc";
 import { MediaObject } from "../../../../model/bloc/MediaObject";
 import ScreenView from "../../showcase/screen/ScreenView";
 import ScreenEdit from "./ScreenEdit";
+import EditionDoubleView from "../../../ui/EditionDoubleView";
 
 interface ScreenContextEditionProps {
   bloc: BlocObject;
@@ -74,9 +75,8 @@ const ScreenContextEdition: React.FC<ScreenContextEditionProps> = ({
   };
 
   return (
-    <div className="flex flex-col lg:flex-row gap-6 h-full">
-      <div className="flex-1 rounded-lg  p-4 shadow-sm">
-        <h2 className="text-lg font-semibold mb-4">Éditeur</h2>
+    <EditionDoubleView
+      EditComponent={
         <ScreenEdit
           bloc={bloc}
           onChange={updateField}
@@ -86,13 +86,9 @@ const ScreenContextEdition: React.FC<ScreenContextEditionProps> = ({
           onDragStart={onDragStart}
           isLink={true}
         />
-      </div>
-
-      <div className="flex-1 rounded-lg  p-4 shadow-sm pb-16">
-        <h2 className="text-lg font-semibold mb-4">Aperçu</h2>
-        <ScreenView bloc={bloc} />
-      </div>
-    </div>
+      }
+      ViewComponent={<ScreenView bloc={bloc} />}
+    />
   );
 };
 export default ScreenContextEdition;

@@ -15,6 +15,7 @@ import { FooterObject } from "../../../../model/bloc/Footer";
 import { MediaObject } from "../../../../model/bloc/MediaObject";
 import FooterView from "../../showcase/footer/FooterView";
 import FooterEdit from "./FooterEdit";
+import EditionDoubleView from "../../../ui/EditionDoubleView";
 
 interface FooterContextEditionProps {
   bloc: FooterObject;
@@ -74,22 +75,17 @@ const FooterContextEdition: React.FC<FooterContextEditionProps> = ({
   }, [onChange]);
 
   return (
-    <div className="flex flex-col lg:flex-row gap-6">
-      <div className="flex-1 rounded-lg  p-4 shadow-sm">
-        <h2 className="text-lg font-semibold mb-4">Éditeur</h2>
+    <EditionDoubleView
+      EditComponent={
         <FooterEdit
           footer={localBloc}
           onChange={updateMediaObject}
           addElement={handleAdd}
           removeElement={handleRemove}
         />
-      </div>
-
-      <div className="flex-1 rounded-lg  p-4 shadow-sm">
-        <h2 className="text-lg font-semibold mb-4">Aperçu</h2>
-        <FooterView footer={localBloc} />
-      </div>
-    </div>
+      }
+      ViewComponent={<FooterView footer={localBloc} />}
+    />
   );
 };
 export default FooterContextEdition;
