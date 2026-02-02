@@ -1,6 +1,12 @@
+import { HeaderObject } from "../model/bloc/Header";
+import { PageObject } from "../model/Page";
 import PageClient from "./[slug]/PageClient";
 import getHomePage from "./callPages";
-import { getPageFooter, getPageHeader } from "./edition/page/[slug]/callPages";
+import {
+  getPageBySlug,
+  getPageFooter,
+  getPageHeader,
+} from "./edition/page/[slug]/callPages";
 import type { Metadata } from "next";
 
 type Props = {
