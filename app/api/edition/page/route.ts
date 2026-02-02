@@ -1,7 +1,7 @@
 import { Prisma } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
-import { BlocObject } from "../../../../../model/Bloc";
-import { PageObject } from "../../../../../model/Page";
+import { BlocObject } from "../../../../model/Bloc";
+import { PageObject } from "../../../../model/Page";
 
 export async function GET(request: NextRequest) {
   try {
