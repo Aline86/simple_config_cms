@@ -36,25 +36,27 @@ export default function PageClient({
       "number_page_position",
     );
     setPages(
-      pages_result.map((p: PageObject, index: number) => {
-        return new PageObject(
-          {
-            id: p.number_id,
-            parent_id: p.number_parent_id, // toujours null à la création
-            published: p.checkbox_published, // page non publiée par défaut
-            checkbox_home_page: p.checkbox_home_page,
-            text_titre: p.text_titre ?? "", // text_titre vide
-            text_description: p.text_description ?? "",
-            slug: p.text_slug ?? "", // text_titre vide
-            number_page_position: index + 1,
-            langue: p.text_langue ?? "fr_FR", // langue par défaut "fr"
-            blocs: p.blocs ?? [], // aucun bloc par défaut
-            text_createdAt: p.text_createdAt ?? new Date(),
-            text_updatedAt: p.text_updatedAt ?? new Date(),
-          },
-          "edition", // mode fixe
-        );
-      }),
+      pages_result !== undefined && Array.isArray(pages_result)
+        ? pages_result.map((p: PageObject, index: number) => {
+            return new PageObject(
+              {
+                id: p.number_id,
+                parent_id: p.number_parent_id, // toujours null à la création
+                published: p.checkbox_published, // page non publiée par défaut
+                checkbox_home_page: p.checkbox_home_page,
+                text_titre: p.text_titre ?? "", // text_titre vide
+                text_description: p.text_description ?? "",
+                slug: p.text_slug ?? "", // text_titre vide
+                number_page_position: index + 1,
+                langue: p.text_langue ?? "fr_FR", // langue par défaut "fr"
+                blocs: p.blocs ?? [], // aucun bloc par défaut
+                text_createdAt: p.text_createdAt ?? new Date(),
+                text_updatedAt: p.text_updatedAt ?? new Date(),
+              },
+              "edition", // mode fixe
+            );
+          })
+        : [],
     );
     setDragged(null);
   };
@@ -207,6 +209,7 @@ export default function PageClient({
       {/* Grille des pages */}
       <div className="grid grid-cols-1 gap-6">
         {pages !== undefined &&
+          Array.isArray(pages) &&
           pages.map(
             (page, index) =>
               page !== undefined && (

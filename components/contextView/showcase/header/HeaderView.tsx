@@ -101,7 +101,8 @@ export default function HeaderView({ header }: MediaViewProps) {
   }
 
   return (
-    pages !== undefined && (
+    pages !== undefined &&
+    Array.isArray(pages) && (
       <>
         <header
           ref={scrollRef}

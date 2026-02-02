@@ -5,9 +5,8 @@ import {
   getPageFooter,
   getPageHeader,
 } from "../edition/page/[slug]/callPages";
-
 import PageClient from "./PageClient";
-import type { Metadata, ResolvingMetadata } from "next";
+import type { Metadata } from "next";
 
 type Props = {
   params: Promise<{ slug: string }>;

@@ -44,9 +44,11 @@ export default function CheckboxInput<T>({
   const validation = validator.validate(String(localValue));
   const showError = touched && !validation.valid;
   const resetOtherInputs = () => {
-    pages.map((page) => {
-      page.checkbox_home_page = false;
-    });
+    pages !== undefined &&
+      Array.isArray(pages) &&
+      pages.map((page) => {
+        page.checkbox_home_page = false;
+      });
   };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const checked = e.currentTarget.checked;

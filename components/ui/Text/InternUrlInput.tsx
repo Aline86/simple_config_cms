@@ -36,15 +36,17 @@ export default function InternUrlInput<T>({
       {label && <label className="input-label">{label}</label>}
       <select onChange={handleChange}>
         <option key="0">- Page -</option>
-        {pages.map((p) => (
-          <option
-            key={new PageObject(p).text_titre}
-            value={new PageObject(p).text_slug}
-            selected={new PageObject(p).text_slug === value}
-          >
-            {new PageObject(p).text_titre}
-          </option>
-        ))}
+        {pages !== undefined &&
+          Array.isArray(pages) &&
+          pages.map((p) => (
+            <option
+              key={new PageObject(p).text_titre}
+              value={new PageObject(p).text_slug}
+              selected={new PageObject(p).text_slug === value}
+            >
+              {new PageObject(p).text_titre}
+            </option>
+          ))}
       </select>
     </div>
   );
