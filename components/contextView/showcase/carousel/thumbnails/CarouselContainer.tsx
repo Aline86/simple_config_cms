@@ -160,7 +160,7 @@ export default function CarouselContainer({
             marginRight: `${gap}px`,
             cursor: transitionFinished ? "not-allowed" : "pointer",
             opacity: transitionFinished ? 0.5 : 1,
-            background: "#3b82f6",
+            background: "#737373",
             color: "white",
             border: "none",
             borderRadius: "4px",
@@ -214,7 +214,8 @@ export default function CarouselContainer({
             marginLeft: `${gap}px`,
             cursor: transitionFinished ? "not-allowed" : "pointer",
             opacity: transitionFinished ? 0.5 : 1,
-            background: "#3b82f6",
+            background: "#737373",
+
             color: "white",
             border: "none",
             borderRadius: "4px",
