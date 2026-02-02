@@ -1,6 +1,5 @@
 import { JSONContent } from "@tiptap/core";
 import { produce } from "immer";
-import DOMPurify from "dompurify";
 
 type UpdateResult<T> = {
   updated: boolean;
@@ -17,13 +16,10 @@ export function updateObjectBySetter<T>(
 
   const result = produce(obj, (draft: any) => {
     let current = draft;
+
     for (let i = 0; i < keys.length - 1; i++) {
       const key = keys[i];
-      if (
-        current[key] === undefined ||
-        current[key] === null ||
-        typeof current[key] !== "object"
-      ) {
+      if (!current[key] || typeof current[key] !== "object") {
         current[key] = {};
       }
       current = current[key];
@@ -36,13 +32,9 @@ export function updateObjectBySetter<T>(
     }
   });
 
-  return {
-    updated,
-    data: result,
-  };
+  return { updated, data: result };
 }
 
-// Create texte for Editor view
 export interface Content {
   type: string;
   attrs?: {
@@ -78,6 +70,16 @@ type Mark = {
   };
 };
 
+const VALID_MARK_TYPES = [
+  "bold",
+  "link",
+  "code",
+  "italic",
+  "underline",
+  "strike",
+  "fontSize",
+];
+
 function applyMarks(text: string, marks: Mark[] = []): string {
   let html = text;
 
@@ -97,27 +99,26 @@ function applyMarks(text: string, marks: Mark[] = []): string {
         break;
       }
       case "fontSize": {
-        let size = "";
-        if (mark.attrs?.size === "16") {
-          size = "text-sm";
-        } else if (mark.attrs?.size === "18") {
-          size = "text-lg";
-        } else if (mark.attrs?.size === "20") {
-          size = "text-2xl";
-        } else if (mark.attrs?.size === "24") {
-          size = "text-3xl";
+        const sizeMap: Record<string, string> = {
+          "16": "text-sm",
+          "18": "text-lg",
+          "20": "text-2xl",
+          "24": "text-3xl",
+        };
+        const size = sizeMap[mark.attrs?.size || ""] || "";
+        if (size) {
+          html = `<span class="${size}">${html}</span>`;
         }
-        html = `<span class="${size}">${html}</span>`;
         break;
       }
       case "italic":
         html = `<em>${html}</em>`;
         break;
       case "underline":
-        html = `__${html}__`;
+        html = `<u>${html}</u>`;
         break;
       case "strike":
-        html = `~~${html}~~`;
+        html = `<strike>${html}</strike>`;
         break;
     }
   });
@@ -125,26 +126,13 @@ function applyMarks(text: string, marks: Mark[] = []): string {
   return html;
 }
 
-function extractTextFromNode(
-  node:
-    | { text?: string; content?: { text?: string; content?: unknown[] }[] }
-    | { [key: string]: unknown }[],
-): string {
-  let result: string = "";
+function extractTextFromNode(node: any): string {
+  let result = "";
 
   if (Array.isArray(node)) {
-    node.forEach(
-      (
-        child:
-          | {
-              text?: string;
-              content?: { text?: string; content?: unknown[] }[];
-            }
-          | { [key: string]: unknown }[],
-      ) => {
-        result += extractTextFromNode(child);
-      },
-    );
+    node.forEach((child) => {
+      result += extractTextFromNode(child);
+    });
   } else if (typeof node === "object" && node !== null) {
     if (node.text) {
       result += node.text + " ";
@@ -177,182 +165,82 @@ function extractTextFromNodeBullet(node: JSONContent, html: string): string[] {
   return result;
 }
 
-function createMarks(nodes: JSONContent, html: string) {
-  if (nodes?.type === "paragraph" && nodes?.content !== undefined) {
-    html += `<p>`;
-    nodes?.content.forEach((node: JSONContent) => {
-      if (node.type === "text" && node.text !== undefined) {
-        const text = node.text;
-        const marks = node.marks || [];
-        html += applyMarks(
-          text,
-          marks.filter((mark): mark is Mark =>
-            [
-              "bold",
-              "link",
-              "code",
-              "italic",
-              "underline",
-              "strike",
-              "fontSize",
-            ].includes(mark.type),
-          ),
+function createMarks(nodes: JSONContent, html: string): string {
+  if (nodes?.type === "paragraph" && nodes?.content) {
+    const textAlign = nodes.attrs?.textAlign || "left";
+    html += `<p style="text-align: ${textAlign}">`;
+
+    nodes.content.forEach((node: JSONContent) => {
+      if (node.type === "text" && node.text) {
+        const marks = (node.marks || []).filter((mark): mark is Mark =>
+          VALID_MARK_TYPES.includes(mark.type),
         );
+        html += applyMarks(node.text, marks);
       }
     });
+
     html += "</p>";
-  } else if (nodes !== undefined) {
-    if (nodes.type === "text" && nodes.text !== undefined) {
-      const text = nodes.text;
-      const marks = nodes.marks || [];
-      html += applyMarks(
-        text,
-        marks.filter((mark): mark is Mark =>
-          [
-            "bold",
-            "link",
-            "code",
-            "italic",
-            "underline",
-            "strike",
-            "fontSize",
-          ].includes(mark.type),
-        ),
-      );
-    }
+  } else if (nodes?.type === "text" && nodes.text) {
+    const marks = (nodes.marks || []).filter((mark): mark is Mark =>
+      VALID_MARK_TYPES.includes(mark.type),
+    );
+    html += applyMarks(nodes.text, marks);
   }
 
   return html;
 }
 
-// Function to convert the provided Tiptap JSON into HTML
 function convertTiptapToHTML(nodes: JSONContent): string {
+  if (!nodes) return "";
+
   let html = "";
 
-  if (nodes !== undefined) {
-    let paragraphHTML = "";
+  // Heading
+  if (nodes.type === "heading" && nodes.content) {
+    const textAlign = nodes.attrs?.textAlign || "left";
+    const text = extractTextFromNode(nodes.content);
+    html += `<h2 style="text-align: ${textAlign}; font-size: 65px">${text}</h2>`;
+  }
 
-    if (nodes?.type === "heading" && nodes?.content !== undefined) {
-      const textAlign = nodes?.attrs?.textAlign || "left";
-      const level = nodes?.attrs?.level || 1;
+  // Bullet List
+  if (nodes.type === "bulletList" && nodes.content) {
+    const list = extractTextFromNodeBullet(nodes.content, "");
+    html += `<div class="ml-6"><ul class="flex flex-col">`;
 
-      let alignClass = "";
-      let sizeClass = "";
+    list.forEach((item: string) => {
+      html += `<li class="mb-4 w-full"><span class="mr-2 mt-1">•</span>${item}</li>`;
+    });
 
-      if (textAlign === "center") {
-        alignClass = "text-center";
-      } else if (textAlign === "right") {
-        alignClass = "text-right";
-      } else if (textAlign === "justify") {
-        alignClass = "text-justify";
-      }
+    html += "</ul></div>";
+  }
 
-      // Ajouter des classes de taille selon le niveau
-      switch (level) {
-        case 1:
-          sizeClass = "text-4xl ";
-          break;
-        case 2:
-          sizeClass = "text-3xl ";
-          break;
-        case 3:
-          sizeClass = "text-2xl ";
-          break;
-        case 4:
-          sizeClass = "text-xl ";
-          break;
-        case 5:
-          sizeClass = "text-lg ";
-          break;
-        case 6:
-          sizeClass = "text-base ";
-          break;
-        default:
-          sizeClass = "text-4xl ";
-      }
-
-      paragraphHTML += `<h${level} class="${sizeClass} ${alignClass}">${extractTextFromNode(nodes?.content)}</h${level}>`;
-      html += paragraphHTML;
-    }
-
-    if (nodes?.type === "bulletList" && nodes?.content !== undefined) {
-      const html_string = "";
-      const list = extractTextFromNodeBullet(nodes?.content, html_string);
-      paragraphHTML += `<div class="ml-4">`;
-      list.forEach((enf: string) => {
-        paragraphHTML += `<div class="ml-8">• ${enf}</div>`;
-      });
-      paragraphHTML += "</div>";
-      html += paragraphHTML;
-    }
-
-    if (nodes?.type === "paragraph" && nodes?.content !== undefined) {
-      const textAlign = nodes?.attrs?.textAlign || "left";
-      let alignClass = "";
-
-      if (textAlign === "center") {
-        alignClass = "text-center";
-      } else if (textAlign === "right") {
-        alignClass = "text-right";
-      } else if (textAlign === "justify") {
-        alignClass = "text-justify";
-      }
-
-      paragraphHTML += `<p class="${alignClass}">`;
-      nodes?.content.forEach((node: JSONContent) => {
-        if (node.type === "text" && node.text !== undefined) {
-          const text = node.text;
-          const marks = node.marks || [];
-          paragraphHTML += applyMarks(
-            text,
-            marks.filter((mark): mark is Mark =>
-              [
-                "bold",
-                "link",
-                "code",
-                "italic",
-                "underline",
-                "strike",
-                "fontSize",
-              ].includes(mark.type),
-            ),
-          );
-        }
-      });
-      paragraphHTML += "</p>";
-      html += paragraphHTML;
-    }
+  // Paragraph
+  if (nodes.type === "paragraph" && nodes.content) {
+    html = createMarks(nodes, html);
   }
 
   return html;
 }
 
-// Et dans la fonction output :
-export const output = (text_article: Record<string, any>) => {
-  if (text_article !== undefined) {
-    const html: string[] = [];
-    if (
-      text_article !== undefined &&
-      text_article !== null &&
-      text_article.content !== undefined &&
-      text_article.content !== null &&
-      Array.isArray(text_article.content) &&
-      text_article.content.length > 0
-    ) {
-      text_article.content.map((value: object) => {
-        html.push(convertTiptapToHTML(value));
-      });
-      // Utiliser DOMPurify directement comme fonction
-      const safeHtmlArray = html.map((item) => {
-        return DOMPurify.sanitize(item);
-      });
-      return safeHtmlArray;
-    }
+export const output = (
+  text_article: Record<string, any>,
+): string[] | undefined => {
+  if (
+    !text_article?.content ||
+    !Array.isArray(text_article.content) ||
+    text_article.content.length === 0
+  ) {
+    return undefined;
   }
+
+  const html = text_article.content.map((value: JSONContent) =>
+    convertTiptapToHTML(value),
+  );
+
+  return html.map((item) => item);
 };
 
-// Déterminer les classes de grille en fonction du nombre de colonnes
-export const getgridClasses = (columns: number | null) => {
+export const getgridClasses = (columns: number | null): string => {
   switch (columns) {
     case 1:
       return "grid-cols-1";
