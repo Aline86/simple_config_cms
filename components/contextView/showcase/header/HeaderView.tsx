@@ -165,7 +165,7 @@ export default function HeaderView({ header }: MediaViewProps) {
               {isBurger && (
                 <button
                   onClick={() => setIsOpen(!isOpen)}
-                  className="relative z-50  cursor-pointer"
+                  className="burger relative z-50  cursor-pointer"
                 >
                   {!isOpen ? (
                     <svg

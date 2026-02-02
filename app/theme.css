@@ -50,3 +50,6 @@ h2 {
   background-color: white;
   color: rgb(20, 20, 20) !important;
 }
+.light .burger {
+  color: rgb(20, 20, 20) !important;
+}
