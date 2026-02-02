@@ -117,7 +117,7 @@ export class PageObject extends BaseValidatable {
   }
 
   setField<K extends keyof PageObject>(field: K, value: PageObject[K]) {
-    (this as any)[field] = value;
+    (this as unknown)[field] = value;
     if (field === "text_titre") {
       this.text_slug = slugify(value as unknown as string, {
         lower: true,

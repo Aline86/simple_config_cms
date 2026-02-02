@@ -19,8 +19,8 @@ import { TextValidator } from "../TextValidator";
 type FieldRendererProps<T> = {
   label: string;
   fieldName: string;
-  model: Record<string, any>;
-  setField: (fieldName: string, value: any) => void;
+  model: unknown;
+  setField: (fieldName: string, value: unknown) => void;
   isVideo?: boolean;
   pages?: PageObject[];
 };
@@ -58,7 +58,7 @@ export function FieldRenderer<T>({
         return (
           <CheckboxInput
             label={label}
-            value={currentValue}
+            value={currentValue as boolean}
             validator={validator as TextValidator}
             model={model}
             field={fieldName}
@@ -71,7 +71,7 @@ export function FieldRenderer<T>({
         return (
           <ColorInput
             label={label}
-            value={currentValue}
+            value={currentValue as string}
             model={model}
             field={fieldName as string}
             onChange={setField}
@@ -84,7 +84,7 @@ export function FieldRenderer<T>({
         return !isVideo ? (
           <ImageUploaderView
             label={label}
-            value={currentValue}
+            value={currentValue as string}
             model={model[fieldNameToInvestigate] as MediaObject}
             field={fieldName}
             onChangeValue={setField}
@@ -92,23 +92,10 @@ export function FieldRenderer<T>({
         ) : (
           <VideoUploaderView
             label={label}
-            value={currentValue}
+            value={currentValue as string}
             model={model[fieldNameToInvestigate] as MediaObject}
             field={fieldName}
             onChangeValue={setField}
-          />
-        );
-
-      case "video":
-        return (
-          <NumberInput
-            label={label}
-            validator={validator as NumberValidator}
-            value={currentValue}
-            field={""}
-            onChangeValue={function (fieldName: string, value: number): void {
-              throw new Error("Function not implemented.");
-            }}
           />
         );
 
@@ -116,7 +103,7 @@ export function FieldRenderer<T>({
         return (
           <NumberInput
             label={label}
-            value={currentValue}
+            value={currentValue as number}
             field={fieldName}
             onChangeValue={setField}
             validator={validator as NumberValidator}

@@ -39,20 +39,20 @@ export default function ButtonEdit<T>({
       <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-200 dark:bg-slate-950">
         <FieldRenderer
           fieldName="color_background_color"
-          model={button}
+          model={button as unknown}
           setField={onChange}
           label={"Couleur de fond de la carte de redirection"}
         />
         <FieldRenderer
           label="text_titre de la carte de redirection"
           fieldName={`text_titre`}
-          model={button as Record<string, any>}
+          model={button as unknown}
           setField={onChange}
         />
         <FieldRenderer
           label="text_description courte (texte court - 500 caractères)"
           fieldName={`text_description`}
-          model={button as Record<string, any>}
+          model={button as unknown}
           setField={onChange}
         />
         <div
