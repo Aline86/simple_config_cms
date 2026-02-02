@@ -187,7 +187,7 @@ export default function PageClient({
   }, [initialPages]);
   useEffect(() => {}, [showErrorMessage, message, hasSucceeded]);
   return (
-    <div className="p-24 space-y-6">
+    <body className="p-24 space-y-6">
       <h2 className="text-2xl font-bold">Pages</h2>
       {showErrorMessage && (
         <ErrorMessage
@@ -226,6 +226,6 @@ export default function PageClient({
               ),
           )}
       </div>
-    </div>
+    </body>
   );
 }

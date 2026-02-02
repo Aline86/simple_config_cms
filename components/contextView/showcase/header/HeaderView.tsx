@@ -128,7 +128,10 @@ export default function HeaderView({ header }: MediaViewProps) {
         >
           <div className="max-w-7xl mx-auto px-4">
             <div className="flex items-center justify-between h-16 ">
-              <span className="text-xl font-bold text-indigo-600 relative  flex-shrink-0 z-0">
+              <a
+                href="/"
+                className="text-xl font-bold text-indigo-600 relative  flex-shrink-0 z-0"
+              >
                 {header?.logo?.image_url ? (
                   <Image
                     src={header.logo.image_url}
@@ -139,7 +142,7 @@ export default function HeaderView({ header }: MediaViewProps) {
                 ) : (
                   "Mon Site"
                 )}
-              </span>
+              </a>
 
               <h1 className="flex-shrink-0 mx-4 ">{header?.text_nom_site}</h1>
 
@@ -165,7 +168,11 @@ export default function HeaderView({ header }: MediaViewProps) {
               {isBurger && (
                 <button
                   onClick={() => setIsOpen(!isOpen)}
-                  className="burger relative z-50  cursor-pointer"
+                  className={
+                    isOpen
+                      ? "burger open-nav relative z-50  cursor-pointer"
+                      : "burger  relative z-50  cursor-pointer"
+                  }
                 >
                   {!isOpen ? (
                     <svg
@@ -209,7 +216,7 @@ export default function HeaderView({ header }: MediaViewProps) {
                 : "fixed w-fit h-fit mt-5 right-[15px] z-15 "
             }
           >
-            <div className="social-media absolute mb-2 right-[0px] ">
+            <div className="social-media absolute mb-2 right-[-160px] ">
               {header.reseaux.map((network, index) => {
                 return <SocialTab key={index} network={network} />;
               })}

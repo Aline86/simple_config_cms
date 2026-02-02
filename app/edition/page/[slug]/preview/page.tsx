@@ -7,7 +7,7 @@ export default async function Page({ params }: PageProps) {
 
   const basePath = `/edition/page/${slug}`;
   return (
-    <div className="flex flex-col items-end m-4">
+    <body className="flex flex-col items-end m-4">
       <a
         href={basePath}
         className="w-[150px] text-center cursor-pointer flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-600 transition"
@@ -25,6 +25,6 @@ export default async function Page({ params }: PageProps) {
           height: "600px",
         }}
       />
-    </div>
+    </body>
   );
 }

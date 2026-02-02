@@ -352,6 +352,38 @@ header {
 .social-media {
   z-index: -100 !important;
 }
+
+/* burger theme darl light */
+.light select {
+  color: rgb(20, 20, 20) !important;
+}
+.light select option {
+  color: rgb(20, 20, 20) !important;
+}
+
+.dark .nav-dynamique--open {
+  background-color: rgb(20, 20, 20);
+}
+.dark .nav-dynamique--open a {
+  background-color: rgb(20, 20, 20);
+  color: white !important;
+}
+
+.dark .open-nav a:hover {
+  background-color: white;
+  color: rgb(20, 20, 20) !important;
+}
+.dark header .burger {
+  color: white;
+}
+
+.light .burger.open-nav {
+  color: rgb(20, 20, 20);
+}
+
+.light .burger {
+  color: white;
+}
 /* TIP TAP */
 h2.tiptap_heading {
   font-size: 65px !important;
@@ -384,7 +416,7 @@ h2.tiptap_heading {
 }
 /* slider automatic */
 .embla {
-  max-width: 100rem;
+  max-width: 95rem;
   margin: auto;
   --slide-height: 19rem;
   --slide-spacing: 1rem;
@@ -402,7 +434,6 @@ h2.tiptap_heading {
   transform: translate3d(0, 0, 0);
   flex: 0 0 var(--slide-size);
   min-width: 0;
-  padding-left: var(--slide-spacing);
 }
 .embla__slide__number {
   box-shadow: inset 0 0 0 0.2rem var(--detail-medium-contrast);
@@ -412,7 +443,7 @@ h2.tiptap_heading {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: var(--slide-height);
+
   user-select: none;
 }
 .validated-input-wrapper .input,
@@ -458,5 +489,12 @@ iframe {
   }
   h2 {
     font-size: 18px !important;
+  }
+  nav {
+    width: 350px !important;
+  }
+  .open-nav a {
+    margin-right: 0 !important;
+    padding-right: 0 !important;
   }
 }

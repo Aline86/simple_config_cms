@@ -1,3 +1,7 @@
+.button-link {
+  background-color: rgb(49, 49, 49);
+}
+
 .dark {
   background-color: rgb(34, 34, 34);
 }
@@ -31,25 +35,34 @@ header h1 {
 h2 {
   font-size: 35px;
 }
-.light select {
-  color: rgb(20, 20, 20) !important;
+.text-view {
+  position: relative;
 }
-.light select option {
-  color: rgb(20, 20, 20) !important;
+/* text bloc */
+.text-view::before,
+.text-view::after {
+  position: absolute;
+  content: "";
+  width: 50px !important;
+  height: 50px;
 }
-
-.dark .nav-dynamique--open {
-  background-color: rgb(20, 20, 20);
+.text-view::before {
+  margin: -25px;
+  border-top: 5px solid rgb(133, 133, 133);
+  border-left: 5px solid rgb(181, 181, 181);
 }
-.dark .nav-dynamique--open a {
-  background-color: rgb(20, 20, 20);
-  color: white !important;
+.text-view::after {
+  margin-right: 20px;
+  border-bottom: 5px solid rgb(133, 133, 133);
+  border-right: 5px solid rgb(181, 181, 181);
+  right: 0;
 }
-
-.dark .open-nav a:hover {
-  background-color: white;
-  color: rgb(20, 20, 20) !important;
-}
-.light .burger {
-  color: rgb(20, 20, 20) !important;
+@media (max-width: 768px) {
+  .text-view::before,
+  .text-view::after {
+    position: absolute;
+    content: "";
+    width: 25px !important;
+    height: 25px;
+  }
 }

@@ -198,7 +198,7 @@ export default function PageClient({
   ]);
 
   return (
-    <div className="space-y-6 ">
+    <body className="space-y-6 ">
       <NavBarEdition
         labelAdd="Ajouter un bloc"
         handleAdd={addBlocToPage}
@@ -243,6 +243,6 @@ export default function PageClient({
         }
         header={"Pied de page"}
       />
-    </div>
+    </body>
   );
 }
