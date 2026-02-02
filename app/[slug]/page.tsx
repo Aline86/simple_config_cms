@@ -12,12 +12,14 @@ type Props = {
   params: { slug: string };
 };
 
-/* ===========================
-   METADATA
-=========================== */
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = params;
-
+  if (!slug) {
+    return {
+      title: "CMS",
+      description: "Ceci est une page",
+    };
+  }
   const [page, header] = await Promise.all([
     getPageBySlug(slug),
     getPageHeader(),
@@ -47,7 +49,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 =========================== */
 export default async function Page({ params }: Props) {
   const { slug } = params;
-
+  if (!slug) {
+    return <div>Page non trouvée</div>;
+  }
   const page = await getPageBySlug(slug);
   if (!page) {
     return <div>Page non trouvée</div>;
