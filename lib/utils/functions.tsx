@@ -289,7 +289,7 @@ export const output = (text_article: Record<string, any>) => {
       text_article.content.map((value: object) => {
         html.push(convertTiptapToHTML(value));
       });
-      const safeHtmlArray = html.map((item) => DOMPurify.sanitize(item));
+      const safeHtmlArray = html.map((item) => item);
       return safeHtmlArray;
     }
   }

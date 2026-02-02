@@ -1,17 +1,9 @@
 "use client";
 
-import { useState } from "react";
 import { BlocObject } from "../../../../model/Bloc";
-import { MediaObject } from "../../../../model/bloc/MediaObject";
-import { reorderArray } from "../../../../helpers/changeComponentPosition";
-import { cloneBlocWithMedias } from "../../../../helpers/bloc.helper";
-import {
-  cloneMediaWithPosition,
-  createMedia,
-} from "../../../../helpers/media.helper";
-import { updateObjectBySetter } from "../../../../lib/utils/functions";
 import ButtonView from "../../showcase/button/ButtonView";
 import ButtonEdit from "./ButtonEdit";
+import useUpdateUI from "../../../../hooks/editor/useUpdateUI";
 
 interface ButtonContextEditionProps {
   bloc: BlocObject;
@@ -22,58 +14,17 @@ const ButtonContextEdition: React.FC<ButtonContextEditionProps> = ({
   bloc,
   onChange,
 }: ButtonContextEditionProps) => {
-  const [dragged, setDragged] = useState<MediaObject | null>(null);
-
-  const onDragStart = (media: MediaObject) => {
-    setDragged(media);
-  };
-
-  const onDrop = (target: MediaObject) => {
-    if (!dragged) return;
-
-    const reordered = reorderArray(
-      bloc.image_medias,
-      dragged,
-      target,
-      "number_position_image",
-    );
-    const cleanimage_medias = reordered.map(cloneMediaWithPosition);
-    const updatedBloc = cloneBlocWithMedias(
-      bloc,
-
-      cleanimage_medias,
-    );
-
-    onChange(updatedBloc); // <-- remonte le bloc mis à jour dans la page
-    setDragged(null);
-  };
-
-  const updateField = (field: string, value: any) => {
-    const updatedBloc = updateObjectBySetter(bloc, field, value);
-    onChange(updatedBloc.data);
-  };
-
-  const handleAdd = () => {
-    const newMedia = createMedia(bloc.image_medias.length, bloc.id);
-    const updatedBloc = cloneBlocWithMedias(bloc, [
-      ...bloc.image_medias,
-      newMedia,
-    ]);
-
-    onChange(updatedBloc);
-  };
-
-  const handleRemove = (media: MediaObject) => {
-    const filteredimage_medias = bloc.image_medias.filter(
-      (img) => img.id !== media.id,
-    );
-    const cleanimage_medias = filteredimage_medias.map(cloneMediaWithPosition);
-    const updatedBloc = cloneBlocWithMedias(bloc, cleanimage_medias);
-
-    onChange(updatedBloc);
-  };
+  const {
+    dragged,
+    localBloc,
+    handleRemove,
+    handleAdd,
+    updateField,
+    onDrop,
+    onDragStart,
+  } = useUpdateUI({ bloc, onChange });
   // Afficher un placeholder pendant le chargement
-  if (!bloc) {
+  if (!localBloc) {
     return (
       <div className="flex flex-col lg:flex-row gap-6">
         <div className="flex-1 rounded-lg  p-4 shadow-sm">
@@ -99,7 +50,7 @@ const ButtonContextEdition: React.FC<ButtonContextEditionProps> = ({
       <div className="flex-1 rounded-lg  p-4 shadow-sm">
         <h2 className="text-lg font-semibold mb-4">Éditeur</h2>
         <ButtonEdit
-          button={bloc}
+          button={localBloc}
           onChange={updateField}
           addElement={handleAdd}
           removeElement={handleRemove}
