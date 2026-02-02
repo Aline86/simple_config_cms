@@ -3,6 +3,7 @@ import { prisma } from "./../../../../../lib/prisma/prisma";
 
 export async function GET() {
   try {
+    // Récupérer LE header (unique pour tout le site)
     const header = await prisma.header.findFirst({
       include: {
         favicon: true,
@@ -11,18 +12,11 @@ export async function GET() {
       },
     });
 
-    // Retourner null si aucun header (c'est OK, pas une erreur)
+    // Retourner null si aucun header n'existe
     return NextResponse.json(header, { status: 200 });
   } catch (err) {
     console.error("GET /api/header error:", err);
-    // ⚠️ CORRECTION : Retourner 500 pour les vraies erreurs serveur
-    return NextResponse.json(
-      {
-        error: "Server error",
-        details: err instanceof Error ? err.message : "Unknown error",
-      },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: "Header not found" }, { status: 404 });
   }
 }
 
@@ -31,45 +25,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { text_nom_site, text_background_url, favicon, logo, reseaux } = body;
 
-    // ✅ AJOUT : Validation des champs requis
-    if (!text_nom_site) {
-      return NextResponse.json(
-        { error: "text_nom_site is required" },
-        { status: 400 },
-      );
-    }
-
-    // ✅ AJOUT : Vérifier qu'un header n'existe pas déjà (si unicité requise)
-    const existingHeader = await prisma.header.findFirst();
-    if (existingHeader) {
-      return NextResponse.json(
-        { error: "A header already exists. Use PUT to update." },
-        { status: 409 }, // Conflict
-      );
-    }
-
-    // ✅ AJOUT : Validation basique des données imbriquées
-    if (favicon && !favicon.text_titre) {
-      return NextResponse.json(
-        { error: "favicon.text_titre is required" },
-        { status: 400 },
-      );
-    }
-
-    if (logo && !logo.text_titre) {
-      return NextResponse.json(
-        { error: "logo.text_titre is required" },
-        { status: 400 },
-      );
-    }
-
-    if (reseaux && !Array.isArray(reseaux)) {
-      return NextResponse.json(
-        { error: "reseaux must be an array" },
-        { status: 400 },
-      );
-    }
-
+    // Plus besoin de vérifier pageId
     const newHeader = await prisma.header.create({
       data: {
         text_nom_site,
@@ -116,10 +72,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    return NextResponse.json(
-      { message: "Header créé", data: newHeader },
-      { status: 201 },
-    );
+    return NextResponse.json({ message: "Header créé", data: newHeader });
   } catch (err) {
     console.error("POST /api/header error:", err);
     return NextResponse.json(
@@ -135,29 +88,13 @@ export async function POST(request: NextRequest) {
 export async function PUT(request: NextRequest) {
   try {
     const body = await request.json();
-
-    // ✅ AJOUT : Vérifier que body.data existe
-    if (!body.data) {
-      return NextResponse.json(
-        { error: "data field is required" },
-        { status: 400 },
-      );
-    }
-
     const { id, nom_site, background_url, favicon, logo, reseaux } = body.data;
 
     if (!id) {
       return NextResponse.json({ error: "Header ID missing" }, { status: 400 });
     }
-
-    // ✅ AJOUT : Vérifier que l'ID est un nombre valide
-    const numericId = Number(id);
-    if (isNaN(numericId)) {
-      return NextResponse.json({ error: "Invalid ID format" }, { status: 400 });
-    }
-
     const existingHeader = await prisma.header.findFirst({
-      where: { number_id: numericId },
+      where: { number_id: Number(id) },
       include: {
         favicon: true,
         logo: true,
@@ -169,36 +106,16 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ error: "Header not found" }, { status: 404 });
     }
 
-    // ✅ AJOUT : Validation des données imbriquées
-    if (favicon && !favicon.text_titre) {
-      return NextResponse.json(
-        { error: "favicon.text_titre is required" },
-        { status: 400 },
-      );
-    }
-
-    if (logo && !logo.text_titre) {
-      return NextResponse.json(
-        { error: "logo.text_titre is required" },
-        { status: 400 },
-      );
-    }
-
-    if (reseaux && !Array.isArray(reseaux)) {
-      return NextResponse.json(
-        { error: "reseaux must be an array" },
-        { status: 400 },
-      );
-    }
-
+    // Mise à jour du header
     const updatedHeader = await prisma.header.update({
       where: {
-        number_id: numericId,
+        number_id: Number(id),
       },
       data: {
         text_nom_site: nom_site,
         text_background_url: background_url,
 
+        // ===== FAVICON (1–1) =====
         ...(favicon && {
           favicon: {
             upsert: {
@@ -220,6 +137,7 @@ export async function PUT(request: NextRequest) {
           },
         }),
 
+        // ===== LOGO (1–1) =====
         ...(logo && {
           logo: {
             upsert: {
@@ -241,9 +159,10 @@ export async function PUT(request: NextRequest) {
           },
         }),
 
+        // ===== RÉSEAUX (1–N) =====
         ...(reseaux && {
           reseaux: {
-            deleteMany: {},
+            deleteMany: {}, // supprime tous les réseaux liés au header
             create: reseaux.map((reseau: any) => ({
               text_titre: reseau.text_titre,
               image_url: reseau.image_url,

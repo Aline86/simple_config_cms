@@ -2,13 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 import { BlocObject } from "../../../../model/Bloc";
 import { PageObject } from "../../../../model/Page";
 import { prisma } from "./../../../../lib/prisma/prisma";
-import { Prisma } from "@prisma/client";
-
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const with_homepage = searchParams.get("with_homepage");
-
     let dbPages = [];
     if (with_homepage === "without_homepage") {
       dbPages = await prisma.page.findMany({
@@ -26,70 +23,38 @@ export async function GET(request: NextRequest) {
         },
       });
     }
-
     const pages = dbPages.map((dbPage) => {
-      //  AJOUT : Gestion d'erreur pour JSON.parse
-      let blocs = [];
-      try {
-        if (typeof dbPage.blocs === "string") {
-          const parsed = JSON.parse(dbPage.blocs);
-          if (Array.isArray(parsed)) {
-            blocs = parsed.map((b: any) => new BlocObject(b));
-          } else {
-            console.warn(
-              `Page ${dbPage.number_id}: blocs is not an array after parsing`,
-            );
-          }
-        }
-      } catch (parseErr) {
-        console.error(
-          `Failed to parse blocs for page ${dbPage.number_id}:`,
-          parseErr,
-        );
-        // Continuer avec un tableau vide plutôt que de crasher
-      }
+      const blocs =
+        typeof dbPage.blocs === "string"
+          ? JSON.parse(dbPage.blocs).map((b: any) => new BlocObject(b))
+          : [];
 
       return new PageObject({
-        id: dbPage.number_id,
-        parent_id: dbPage.number_parent_id,
-        published: dbPage.checkbox_published,
+        id: dbPage.number_id, // ✅ Changé de id
+        parent_id: dbPage.number_parent_id, // ✅ Changé de parent_id
+        published: dbPage.checkbox_published, // ✅ Changé de published
         checkbox_home_page: dbPage.checkbox_home_page,
-        text_titre: dbPage.text_titre,
-        text_description: dbPage.text_description ?? "",
-        slug: dbPage.text_slug,
-        number_page_position: dbPage.number_page_position,
-        langue: dbPage.text_langue,
-        text_createdAt: dbPage.text_createdAt,
-        text_updatedAt: dbPage.text_updatedAt,
+        text_titre: dbPage.text_titre, // ✅ Changé de text_titre
+        text_description: dbPage.text_description ?? "", // ✅ Changé de text_titre
+        slug: dbPage.text_slug, // ✅ Changé de slug
+        number_page_position: dbPage.number_page_position, // ✅ Changé de number_page_position
+        langue: dbPage.text_langue, // ✅ Changé de langue
+        text_createdAt: dbPage.text_createdAt, // ✅ Changé de text_createdAt
+        text_updatedAt: dbPage.text_updatedAt, // ✅ Changé de text_updatedAt
         blocs,
       });
     });
 
     return NextResponse.json(pages);
   } catch (err) {
-    console.error("GET /api/pages error:", err);
-    return NextResponse.json(
-      {
-        error: "Server error",
-        details: err instanceof Error ? err.message : "Unknown error",
-      },
-      { status: 500 },
-    );
+    console.error(err);
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-
-    //  AJOUT : Vérifier que body existe
-    if (!body) {
-      return NextResponse.json(
-        { error: "Request body is required" },
-        { status: 400 },
-      );
-    }
-
     const pagesPayload = Array.isArray(body) ? body : body.data;
 
     if (!Array.isArray(pagesPayload)) {
@@ -99,156 +64,63 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    //  AJOUT : Vérifier que le tableau n'est pas vide
-    if (pagesPayload.length === 0) {
-      return NextResponse.json(
-        { error: "Pages array cannot be empty" },
-        { status: 400 },
-      );
-    }
+    for (const p of pagesPayload) {
+      const page = p instanceof PageObject ? p : new PageObject(p);
 
-    //  AMÉLIORATION : Validation unique (pas en double)
-    const validatedPages: PageObject[] = [];
-
-    for (let i = 0; i < pagesPayload.length; i++) {
-      const p = pagesPayload[i];
-
-      try {
-        const page = p instanceof PageObject ? p : new PageObject(p);
-
-        if (!page.validateAll()) {
-          console.error(`❌ Validation failed for page at index ${i}:`, page);
-          return NextResponse.json(
-            {
-              error: "Validation failed",
-              pageIndex: i,
-              page: p,
-            },
-            { status: 400 },
-          );
-        }
-
-        //  AJOUT : Vérifier que blocs est bien un tableau
-        if (!Array.isArray(page.blocs)) {
-          return NextResponse.json(
-            {
-              error: "blocs must be an array",
-              pageIndex: i,
-            },
-            { status: 400 },
-          );
-        }
-
-        //  AJOUT : Vérifier que chaque bloc a toJSON()
-        for (const bloc of page.blocs) {
-          if (typeof bloc.toJSON !== "function") {
-            return NextResponse.json(
-              {
-                error: "Invalid bloc object (missing toJSON method)",
-                pageIndex: i,
-              },
-              { status: 400 },
-            );
-          }
-        }
-
-        validatedPages.push(page);
-      } catch (validationErr) {
-        console.error(`Error validating page at index ${i}:`, validationErr);
+      if (!page.validateAll()) {
+        console.error("❌ Validation failed for page:", page);
         return NextResponse.json(
-          {
-            error: "Validation error",
-            pageIndex: i,
-            details:
-              validationErr instanceof Error
-                ? validationErr.message
-                : "Unknown error",
-          },
+          { error: "Validation failed", page: p },
           { status: 400 },
         );
       }
     }
 
-    //  AMÉLIORATION : Vérifier l'existence des pages à mettre à jour
-    const pagesToUpdate = validatedPages.filter(
-      (page) =>
-        page.number_id !== null &&
-        page.number_id !== undefined &&
-        page.number_id > 0,
-    );
+    const allPages = await Promise.all(
+      pagesPayload.map(async (p) => {
+        const page = new PageObject(p);
 
-    if (pagesToUpdate.length > 0) {
-      const existingIds = await prisma.page.findMany({
-        where: {
-          number_id: {
-            in: pagesToUpdate.map((p) => Number(p.number_id)),
-          },
-        },
-        select: { number_id: true },
-      });
+        if (!page.validateAll()) {
+          throw new Error(`Validation failed for page ${page.text_titre}`);
+        }
 
-      const existingIdSet = new Set(existingIds.map((p) => p.number_id));
-      const missingIds = pagesToUpdate
-        .map((p) => p.number_id)
-        .filter((id) => !existingIdSet.has(Number(id)));
-
-      if (missingIds.length > 0) {
-        return NextResponse.json(
-          {
-            error: "Some pages to update do not exist",
-            missingIds,
-          },
-          { status: 404 },
-        );
-      }
-    }
-
-    //  AMÉLIORATION : Utiliser une transaction pour tout-ou-rien
-    const allPages = await prisma.$transaction(
-      validatedPages.map((page) => {
         const isUpdate =
           page.number_id !== null &&
           page.number_id !== undefined &&
           page.number_id > 0;
 
-        //  AJOUT : Gestion d'erreur pour JSON.stringify
-        let blocsJson: string;
-        try {
-          blocsJson = JSON.stringify(page.blocs.map((b) => b.toJSON()));
-        } catch (stringifyErr) {
-          throw new Error(
-            `Failed to serialize blocs for page "${page.text_titre}": ${
-              stringifyErr instanceof Error
-                ? stringifyErr.message
-                : "Unknown error"
-            }`,
-          );
-        }
-
-        const pageData = {
-          number_parent_id:
-            page.number_parent_id === -1 ? null : page.number_parent_id,
-          checkbox_published: page.checkbox_published,
-          checkbox_home_page: page.checkbox_home_page,
-          text_titre: page.text_titre ?? "",
-          text_description: page.text_description ?? "",
-          text_slug: page.text_slug ?? "",
-          number_page_position: page.number_page_position ?? 0,
-          text_langue: page.text_langue ?? "fr_FR",
-          blocs: blocsJson,
-          text_updatedAt: new Date(),
-        };
-
         if (isUpdate) {
           return prisma.page.update({
             where: { number_id: Number(page.number_id) },
-            data: pageData,
+            data: {
+              number_parent_id:
+                page.number_parent_id === -1 ? null : page.number_parent_id,
+              checkbox_published: page.checkbox_published,
+              checkbox_home_page: page.checkbox_home_page,
+              text_titre: page.text_titre ?? "",
+              text_description: page.text_description ?? "",
+              text_slug: page.text_slug ?? "",
+              number_page_position: page.number_page_position ?? 0,
+              text_langue: page.text_langue ?? "fr_FR",
+              blocs: JSON.stringify(page.blocs.map((b) => b.toJSON())),
+              text_updatedAt: new Date(),
+            },
           });
         } else {
           return prisma.page.create({
             data: {
-              ...pageData,
+              number_parent_id:
+                page.number_parent_id === -1 ? null : page.number_parent_id,
+              checkbox_published: page.checkbox_published,
+              checkbox_home_page: page.checkbox_home_page,
+              text_titre: page.text_titre ?? "",
+              text_description: page.text_description ?? "",
+              text_slug: page.text_slug ?? "",
+              number_page_position: page.number_page_position ?? 0,
+              text_langue: page.text_langue ?? "fr_FR",
+              blocs: JSON.stringify(page.blocs.map((b) => b.toJSON())),
               text_createdAt: new Date(),
+              text_updatedAt: new Date(),
             },
           });
         }
@@ -259,39 +131,13 @@ export async function POST(request: NextRequest) {
       status: 201,
     });
   } catch (err) {
-    console.error("POST /api/pages error:", err);
-
-    //  AMÉLIORATION : Gestion d'erreur Prisma typée
-    if (err instanceof Prisma.PrismaClientKnownRequestError) {
-      if (err.code === "P2002") {
-        return NextResponse.json(
-          { error: "Un slug en doublon a été détecté" },
-          { status: 409 }, // Conflict
-        );
-      }
-
-      if (err.code === "P2025") {
-        return NextResponse.json(
-          { error: "Une ou plusieurs pages à mettre à jour n'existent pas" },
-          { status: 404 },
-        );
-      }
-
-      if (err.code === "P2003") {
-        return NextResponse.json(
-          { error: "Contrainte de clé étrangère violée (parent_id invalide)" },
-          { status: 400 },
-        );
-      }
+    if (err.code === "P2002") {
+      return NextResponse.json(
+        { error: "Un slug en doublon a été détecté" },
+        { status: 400 },
+      );
     }
 
-    //  CORRECTION CRITIQUE : Retourner 500 pour les vraies erreurs
-    return NextResponse.json(
-      {
-        error: "Server error",
-        details: err instanceof Error ? err.message : "Unknown error",
-      },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: "Pages non trouvée" }, { status: 404 });
   }
 }
