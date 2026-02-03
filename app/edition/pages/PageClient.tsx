@@ -66,16 +66,39 @@ export default function PageClient({
     if (!confirm(`Supprimer la page "${page.text_titre}" ?`)) return;
 
     try {
-      const res = await fetch("/api/edition/page", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ id: page.number_id }),
+      if (page.number_id > 0) {
+        const res = await fetch("/api/edition/page", {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: page.number_id }),
+        });
+
+        if (!res.ok) throw new Error("Erreur lors de la suppression");
+      }
+      const result = pages.filter(
+        (p) => p.number_page_position !== page.number_page_position,
+      );
+
+      const result_pages = result.map((p: PageObject, index: number) => {
+        return new PageObject(
+          {
+            id: p.number_id,
+            parent_id: p.number_parent_id, // toujours null à la création
+            published: p.checkbox_published, // page non publiée par défaut
+            checkbox_home_page: p.checkbox_home_page,
+            text_titre: p.text_titre ?? "", // text_titre vide
+            text_description: p.text_description ?? "",
+            slug: p.text_slug ?? "", // text_titre vide
+            number_page_position: index + 1,
+            langue: p.text_langue ?? "fr_FR", // langue par défaut "fr"
+            blocs: p.blocs ?? [], // aucun bloc par défaut
+            text_createdAt: p.text_createdAt ?? new Date(),
+            text_updatedAt: p.text_updatedAt ?? new Date(),
+          },
+          "edition", // mode fixe
+        );
       });
-
-      if (!res.ok) throw new Error("Erreur lors de la suppression");
-
-      // Supprime la page du state
-      setPages((prev) => prev.filter((p) => p.number_id !== page.number_id));
+      setPages(result_pages);
     } catch (error) {
       console.error(error);
     }
@@ -130,7 +153,7 @@ export default function PageClient({
       setShowErrorMessage(!showErrorMessage);
       setHasSucceeded(true);
     } catch (error) {
-      setMessage("L'action n'a pas réussi !");
+      setMessage("L'action n'a pas résussie !");
       logout();
     }
   };
