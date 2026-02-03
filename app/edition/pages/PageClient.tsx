@@ -1,9 +1,12 @@
 "use client";
 
 import { Plus, Save } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Draggable from "../../../components/ui/Draggable";
-import { reorderArray } from "../../../helpers/changeComponentPosition";
+import {
+  deleteItemAndReorder,
+  reorderArray,
+} from "../../../helpers/changeComponentPosition";
 import { BlocObject } from "../../../model/Bloc";
 import { PageObject } from "../../../model/Page";
 import PageCrud from "./pageComponent";
@@ -27,82 +30,46 @@ export default function PageClient({
     setDragged(page);
   };
 
-  const onDrop = (target: PageObject) => {
-    if (!dragged) return;
-    const pages_result = reorderArray(
-      pages,
-      dragged,
-      target,
-      "number_page_position",
-    );
-    setPages(
-      pages_result !== undefined && Array.isArray(pages_result)
-        ? pages_result.map((p: PageObject, index: number) => {
-            return new PageObject(
+  const onDrop = useCallback(
+    (target: PageObject) => {
+      setPages((prev) => {
+        if (!dragged) return prev;
+
+        const reordered = reorderArray(
+          prev,
+          dragged,
+          target,
+          "number_page_position",
+        );
+
+        if (!Array.isArray(reordered)) return prev;
+
+        return reordered.map(
+          (p, index) =>
+            new PageObject(
               {
                 id: p.number_id,
-                parent_id: p.number_parent_id, // toujours null à la création
-                published: p.checkbox_published, // page non publiée par défaut
+                parent_id: p.number_parent_id,
+                published: p.checkbox_published,
                 checkbox_home_page: p.checkbox_home_page,
-                text_titre: p.text_titre ?? "", // text_titre vide
+                text_titre: p.text_titre ?? "",
                 text_description: p.text_description ?? "",
-                slug: p.text_slug ?? "", // text_titre vide
+                slug: p.text_slug ?? "",
                 number_page_position: index + 1,
-                langue: p.text_langue ?? "fr_FR", // langue par défaut "fr"
-                blocs: p.blocs ?? [], // aucun bloc par défaut
+                langue: p.text_langue ?? "fr_FR",
+                blocs: p.blocs ?? [],
                 text_createdAt: p.text_createdAt ?? new Date(),
                 text_updatedAt: p.text_updatedAt ?? new Date(),
               },
-              "edition", // mode fixe
-            );
-          })
-        : [],
-    );
-    setDragged(null);
-  };
-
-  // Supprimer une page
-  const handleDelete = async (page: PageObject) => {
-    if (!confirm(`Supprimer la page "${page.text_titre}" ?`)) return;
-
-    try {
-      if (page.number_id > 0) {
-        const res = await fetch("/api/edition/page", {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ id: page.number_id }),
-        });
-
-        if (!res.ok) throw new Error("Erreur lors de la suppression");
-      }
-      const result = pages.filter(
-        (p) => p.number_page_position !== page.number_page_position,
-      );
-      let i = 0;
-      const result_pages = result.map((p: PageObject, index: number) => {
-        return new PageObject(
-          {
-            id: p.number_id,
-            parent_id: p.number_parent_id, // toujours null à la création
-            published: p.checkbox_published, // page non publiée par défaut
-            checkbox_home_page: p.checkbox_home_page,
-            text_titre: p.text_titre ?? "", // text_titre vide
-            text_description: p.text_description ?? "",
-            slug: p.text_slug ?? "", // text_titre vide
-            number_page_position: index + 1,
-            langue: p.text_langue ?? "fr_FR", // langue par défaut "fr"
-            blocs: p.blocs ?? [], // aucun bloc par défaut
-            text_createdAt: p.text_createdAt ?? new Date(),
-            text_updatedAt: p.text_updatedAt ?? new Date(),
-          },
-          "edition", // mode fixe
+              "edition",
+            ),
         );
       });
-      setPages(result_pages);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+
+      setDragged(null);
+    },
+    [dragged],
+  );
 
   const handleSavePages = async () => {
     try {
@@ -158,25 +125,38 @@ export default function PageClient({
     }
   };
 
-  // Editer une page
-  // Editer une page
-  const handleEdit = (
-    page: PageObject,
-    fieldName: keyof PageObject,
-    newValue: any,
-  ) => {
-    setPages((prev) =>
-      prev.map((p) => {
-        if (
-          (p.text_slug === page.text_slug && page.text_slug !== "") ||
-          p.number_page_position === page.number_page_position
-        ) {
-          p.setField(fieldName, newValue);
-        }
+  const handleEdit = useCallback(
+    (page: PageObject, fieldName: keyof PageObject, newValue: any) => {
+      setPages((prev) =>
+        prev.map((p) => {
+          if (
+            (p.text_slug === page.text_slug && page.text_slug !== "") ||
+            p.number_page_position === page.number_page_position
+          ) {
+            p.setField(fieldName, newValue);
+          }
+          return p;
+        }),
+      );
+    },
+    [],
+  );
+
+  const handleDelete = useCallback((model: PageObject) => {
+    if (!confirm(`Supprimer la page "${model.text_titre}" ?`)) return;
+
+    setPages((prev) => {
+      const filtered = prev.filter(
+        (p) => p.number_page_position !== model.number_page_position,
+      );
+
+      return filtered.map((p, index) => {
+        p.number_page_position = index + 1;
         return p;
-      }),
-    );
-  };
+      });
+    });
+  }, []);
+
   // Ajouter une nouvelle page
   const handleAdd = () => {
     const newPage = new PageObject({
@@ -208,7 +188,9 @@ export default function PageClient({
     const result = initialPages.map((page) => new PageObject(page));
     setPages(result);
   }, [initialPages]);
-  useEffect(() => {}, [showErrorMessage, message, hasSucceeded]);
+  useEffect(() => {
+    console.log("pages", pages);
+  }, [showErrorMessage, message, hasSucceeded, pages]);
   return (
     <body className="p-24 space-y-6">
       <h2 className="text-2xl font-bold">Pages</h2>
@@ -238,7 +220,7 @@ export default function PageClient({
               page !== undefined && (
                 <PageCrud
                   key={index}
-                  page_data={page}
+                  page_data={pages[index]}
                   onDelete={handleDelete}
                   onEdit={handleEdit}
                   onDrop={onDrop}
