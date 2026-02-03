@@ -170,7 +170,7 @@ export default function PageClient({
       return clonePageWithBlocs(prev, filteredImages);
     });
     setMessage(
-      "Action réussi mais veuillez enregistrer tout le contenu pour sauvegarder la suppression",
+      "Action réussie mais veuillez enregistrer tout le contenu pour sauvegarder la suppression",
     );
     setShowErrorMessage(!showErrorMessage);
     setHasSucceeded(true);

@@ -92,9 +92,10 @@ export class PageObject extends BaseValidatable {
     this.blocs = [];
 
     if (typeof data.blocs === "string") {
-      JSON.parse(data.blocs).forEach((b: any) =>
-        this.addBloc(new BlocObject(b, mode)),
-      );
+      const blocs = JSON.parse(data.blocs);
+      blocs.length > 0 && Array.isArray(blocs)
+        ? blocs.forEach((b: any) => this.addBloc(new BlocObject(b, mode)))
+        : [];
     } else if (Array.isArray(data.blocs)) {
       data.blocs.forEach((b: any) => {
         if (b instanceof BlocObject) {

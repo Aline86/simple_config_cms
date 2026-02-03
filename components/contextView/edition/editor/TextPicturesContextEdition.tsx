@@ -117,7 +117,7 @@ const TextPicturesContextEdition: React.FC<TextPicturesContextEditionProps> = ({
     <EditionDoubleView
       EditComponent={
         <TextEditor
-          bloc={localBloc}
+          bloc={bloc}
           onChange={updateField}
           addElement={handleAdd}
           removeElement={handleRemove}
@@ -125,7 +125,7 @@ const TextPicturesContextEdition: React.FC<TextPicturesContextEditionProps> = ({
           onDragStart={onDragStart}
         />
       }
-      ViewComponent={<TextView bloc={localBloc} />}
+      ViewComponent={<TextView bloc={bloc} />}
     />
   );
 };
