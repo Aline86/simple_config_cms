@@ -89,7 +89,7 @@ export default function PageClient({
             text_titre: p.text_titre ?? "", // text_titre vide
             text_description: p.text_description ?? "",
             slug: p.text_slug ?? "", // text_titre vide
-            number_page_position: i++,
+            number_page_position: index + 1,
             langue: p.text_langue ?? "fr_FR", // langue par défaut "fr"
             blocs: p.blocs ?? [], // aucun bloc par défaut
             text_createdAt: p.text_createdAt ?? new Date(),
