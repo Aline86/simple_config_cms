@@ -100,8 +100,6 @@ export default function HeaderView({ header }: MediaViewProps) {
     setStateBG(getBackgroundType(header.text_background_url as string));
   }, [header.text_background_url]);
 
-  console.log("header", header, pages);
-
   return (
     pages !== undefined && (
       <>
@@ -219,7 +217,6 @@ export default function HeaderView({ header }: MediaViewProps) {
           >
             <div className="social-media absolute mb-2 right-[-160px] ">
               {header.reseaux.map((network, index) => {
-                console.log(header.reseaux);
                 return <SocialTab key={index} network={network} />;
               })}
             </div>

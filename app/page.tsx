@@ -48,7 +48,7 @@ export default async function Page() {
   if (!header || !footer) {
     return <div>Erreur lors du chargement du layout</div>;
   }
-  console.log("data", header, page, footer);
+
   return (
     <PageClient
       initialpage={page}

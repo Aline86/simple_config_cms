@@ -16,16 +16,19 @@ export default function Page() {
     // Call your API route to authenticate
     const res = await fetch("/api/auth/login", {
       method: "POST",
+      credentials: "include",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ text_email, text_password }),
     });
 
-    if (res.ok) {
-      // Redirect to protected page
-      router.push("/edition");
-    } else {
-      const data = await res.json();
-      setError(data.message || "Login failed");
+    if (res !== undefined) {
+      if (res.ok) {
+        // Redirect to protected page
+        router.push("/edition");
+      } else {
+        const data = await res.json();
+        setError(data.message || "Login failed");
+      }
     }
   };
 

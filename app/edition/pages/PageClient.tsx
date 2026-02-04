@@ -91,7 +91,6 @@ export default function PageClient({
       const result = await res.json(); // Pages avec les ids de la BDD
 
       if (result !== undefined && result !== null) {
-        console.log("pages", pages);
         const updatedPages = Object.entries(result.pages).map(
           ([, dbPage]: [string, PageObject]) => {
             // Parser les blocs si c'est une string
@@ -196,16 +195,13 @@ export default function PageClient({
     window.location.href = "/login";
   };
   useEffect(() => {
-    console.log("pages", pages);
     const result = Object.entries(initialPages).map(
       ([, page]) => new PageObject(page),
     );
     setPages(result);
   }, [initialPages]);
 
-  useEffect(() => {
-    console.log("pages", pages);
-  }, [showErrorMessage, message, hasSucceeded, pages]);
+  useEffect(() => {}, [showErrorMessage, message, hasSucceeded, pages]);
   return (
     <body className="p-24 space-y-6">
       <h2 className="text-2xl font-bold">Pages</h2>

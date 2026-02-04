@@ -1,14 +1,16 @@
 // app/api/signature/route.ts
 import { v2 as cloudinary } from "cloudinary";
-import { NextResponse } from "next/server";
+import { NextRequest } from "next/server";
+import { ApiResponse } from "../../../helpers/ApiResponse";
 
-//  AJOUT : Vérification des variables d'environnement au chargement
+// ========== CONFIGURATION ==========
 const CLOUDINARY_CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 const CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY;
 const CLOUDINARY_API_SECRET = process.env.CLOUDINARY_API_SECRET;
 const CLOUDINARY_UPLOAD_FOLDER =
   process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER || "uploads";
 
+// Vérification au chargement
 if (!CLOUDINARY_CLOUD_NAME || !CLOUDINARY_API_KEY || !CLOUDINARY_API_SECRET) {
   throw new Error(
     "FATAL: Cloudinary environment variables are not properly configured",
@@ -21,7 +23,7 @@ cloudinary.config({
   api_secret: CLOUDINARY_API_SECRET,
 });
 
-//  AJOUT : Constantes de validation
+// ========== CONSTANTES ==========
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 const ALLOWED_MIME_TYPES = [
   "image/jpeg",
@@ -31,158 +33,177 @@ const ALLOWED_MIME_TYPES = [
   "image/svg+xml",
 ];
 
-export async function POST(req: Request) {
-  try {
-    //  AJOUT : Vérifier le Content-Type
-    const contentType = req.headers.get("content-type");
-    if (!contentType?.includes("multipart/form-data")) {
-      return NextResponse.json(
-        { error: "Content-Type must be multipart/form-data" },
-        { status: 400 },
-      );
-    }
+// ========== TYPES ==========
+interface CloudinaryUploadResult {
+  secure_url: string;
+  public_id: string;
+  [key: string]: any;
+}
 
-    const formData = await req.formData();
-    const file = formData.get("file") as File;
+// ========== CUSTOM ERRORS ==========
+class FileValidationError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "FileValidationError";
+  }
+}
 
-    if (!file) {
-      return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
-    }
+class CloudinaryUploadError extends Error {
+  constructor(
+    message: string,
+    public statusCode: number = 500,
+  ) {
+    super(message);
+    this.name = "CloudinaryUploadError";
+  }
+}
 
-    //  AJOUT : Vérifier que c'est bien un File
-    if (!(file instanceof File)) {
-      return NextResponse.json(
-        { error: "Invalid file format" },
-        { status: 400 },
-      );
-    }
+// ========== HELPERS ==========
+async function validateFile(file: File): Promise<void> {
+  if (!(file instanceof File)) {
+    throw new FileValidationError("Invalid file format");
+  }
 
-    //  AJOUT : Vérifier la taille du fichier
-    if (file.size > MAX_FILE_SIZE) {
-      return NextResponse.json(
-        { error: `File size exceeds ${MAX_FILE_SIZE / 1024 / 1024}MB limit` },
-        { status: 400 },
-      );
-    }
+  if (file.size === 0) {
+    throw new FileValidationError("File is empty");
+  }
 
-    //  AJOUT : Vérifier le type MIME
-    if (!ALLOWED_MIME_TYPES.includes(file.type)) {
-      return NextResponse.json(
-        {
-          error: `File type ${file.type} is not allowed. Allowed types: ${ALLOWED_MIME_TYPES.join(", ")}`,
-        },
-        { status: 400 },
-      );
-    }
-
-    //  AJOUT : Vérifier que le fichier n'est pas vide
-    if (file.size === 0) {
-      return NextResponse.json({ error: "File is empty" }, { status: 400 });
-    }
-
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-
-    //  AMÉLIORATION : Typage plus strict et timeout
-    const uploadResult = await new Promise<{
-      secure_url: string;
-      public_id: string;
-      [key: string]: any;
-    }>((resolve, reject) => {
-      //  AJOUT : Timeout de 30 secondes
-      const timeout = setTimeout(() => {
-        reject(new Error("Upload timeout after 30 seconds"));
-      }, 30000);
-
-      cloudinary.uploader
-        .upload_stream(
-          {
-            folder: CLOUDINARY_UPLOAD_FOLDER,
-            resource_type: "auto", //  Détection automatique du type
-            //  AJOUT : Options de sécurité
-            overwrite: false,
-            invalidate: true,
-          },
-          (err, result) => {
-            clearTimeout(timeout);
-            if (err) {
-              reject(err);
-            } else if (!result) {
-              reject(new Error("Upload failed: no result returned"));
-            } else {
-              resolve(result);
-            }
-          },
-        )
-        .end(buffer);
-    });
-
-    //  AJOUT : Vérifier que les propriétés existent
-    if (!uploadResult.secure_url || !uploadResult.public_id) {
-      console.error("Invalid upload result:", uploadResult);
-      return NextResponse.json(
-        { error: "Upload succeeded but response is invalid" },
-        { status: 500 },
-      );
-    }
-
-    return NextResponse.json({
-      url: uploadResult.secure_url,
-      public_id: uploadResult.public_id,
-    });
-  } catch (err) {
-    console.error("POST /api/signature error:", err);
-
-    //  AJOUT : Gestion d'erreur spécifique pour Cloudinary
-    if (err instanceof Error) {
-      // Erreurs Cloudinary courantes
-      if (err.message.includes("Invalid image file")) {
-        return NextResponse.json(
-          { error: "Invalid image file" },
-          { status: 400 },
-        );
-      }
-
-      if (err.message.includes("File size too large")) {
-        return NextResponse.json(
-          { error: "File size exceeds Cloudinary limit" },
-          { status: 400 },
-        );
-      }
-
-      if (err.message.includes("timeout")) {
-        return NextResponse.json(
-          { error: "Upload timeout. Please try again." },
-          { status: 408 }, // Request Timeout
-        );
-      }
-
-      if (err.message.includes("quota") || err.message.includes("limit")) {
-        return NextResponse.json(
-          { error: "Upload quota exceeded. Please try again later." },
-          { status: 503 }, // Service Unavailable
-        );
-      }
-
-      if (
-        err.message.includes("unauthorized") ||
-        err.message.includes("authentication")
-      ) {
-        console.error("CRITICAL: Cloudinary authentication failed");
-        return NextResponse.json(
-          { error: "Server configuration error" },
-          { status: 500 },
-        );
-      }
-    }
-
-    // Erreur générique
-    return NextResponse.json(
-      {
-        error: "Server error during upload",
-        details: err instanceof Error ? err.message : "Unknown error",
-      },
-      { status: 500 },
+  if (file.size > MAX_FILE_SIZE) {
+    throw new FileValidationError(
+      `File size exceeds ${MAX_FILE_SIZE / 1024 / 1024}MB limit`,
     );
   }
+
+  if (!ALLOWED_MIME_TYPES.includes(file.type)) {
+    throw new FileValidationError(
+      `File type ${file.type} is not allowed. Allowed types: ${ALLOWED_MIME_TYPES.join(", ")}`,
+    );
+  }
+}
+
+async function uploadToCloudinary(
+  buffer: Buffer,
+): Promise<CloudinaryUploadResult> {
+  return new Promise((resolve, reject) => {
+    const timeout = setTimeout(() => {
+      reject(new CloudinaryUploadError("Upload timeout after 30 seconds", 408));
+    }, 30000);
+
+    cloudinary.uploader
+      .upload_stream(
+        {
+          folder: CLOUDINARY_UPLOAD_FOLDER,
+          resource_type: "auto",
+          overwrite: false,
+          invalidate: true,
+        },
+        (err, result) => {
+          clearTimeout(timeout);
+
+          if (err) {
+            reject(new CloudinaryUploadError(err.message));
+          } else if (!result) {
+            reject(
+              new CloudinaryUploadError("Upload failed: no result returned"),
+            );
+          } else if (!result.secure_url || !result.public_id) {
+            reject(
+              new CloudinaryUploadError(
+                "Upload succeeded but response is invalid",
+              ),
+            );
+          } else {
+            resolve(result as CloudinaryUploadResult);
+          }
+        },
+      )
+      .end(buffer);
+  });
+}
+
+// ========== ROUTE HANDLER ==========
+export async function POST(request: NextRequest) {
+  return ApiResponse.handle(
+    async () => {
+      // Validation Content-Type
+      const contentType = request.headers.get("content-type");
+      if (!contentType?.includes("multipart/form-data")) {
+        throw new FileValidationError(
+          "Content-Type must be multipart/form-data",
+        );
+      }
+
+      // Récupération du fichier
+      const formData = await request.formData();
+      const file = formData.get("file");
+
+      if (!file) {
+        throw new FileValidationError("No file uploaded");
+      }
+
+      // Validation du fichier
+      await validateFile(file as File);
+
+      // Conversion en buffer
+      const bytes = await (file as File).arrayBuffer();
+      const buffer = Buffer.from(bytes);
+
+      // Upload vers Cloudinary
+      const uploadResult = await uploadToCloudinary(buffer);
+
+      return {
+        message: "File uploaded successfully",
+        data: {
+          url: uploadResult.secure_url,
+          public_id: uploadResult.public_id,
+        },
+      };
+    },
+    {
+      errorHandler: (err: any) => {
+        // Erreurs de validation de fichier
+        if (err instanceof FileValidationError) {
+          return ApiResponse.validationError(err.message);
+        }
+
+        // Erreurs Cloudinary
+        if (err instanceof CloudinaryUploadError) {
+          return ApiResponse.error(err.message, err.statusCode);
+        }
+
+        // Erreurs Cloudinary (fallback)
+        if (err instanceof Error) {
+          if (err.message.includes("Invalid image file")) {
+            return ApiResponse.validationError("Invalid image file");
+          }
+
+          if (err.message.includes("File size too large")) {
+            return ApiResponse.validationError(
+              "File size exceeds Cloudinary limit",
+            );
+          }
+
+          if (err.message.includes("quota") || err.message.includes("limit")) {
+            return ApiResponse.error(
+              "Upload quota exceeded. Please try again later.",
+              503,
+            );
+          }
+
+          if (
+            err.message.includes("unauthorized") ||
+            err.message.includes("authentication")
+          ) {
+            console.error("CRITICAL: Cloudinary authentication failed");
+            return ApiResponse.serverError(
+              new Error("Server configuration error"),
+            );
+          }
+        }
+
+        // Erreur générique
+        return ApiResponse.serverError(err);
+      },
+    },
+  );
 }

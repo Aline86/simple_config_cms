@@ -89,7 +89,7 @@ function applyMarks(text: string, marks: Mark[] = []): string {
         return `<a href="${href}" target="${target}" rel="${rel}">${html}</a>`;
       case "textStyle":
         const size = FONT_SIZE_MAP[mark.attrs?.fontSize || ""];
-        console.log("size", size);
+
         return size ? `<span style="font-size: ${size};">${html}</span>` : html;
       default:
         return html;

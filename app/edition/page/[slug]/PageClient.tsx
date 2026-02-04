@@ -193,9 +193,13 @@ export default function PageClient({
 
     window.location.href = "/login";
   };
-  useEffect(() => {
-    console.log("headerData", headerData);
-  }, [headerData, footerData, showErrorMessage, message, hasSucceeded]);
+  useEffect(() => {}, [
+    headerData,
+    footerData,
+    showErrorMessage,
+    message,
+    hasSucceeded,
+  ]);
 
   return (
     <body className="space-y-6 ">

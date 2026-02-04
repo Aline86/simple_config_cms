@@ -25,7 +25,7 @@ export async function proxy(request: NextRequest) {
       return redirect;
     }
 
-    // 🔁 Redirection UNIQUEMENT si /edition
+    // Redirection UNIQUEMENT si /edition
     if (pathname === "/edition") {
       const url = request.nextUrl.clone();
       url.pathname = "/edition/pages";
