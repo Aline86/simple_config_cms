@@ -13,7 +13,7 @@ export function cloneArticleWithImages(
     number_text_width: article.number_text_width ?? 0,
     number_height: article.number_height ?? 0,
     number_text_margins: article.number_text_margins ?? 0,
-    images: images ?? [],
-    text_images_position: article.text_images_position ?? "top",
+    images: images,
+    text_images_position: article.text_images_position,
   });
 }
