@@ -22,9 +22,9 @@ export class ApiResponse {
   static error(
     message: string,
     status: number = 500,
-    details?: any,
+    details?: string,
   ): NextResponse {
-    const response: any = { error: message };
+    const response: Record<string, string> = { error: message };
     if (details) {
       response.details = details;
     }
