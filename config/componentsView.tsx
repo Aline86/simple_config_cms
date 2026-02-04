@@ -1,12 +1,10 @@
 import ButtonContextEdition from "../components/contextView/edition/button/ButtonContextEdition";
 import CarouselsAutoContextEdition from "../components/contextView/edition/carousel/automatic/CarouselsAutoContextEdition";
-import CarouselContextEdition from "../components/contextView/edition/carousel/CarouselContextEdition";
 import CarouselsSimpleContextEdition from "../components/contextView/edition/carousel/simple/CarouselsSimpleContextEdition";
 import CarouselThumbnailsContextEdition from "../components/contextView/edition/carousel/thumbnails/CarouselThumbnailsContextEdition";
 import TextPicturesContextEdition from "../components/contextView/edition/editor/TextPicturesContextEdition";
 import ImageGridContextEdition from "../components/contextView/edition/grid/image_grid/ImageGridContextEdition";
 import ImageGroupContextEdition from "../components/contextView/edition/grid/image_group/ImageGroupContextEdition";
-import PictureGroupContextEdition from "../components/contextView/edition/grid/PictureGroupContextEdition";
 import ScreenContextEdition from "../components/contextView/edition/screen/ScreenContextEdition";
 import VideoContextEdition from "../components/contextView/edition/video/VideoContextEdition";
 import ButtonView from "../components/contextView/showcase/button/ButtonView";
@@ -37,32 +35,29 @@ type BlockRendererMap = {
 };
 type SubGroupRenderType = {
   [key: string]: {
-    backend: BlocComponent | null;
+    [key: string]: BlocComponent | null;
   };
 };
 type FrontRenderType = {
   [key: string]: { [key: string]: BlocFrontComponent | null };
 };
 
-export const blocksToRender: BlockRendererMap = {
+export const blocksToRender: SubGroupRenderType = {
   CAROUSEL: {
-    backend: CarouselContextEdition,
+    classique: CarouselsSimpleContextEdition,
+    miniatures: CarouselThumbnailsContextEdition,
+    automatique: CarouselsAutoContextEdition,
   },
-  TEXTE: { backend: TextPicturesContextEdition },
-  IMAGE_GROUPE: { backend: PictureGroupContextEdition },
-  BOUTON: { backend: ButtonContextEdition },
-  SCREEN: { backend: ScreenContextEdition },
-  VIDEO: { backend: VideoContextEdition },
+  TEXTE: { texte: TextPicturesContextEdition },
+  IMAGE_GROUPE: {
+    image_group: ImageGroupContextEdition,
+    grid: ImageGridContextEdition,
+  },
+  BOUTON: { bouton: ButtonContextEdition },
+  SCREEN: { screen: ScreenContextEdition },
+  VIDEO: { video: VideoContextEdition },
 };
-export const carouselToRender: SubGroupRenderType = {
-  classique: { backend: CarouselsSimpleContextEdition },
-  miniatures: { backend: CarouselThumbnailsContextEdition },
-  automatique: { backend: CarouselsAutoContextEdition },
-};
-export const pictureGroupToRender: SubGroupRenderType = {
-  image_group: { backend: ImageGroupContextEdition },
-  grid: { backend: ImageGridContextEdition },
-};
+
 export const blocksFrontToRender: FrontRenderType = {
   CAROUSEL: {
     automatique: CarouselAutoView,

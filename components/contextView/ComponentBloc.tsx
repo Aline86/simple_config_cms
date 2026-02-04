@@ -15,7 +15,7 @@ export default function ComponentBloc({
   onDelete,
   updateBloc,
 }: PageCrudProps) {
-  const Renderer = blocksToRender[bloc.type].backend;
+  const Renderer = blocksToRender[bloc.type][bloc.text_nom_bloc];
   if (!Renderer) return null;
 
   return (
