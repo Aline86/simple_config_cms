@@ -36,7 +36,7 @@ export class ApiResponse {
    */
   static validationError(
     message: string = "Validation failed",
-    details?: any,
+    details?: string,
   ): NextResponse {
     return this.error(message, 400, details);
   }
@@ -83,8 +83,8 @@ export class ApiResponse {
     switch (code) {
       // Erreur de contrainte unique (duplicate)
       case PrismaErrorCode.UNIQUE_CONSTRAINT:
-        const target = meta?.target as string[] | undefined;
-        const field = target?.join(", ") || "champ";
+        const target = meta?.target as string[];
+        const field = target?.join(", ");
         return this.error(`Un doublon a été détecté sur: ${field}`, 400);
 
       // Enregistrement non trouvé
@@ -97,7 +97,7 @@ export class ApiResponse {
 
       // Erreur de validation des données
       case PrismaErrorCode.VALUE_TOO_LONG:
-        const fieldName = meta?.field_name || "un champ";
+        const fieldName = meta?.field_name;
         return this.validationError(
           `La valeur est trop longue pour ${fieldName}`,
         );

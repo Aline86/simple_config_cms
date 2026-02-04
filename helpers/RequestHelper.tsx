@@ -32,7 +32,7 @@ export class RequestHelper {
   /**
    * Parse le body JSON de la requête
    */
-  static async getBody<T = unknown>(request: NextRequest): Promise<T> {
+  static async getBody<T = any>(request: NextRequest): Promise<T> {
     return await request.json();
   }
 

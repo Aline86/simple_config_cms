@@ -194,7 +194,7 @@ export async function PUT(request: NextRequest) {
           ...(reseaux && {
             reseaux: {
               deleteMany: {}, // supprime tous les réseaux liés au header
-              create: reseaux.map((reseau: any) => ({
+              create: reseaux.map((reseau: MediaObject) => ({
                 text_titre: reseau.text_titre,
                 image_url: reseau.image_url,
                 color_couleur_bg: reseau.color_couleur_bg,

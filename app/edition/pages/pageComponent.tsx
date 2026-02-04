@@ -20,7 +20,7 @@ interface PageCrudProps {
   onEdit: (
     page: PageObject,
     fieldName: keyof PageObject,
-    newValue: any,
+    newValue: unknown,
   ) => void;
   onAdd?: () => void; // optionnel, si tu veux un bouton "Ajouter une page"
   onDragStart: (page: PageObject) => void;

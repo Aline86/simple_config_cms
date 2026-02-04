@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
       const pages = dbPages.map((dbPage) => {
         const blocs =
           typeof dbPage.blocs === "string"
-            ? JSON.parse(dbPage.blocs).map((b: any) => new BlocObject(b))
+            ? JSON.parse(dbPage.blocs).map((b: BlocObject) => new BlocObject(b))
             : [];
 
         return new PageObject({

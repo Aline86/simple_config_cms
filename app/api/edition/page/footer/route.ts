@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "./../../../../../lib/prisma/prisma";
 import { ApiResponse } from "../../../../../helpers/ApiResponse";
+import { MediaObject } from "../../../../../model/bloc/MediaObject";
 export async function GET(request: NextRequest) {
   return ApiResponse.handle(
     async () => {
@@ -58,7 +59,7 @@ export async function POST(request: NextRequest) {
           ...(reseaux &&
             reseaux.length > 0 && {
               reseaux: {
-                create: reseaux.map((reseau: any) => ({
+                create: reseaux.map((reseau: MediaObject) => ({
                   text_titre: reseau.text_titre,
                   image_url: reseau.image_url,
                   color_couleur_bg: reseau.color_couleur_bg,
@@ -141,7 +142,7 @@ export async function PUT(request: NextRequest) {
           ...(reseaux && {
             reseaux: {
               deleteMany: {}, // supprime tous les réseaux existants
-              create: reseaux.map((reseau: any) => ({
+              create: reseaux.map((reseau: MediaObject) => ({
                 text_titre: reseau.text_titre,
                 image_url: reseau.image_url,
                 color_couleur_bg: reseau.color_couleur_bg,
