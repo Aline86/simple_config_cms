@@ -20,11 +20,11 @@ export default async function Page({ params }: Props) {
 
   let page;
 
-  if (slug === undefined) {
-    page = await getHomePage();
-  } else {
+  if (slug !== undefined) {
     page = await getPageBySlug(slug);
     page = page.page;
+  } else {
+    page = await getHomePage();
   }
   const [header, footer] = await Promise.all([
     getPageHeader(),
