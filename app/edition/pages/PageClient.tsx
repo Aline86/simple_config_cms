@@ -90,29 +90,32 @@ export default function PageClient({
 
       const result = await res.json(); // Pages avec les ids de la BDD
 
-      if (result !== undefined && Array.isArray(result)) {
-        const updatedPages = result.map((dbPage: any) => {
-          // Parser les blocs si c'est une string
-          const blocs =
-            typeof dbPage.blocs === "string"
-              ? JSON.parse(dbPage.blocs).map((b: any) => new BlocObject(b))
-              : dbPage.blocs.map((b: any) => new BlocObject(b));
+      if (result !== undefined && result !== null) {
+        console.log("pages", pages);
+        const updatedPages = Object.entries(result.pages).map(
+          ([, dbPage]: [string, PageObject]) => {
+            // Parser les blocs si c'est une string
+            const blocs =
+              typeof dbPage.blocs === "string"
+                ? JSON.parse(dbPage.blocs).map((b: any) => new BlocObject(b))
+                : dbPage.blocs.map((b: any) => new BlocObject(b));
 
-          return new PageObject({
-            number_id: dbPage.number_id,
-            number_parent_id: dbPage.number_parent_id,
-            checkbox_published: dbPage.checkbox_published,
-            checkbox_home_page: dbPage.checkbox_home_page,
-            text_titre: dbPage.text_titre,
-            text_description: dbPage.text_description,
-            text_slug: dbPage.text_slug,
-            number_page_position: dbPage.number_page_position,
-            text_langue: dbPage.text_langue,
-            text_createdAt: dbPage.text_createdAt,
-            text_updatedAt: dbPage.text_updatedAt,
-            blocs,
-          });
-        });
+            return new PageObject({
+              number_id: dbPage.number_id,
+              number_parent_id: dbPage.number_parent_id,
+              checkbox_published: dbPage.checkbox_published,
+              checkbox_home_page: dbPage.checkbox_home_page,
+              text_titre: dbPage.text_titre,
+              text_description: dbPage.text_description,
+              text_slug: dbPage.text_slug,
+              number_page_position: dbPage.number_page_position,
+              text_langue: dbPage.text_langue,
+              text_createdAt: dbPage.text_createdAt,
+              text_updatedAt: dbPage.text_updatedAt,
+              blocs,
+            });
+          },
+        );
 
         setPages(updatedPages);
       }
@@ -120,8 +123,9 @@ export default function PageClient({
       setShowErrorMessage(!showErrorMessage);
       setHasSucceeded(true);
     } catch (error) {
-      setMessage("L'action n'a pas résussie !");
-      logout();
+      setMessage("L'action n'a pas réussi !" + error);
+      setShowErrorMessage(!showErrorMessage);
+      setHasSucceeded(false);
     }
   };
 
@@ -194,7 +198,7 @@ export default function PageClient({
   useEffect(() => {
     console.log("pages", pages);
     const result = Object.entries(initialPages).map(
-      ([index, page]) => new PageObject(page),
+      ([, page]) => new PageObject(page),
     );
     setPages(result);
   }, [initialPages]);

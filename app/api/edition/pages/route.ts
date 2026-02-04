@@ -63,91 +63,87 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  try {
-    const body = await request.json();
-    const pagesPayload = Array.isArray(body) ? body : body.data;
+  return ApiResponse.handle(
+    async () => {
+      const body = await request.json();
+      const pagesPayload = Array.isArray(body) ? body : body.data;
 
-    if (!Array.isArray(pagesPayload)) {
-      return NextResponse.json(
-        { error: "Payload must be an array of pages" },
-        { status: 400 },
-      );
-    }
-
-    for (const p of pagesPayload) {
-      const page = p instanceof PageObject ? p : new PageObject(p);
-
-      if (!page.validateAll()) {
-        console.error("❌ Validation failed for page:", page);
+      if (!Array.isArray(pagesPayload)) {
         return NextResponse.json(
-          { error: "Validation failed", page: p },
+          { error: "Payload must be an array of pages" },
           { status: 400 },
         );
       }
-    }
 
-    const allPages = await Promise.all(
-      pagesPayload.map(async (p) => {
-        const page = new PageObject(p);
+      for (const p of pagesPayload) {
+        const page = p instanceof PageObject ? p : new PageObject(p);
 
         if (!page.validateAll()) {
-          throw new Error(`Validation failed for page ${page.text_titre}`);
+          console.error("Validation failed for page:", page);
+          return NextResponse.json(
+            { error: "Validation failed", page: p },
+            { status: 400 },
+          );
         }
+      }
 
-        const isUpdate =
-          page.number_id !== null &&
-          page.number_id !== undefined &&
-          page.number_id > 0;
+      const allPages = await Promise.all(
+        pagesPayload.map(async (p) => {
+          const page = new PageObject(p);
 
-        if (isUpdate) {
-          return prisma.page.update({
-            where: { number_id: Number(page.number_id) },
-            data: {
-              number_parent_id:
-                page.number_parent_id === -1 ? null : page.number_parent_id,
-              checkbox_published: page.checkbox_published,
-              checkbox_home_page: page.checkbox_home_page,
-              text_titre: page.text_titre ?? "",
-              text_description: page.text_description ?? "",
-              text_slug: page.text_slug ?? "",
-              number_page_position: page.number_page_position ?? 0,
-              text_langue: page.text_langue ?? "fr_FR",
-              blocs: JSON.stringify(page.blocs.map((b) => b.toJSON())),
-              text_updatedAt: new Date(),
-            },
-          });
-        } else {
-          return prisma.page.create({
-            data: {
-              number_parent_id:
-                page.number_parent_id === -1 ? null : page.number_parent_id,
-              checkbox_published: page.checkbox_published,
-              checkbox_home_page: page.checkbox_home_page,
-              text_titre: page.text_titre ?? "",
-              text_description: page.text_description ?? "",
-              text_slug: page.text_slug ?? "",
-              number_page_position: page.number_page_position ?? 0,
-              text_langue: page.text_langue ?? "fr_FR",
-              blocs: JSON.stringify(page.blocs.map((b) => b.toJSON())),
-              text_createdAt: new Date(),
-              text_updatedAt: new Date(),
-            },
-          });
-        }
-      }),
-    );
+          const isUpdate =
+            page.number_id !== null &&
+            page.number_id !== undefined &&
+            page.number_id > 0;
 
-    return NextResponse.json(allPages, {
-      status: 201,
-    });
-  } catch (err) {
-    if (err.code === "P2002") {
-      return NextResponse.json(
-        { error: "Un slug en doublon a été détecté" },
-        { status: 400 },
+          if (isUpdate) {
+            return prisma.page.update({
+              where: { number_id: Number(page.number_id) },
+              data: {
+                number_parent_id:
+                  page.number_parent_id === -1 ? null : page.number_parent_id,
+                checkbox_published: page.checkbox_published,
+                checkbox_home_page: page.checkbox_home_page,
+                text_titre: page.text_titre ?? "",
+                text_description: page.text_description ?? "",
+                text_slug: page.text_slug ?? "",
+                number_page_position: page.number_page_position ?? 0,
+                text_langue: page.text_langue ?? "fr_FR",
+                blocs: JSON.stringify(page.blocs.map((b) => b.toJSON())),
+                text_updatedAt: new Date(),
+              },
+            });
+          } else {
+            return prisma.page.create({
+              data: {
+                number_parent_id:
+                  page.number_parent_id === -1 ? null : page.number_parent_id,
+                checkbox_published: page.checkbox_published,
+                checkbox_home_page: page.checkbox_home_page,
+                text_titre: page.text_titre ?? "",
+                text_description: page.text_description ?? "",
+                text_slug: page.text_slug ?? "",
+                number_page_position: page.number_page_position ?? 0,
+                text_langue: page.text_langue ?? "fr_FR",
+                blocs: JSON.stringify(page.blocs.map((b) => b.toJSON())),
+                text_createdAt: new Date(),
+                text_updatedAt: new Date(),
+              },
+            });
+          }
+        }),
       );
-    }
-
-    return NextResponse.json({ error: "Pages non trouvée" }, { status: 404 });
-  }
+      return {
+        message: "Pages got",
+        pages: {
+          ...allPages,
+        },
+      };
+    },
+    {
+      errorHandler: (err) => {
+        return ApiResponse.handlePrismaError(err);
+      },
+    },
+  );
 }
