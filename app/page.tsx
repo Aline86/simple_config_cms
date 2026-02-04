@@ -48,6 +48,12 @@ export default async function Page() {
   if (!header || !footer) {
     return <div>Erreur lors du chargement du layout</div>;
   }
-
-  return <PageClient initialpage={page} header={header} footer={footer} />;
+  console.log("data", header, page, footer);
+  return (
+    <PageClient
+      initialpage={page}
+      header={header.header}
+      footer={footer.footer}
+    />
+  );
 }

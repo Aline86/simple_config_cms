@@ -16,12 +16,18 @@ export default async function Page({ params }: PageProps) {
   const header = await getPageHeader();
 
   if (!header) {
-    return <div>PB lors du chargement du header</div>;
+    return <body>PB lors du chargement du header</body>;
   }
   const footer = await getPageFooter();
 
   if (!footer) {
-    return <div>PB lors du chargement du header</div>;
+    return <body>PB lors du chargement du header</body>;
   }
-  return <PageClient initialpage={page} header={header} footer={footer} />;
+  return (
+    <PageClient
+      initialpage={page.page}
+      header={header.header}
+      footer={footer.footer}
+    />
+  );
 }

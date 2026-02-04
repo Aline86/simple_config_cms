@@ -57,7 +57,7 @@ export default function HeaderView({ header }: MediaViewProps) {
   const showPages = async () => {
     const pages = await getPages();
 
-    setPages(pages ?? []);
+    setPages(pages.pages ?? []);
   };
 
   const handleScroll = () => {
@@ -70,9 +70,13 @@ export default function HeaderView({ header }: MediaViewProps) {
     showPages();
   }, []);
   useEffect(() => {
-    setHasH1InPage(header.text_nom_site.trim().length > 0);
+    header !== undefined &&
+      header !== null &&
+      header.text_nom_site !== null &&
+      header.text_nom_site !== undefined &&
+      setHasH1InPage(header.text_nom_site.trim().length > 0);
   }, [header]);
-  useEffect(() => {}, [pages]);
+
   useEffect(() => {
     if (!pages) return;
 
@@ -93,26 +97,23 @@ export default function HeaderView({ header }: MediaViewProps) {
   }, [pages]);
 
   useEffect(() => {
-    setStateBG(getBackgroundType(header?.text_background_url as string));
-  }, [header?.text_background_url]);
+    setStateBG(getBackgroundType(header.text_background_url as string));
+  }, [header.text_background_url]);
 
-  if (!pages) {
-    return <header className="bg-white shadow "></header>;
-  }
+  console.log("header", header, pages);
 
   return (
-    pages !== undefined &&
-    Array.isArray(pages) && (
+    pages !== undefined && (
       <>
         <header
           ref={scrollRef}
           style={{
             backgroundColor:
               stateBG !== "image"
-                ? ((header?.text_background_url + "40") as string)
+                ? ((header.text_background_url + "40") as string)
                 : undefined,
             backgroundImage:
-              stateBG === "image" && header?.text_background_url
+              stateBG === "image" && header.text_background_url
                 ? `url(${header.text_background_url})`
                 : undefined,
             backgroundSize: "cover",
@@ -132,7 +133,7 @@ export default function HeaderView({ header }: MediaViewProps) {
                 href="/"
                 className="text-xl font-bold text-indigo-600 relative  flex-shrink-0 z-0"
               >
-                {header?.logo?.image_url ? (
+                {header.logo?.image_url ? (
                   <Image
                     src={header.logo.image_url}
                     alt={header.text_nom_site || "Logo"}
@@ -144,7 +145,7 @@ export default function HeaderView({ header }: MediaViewProps) {
                 )}
               </a>
 
-              <h1 className="flex-shrink-0 mx-4 ">{header?.text_nom_site}</h1>
+              <h1 className="flex-shrink-0 mx-4 ">{header.text_nom_site}</h1>
 
               <nav
                 ref={navRef}
@@ -156,7 +157,7 @@ export default function HeaderView({ header }: MediaViewProps) {
                       : ""
                 }`}
               >
-                {pages.map((page) => {
+                {Object.entries(pages).map(([, page]) => {
                   return (
                     <a key={page.number_id} href={"/" + page.text_slug}>
                       {page.text_titre}
@@ -208,7 +209,7 @@ export default function HeaderView({ header }: MediaViewProps) {
             </div>
           </div>
         </header>
-        {header?.reseaux !== null ? (
+        {header.reseaux !== null ? (
           <div
             className={
               header.mode === "edition"
@@ -218,6 +219,7 @@ export default function HeaderView({ header }: MediaViewProps) {
           >
             <div className="social-media absolute mb-2 right-[-160px] ">
               {header.reseaux.map((network, index) => {
+                console.log(header.reseaux);
                 return <SocialTab key={index} network={network} />;
               })}
             </div>

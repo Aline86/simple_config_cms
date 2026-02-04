@@ -20,6 +20,7 @@ export default function PageClient({
   const page = new PageObject(initialpage);
   const headerData = new HeaderObject(header, "view");
   const footerData = new FooterObject(footer, "view");
+
   return (
     <body className="mt-[-1px]">
       <HeaderView header={headerData} />

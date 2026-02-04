@@ -3,8 +3,8 @@ import PageClient from "./PageClient";
 
 export default async function Page() {
   const pages = await getPages();
-  if (pages !== undefined && Array.isArray(pages)) {
-    return <PageClient initialPages={pages} />;
+  if (pages !== undefined) {
+    return <PageClient initialPages={pages.pages} />;
   } else {
     return <div>Pages non trouvée</div>;
   }

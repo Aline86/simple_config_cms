@@ -142,8 +142,15 @@ export default function PageClient({
     [],
   );
 
-  const handleDelete = useCallback((model: PageObject) => {
+  const handleDelete = useCallback(async (model: PageObject) => {
     if (!confirm(`Supprimer la page "${model.text_titre}" ?`)) return;
+    if (model.number_id !== -1) {
+      await fetch("/api/edition/page", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: model.number_id }),
+      });
+    }
 
     setPages((prev) => {
       const filtered = prev.filter(
@@ -185,9 +192,13 @@ export default function PageClient({
     window.location.href = "/login";
   };
   useEffect(() => {
-    const result = initialPages.map((page) => new PageObject(page));
+    console.log("pages", pages);
+    const result = Object.entries(initialPages).map(
+      ([index, page]) => new PageObject(page),
+    );
     setPages(result);
   }, [initialPages]);
+
   useEffect(() => {
     console.log("pages", pages);
   }, [showErrorMessage, message, hasSucceeded, pages]);

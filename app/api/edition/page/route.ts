@@ -1,90 +1,107 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import { PageObject } from "../../../../model/Page";
 import { prisma } from "./../../../../lib/prisma/prisma";
+import { RequestHelper } from "../../../../helpers/RequestHelper";
+import { ApiResponse } from "../../../../helpers/ApiResponse";
+
+// ========== GET PAGE BY SLUG ==========
 export async function GET(request: NextRequest) {
-  try {
-    const { searchParams } = new URL(request.url);
-    const slug = searchParams.get("slug");
+  return ApiResponse.handle(
+    async () => {
+      const slug = RequestHelper.getRequiredSearchParam(request, "slug");
 
-    if (!slug) {
-      return NextResponse.json({ error: "Slug missing" }, { status: 400 });
-    }
+      const dbPage = await prisma.page.findFirst({
+        where: { text_slug: slug },
+      });
 
-    const dbPage = await prisma.page.findFirst({
-      where: { text_slug: slug },
-    });
+      if (!dbPage) {
+        throw new Error("Page not found");
+      }
 
-    if (!dbPage) {
-      return NextResponse.json({ error: "Page not found" }, { status: 404 });
-    }
-
-    return NextResponse.json(dbPage, { status: 200 });
-  } catch (err) {
-    console.error("GET /api/page error:", err);
-    return NextResponse.json(
-      {
-        error: "Server error",
-        details: err instanceof Error ? err.message : "Unknown error",
+      return {
+        message: "Page got",
+        page: {
+          ...dbPage,
+        },
+      };
+    },
+    {
+      errorHandler: (err: Record<string, unknown>) => {
+        if (err.message === "slug missing") {
+          return ApiResponse.missingParameter("Slug");
+        }
+        if (err.message === "Page not found") {
+          return ApiResponse.notFound("Page not found");
+        }
+        return ApiResponse.serverError(err);
       },
-      { status: 500 },
-    );
-  }
+    },
+  );
 }
 
+// ========== DELETE PAGE ==========
 export async function DELETE(request: NextRequest) {
-  try {
-    const body = await request.json();
-    const { id } = body;
+  return ApiResponse.handle(
+    async () => {
+      const id = await RequestHelper.getBodyProperty<number>(
+        request,
+        "id",
+        true,
+      );
 
-    if (!id) {
-      return NextResponse.json({ error: "id missing" }, { status: 400 });
-    }
+      const deletedPage = await prisma.page.delete({
+        where: { number_id: Number(id) },
+      });
 
-    const deletedPage = await prisma.page.delete({
-      where: { number_id: Number(id) },
-    });
-
-    return NextResponse.json(deletedPage, { status: 200 });
-  } catch (err) {
-    return NextResponse.json(
-      {
-        error: "Server error",
-        details: err instanceof Error ? err.message : "Unknown error",
+      return deletedPage;
+    },
+    {
+      errorHandler: (err: Record<string, unknown>) => {
+        if (err.message === "id missing") {
+          return ApiResponse.missingParameter("id");
+        }
+        return ApiResponse.handlePrismaError(err);
       },
-      { status: 500 },
-    );
-  }
+    },
+  );
 }
 
+// ========== UPDATE PAGE ==========
 export async function PUT(request: NextRequest) {
-  try {
-    const body = await request.json();
-    const rawPage = body.data;
-    const w = JSON.stringify(rawPage.blocs);
-    rawPage.blocs = w;
+  return ApiResponse.handle(
+    async () => {
+      const body = await RequestHelper.getBody(request);
+      const rawPage = body.data;
 
-    const page = new PageObject(rawPage);
+      // Sérialisation des blocs
+      rawPage.blocs = JSON.stringify(rawPage.blocs);
 
-    if (!page.validateAll()) {
-      return NextResponse.json({ error: "Validation failed" }, { status: 400 });
-    }
+      // Validation
+      const page = new PageObject(rawPage);
+      if (!page.validateAll()) {
+        throw new Error("Validation failed");
+      }
 
-    await prisma.page.update({
-      where: { number_id: Number(rawPage.number_id) },
-      data: rawPage,
-    });
+      // Mise à jour
+      await prisma.page.update({
+        where: { number_id: Number(rawPage.number_id) },
+        data: rawPage,
+      });
 
-    return NextResponse.json(
-      { message: "Page mise à jour", blocs: rawPage },
-      { status: 200 },
-    );
-  } catch (err) {
-    return NextResponse.json(
-      {
-        error: "Server error",
-        details: err instanceof Error ? err.message : "Unknown error",
+      return {
+        message: "Page got",
+        page: {
+          ...rawPage,
+        },
+      };
+    },
+    {
+      errorHandler: (err: Record<string, unknown>) => {
+        if (err.message === "Validation failed") {
+          return ApiResponse.validationError("Validation failed");
+        }
+        return ApiResponse.handlePrismaError(err);
       },
-      { status: 500 },
-    );
-  }
+    },
+  );
 }

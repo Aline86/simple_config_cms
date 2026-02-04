@@ -32,8 +32,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     header !== undefined &&
     header !== null
   ) {
-    const pageData = new PageObject(page);
-    const haederData = new HeaderObject(header, "view");
+    const pageData = new PageObject(page.page);
+    const haederData = new HeaderObject(header.header, "view");
 
     return {
       title: pageData.text_titre,
@@ -48,7 +48,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: "Ceci est une page",
   };
 }
-export default async function Page({ params, searchParams }: Props) {
+export default async function Page({ params }: Props) {
   const { slug } = await params;
   if (slug === "/") {
     return <></>;
@@ -69,5 +69,11 @@ export default async function Page({ params, searchParams }: Props) {
   if (!footer) {
     return <div>PB lors du chargement du header</div>;
   }
-  return <PageClient initialpage={page} header={header} footer={footer} />;
+  return (
+    <PageClient
+      initialpage={page.page}
+      header={header.header}
+      footer={footer.footer}
+    />
+  );
 }

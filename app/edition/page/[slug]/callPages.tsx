@@ -71,7 +71,7 @@ async function postPageHeader(headerData: { [key: string]: unknown }) {
   }
 
   const result = await res.json();
-  return result.data;
+  return result;
 }
 export async function getPageFooter() {
   const res = await fetch(
@@ -122,5 +122,5 @@ async function postPageFooter(footerData: { [key: string]: unknown }) {
   }
 
   const result = await res.json();
-  return result.data;
+  return result;
 }

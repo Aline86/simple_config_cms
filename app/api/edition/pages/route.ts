@@ -2,54 +2,64 @@ import { NextRequest, NextResponse } from "next/server";
 import { BlocObject } from "../../../../model/Bloc";
 import { PageObject } from "../../../../model/Page";
 import { prisma } from "./../../../../lib/prisma/prisma";
+import { ApiResponse } from "../../../../helpers/ApiResponse";
 export async function GET(request: NextRequest) {
-  try {
-    const { searchParams } = new URL(request.url);
-    const with_homepage = searchParams.get("with_homepage");
-    let dbPages = [];
-    if (with_homepage === "without_homepage") {
-      dbPages = await prisma.page.findMany({
-        where: {
-          checkbox_home_page: false,
-        },
-        orderBy: {
-          number_page_position: "asc",
-        },
-      });
-    } else {
-      dbPages = await prisma.page.findMany({
-        orderBy: {
-          number_page_position: "asc",
-        },
-      });
-    }
-    const pages = dbPages.map((dbPage) => {
-      const blocs =
-        typeof dbPage.blocs === "string"
-          ? JSON.parse(dbPage.blocs).map((b: any) => new BlocObject(b))
-          : [];
+  return ApiResponse.handle(
+    async () => {
+      const { searchParams } = new URL(request.url);
+      const with_homepage = searchParams.get("with_homepage");
+      let dbPages = [];
+      if (with_homepage === "without_homepage") {
+        dbPages = await prisma.page.findMany({
+          where: {
+            checkbox_home_page: false,
+          },
+          orderBy: {
+            number_page_position: "asc",
+          },
+        });
+      } else {
+        dbPages = await prisma.page.findMany({
+          orderBy: {
+            number_page_position: "asc",
+          },
+        });
+      }
+      const pages = dbPages.map((dbPage) => {
+        const blocs =
+          typeof dbPage.blocs === "string"
+            ? JSON.parse(dbPage.blocs).map((b: any) => new BlocObject(b))
+            : [];
 
-      return new PageObject({
-        id: dbPage.number_id, // ✅ Changé de id
-        parent_id: dbPage.number_parent_id, // ✅ Changé de parent_id
-        published: dbPage.checkbox_published, // ✅ Changé de published
-        checkbox_home_page: dbPage.checkbox_home_page,
-        text_titre: dbPage.text_titre, // ✅ Changé de text_titre
-        text_description: dbPage.text_description ?? "", // ✅ Changé de text_titre
-        slug: dbPage.text_slug, // ✅ Changé de slug
-        number_page_position: dbPage.number_page_position, // ✅ Changé de number_page_position
-        langue: dbPage.text_langue, // ✅ Changé de langue
-        text_createdAt: dbPage.text_createdAt, // ✅ Changé de text_createdAt
-        text_updatedAt: dbPage.text_updatedAt, // ✅ Changé de text_updatedAt
-        blocs,
+        return new PageObject({
+          id: dbPage.number_id, //  Changé de id
+          parent_id: dbPage.number_parent_id, //  Changé de parent_id
+          published: dbPage.checkbox_published, //  Changé de published
+          checkbox_home_page: dbPage.checkbox_home_page,
+          text_titre: dbPage.text_titre, //  Changé de text_titre
+          text_description: dbPage.text_description ?? "", //  Changé de text_titre
+          slug: dbPage.text_slug, //  Changé de slug
+          number_page_position: dbPage.number_page_position, //  Changé de number_page_position
+          langue: dbPage.text_langue, //  Changé de langue
+          text_createdAt: dbPage.text_createdAt, //  Changé de text_createdAt
+          text_updatedAt: dbPage.text_updatedAt, //  Changé de text_updatedAt
+          blocs,
+        });
       });
-    });
 
-    return NextResponse.json(pages);
-  } catch (err) {
-    console.error(err);
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
-  }
+      return {
+        message: "Pages got",
+        pages: {
+          ...pages,
+        },
+      };
+    },
+    {
+      errorHandler: (err) => {
+        return ApiResponse.handlePrismaError(err);
+      },
+    },
+  );
 }
 
 export async function POST(request: NextRequest) {

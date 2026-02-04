@@ -147,19 +147,23 @@ export default function PageClient({
 
       // Mettre à jour les states
       if (pageResult !== undefined) {
-        setPage(new PageObject(pageResult.blocs));
+        setPage(new PageObject(pageResult.page));
       }
       if (headerResult !== undefined) {
-        setHeader(new HeaderObject(headerResult, "edition")); // Assurez-vous d'avoir un setHeader
+        setHeader(new HeaderObject(headerResult.header, "edition")); // Assurez-vous d'avoir un setHeader
       }
       if (footerResult !== undefined) {
-        setFooter(new FooterObject(footerResult, "edition")); // Assurez-vous d'avoir un setHeader
+        setFooter(new FooterObject(footerResult.footer, "edition")); // Assurez-vous d'avoir un setHeader
       }
       setMessage("L'action a réussi !");
       setShowErrorMessage(!showErrorMessage);
       setHasSucceeded(true);
     } catch (error) {
-      logout();
+      setMessage(
+        "L'action n'a pas réussi, veuillez recommencer, si le problème persiste, veuillez contacter l'administrateur !",
+      );
+      setShowErrorMessage(!showErrorMessage);
+      setHasSucceeded(false);
     }
   };
   const handleRemove = (model: BlocObject) => {
@@ -189,13 +193,9 @@ export default function PageClient({
 
     window.location.href = "/login";
   };
-  useEffect(() => {}, [
-    headerData,
-    footerData,
-    showErrorMessage,
-    message,
-    hasSucceeded,
-  ]);
+  useEffect(() => {
+    console.log("headerData", headerData);
+  }, [headerData, footerData, showErrorMessage, message, hasSucceeded]);
 
   return (
     <body className="space-y-6 ">
