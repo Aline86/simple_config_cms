@@ -54,46 +54,36 @@ export class NumberValidator {
     let schema = z.number();
 
     if (!this.params.required) {
-      schema = schema.refine(
-        (val) => val === undefined || typeof val === "number",
-        { message: "Doit être un nombre" },
-      );
+      schema = schema.refine((val) => typeof val === "number", {
+        message: "Doit être un nombre",
+      });
     }
 
     if (this.params.integer) {
-      schema = schema.refine(
-        (val) => val === undefined || Number.isInteger(val),
-        {
-          message:
-            this.params.errorMessages?.integer || "Doit être un nombre entier",
-        },
-      );
+      schema = schema.refine((val) => Number.isInteger(val), {
+        message:
+          this.params.errorMessages?.integer || "Doit être un nombre entier",
+      });
     }
 
     if (this.params.min !== undefined) {
-      schema = schema.refine(
-        (val) => val === undefined || val >= this.params.min!,
-        {
-          message:
-            this.params.errorMessages?.min ||
-            `La valeur minimale est ${this.params.min}`,
-        },
-      );
+      schema = schema.refine((val) => val >= this.params.min!, {
+        message:
+          this.params.errorMessages?.min ||
+          `La valeur minimale est ${this.params.min}`,
+      });
     }
 
     if (this.params.max !== undefined) {
-      schema = schema.refine(
-        (val) => val === undefined || val <= this.params.max!,
-        {
-          message:
-            this.params.errorMessages?.max ||
-            `La valeur maximale est ${this.params.max}`,
-        },
-      );
+      schema = schema.refine((val) => val <= this.params.max!, {
+        message:
+          this.params.errorMessages?.max ||
+          `La valeur maximale est ${this.params.max}`,
+      });
     }
 
     if (this.params.positive) {
-      schema = schema.refine((val) => val === undefined || val > 0, {
+      schema = schema.refine((val) => val > 0, {
         message:
           this.params.errorMessages?.positive ||
           "Doit être un nombre positif (> 0)",
@@ -101,7 +91,7 @@ export class NumberValidator {
     }
 
     if (this.params.nonnegative) {
-      schema = schema.refine((val) => val === undefined || val >= 0, {
+      schema = schema.refine((val) => val >= 0, {
         message:
           this.params.errorMessages?.nonnegative ||
           "Doit être un nombre non négatif (≥ 0)",
