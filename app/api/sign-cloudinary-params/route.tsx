@@ -37,7 +37,7 @@ const ALLOWED_MIME_TYPES = [
 interface CloudinaryUploadResult {
   secure_url: string;
   public_id: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 // ========== CUSTOM ERRORS ==========
