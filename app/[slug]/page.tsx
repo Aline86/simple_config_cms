@@ -1,11 +1,8 @@
 import { HeaderObject } from "../../model/bloc/Header";
 import { PageObject } from "../../model/Page";
-import {
-  getPageBySlug,
-  getPageFooter,
-  getPageHeader,
-} from "../edition/page/[slug]/callPages";
-import PageClient from "./PageClient";
+import { getPageBySlug, getPageHeader } from "../edition/page/[slug]/callPages";
+import PageContainer from "../PageContainer";
+
 import type { Metadata } from "next";
 
 type Props = {
@@ -49,31 +46,5 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 export default async function Page({ params }: Props) {
-  const { slug } = await params;
-  if (slug === "/") {
-    return <></>;
-  }
-
-  const page = await getPageBySlug(slug);
-
-  if (!page) {
-    return <body>Page non trouvée</body>;
-  }
-  const header = await getPageHeader();
-
-  if (!header) {
-    return <div>PB lors du chargement du header</div>;
-  }
-  const footer = await getPageFooter();
-
-  if (!footer) {
-    return <div>PB lors du chargement du header</div>;
-  }
-  return (
-    <PageClient
-      initialpage={page.page}
-      header={header.header}
-      footer={footer.footer}
-    />
-  );
+  return <PageContainer params={params} searchParams={undefined} />;
 }

@@ -2,8 +2,13 @@ import { HeaderObject } from "../model/bloc/Header";
 import { PageObject } from "../model/Page";
 import PageClient from "./[slug]/PageClient";
 import getHomePage from "./callPages";
-import { getPageFooter, getPageHeader } from "./edition/page/[slug]/callPages";
+import {
+  getPageBySlug,
+  getPageFooter,
+  getPageHeader,
+} from "./edition/page/[slug]/callPages";
 import type { Metadata } from "next";
+import PageContainer from "./PageContainer";
 
 /* ===========================
    METADATA HOME
@@ -29,31 +34,14 @@ export async function generateMetadata(): Promise<Metadata> {
       : undefined,
   };
 }
+type Props = {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<PageObject>;
+};
 
 /* ===========================
    PAGE HOME
 =========================== */
-export default async function Page() {
-  const page = await getHomePage();
-
-  if (!page) {
-    return <body>Page non trouvée</body>;
-  }
-
-  const [header, footer] = await Promise.all([
-    getPageHeader(),
-    getPageFooter(),
-  ]);
-
-  if (!header || !footer) {
-    return <div>Erreur lors du chargement du layout</div>;
-  }
-
-  return (
-    <PageClient
-      initialpage={page}
-      header={header.header}
-      footer={footer.footer}
-    />
-  );
+export default async function Page({ params }: Props) {
+  return <PageContainer params={params} searchParams={undefined} />;
 }

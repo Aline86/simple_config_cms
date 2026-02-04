@@ -28,20 +28,22 @@ export default function PageBlocs({
   useEffect(() => {}, [draggableEnabled]);
   return (
     <div className="p-6  space-y-6 ">
-      {page_data !== undefined &&
-        page_data !== null &&
-        page_data.blocs !== undefined &&
-        page_data.blocs !== null &&
-        page_data.blocs.length > 0 &&
+      {page_data.blocs.length > 0 &&
         page_data.blocs.map((bloc, index) => {
           const num = Number(index) + 1;
           return (
             <div
               key={bloc.id}
               draggable={draggableEnabled}
-              onDragStart={() => onDragStart(bloc)}
-              onDragOver={(e) => e.preventDefault()}
-              onDrop={() => onDrop(bloc)}
+              onDragStart={() => {
+                onDragStart(bloc);
+              }}
+              onDragOver={(e) => {
+                e.preventDefault();
+              }}
+              onDrop={() => {
+                onDrop(bloc);
+              }}
               className="cursor-grab active:cursor-grabbing"
             >
               <Accordion
