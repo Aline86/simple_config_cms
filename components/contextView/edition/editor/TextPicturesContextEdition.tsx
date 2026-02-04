@@ -33,15 +33,16 @@ const TextPicturesContextEdition: React.FC<TextPicturesContextEditionProps> = ({
     setLocalBloc(bloc);
   }, [bloc.id]);
 
-  const onDragStart = (media: MediaObject) => setDragged(media);
+  const onDragStart = (media: MediaObject) => {
+    setDragged(media);
+  };
 
   const onDrop = useCallback(
     (target: MediaObject) => {
       if (!dragged) return;
 
       setLocalBloc((prev) => {
-        const article = prev.articles?.[0];
-        if (!article) return prev;
+        const article = prev.articles[0];
 
         const reordered = reorderArray(
           article.images,
@@ -67,7 +68,7 @@ const TextPicturesContextEdition: React.FC<TextPicturesContextEditionProps> = ({
   );
 
   const updateField = useCallback(
-    (field: string, value: any) => {
+    (field: string, value: unknown) => {
       setLocalBloc((prev) => {
         const updatedBloc = updateObjectBySetter(prev, field, value);
         onChange(updatedBloc.data);

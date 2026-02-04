@@ -48,9 +48,15 @@ export default function PageCrud({
       <div
         className="cursor-grab active:cursor-grabbing grid  gap-6 "
         draggable={draggableEnabled}
-        onDragStart={() => onDragStart(page_data)}
-        onDragOver={(e) => e.preventDefault()}
-        onDrop={() => onDrop(page_data)}
+        onDragStart={() => {
+          onDragStart(page_data);
+        }}
+        onDragOver={(e) => {
+          e.preventDefault();
+        }}
+        onDrop={() => {
+          onDrop(page_data);
+        }}
       >
         <Accordion
           children={

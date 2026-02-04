@@ -7,7 +7,7 @@ import { DynamicValidatorDropDown } from "../../../../../validators/DynamicValid
 
 interface MediaEditorProps<T> {
   media: MediaObject;
-  onChange: (fieldName: string, newValue: any) => void;
+  onChange: (fieldName: string, newValue: unknown) => void;
   removeElement: (media: T) => void;
   onDragStart: (page: MediaObject) => void;
   onDrop: (page: MediaObject) => void;
@@ -28,12 +28,20 @@ export function PictureEditor<T>({ ...props }: MediaEditorProps<T>) {
           : "h-[10vh]"
       }
       draggable
-      onDragStart={() => props.onDragStart(props.media as MediaObject)}
-      onDragOver={(e) => e.preventDefault()}
-      onDrop={() => props.onDrop(props.media)}
+      onDragStart={() => {
+        props.onDragStart(props.media as MediaObject);
+      }}
+      onDragOver={(e) => {
+        e.preventDefault();
+      }}
+      onDrop={() => {
+        props.onDrop(props.media);
+      }}
     >
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => {
+          setIsOpen(!isOpen);
+        }}
         className="w-full flex items-center justify-between p-4 hover:bg-gray-50 transition-colors"
       >
         <span className="font-semibold text-black">
@@ -74,7 +82,9 @@ export function PictureEditor<T>({ ...props }: MediaEditorProps<T>) {
             <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-200 dark:bg-slate-950">
               <div
                 className="w-full flex justify-end items-center"
-                onClick={() => props.removeElement(props.media as T)}
+                onClick={() => {
+                  props.removeElement(props.media as T);
+                }}
               >
                 <div className="mb-4 flex-1">
                   <p className="text-lg font-semibold text-slate-800 mb-2">
@@ -107,7 +117,7 @@ export function PictureEditor<T>({ ...props }: MediaEditorProps<T>) {
                         context_medias +
                         `${(props.media as MediaObject).number_position_image}.text_titre`
                       }
-                      model={props.media as Record<string, any>}
+                      model={props.media as MediaObject}
                       setField={props.onChange}
                     />
                     <DynamicValidatorDropDown
@@ -121,7 +131,7 @@ export function PictureEditor<T>({ ...props }: MediaEditorProps<T>) {
                         context_medias +
                         `${(props.media as MediaObject).number_position_image}.text_image_lien`
                       }
-                      model={props.media as Record<string, any>}
+                      model={props.media as MediaObject}
                       onChange={props.onChange}
                     />
                   </>
@@ -132,7 +142,7 @@ export function PictureEditor<T>({ ...props }: MediaEditorProps<T>) {
                     context_medias +
                     `${(props.media as MediaObject).number_position_image}.image_url`
                   }
-                  model={props.media as Record<string, any>}
+                  model={props.media as MediaObject}
                   setField={props.onChange}
                 />
 
