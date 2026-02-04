@@ -37,8 +37,7 @@ export default function InternUrlInput<T>({
       <select onChange={handleChange}>
         <option key="0">- Page -</option>
         {pages !== undefined &&
-          Array.isArray(pages) &&
-          pages.map((p) => (
+          Object.entries(pages).map(([, p]) => (
             <option
               key={new PageObject(p).text_titre}
               value={new PageObject(p).text_slug}

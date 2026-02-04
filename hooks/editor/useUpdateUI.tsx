@@ -50,16 +50,13 @@ const useUpdateUI = ({ bloc, onChange }: ContextEditionProps) => {
     [dragged, onChange],
   );
 
-  const updateField = useCallback(
-    (field: string, value: any) => {
-      setLocalBloc((prev) => {
-        const updatedBloc = updateObjectBySetter(prev, field, value);
-        onChange(updatedBloc.data);
-        return updatedBloc.data;
-      });
-    },
-    [onChange],
-  );
+  const updateField = useCallback((field: string, value: unknown) => {
+    setLocalBloc((prev) => updateObjectBySetter(prev, field, value).data);
+  }, []);
+
+  useEffect(() => {
+    onChange(localBloc);
+  }, [localBloc]);
 
   const handleAdd = useCallback(() => {
     setLocalBloc((prev) => {

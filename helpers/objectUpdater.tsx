@@ -1,4 +1,4 @@
-import FIELD_CONFIGS from "../config/fieldConfig";
+import FIELD_CONFIGS, { FieldParameter } from "../config/fieldConfig";
 import CloudinaryValidator, {
   CloudinaryParameter,
 } from "../validators/MediaValidator";
@@ -59,7 +59,7 @@ export const extractPrefix = (fieldName: string): FieldPrefix => {
  * @returns La configuration du champ ou une config par défaut
  */
 export const getFieldConfig = (fieldName: string): ParameterClass => {
-  const config = FIELD_CONFIGS[fieldName];
+  const config: FieldParameter = FIELD_CONFIGS[fieldName as string];
 
   if (!config) {
     const prefix = extractPrefix(fieldName);

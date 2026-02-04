@@ -2,10 +2,13 @@ import {
   createValidator,
   FieldConfigsMap,
 } from "../lib/utils/validators.utils";
+import { BlocObject } from "./Bloc";
+import { MediaObject } from "./bloc/MediaObject";
+import { PageObject } from "./Page";
 
 export abstract class BaseValidatable {
   validateAll(): boolean {
-    const validateValue = (value: any, fieldName?: string): boolean => {
+    const validateValue = (value: unknown, fieldName?: string): boolean => {
       if (fieldName && fieldName.endsWith("_id")) {
         return true;
       }
@@ -20,8 +23,11 @@ export abstract class BaseValidatable {
 
       // Objet avec validateAll → délégation
       if (value && typeof value === "object") {
-        if (typeof (value as any).validateAll === "function") {
-          return (value as any).validateAll();
+        if (
+          typeof (value as BlocObject | MediaObject | PageObject)
+            .validateAll === "function"
+        ) {
+          return (value as BlocObject | MediaObject | PageObject).validateAll();
         }
         return true;
       }
@@ -43,7 +49,7 @@ export abstract class BaseValidatable {
 
     return (Object.keys(this) as Array<keyof this>).every((fieldName) => {
       try {
-        return validateValue((this as any)[fieldName], String(fieldName));
+        return validateValue(this[fieldName], String(fieldName));
       } catch (e) {
         console.warn(`Validation failed on field ${String(fieldName)}`, e);
         return false;

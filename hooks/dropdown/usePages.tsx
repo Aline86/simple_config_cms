@@ -3,13 +3,22 @@ import { useEffect, useState } from "react";
 export default function usePages() {
   const [pages, setPages] = useState<{ slug: string; title: string }[]>([]);
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch("/api/edition/pages")
+  const getPages = async () => {
+    await fetch("/api/edition/pages")
       .then((res) => res.json())
-      .then((data) => setPages(data))
-      .finally(() => setLoading(false));
+      .then((data) => {
+        console.log("data", data);
+        setPages(data.pages);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+  useEffect(() => {
+    getPages();
   }, []);
 
-  return { pages, loading };
+  if (pages !== undefined) {
+    return { pages, loading };
+  }
 }

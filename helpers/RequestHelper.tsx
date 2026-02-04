@@ -32,14 +32,14 @@ export class RequestHelper {
   /**
    * Parse le body JSON de la requête
    */
-  static async getBody<T = any>(request: NextRequest): Promise<T> {
+  static async getBody<T = unknown>(request: NextRequest): Promise<T> {
     return await request.json();
   }
 
   /**
    * Extrait une propriété du body
    */
-  static async getBodyProperty<T = any>(
+  static async getBodyProperty<T = unknown>(
     request: NextRequest,
     propertyName: string,
     required: boolean = true,
@@ -52,24 +52,5 @@ export class RequestHelper {
     }
 
     return value;
-  }
-
-  /**
-   * Extrait et normalise un tableau du body
-   */
-  static async getArrayFromBody<T = any>(
-    request: NextRequest,
-    propertyName?: string,
-  ): Promise<T[]> {
-    const body = await this.getBody(request);
-
-    // Si propertyName est fourni, chercher dans cette propriété
-    const data = propertyName ? body[propertyName] : body;
-
-    if (!Array.isArray(data)) {
-      throw new Error("Payload must be an array");
-    }
-
-    return data;
   }
 }

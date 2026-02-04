@@ -2,7 +2,7 @@ import { CloudinaryParameter } from "../validators/MediaValidator";
 import { Parameter } from "../validators/NumberValidator";
 import { TextParameter } from "../validators/TextValidator";
 
-type FieldParameter = TextParameter | CloudinaryParameter | Parameter;
+export type FieldParameter = TextParameter | CloudinaryParameter | Parameter;
 
 const FIELD_CONFIGS: Record<string, FieldParameter> = {
   number_columns: new Parameter({
