@@ -1,5 +1,7 @@
 // helpers/changeComponentPosition.ts (ou similaire)
 
+import { MediaObject } from "../model/bloc/MediaObject";
+
 export function reorderArray<T>(
   array: T[],
   dragged: T,
@@ -29,21 +31,20 @@ export function reorderArray<T>(
   }));
 }
 
-export function deleteItemAndReorder<T extends Record<string, any>>(
-  prev: T[],
-  itemToDelete: T,
-  idKey: keyof T,
-): T[] {
-  // Supprimer l'élément ciblé
+export function deleteItemAndReorder(
+  prev: MediaObject[],
+  itemToDelete: MediaObject,
+  idKey: "number_position_image",
+): MediaObject[] {
   const filtered = prev.filter((p) => p[idKey] !== itemToDelete[idKey]);
 
-  // Réordonner les positions de manière consécutive en créant de nouveaux objets
   const reordered = filtered
-    .sort((a, b) => (a[idKey] ?? 0) - (b[idKey] ?? 0))
-    .map((item, index) => ({
-      ...item,
-      [idKey]: index + 1, // mise à jour dynamique de la clé
-    }));
+    .sort((a, b) => a[idKey] - b[idKey])
+    .map((item, index) => {
+      const media = new MediaObject(item);
+      media[idKey] = index + 1;
+      return media;
+    });
 
-  return reordered;
+  return reordered ?? [];
 }

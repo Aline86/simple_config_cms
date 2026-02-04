@@ -3,10 +3,7 @@
 import { Plus, Save } from "lucide-react";
 import { useState, useEffect, useCallback } from "react";
 import Draggable from "../../../components/ui/Draggable";
-import {
-  deleteItemAndReorder,
-  reorderArray,
-} from "../../../helpers/changeComponentPosition";
+import { reorderArray } from "../../../helpers/changeComponentPosition";
 import { BlocObject } from "../../../model/Bloc";
 import { PageObject } from "../../../model/Page";
 import PageCrud from "./pageComponent";
