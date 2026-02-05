@@ -61,8 +61,8 @@ h2 {
   border-right: 5px solid rgb(181, 181, 181);
   right: 0;
 }
-.dark .footer {
-  color: black;
+.dark footer {
+  color: black !important;
 }
 @media (max-width: 768px) {
   .text-view::before,
