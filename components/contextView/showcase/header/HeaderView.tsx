@@ -60,12 +60,23 @@ export default function HeaderView({ header }: MediaViewProps) {
     setPages(pages.pages ?? []);
   };
 
-  const handleScroll = () => {
-    if (!scrollRef.current) return;
+  let ticking = false;
 
-    const scrollY = window.scrollY;
-    setIsSticky(scrollY < window.innerHeight * 2);
+  const handleScroll = () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        if (!scrollRef.current) return;
+
+        const scrollY = window.scrollY;
+        setIsSticky(scrollY < window.innerHeight * 2);
+
+        ticking = false;
+      });
+
+      ticking = true;
+    }
   };
+
   useEffect(() => {
     showPages();
   }, []);
@@ -80,14 +91,14 @@ export default function HeaderView({ header }: MediaViewProps) {
   useEffect(() => {
     if (!pages) return;
 
-    checkOverflow();
-
     const observer = new ResizeObserver(checkOverflow);
     if (scrollRef.current) observer.observe(scrollRef.current);
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", checkOverflow);
+
     handleScroll();
+    checkOverflow();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
