@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { TextValidator } from "../../../validators/TextValidator";
-import CloudinaryValidator from "../../../validators/MediaValidator";
-import { NumberValidator } from "../../../validators/NumberValidator";
+import { TextValidator } from "../../../lib/validators/TextValidator";
+import CloudinaryValidator from "../../../lib/validators/MediaValidator";
+import { NumberValidator } from "../../../lib/validators/NumberValidator";
 
 type ValidatorInstance = TextValidator | CloudinaryValidator | NumberValidator;
 

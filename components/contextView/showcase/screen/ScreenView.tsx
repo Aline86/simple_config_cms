@@ -1,12 +1,12 @@
 // PicturesLinkItemView.tsx
 
 import Image from "next/image";
-import FIELD_CONFIGS from "../../../../config/fieldConfig";
-import { BlocObject } from "../../../../model/Bloc";
+import FIELD_CONFIGS from "../../../../lib/config/fieldConfig";
+import { BlocObject } from "../../../../database/model/Bloc";
 import CloudinaryValidator, {
   CloudinaryParameter,
-} from "../../../../validators/MediaValidator";
-import { useAppContext } from "../../../../app/context/DomDataProvider";
+} from "../../../../lib/validators/MediaValidator";
+import { useAppContext } from "../../../../context/DomDataProvider";
 export default function ScreenView({ bloc }: { bloc: BlocObject }) {
   const picture = bloc.image_medias[0];
   const isValid = new CloudinaryValidator(

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
-import { verifyUser } from "../../../../repositories/user/user";
+import { verifyUser } from "../../../../database/user/user";
 
 export async function POST(req: NextRequest) {
   try {

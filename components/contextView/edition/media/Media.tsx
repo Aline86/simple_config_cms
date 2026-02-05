@@ -1,7 +1,7 @@
 "use client";
 
-import { MediaObject } from "../../../../model/bloc/MediaObject";
-import { FieldRenderer } from "../../../../validators/renderer/TextRenderer";
+import { MediaObject } from "../../../../database/model/bloc/MediaObject";
+import { FieldRenderer } from "../../../../lib/validators/renderer/TextRenderer";
 
 interface MediaEditorProps<T> {
   socialMedia: MediaObject;

@@ -1,15 +1,15 @@
 "use client";
 import { useCallback, useState, useEffect } from "react";
 import PicturesLinkEdit from "./PicturesLinkEdit";
-import { cloneBlocWithMedias } from "../../../../../helpers/bloc.helper";
-import { reorderArray } from "../../../../../helpers/changeComponentPosition";
+import { cloneBlocWithMedias } from "../../../../../lib/helpers/bloc.helper";
+import { reorderArray } from "../../../../../lib/helpers/changeComponentPosition";
 import {
   cloneMediaWithPosition,
   createMedia,
-} from "../../../../../helpers/media.helper";
-import { updateObjectBySetter } from "../../../../../lib/utils/functions";
-import { BlocObject } from "../../../../../model/Bloc";
-import { MediaObject } from "../../../../../model/bloc/MediaObject";
+} from "../../../../../lib/helpers/media.helper";
+import { updateObjectBySetter } from "../../../../../lib/helpers/functions";
+import { BlocObject } from "../../../../../database/model/Bloc";
+import { MediaObject } from "../../../../../database/model/bloc/MediaObject";
 import PicturesLinkView from "../../../showcase/grid/picturesLink/PicturesLinkView";
 import EditionDoubleView from "../../../../ui/EditionDoubleView";
 import useUpdateUI from "../../../../../hooks/editor/useUpdateUI";

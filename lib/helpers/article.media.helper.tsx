@@ -1,5 +1,5 @@
-import { ArticleObject } from "../model/bloc/Article";
-import { MediaObject } from "../model/bloc/MediaObject";
+import { ArticleObject } from "../../database/model/bloc/Article";
+import { MediaObject } from "../../database/model/bloc/MediaObject";
 
 export function updateArticleImages(
   articles: ArticleObject[],

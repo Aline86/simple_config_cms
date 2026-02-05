@@ -1,5 +1,5 @@
-import { HeaderObject } from "../model/bloc/Header";
-import { PageObject } from "../model/Page";
+import { HeaderObject } from "../database/model/bloc/Header";
+import { PageObject } from "../database/model/Page";
 import getHomePage from "./callPages";
 import { getPageHeader } from "./edition/page/[slug]/callPages";
 import type { Metadata } from "next";

@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useIsSmScreen } from "../../../../../hooks/screenSize/useIsSmScreen";
-import { BlocObject } from "../../../../../model/Bloc";
-import { MediaObject } from "../../../../../model/bloc/MediaObject";
+import { BlocObject } from "../../../../../database/model/Bloc";
+import { MediaObject } from "../../../../../database/model/bloc/MediaObject";
 import CarouselContainer from "./CarouselContainer";
 
 export default function CarouselThumbnailsView({

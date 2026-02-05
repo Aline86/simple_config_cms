@@ -8,7 +8,7 @@ import {
   SkipBack,
   SkipForward,
 } from "lucide-react";
-import { BlocObject } from "../../../../model/Bloc";
+import { BlocObject } from "../../../../database/model/Bloc";
 
 interface VideoPlayerProps {
   bloc: BlocObject;

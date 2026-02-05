@@ -4,9 +4,9 @@
 
 import { JSONContent } from "@tiptap/core";
 import clsx from "clsx";
-import { getgridClasses } from "../../../../lib/utils/functions";
-import { BlocObject } from "../../../../model/Bloc";
-import { MediaObject } from "../../../../model/bloc/MediaObject";
+import { getgridClasses } from "../../../../lib/helpers/functions";
+import { BlocObject } from "../../../../database/model/Bloc";
+import { MediaObject } from "../../../../database/model/bloc/MediaObject";
 import PicturesLinkItemView from "../grid/picturesLink/PictureLinkItemView";
 import ArticleView from "./ArtcleView";
 import ContentLayout from "./ContentLayout";

@@ -1,4 +1,4 @@
-import { PageObject } from "../model/Page";
+import { PageObject } from "../database/model/Page";
 import PageClient from "./[slug]/PageClient";
 import getHomePage from "./callPages";
 import {

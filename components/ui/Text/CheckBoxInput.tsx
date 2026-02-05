@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { TextValidator } from "../../../validators/TextValidator";
-import { PageObject } from "../../../model/Page";
+import { TextValidator } from "../../../lib/validators/TextValidator";
+import { PageObject } from "../../../database/model/Page";
 
 interface BaseInputProps<T> {
   label?: string;

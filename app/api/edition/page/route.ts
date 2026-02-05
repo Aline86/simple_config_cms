@@ -1,8 +1,8 @@
 import { NextRequest } from "next/server";
-import { PageObject } from "../../../../model/Page";
+import { PageObject } from "../../../../database/model/Page";
 import { prisma } from "./../../../../lib/prisma/prisma";
-import { RequestHelper } from "../../../../helpers/RequestHelper";
-import { ApiResponse } from "../../../../helpers/ApiResponse";
+import { RequestHelper } from "../../../../lib/helpers/RequestHelper";
+import { ApiResponse } from "../../../../lib/helpers/ApiResponse";
 
 // ========== GET PAGE BY SLUG ==========
 export async function GET(request: NextRequest) {

@@ -1,6 +1,6 @@
 import { Editor, JSONContent } from "@tiptap/core";
 import { useCallback } from "react";
-import { ArticleObject } from "../../model/bloc/Article";
+import { ArticleObject } from "../../database/model/bloc/Article";
 
 export const useEditorContent = (
   bloc: ArticleObject,

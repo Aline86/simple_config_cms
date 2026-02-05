@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { CreateBlocOptions } from "../../lib/factories/Bloc.factory";
-import { PageObject, TypeBloc } from "../../model/Page";
+import { PageObject, TypeBloc } from "../../database/model/Page";
 import { Modal } from "./Modal";
 
 export default function BlocChoiceModal({

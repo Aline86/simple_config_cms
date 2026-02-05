@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BlocObject } from "../../model/Bloc";
+import { BlocObject } from "../../database/model/Bloc";
 
 interface DeleteButtonProps {
   bloc: BlocObject;

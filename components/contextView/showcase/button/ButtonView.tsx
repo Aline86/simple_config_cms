@@ -1,11 +1,11 @@
 // PicturesLinkItemView.tsx
 import Image from "next/image";
 import { ArrowRight, Heart, Sparkles } from "lucide-react";
-import FIELD_CONFIGS from "../../../../config/fieldConfig";
-import { BlocObject } from "../../../../model/Bloc";
+import FIELD_CONFIGS from "../../../../lib/config/fieldConfig";
+import { BlocObject } from "../../../../database/model/Bloc";
 import CloudinaryValidator, {
   CloudinaryParameter,
-} from "../../../../validators/MediaValidator";
+} from "../../../../lib/validators/MediaValidator";
 
 export default function ButtonView({ bloc }: { bloc: BlocObject }) {
   const picture = bloc.image_medias[0];

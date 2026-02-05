@@ -2,7 +2,7 @@
 "use client";
 import { useMemo } from "react";
 import { JSONContent } from "@tiptap/core";
-import { output } from "../../../../lib/utils/functions";
+import { output } from "../../../../lib/helpers/functions";
 
 interface DOMPurifyI {
   sanitize: (

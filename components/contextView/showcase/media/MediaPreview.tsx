@@ -1,7 +1,7 @@
 "use client";
 
 import { ExternalLink } from "lucide-react";
-import { MediaObject } from "../../../../model/bloc/MediaObject";
+import { MediaObject } from "../../../../database/model/bloc/MediaObject";
 import { Card } from "../../../ui/card";
 
 type MediaPreviewProps = {

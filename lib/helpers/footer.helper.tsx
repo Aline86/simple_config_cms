@@ -1,6 +1,5 @@
-import { nanoid } from "nanoid";
-import { FooterObject } from "../model/bloc/Footer";
-import { MediaObject } from "../model/bloc/MediaObject";
+import { FooterObject } from "../../database/model/bloc/Footer";
+import { MediaObject } from "../../database/model/bloc/MediaObject";
 
 export function cloneFooterWithReseaux(
   prev: FooterObject,

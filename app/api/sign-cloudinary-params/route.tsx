@@ -1,7 +1,7 @@
 // app/api/signature/route.ts
 import { v2 as cloudinary } from "cloudinary";
 import { NextRequest } from "next/server";
-import { ApiResponse } from "../../../helpers/ApiResponse";
+import { ApiResponse } from "../../../lib/helpers/ApiResponse";
 
 // ========== CONFIGURATION ==========
 const CLOUDINARY_CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;

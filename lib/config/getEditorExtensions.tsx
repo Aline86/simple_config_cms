@@ -1,5 +1,5 @@
 // ============================================
-// config/editorConfig.ts (VERSION CORRIGÉE)
+// lib/config/editorConfig.ts (VERSION CORRIGÉE)
 // ============================================
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
@@ -13,7 +13,7 @@ import {
   DISALLOWED_LINK_PROTOCOLS,
   NO_AUTOLINK_DOMAINS,
 } from "./editorTypesConfig";
-import { FontSize } from "../lib/extensions/FontSize";
+import { FontSize } from "../../lib/extensions/FontSize";
 
 export const getEditorExtensions = () => [
   StarterKit.configure({

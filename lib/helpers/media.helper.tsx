@@ -1,5 +1,5 @@
 import { nanoid } from "nanoid";
-import { MediaObject } from "../model/bloc/MediaObject";
+import { MediaObject } from "../../database/model/bloc/MediaObject";
 
 export function cloneMediaWithPosition(media: MediaObject, position: number) {
   return new MediaObject({

@@ -10,7 +10,7 @@ import {
 } from "@headlessui/react";
 import { ChevronUpDownIcon } from "@heroicons/react/16/solid";
 import { Editor } from "@tiptap/react";
-import { FONT_SIZES } from "../../../../config/editorTypesConfig";
+import { FONT_SIZES } from "../../../../lib/config/editorTypesConfig";
 
 interface FontSizeSelectorProps {
   editor: Editor;

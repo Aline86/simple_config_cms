@@ -1,7 +1,7 @@
 "use client";
 
-import { blocksToRender } from "../../config/componentsView";
-import { BlocObject } from "../../model/Bloc";
+import { blocksToRender } from "../../lib/config/componentsView";
+import { BlocObject } from "../../database/model/Bloc";
 import { DeleteButton } from "../ui/DeleteButton";
 
 interface PageCrudProps {

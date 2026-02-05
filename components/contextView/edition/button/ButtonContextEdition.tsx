@@ -1,6 +1,6 @@
 "use client";
 
-import { BlocObject } from "../../../../model/Bloc";
+import { BlocObject } from "../../../../database/model/Bloc";
 import useUpdateUI from "../../../../hooks/editor/useUpdateUI";
 import EditionDoubleView from "../../../ui/EditionDoubleView";
 import ButtonEdit from "./ButtonEdit";

@@ -1,18 +1,18 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { deleteItemAndReorder } from "../../../../helpers/changeComponentPosition";
+import { deleteItemAndReorder } from "../../../../lib/helpers/changeComponentPosition";
 import {
   cloneFooterWithReseau,
   cloneFooterWithReseaux,
-} from "../../../../helpers/footer.helper";
+} from "../../../../lib/helpers/footer.helper";
 import {
   cloneMediaWithPosition,
   createMedia,
-} from "../../../../helpers/media.helper";
-import { updateObjectBySetter } from "../../../../lib/utils/functions";
-import { FooterObject } from "../../../../model/bloc/Footer";
-import { MediaObject } from "../../../../model/bloc/MediaObject";
+} from "../../../../lib/helpers/media.helper";
+import { updateObjectBySetter } from "../../../../lib/helpers/functions";
+import { FooterObject } from "../../../../database/model/bloc/Footer";
+import { MediaObject } from "../../../../database/model/bloc/MediaObject";
 import FooterView from "../../showcase/footer/FooterView";
 import FooterEdit from "./FooterEdit";
 import EditionDoubleView from "../../../ui/EditionDoubleView";

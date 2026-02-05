@@ -1,9 +1,9 @@
 "use client";
 
-import { HeaderObject } from "../../../../model/bloc/Header";
-import { MediaObject } from "../../../../model/bloc/MediaObject";
-import { DynamicValidatorDropDown } from "../../../../validators/DynamicValidatorDropDown";
-import { FieldRenderer } from "../../../../validators/renderer/TextRenderer";
+import { HeaderObject } from "../../../../database/model/bloc/Header";
+import { MediaObject } from "../../../../database/model/bloc/MediaObject";
+import { DynamicValidatorDropDown } from "../../../../lib/validators/DynamicValidatorDropDown";
+import { FieldRenderer } from "../../../../lib/validators/renderer/TextRenderer";
 import { SocialMediaModal } from "../../../modals/SocialMediaModal";
 
 interface MediaEditorProps<T> {

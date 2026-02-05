@@ -3,8 +3,8 @@
 import { useEffect } from "react";
 import ComponentBloc from "../../../../components/contextView/ComponentBloc";
 import { Accordion } from "../../../../components/ui/Accordeon";
-import { BlocObject } from "../../../../model/Bloc";
-import { PageObject } from "../../../../model/Page";
+import { BlocObject } from "../../../../database/model/Bloc";
+import { PageObject } from "../../../../database/model/Page";
 
 interface PageCrudProps {
   page_data: PageObject;

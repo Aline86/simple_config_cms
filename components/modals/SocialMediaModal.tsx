@@ -3,7 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { Heart, PlusIcon } from "lucide-react";
 import { MediaEditor } from "../contextView/edition/media/Media";
-import { MediaObject } from "../../model/bloc/MediaObject";
+import { MediaObject } from "../../database/model/bloc/MediaObject";
 
 interface MediaEditorProps<T> {
   socialMedia: T[];

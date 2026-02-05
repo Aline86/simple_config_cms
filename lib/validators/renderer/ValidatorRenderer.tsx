@@ -4,12 +4,12 @@ import { useEffect, useState, useMemo } from "react";
 import { TextParameter, TextValidator } from "../TextValidator";
 import CloudinaryValidator, { CloudinaryParameter } from "../MediaValidator";
 import { NumberValidator, Parameter } from "../NumberValidator";
-import ImageUploaderView from "../../components/ui/Uploader/ImageUploaderView";
-import TextInput from "../../components/ui/Text/TextInput";
+import ImageUploaderView from "../../../components/ui/Uploader/ImageUploaderView";
+import TextInput from "../../../components/ui/Text/TextInput";
 import FIELD_CONFIGS from "../../config/fieldConfig";
-import { MediaObject } from "../../model/bloc/MediaObject";
-import InternUrlInput from "../../components/ui/Text/InternUrlInput";
-import { ColorInput } from "../../components/ui/Text/ColorInput";
+import { MediaObject } from "../../../database/model/bloc/MediaObject";
+import InternUrlInput from "../../../components/ui/Text/InternUrlInput";
+import { ColorInput } from "../../../components/ui/Text/ColorInput";
 
 // Types
 export type FieldPrefix = "text" | "image" | "video" | "number" | "color";

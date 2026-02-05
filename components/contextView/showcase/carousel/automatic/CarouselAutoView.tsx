@@ -4,7 +4,7 @@ import { EmblaOptionsType } from "embla-carousel";
 import Autoplay from "embla-carousel-autoplay";
 import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
-import { BlocObject } from "../../../../../model/Bloc";
+import { BlocObject } from "../../../../../database/model/Bloc";
 
 type CardDatas = {
   options?: EmblaOptionsType;

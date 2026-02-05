@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid";
-import { HeaderObject } from "../model/bloc/Header";
-import { MediaObject } from "../model/bloc/MediaObject";
+import { HeaderObject } from "../../database/model/bloc/Header";
+import { MediaObject } from "../../database/model/bloc/MediaObject";
 
 export function cloneHeaderWithReseaux(
   prev: HeaderObject,

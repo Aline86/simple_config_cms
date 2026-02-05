@@ -10,8 +10,8 @@ import {
   CardFooter,
 } from "../../../components/ui/card";
 import { RedirectButton } from "../../../components/ui/RedirectButton";
-import { PageObject } from "../../../model/Page";
-import { FieldRenderer } from "../../../validators/renderer/TextRenderer";
+import { PageObject } from "../../../database/model/Page";
+import { FieldRenderer } from "../../../lib/validators/renderer/TextRenderer";
 import { Accordion } from "../../../components/ui/Accordeon";
 
 interface PageCrudProps {

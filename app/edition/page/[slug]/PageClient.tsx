@@ -1,26 +1,23 @@
 "use client";
 
-import { Plus, Save } from "lucide-react";
-
 import { useEffect, useState } from "react";
 import PageBlocs from "./pageComponent";
-import { PageObject } from "../../../../model/Page";
-import { HeaderObject } from "../../../../model/bloc/Header";
-import { FooterObject } from "../../../../model/bloc/Footer";
+import { PageObject } from "../../../../database/model/Page";
+import { HeaderObject } from "../../../../database/model/bloc/Header";
+import { FooterObject } from "../../../../database/model/bloc/Footer";
 import {
   CreateBlocOptions,
   createNewBloc,
 } from "../../../../lib/factories/Bloc.factory";
-import { BlocObject } from "../../../../model/Bloc";
-import { clonePageWithBlocs } from "../../../../helpers/page.helper";
+import { BlocObject } from "../../../../database/model/Bloc";
+import { clonePageWithBlocs } from "../../../../lib/helpers/page.helper";
 import HeaderContextEdition from "../../../../components/contextView/edition/header/HeaderContextEdition";
-import BlocChoiceModal from "../../../../components/modals/PageChoiceModal";
 import FooterContextEdition from "../../../../components/contextView/edition/footer/FooterContextEdition";
-import { reorderArray } from "../../../../helpers/changeComponentPosition";
+import { reorderArray } from "../../../../lib/helpers/changeComponentPosition";
 import NavBarEdition from "../../../../components/ui/NavBarEdition";
 import ErrorMessage from "../../../../components/ui/ErrorMessage";
 import { Accordion } from "../../../../components/ui/Accordeon";
-import { cloneBlocWithArticlesAndMedia } from "../../../../helpers/bloc.helper";
+import { cloneBlocWithArticlesAndMedia } from "../../../../lib/helpers/bloc.helper";
 import ThemeToggle from "../../../../components/ui/ThemeToggle";
 
 export default function PageClient({

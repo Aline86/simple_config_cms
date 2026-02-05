@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { NumberValidator } from "../../../validators/NumberValidator";
+import { NumberValidator } from "../../../lib/validators/NumberValidator";
 
 interface BaseInputProps<T> {
   label?: string;

@@ -2,10 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import SocialTab from "./SocialTab";
-import { HeaderObject } from "../../../../model/bloc/Header";
+import { HeaderObject } from "../../../../database/model/bloc/Header";
 import getPages from "../../../../app/edition/pages/callPages";
-import { PageObject } from "../../../../model/Page";
-import { useAppContext } from "../../../../app/context/DomDataProvider";
+import { PageObject } from "../../../../database/model/Page";
+import { useAppContext } from "../../../../context/DomDataProvider";
 import Image from "next/image";
 interface MediaViewProps {
   header: HeaderObject;

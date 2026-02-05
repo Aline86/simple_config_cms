@@ -3,7 +3,7 @@
 import React, { JSX, useEffect, useState } from "react";
 
 import { ColorInput } from "./ColorInput";
-import { TextValidator } from "../../../validators/TextValidator";
+import { TextValidator } from "../../../lib/validators/TextValidator";
 
 interface BaseInputProps<T> {
   label?: string;

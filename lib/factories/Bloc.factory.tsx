@@ -1,10 +1,10 @@
 // lib/factories/bloc.factory.ts
 
 import { nanoid } from "nanoid";
-import { BlocObject } from "../../model/Bloc";
-import { ArticleObject } from "../../model/bloc/Article";
-import { MediaObject } from "../../model/bloc/MediaObject";
-import { TypeBloc } from "../../model/Page";
+import { BlocObject } from "../../database/model/Bloc";
+import { ArticleObject } from "../../database/model/bloc/Article";
+import { MediaObject } from "../../database/model/bloc/MediaObject";
+import { TypeBloc } from "../../database/model/Page";
 
 /**
  * Options pour créer un nouveau bloc

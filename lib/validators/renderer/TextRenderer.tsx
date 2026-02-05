@@ -1,18 +1,16 @@
 // components/FieldRenderer.tsx
 "use client";
 
-import CheckboxInput from "../../components/ui/Text/CheckBoxInput";
-import { ColorInput } from "../../components/ui/Text/ColorInput";
-import NumberInput from "../../components/ui/Text/RangeInput";
-import TextInput from "../../components/ui/Text/TextInput";
-import ImageUploaderView from "../../components/ui/Uploader/ImageUploaderView";
-import VideoUploaderView from "../../components/ui/Uploader/VideoUploaderView";
-import {
-  createValidator,
-  extractPrefix,
-} from "../../lib/utils/validators.utils";
-import { MediaObject } from "../../model/bloc/MediaObject";
-import { PageObject } from "../../model/Page";
+import CheckboxInput from "../../../components/ui/Text/CheckBoxInput";
+import { ColorInput } from "../../../components/ui/Text/ColorInput";
+import NumberInput from "../../../components/ui/Text/RangeInput";
+import TextInput from "../../../components/ui/Text/TextInput";
+import ImageUploaderView from "../../../components/ui/Uploader/ImageUploaderView";
+import VideoUploaderView from "../../../components/ui/Uploader/VideoUploaderView";
+import { MediaObject } from "../../../database/model/bloc/MediaObject";
+import { PageObject } from "../../../database/model/Page";
+import { extractPrefix } from "../../helpers/objectUpdater";
+import { createValidator } from "../../helpers/validators.utils";
 import { NumberValidator } from "../NumberValidator";
 import { TextValidator } from "../TextValidator";
 

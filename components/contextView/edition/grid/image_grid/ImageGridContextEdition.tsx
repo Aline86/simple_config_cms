@@ -1,6 +1,6 @@
 "use client";
 
-import { BlocObject } from "../../../../../model/Bloc";
+import { BlocObject } from "../../../../../database/model/Bloc";
 import PicturesgridView from "../../../showcase/grid/picturesView/PicturesGridView";
 import PicturesLinkEdit from "../image_group/PicturesLinkEdit";
 import useUpdateUI from "../../../../../hooks/editor/useUpdateUI";

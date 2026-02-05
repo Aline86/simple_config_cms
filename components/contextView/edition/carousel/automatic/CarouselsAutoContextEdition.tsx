@@ -1,6 +1,6 @@
 "use client";
 
-import { BlocObject } from "../../../../../model/Bloc";
+import { BlocObject } from "../../../../../database/model/Bloc";
 import CarouselAutoView from "../../../showcase/carousel/automatic/CarouselAutoView";
 import CarouselThumbnailsEdit from "../thumbnails/CarouselThumbnailsEdit";
 import useUpdateUI from "../../../../../hooks/editor/useUpdateUI";

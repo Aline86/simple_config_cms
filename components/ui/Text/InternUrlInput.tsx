@@ -2,7 +2,7 @@
 
 import React from "react";
 import usePages from "../../../hooks/dropdown/usePages";
-import { PageObject } from "../../../model/Page";
+import { PageObject } from "../../../database/model/Page";
 interface InternUrlInputProps<T> {
   value: string;
   model: T;

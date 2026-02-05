@@ -1,7 +1,7 @@
 import {
   createValidator,
   FieldConfigsMap,
-} from "../lib/utils/validators.utils";
+} from "../../lib/helpers/validators.utils";
 import { BlocObject } from "./Bloc";
 import { MediaObject } from "./bloc/MediaObject";
 import { PageObject } from "./Page";

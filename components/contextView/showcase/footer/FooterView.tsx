@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 
 import Image from "next/image";
-import { FooterObject } from "../../../../model/bloc/Footer";
+import { FooterObject } from "../../../../database/model/bloc/Footer";
 interface MediaViewProps {
   footer: FooterObject;
 }

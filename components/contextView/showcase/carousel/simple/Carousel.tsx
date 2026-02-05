@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { BlocObject } from "../../../../../model/Bloc";
-import { MediaObject } from "../../../../../model/bloc/MediaObject";
+import { BlocObject } from "../../../../../database/model/Bloc";
+import { MediaObject } from "../../../../../database/model/bloc/MediaObject";
 import {
   Carousel,
   CarouselContent,

@@ -4,7 +4,7 @@ import Image from "next/image";
 
 import UploadButton from "../UploadButton";
 import ImageUploader from "../../../lib/mediaUploader/ImageUploader";
-import { MediaObject } from "../../../model/bloc/MediaObject";
+import { MediaObject } from "../../../database/model/bloc/MediaObject";
 
 export default function ImageUploaderView<T>({
   value,

@@ -1,8 +1,8 @@
 "use client";
 
-import { BlocObject } from "../../../../../model/Bloc";
-import { MediaObject } from "../../../../../model/bloc/MediaObject";
-import { FieldRenderer } from "../../../../../validators/renderer/TextRenderer";
+import { BlocObject } from "../../../../../database/model/Bloc";
+import { MediaObject } from "../../../../../database/model/bloc/MediaObject";
+import { FieldRenderer } from "../../../../../lib/validators/renderer/TextRenderer";
 import { PictureEditor } from "../../grid/image_grid/PictureEditor";
 
 interface CarouselThumbnailsProps<T> {

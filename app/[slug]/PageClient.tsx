@@ -3,9 +3,9 @@
 import FooterView from "../../components/contextView/showcase/footer/FooterView";
 import HeaderView from "../../components/contextView/showcase/header/HeaderView";
 import ThemeToggle from "../../components/ui/ThemeToggle";
-import { FooterObject } from "../../model/bloc/Footer";
-import { HeaderObject } from "../../model/bloc/Header";
-import { PageObject } from "../../model/Page";
+import { FooterObject } from "../../database/model/bloc/Footer";
+import { HeaderObject } from "../../database/model/bloc/Header";
+import { PageObject } from "../../database/model/Page";
 import ComponentBloc from "./BlocComponent";
 
 export default function PageClient({

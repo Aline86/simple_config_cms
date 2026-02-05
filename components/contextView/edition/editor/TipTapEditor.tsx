@@ -1,8 +1,8 @@
 import { useEditor, EditorContent, JSONContent, Editor } from "@tiptap/react";
 import { useEditorContent } from "../../../../hooks/editor/useEditorContent";
-import { getEditorExtensions } from "../../../../config/getEditorExtensions";
+import { getEditorExtensions } from "../../../../lib/config/getEditorExtensions";
 import { useLinkHandler } from "../../../../hooks/editor/useLinkHandler";
-import { ArticleObject } from "../../../../model/bloc/Article";
+import { ArticleObject } from "../../../../database/model/bloc/Article";
 import { EditorToolbar } from "./EditorToolbar";
 
 interface TiptapProps {

@@ -1,18 +1,18 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { HeaderObject } from "../../../../model/bloc/Header";
-import { updateObjectBySetter } from "../../../../lib/utils/functions";
+import { HeaderObject } from "../../../../database/model/bloc/Header";
+import { updateObjectBySetter } from "../../../../lib/helpers/functions";
 import {
   cloneHeaderWithReseau,
   cloneHeaderWithReseaux,
-} from "../../../../helpers/header.helper";
+} from "../../../../lib/helpers/header.helper";
 import {
   cloneMediaWithPosition,
   createMedia,
-} from "../../../../helpers/media.helper";
-import { deleteItemAndReorder } from "../../../../helpers/changeComponentPosition";
-import { MediaObject } from "../../../../model/bloc/MediaObject";
+} from "../../../../lib/helpers/media.helper";
+import { deleteItemAndReorder } from "../../../../lib/helpers/changeComponentPosition";
+import { MediaObject } from "../../../../database/model/bloc/MediaObject";
 import HeaderView from "../../showcase/header/HeaderView";
 import HeaderEdit from "./HeaderEdit";
 import EditionDoubleView from "../../../ui/EditionDoubleView";

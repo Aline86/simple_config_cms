@@ -2,7 +2,7 @@ import { Plus, Save } from "lucide-react";
 import Draggable from "./Draggable";
 import LogoutButton from "./LogoutButton";
 import BlocChoiceModal from "../modals/PageChoiceModal";
-import { PageObject } from "../../model/Page";
+import { PageObject } from "../../database/model/Page";
 import { CreateBlocOptions } from "../../lib/factories/Bloc.factory";
 import { usePathname } from "next/navigation";
 

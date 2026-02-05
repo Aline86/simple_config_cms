@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { MediaObject } from "../../../../../model/bloc/MediaObject";
-import { FieldRenderer } from "../../../../../validators/renderer/TextRenderer";
-import { DynamicValidatorDropDown } from "../../../../../validators/DynamicValidatorDropDown";
+import { MediaObject } from "../../../../../database/model/bloc/MediaObject";
+import { FieldRenderer } from "../../../../../lib/validators/renderer/TextRenderer";
+import { DynamicValidatorDropDown } from "../../../../../lib/validators/DynamicValidatorDropDown";
 
 interface MediaEditorProps<T> {
   media: MediaObject;

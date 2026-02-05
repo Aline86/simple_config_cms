@@ -1,7 +1,7 @@
 // ==================== UI COMPONENTS ====================
 
 import Image from "next/image";
-import { MediaObject } from "../../../model/bloc/MediaObject";
+import { MediaObject } from "../../../database/model/bloc/MediaObject";
 import VideoUploader from "../../../lib/mediaUploader/VideoUploader";
 
 interface UploadedImage {

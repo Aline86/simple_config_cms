@@ -1,6 +1,6 @@
 // helpers/changeComponentPosition.ts (ou similaire)
 
-import { MediaObject } from "../model/bloc/MediaObject";
+import { MediaObject } from "../../database/model/bloc/MediaObject";
 
 export function reorderArray<T>(
   array: T[],

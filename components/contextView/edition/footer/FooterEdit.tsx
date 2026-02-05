@@ -1,8 +1,8 @@
 "use client";
 
-import { FooterObject } from "../../../../model/bloc/Footer";
-import { MediaObject } from "../../../../model/bloc/MediaObject";
-import { FieldRenderer } from "../../../../validators/renderer/TextRenderer";
+import { FooterObject } from "../../../../database/model/bloc/Footer";
+import { MediaObject } from "../../../../database/model/bloc/MediaObject";
+import { FieldRenderer } from "../../../../lib/validators/renderer/TextRenderer";
 import { SocialMediaModal } from "../../../modals/SocialMediaModal";
 
 interface MediaEditorProps<T> {

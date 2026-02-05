@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "./../../../../../lib/prisma/prisma";
-import { ApiResponse } from "../../../../../helpers/ApiResponse";
-import { MediaObject } from "../../../../../model/bloc/MediaObject";
+import { ApiResponse } from "../../../../../lib/helpers/ApiResponse";
+import { MediaObject } from "../../../../../database/model/bloc/MediaObject";
 export async function GET(request: NextRequest) {
   return ApiResponse.handle(
     async () => {

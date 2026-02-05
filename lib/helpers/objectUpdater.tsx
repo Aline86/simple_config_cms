@@ -1,4 +1,4 @@
-import FIELD_CONFIGS, { FieldParameter } from "../config/fieldConfig";
+import FIELD_CONFIGS, { FieldParameter } from "../../lib/config/fieldConfig";
 import CloudinaryValidator, {
   CloudinaryParameter,
 } from "../validators/MediaValidator";
@@ -6,7 +6,7 @@ import { NumberValidator, Parameter } from "../validators/NumberValidator";
 import { TextValidator, TextParameter } from "../validators/TextValidator";
 
 // Types
-export type FieldPrefix = "text" | "image" | "number" | "color";
+export type FieldPrefix = "text" | "image" | "number" | "color" | "checkbox";
 
 export type ValidatorInstance =
   | TextValidator
@@ -22,6 +22,7 @@ type ParameterClass = CloudinaryParameter | TextParameter | Parameter;
 
 // Map des classes de validators par préfixe
 const VALIDATOR_MAP: Record<FieldPrefix, ValidatorClass> = {
+  checkbox: TextValidator,
   text: TextValidator,
   image: CloudinaryValidator,
   number: NumberValidator,
@@ -30,6 +31,7 @@ const VALIDATOR_MAP: Record<FieldPrefix, ValidatorClass> = {
 
 // Map des paramètres par défaut par préfixe
 const DEFAULT_PARAMS: Record<FieldPrefix, ParameterClass> = {
+  checkbox: new TextParameter({}),
   text: new TextParameter({}),
   image: new CloudinaryParameter({}),
   number: new Parameter({}),

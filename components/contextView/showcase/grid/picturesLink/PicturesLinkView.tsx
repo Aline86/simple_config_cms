@@ -1,9 +1,9 @@
 // PicturesLinkView.tsx
 
 import clsx from "clsx";
-import { getgridClasses } from "../../../../../lib/utils/functions";
-import { BlocObject } from "../../../../../model/Bloc";
+import { BlocObject } from "../../../../../database/model/Bloc";
 import PicturesLinkItemView from "./PictureLinkItemView";
+import { getgridClasses } from "../../../../../lib/helpers/functions";
 
 export default function PicturesLinkView({ bloc }: { bloc: BlocObject }) {
   return (

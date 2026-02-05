@@ -4,11 +4,10 @@ export const metadata: Metadata = {
   title: "Create Next App",
 };
 
-import "./globals.css";
-import "./theme.css";
+import "../styles/globals.css";
+import "../styles/theme.css";
 import { ReactNode } from "react";
-import ThemeToggle from "../components/ui/ThemeToggle";
-import { DomDataProvider } from "./context/DomDataProvider";
+import { DomDataProvider } from "../context/DomDataProvider";
 
 interface RootLayoutProps {
   children: ReactNode;

@@ -1,7 +1,7 @@
-import FIELD_CONFIGS from "../../config/fieldConfig";
-import CloudinaryValidator from "../../validators/MediaValidator";
-import { NumberValidator } from "../../validators/NumberValidator";
-import { TextValidator, TextParameter } from "../../validators/TextValidator";
+import FIELD_CONFIGS from "../../lib/config/fieldConfig";
+import CloudinaryValidator from "../validators/MediaValidator";
+import { NumberValidator } from "../validators/NumberValidator";
+import { TextValidator, TextParameter } from "../validators/TextValidator";
 
 // Types
 export type FieldPrefix =

@@ -1,5 +1,5 @@
-import { blocksFrontToRender } from "../../config/componentsView";
-import { BlocObject } from "../../model/Bloc";
+import { blocksFrontToRender } from "../../lib/config/componentsView";
+import { BlocObject } from "../../database/model/Bloc";
 
 interface PageCrudProps {
   bloc: BlocObject;

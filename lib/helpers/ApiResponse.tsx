@@ -1,9 +1,5 @@
 import { NextResponse } from "next/server";
-import {
-  isPrismaError,
-  PrismaError,
-  PrismaErrorCode,
-} from "./PrismaErrorTypes";
+import { isPrismaError, PrismaErrorCode } from "./PrismaErrorTypes";
 
 /**
  * Classe utilitaire pour gérer les réponses API de manière cohérente

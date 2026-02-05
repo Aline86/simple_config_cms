@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useState } from "react";
-import { MediaObject } from "../../../../model/bloc/MediaObject";
+import { MediaObject } from "../../../../database/model/bloc/MediaObject";
 
 export default function SocialTab({ network }: { network: MediaObject }) {
   const [isHovered, setIsHovered] = useState(false);

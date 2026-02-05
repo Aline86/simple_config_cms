@@ -1,7 +1,7 @@
 "use client";
 
-import { BlocObject } from "../../model/Bloc";
-import { PageObject } from "../../model/Page";
+import { BlocObject } from "../../database/model/Bloc";
+import { PageObject } from "../../database/model/Page";
 import ComponentBloc from "./BlocComponent";
 
 interface PageCrudProps {

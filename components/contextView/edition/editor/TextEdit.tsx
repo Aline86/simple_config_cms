@@ -4,9 +4,9 @@ import { Tiptap } from "./TipTapEditor";
 import { PlusIcon } from "lucide-react";
 import { useState } from "react";
 import { PictureEditor } from "../grid/image_grid/PictureEditor";
-import { MediaObject } from "../../../../model/bloc/MediaObject";
-import { BlocObject } from "../../../../model/Bloc";
-import { FieldRenderer } from "../../../../validators/renderer/TextRenderer";
+import { MediaObject } from "../../../../database/model/bloc/MediaObject";
+import { BlocObject } from "../../../../database/model/Bloc";
+import { FieldRenderer } from "../../../../lib/validators/renderer/TextRenderer";
 
 interface TextEditorProps {
   bloc: BlocObject;

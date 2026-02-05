@@ -1,20 +1,20 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
-import { cloneArticleWithImages } from "../../../../helpers/article.helper";
-import { updateArticleImages } from "../../../../helpers/article.media.helper";
-import { cloneBlocWithArticles } from "../../../../helpers/bloc.helper";
-import { reorderArray } from "../../../../helpers/changeComponentPosition";
+import { cloneArticleWithImages } from "../../../../lib/helpers/article.helper";
+import { updateArticleImages } from "../../../../lib/helpers/article.media.helper";
+import { cloneBlocWithArticles } from "../../../../lib/helpers/bloc.helper";
+import { reorderArray } from "../../../../lib/helpers/changeComponentPosition";
 import {
   cloneMediaWithPosition,
   createMedia,
-} from "../../../../helpers/media.helper";
-import { updateObjectBySetter } from "../../../../lib/utils/functions";
-import { BlocObject } from "../../../../model/Bloc";
-import { MediaObject } from "../../../../model/bloc/MediaObject";
+} from "../../../../lib/helpers/media.helper";
+import { BlocObject } from "../../../../database/model/Bloc";
+import { MediaObject } from "../../../../database/model/bloc/MediaObject";
 import TextView from "../../showcase/editor/TextView";
 import TextEditor from "./TextEdit";
 import EditionDoubleView from "../../../ui/EditionDoubleView";
+import { updateObjectBySetter } from "../../../../lib/helpers/functions";
 
 interface TextPicturesContextEditionProps {
   bloc: BlocObject;
