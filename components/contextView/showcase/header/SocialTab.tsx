@@ -21,6 +21,7 @@ export default function SocialTab({ network }: { network: MediaObject }) {
         }`}
       >
         <a
+          title="Lien externe réseau social"
           href={network.text_image_lien !== "" ? network.text_image_lien : "#"}
           target="_blank"
           rel="noopener noreferrer"
@@ -36,6 +37,11 @@ export default function SocialTab({ network }: { network: MediaObject }) {
                 alt={(network as MediaObject).text_titre}
                 width="15"
                 height="15"
+                sizes="
+    (max-width: 640px) 100vw,
+    (max-width: 1024px) 80vw,
+    1440px
+  "
               />
             ) : (
               <></>

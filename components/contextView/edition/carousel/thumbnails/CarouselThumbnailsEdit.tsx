@@ -41,6 +41,7 @@ export default function CarouselThumbnailsEdit<T>({
 
       <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-200 dark:bg-slate-950">
         <button
+          aria-label="Ajouter un élément"
           onClick={addElement}
           className="flex h-10 w-10 items-center justify-center rounded-full bg-black text-white hover:bg-gray-800"
         >

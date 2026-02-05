@@ -32,6 +32,7 @@ export default function NavBarEdition<T>({
         <BlocChoiceModal page={model as PageObject} addBlocToPage={handleAdd} />
       ) : (
         <button
+          aria-label={labelAdd}
           onClick={() => {
             handleAdd();
           }}
@@ -44,17 +45,20 @@ export default function NavBarEdition<T>({
         <>
           <a
             href={`${pathname}/mobile`}
+            title="Voir la version mobile"
             className="cursor-pointer flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-600 transition"
           >
             Voir la version mobile
           </a>
           <a
+            title="Voir le rendu actuel"
             href={`${pathname}/preview`}
             className="cursor-pointer flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-600 transition"
           >
             Voir le rendu actuel
           </a>
           <a
+            title="Pages"
             href={`/edition/pages`}
             className="cursor-pointer flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-600 transition"
           >

@@ -38,11 +38,11 @@ export default function Page() {
         onSubmit={handleSubmit}
         className="p-8  rounded shadow-md w-full max-w-md"
       >
-        <h1 className="text-2xl font-bold mb-6 text-center">Login</h1>
+        <h1 className="text-2xl font-bold mb-6 text-center">Se connecter</h1>
 
         {error && <p className="text-red-500 mb-4">{error}</p>}
 
-        <label className="block mb-2">Email</label>
+        <label className="block mb-2">E-mail</label>
         <input
           type="email"
           className="w-full  p-2 rounded mb-4"
@@ -53,7 +53,7 @@ export default function Page() {
           required
         />
 
-        <label className="block mb-2">Password</label>
+        <label className="block mb-2">Mot de passe</label>
         <input
           type="password"
           className="w-full  p-2 rounded mb-4"
@@ -65,10 +65,11 @@ export default function Page() {
         />
 
         <button
+          aria-label="Se connecter"
           type="submit"
           className="mt-4 w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition"
         >
-          Login
+          Se connecter
         </button>
       </form>
     </body>

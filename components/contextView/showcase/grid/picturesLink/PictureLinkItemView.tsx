@@ -36,6 +36,11 @@ export default function PicturesLinkItemView({
               src={mediaObject.image_url}
               fill
               alt={mediaObject.text_titre}
+              sizes="
+    (max-width: 640px) 100vw,
+    (max-width: 1024px) 80vw,
+    1440px
+  "
             />
           ) : (
             <img

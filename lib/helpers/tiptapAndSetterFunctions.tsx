@@ -88,7 +88,7 @@ function applyMarks(text: string, marks: Mark[] = []): string {
         const href = mark.attrs?.href || "#";
         const target = mark.attrs?.target || "_blank";
         const rel = mark.attrs?.rel || "noopener noreferrer";
-        return `<a href="${href}" target="${target}" rel="${rel}">${html}</a>`;
+        return `<a title="${target}" href="${href}" target="${target}" rel="${rel}">${html}</a>`;
       case "textStyle":
         const size = FONT_SIZE_MAP[mark.attrs?.fontSize || ""];
 

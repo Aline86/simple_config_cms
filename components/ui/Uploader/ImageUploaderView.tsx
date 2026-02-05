@@ -88,7 +88,12 @@ function PreviewSection({
             ? "1 image"
             : `${images.length} image${images.length > 1 ? "s" : ""}`}
         </span>
-        <button type="button" onClick={onClearAll} className="clear-button">
+        <button
+          aria-label="tout supprimer"
+          type="button"
+          onClick={onClearAll}
+          className="clear-button"
+        >
           Tout supprimer
         </button>
       </div>
@@ -99,7 +104,17 @@ function PreviewSection({
         value !== "" &&
         !value.includes("#") ? (
           <div className="image-wrapper">
-            <Image src={value} alt="preview" fill className="preview-image" />
+            <Image
+              src={value}
+              alt="preview"
+              fill
+              className="preview-image"
+              sizes="
+    (max-width: 640px) 100vw,
+    (max-width: 1024px) 80vw,
+    1440px
+  "
+            />
           </div>
         ) : Array.isArray(images) ? (
           images.map((img) => (
@@ -128,6 +143,7 @@ function PreviewItem({ image, onRemove }: PreviewItemProps) {
       />
       <div className="preview-overlay">
         <button
+          aria-label="supprimer une image"
           type="button"
           onClick={(e) => {
             e.stopPropagation();

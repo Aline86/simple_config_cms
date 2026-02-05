@@ -26,6 +26,11 @@ export default function ButtonView({ bloc }: { bloc: BlocObject }) {
         <div className="relative h-56 mx-6 mb-4 rounded-xl overflow-hidden will-change-transform flex-shrink-0">
           <Image
             fill
+            sizes="
+    (max-width: 640px) 100vw,
+    (max-width: 1024px) 80vw,
+    1440px
+  "
             className="object-cover transform "
             src={
               picture.image_url ??
@@ -41,6 +46,11 @@ export default function ButtonView({ bloc }: { bloc: BlocObject }) {
         <div className="px-6 pb-6 flex-1 flex flex-col justify-end">
           {/* Bouton avec effet shine */}
           <a
+            title={
+              picture.text_titre !== ""
+                ? picture.text_titre
+                : "Image sans titre"
+            }
             style={{
               backgroundColor:
                 bloc.color_background_color === "#ffffff"

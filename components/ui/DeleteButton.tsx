@@ -67,6 +67,7 @@ export function DeleteButton({
             </p>
             <div className="flex gap-3 justify-end">
               <button
+                aria-label="Annuler"
                 onClick={() => {
                   setShowConfirm(false);
                 }}
@@ -75,6 +76,7 @@ export function DeleteButton({
                 Annuler
               </button>
               <button
+                aria-label="Supprimer"
                 onClick={handleDelete}
                 className="px-4 py-2 rounded-lg bg-red-500 hover:bg-red-600 text-white font-medium transition-colors duration-200"
               >

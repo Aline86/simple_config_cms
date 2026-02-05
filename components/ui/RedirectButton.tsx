@@ -21,6 +21,7 @@ export const RedirectButton: React.FC<LucidButtonProps> = ({
 
   return (
     <button
+      aria-label={label}
       type="button"
       onClick={handleClick}
       className={`px-4 py-2 cursor-pointer rounded hover:bg-gray-100 transition-colors duration-200 ${className}`}

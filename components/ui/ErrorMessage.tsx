@@ -19,7 +19,7 @@ export default function ErrorMessage({
 
     const timer = setTimeout(() => {
       setShowErrorMessage(!errorMessage);
-    }, 5000); // 5 secondes
+    }, 500); // 5 secondes
 
     return () => {
       clearTimeout(timer);

@@ -128,6 +128,7 @@ export default function HeaderView({ header }: MediaViewProps) {
           <div className="max-w-7xl mx-auto px-4">
             <div className="flex items-center justify-between h-16 ">
               <a
+                title="Retour à l'accueil"
                 href="/"
                 className="text-xl font-bold text-indigo-600 relative  flex-shrink-0 z-0"
               >
@@ -137,6 +138,11 @@ export default function HeaderView({ header }: MediaViewProps) {
                     alt={header.text_nom_site || "Logo"}
                     height="100"
                     width="100"
+                    sizes="
+    (max-width: 640px) 100vw,
+    (max-width: 1024px) 80vw,
+    1440px
+  "
                   />
                 ) : (
                   "Mon Site"
@@ -166,6 +172,7 @@ export default function HeaderView({ header }: MediaViewProps) {
 
               {isBurger && (
                 <button
+                  aria-label="Ouvrir le menu burger"
                   onClick={() => setIsOpen(!isOpen)}
                   className={
                     isOpen

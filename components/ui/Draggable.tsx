@@ -11,6 +11,7 @@ export default function Draggable({
 }: CardProps) {
   return (
     <button
+      aria-label="Glisser / déposer les éléments de la page"
       onClick={() => setDraggableEnabled(!draggableEnabled)}
       className={`cursor-pointer flex items-center gap-2 px-3 py-2 rounded-lg transition
         ${

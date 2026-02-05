@@ -8,13 +8,7 @@ type MediaPreviewProps = {
   media: MediaObject;
   isLink?: boolean;
 };
-/*<Image
-              src={media.image_url!}
-              alt={media.text_titre || "Image"}
-              fill
-              className="object-cover"
-              unoptimized
-            />*/
+
 export function MediaPreview({ media, isLink }: MediaPreviewProps) {
   const hasImage = Boolean(media.image_url);
   const hasLink = Boolean(media.text_image_lien);
@@ -54,6 +48,7 @@ export function MediaPreview({ media, isLink }: MediaPreviewProps) {
 
           {hasLink && (
             <a
+              title="Voir le lien"
               href={media.text_image_lien!}
               target="_blank"
               rel="noopener noreferrer"

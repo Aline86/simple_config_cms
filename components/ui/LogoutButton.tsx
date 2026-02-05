@@ -6,6 +6,7 @@ interface PageCrudProps {
 export default function LogoutButton({ handleOnClick }: PageCrudProps) {
   return (
     <button
+      aria-label="Déconnexion"
       onClick={handleOnClick}
       className="cursor-pointer flex items-center gap-2 text-red-600 hover:text-red-700"
     >

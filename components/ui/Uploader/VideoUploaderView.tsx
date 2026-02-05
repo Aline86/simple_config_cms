@@ -113,7 +113,12 @@ function YouTubeSection({
 }: YouTubeSectionProps) {
   return (
     <div className="youtube-section">
-      <button type="button" onClick={onToggle} className="youtube-toggle">
+      <button
+        aria-label={showInput ? "Annuler" : "Ajouter une vidéo YouTube"}
+        type="button"
+        onClick={onToggle}
+        className="youtube-toggle"
+      >
         <YoutubeIcon />
         {showInput ? "Annuler" : "Ajouter une vidéo YouTube"}
       </button>
@@ -127,7 +132,12 @@ function YouTubeSection({
             placeholder="https://www.youtube.com/watch?v=..."
             className="youtube-input"
           />
-          <button type="button" onClick={onAdd} className="youtube-add-button">
+          <button
+            aria-label="Ajouter"
+            type="button"
+            onClick={onAdd}
+            className="youtube-add-button"
+          >
             Ajouter
           </button>
         </div>
@@ -200,7 +210,12 @@ function PreviewSection({
             ? "1 média"
             : `${media.length} média${media.length > 1 ? "s" : ""}`}
         </span>
-        <button type="button" onClick={onClearAll} className="clear-button">
+        <button
+          aria-label="Tout supprimer"
+          type="button"
+          onClick={onClearAll}
+          className="clear-button"
+        >
           Tout supprimer
         </button>
       </div>
@@ -217,6 +232,11 @@ function PreviewSection({
                   alt="preview"
                   fill
                   className="preview-image"
+                  sizes="
+    (max-width: 640px) 100vw,
+    (max-width: 1024px) 80vw,
+    1440px
+  "
                 />
               </div>
             )}
@@ -243,6 +263,7 @@ function PreviewItem({ item, onRemove }: PreviewItemProps) {
         <YouTubePreview url={item.url} videoid={item.videoid} />
         <div className="preview-overlay">
           <button
+            aria-label="Supprimer le lien Youtube"
             type="button"
             onClick={(e) => {
               e.stopPropagation();
@@ -272,6 +293,7 @@ function PreviewItem({ item, onRemove }: PreviewItemProps) {
             onRemove(item.id);
           }}
           className="remove-button"
+          aria-label="supprimer la video"
         >
           ✕
         </button>

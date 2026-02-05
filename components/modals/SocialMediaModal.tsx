@@ -24,6 +24,7 @@ export const SocialMediaModal = <T,>({
     <div className="p-6 space-y-6">
       <div className="p-10 text-center">
         <button
+          aria-label="Gérer les réseaux sociaux affichés sur le site"
           onClick={() => {
             setOpen(true);
           }}
@@ -44,17 +45,16 @@ export const SocialMediaModal = <T,>({
                         className="object-cover"
                         src={(reseau as MediaObject).image_url}
                         alt={(reseau as MediaObject).text_titre}
+                        sizes="
+    (max-width: 640px) 100vw,
+    (max-width: 1024px) 80vw,
+    1440px
+  "
                         fill
                       />
                     ) : (
                       <></>
                     )}
-                    <button className="absolute top-3 right-3 p-2 bg-white/90 hover:bg-white rounded-full shadow-md transition-colors">
-                      <Heart className="w-4 h-4 text-slate-700" />
-                    </button>
-                    <span className="absolute bottom-3 left-3 px-3 py-1 bg-slate-900/80 backdrop-blur-sm text-white text-xs font-medium rounded-full">
-                      Actif
-                    </span>
                   </div>
 
                   {/* Contenu */}

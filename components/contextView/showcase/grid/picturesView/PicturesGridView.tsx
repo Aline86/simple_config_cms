@@ -23,6 +23,7 @@ export default function PicturesgridView({ bloc }: { bloc: BlocObject }) {
       >
         {bloc.image_medias.map((img, idx) => (
           <button
+            aria-label="Agrandir l'image"
             key={idx}
             onClick={() => setActiveImage(img.image_url)}
             className="w-full mb-4 overflow-hidden rounded focus:outline-none"
@@ -39,6 +40,11 @@ export default function PicturesgridView({ bloc }: { bloc: BlocObject }) {
                 className="rounded w-full cursor-pointer"
                 width={100}
                 height={100}
+                sizes="
+    (max-width: 640px) 100vw,
+    (max-width: 1024px) 80vw,
+    1440px
+  "
               />
             ) : (
               <></>
@@ -59,7 +65,11 @@ export default function PicturesgridView({ bloc }: { bloc: BlocObject }) {
               alt="Image agrandie"
               fill
               className="object-contain rounded"
-              sizes="100vw"
+              sizes="
+    (max-width: 640px) 100vw,
+    (max-width: 1024px) 80vw,
+    1440px
+  "
               priority
             />
           </div>

@@ -41,6 +41,11 @@ export default function CarouselSimple({ bloc }: CustomCarouselInfo) {
                     alt={media.text_titre || "Image"}
                     fill
                     className="object-cover rounded "
+                    sizes="
+    (max-width: 640px) 100vw,
+    (max-width: 1024px) 80vw,
+    1440px
+  "
                   />
                 )}
 

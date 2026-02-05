@@ -153,6 +153,7 @@ export default function CarouselContainer({
         }}
       >
         <button
+          aria-label="Retour"
           onClick={moveRight}
           disabled={transitionFinished}
           style={{
@@ -207,6 +208,7 @@ export default function CarouselContainer({
         </div>
 
         <button
+          aria-label="Avancer"
           onClick={moveLeft}
           disabled={transitionFinished}
           style={{

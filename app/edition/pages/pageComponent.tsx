@@ -104,6 +104,7 @@ export default function PageCrud({
                 <div className="flex gap-2">
                   {/* Bouton Delete */}
                   <button
+                    aria-label="Supprimer"
                     onClick={() => onDelete(page_data)}
                     className="flex items-center gap-1 px-3 py-1 rounded bg-red-500 text-white hover:bg-red-600 transition"
                   >

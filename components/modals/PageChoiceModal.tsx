@@ -79,6 +79,7 @@ export default function BlocChoiceModal({
     <div className="space-y-6">
       <div className="">
         <button
+          aria-label="Créer un bloc"
           onClick={() => {
             setOpen(true);
           }}
@@ -106,6 +107,7 @@ export default function BlocChoiceModal({
         >
           <div className="flex flex-col space-y-2 w-115">
             <button
+              aria-label="Créer un bloc Carousel d'images avec miniatures"
               className="px-4 py-4 rounded bg-slate-600 text-white text-lg hover:bg-slate-700 transition"
               onClick={() => {
                 addBlocToPage(options_carousel_miniature);
@@ -114,6 +116,7 @@ export default function BlocChoiceModal({
               Carousel d'images avec miniatures
             </button>
             <button
+              aria-label="Créer un bloc Carousel d'images classique"
               className="px-4 py-4 rounded bg-slate-600 text-white text-lg hover:bg-slate-700 transition"
               onClick={() => {
                 addBlocToPage(options_carousel_classique);
@@ -122,6 +125,7 @@ export default function BlocChoiceModal({
               Carousel d'images classique
             </button>
             <button
+              aria-label="Créer un bloc Carousel d'images automatique"
               className="px-4 py-4 rounded bg-slate-600 text-white text-lg hover:bg-slate-700 transition"
               onClick={() => {
                 addBlocToPage(options_carousel_automatique);
@@ -130,6 +134,7 @@ export default function BlocChoiceModal({
               Carousel d'images automatique
             </button>
             <button
+              aria-label="Créer un bloc Carousel d'images avec redirections"
               className="px-4 py-4 rounded bg-slate-600 text-white text-lg hover:bg-slate-700 transition"
               onClick={() => {
                 addBlocToPage(options_image_group);
@@ -138,6 +143,7 @@ export default function BlocChoiceModal({
               Groupe d'images avec redirections
             </button>
             <button
+              aria-label="Créer un bloc Groupe d'images à afficher (photographie)"
               className="px-4 py-4 rounded bg-slate-600 text-white text-lg hover:bg-slate-700 transition"
               onClick={() => {
                 addBlocToPage(options_image_grid);
@@ -146,6 +152,7 @@ export default function BlocChoiceModal({
               Groupe d'images à afficher (photographie)
             </button>
             <button
+              aria-label="Créer un Ecran bloc (image pleine page)"
               className="px-4 py-4 rounded bg-slate-600 text-white text-lg hover:bg-slate-700 transition"
               onClick={() => {
                 addBlocToPage(options_screen);
@@ -154,6 +161,7 @@ export default function BlocChoiceModal({
               Ecran (image pleine page)
             </button>
             <button
+              aria-label="Créer un bloc Vidéo"
               className="px-4 py-4 rounded bg-slate-600 text-white text-lg hover:bg-slate-700 transition"
               onClick={() => {
                 addBlocToPage(options_video);
@@ -162,6 +170,7 @@ export default function BlocChoiceModal({
               Vidéo
             </button>
             <button
+              aria-label="Créer un bloc Bouton"
               className="px-4 py-4 rounded bg-slate-600 text-white text-lg hover:bg-slate-700 transition"
               onClick={() => {
                 addBlocToPage(options_button);
@@ -170,6 +179,7 @@ export default function BlocChoiceModal({
               Bouton
             </button>
             <button
+              aria-label="Créer un bloc Texte avec images optionnelles"
               className="px-4 py-4 rounded bg-slate-600 text-white text-lg hover:bg-slate-700 transition"
               onClick={() => {
                 addBlocToPage(options_texte);

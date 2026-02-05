@@ -56,6 +56,11 @@ export default function FooterView({ footer }: MediaViewProps) {
                             width="50"
                             height="50"
                             className="object-cover w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors"
+                            sizes="
+    (max-width: 640px) 100vw,
+    (max-width: 1024px) 80vw,
+    1440px
+  "
                           />
                         )}
                     </a>

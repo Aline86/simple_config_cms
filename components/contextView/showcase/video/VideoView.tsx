@@ -165,6 +165,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ bloc }) => {
         {!isPlaying && (
           <div className="absolute inset-0 flex items-center justify-center bg-black/30">
             <button
+              aria-label="Appuyer sur le bouton play"
               onClick={togglePlay}
               className="w-16 h-16 flex items-center justify-center bg-white rounded-full shadow-lg hover:scale-110 transition-transform"
             >

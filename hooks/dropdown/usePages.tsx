@@ -1,24 +1,24 @@
 import { useEffect, useState } from "react";
 
 export default function usePages() {
-  const [pages, setPages] = useState<{ slug: string; title: string }[]>([]);
   const [loading, setLoading] = useState(true);
-  const getPages = async () => {
-    await fetch("/api/edition/pages")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("data", data);
-        setPages(data.pages);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  };
+  const [pages, setPages] = useState(undefined);
+
   useEffect(() => {
-    void getPages();
+    const getPages = async () => {
+      try {
+        const res = await fetch("/api/edition/pages");
+        const data = await res.json();
+        setPages(data.pages);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getPages();
   }, []);
 
-  if (pages !== undefined) {
-    return { pages, loading };
-  }
+  return { pages, loading };
 }

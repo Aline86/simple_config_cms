@@ -38,6 +38,11 @@ const CarouselAutoView: React.FC<CardDatas> = ({
                       src={item.image_url}
                       fill={true}
                       alt="Image"
+                      sizes="
+    (max-width: 640px) 100vw,
+    (max-width: 1024px) 80vw,
+    1440px
+  "
                     />
                   )}
                   {item.text_titre !== undefined && (

@@ -30,6 +30,7 @@ export const EditorToolbar = ({ editor, onSetLink }: EditorToolbarProps) => (
   <div className="mb-5 border-b pb-2">
     <div className="flex gap-1 flex-wrap">
       <button
+        aria-label="Paragraphe"
         onClick={() => editor.chain().focus().setParagraph().run()}
         disabled={!editor.can().chain().focus().setParagraph().run()}
         className={`px-3 py-2 rounded hover:bg-gray-100 transition-colors ${
@@ -100,6 +101,7 @@ export const EditorToolbar = ({ editor, onSetLink }: EditorToolbarProps) => (
         className="px-3 py-2 rounded hover:bg-gray-100 transition-colors text-sm flex items-center gap-1"
         onClick={() => editor.chain().focus().unsetFontSize()}
         title="Réinitialiser la taille"
+        aria-label="Réinitialiser la taille"
       >
         <UndoIcon className="w-4 h-4" />
         <span>Taille</span>

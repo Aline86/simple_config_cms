@@ -19,6 +19,7 @@ export default function ThemeToggle() {
 
   return (
     <button
+      aria-label={theme === "dark" ? "mode nuit" : "mode jour"}
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
       className="cursor-pointer fixed  top-[70px] right-0 z-10 p-2 rounded"
     >

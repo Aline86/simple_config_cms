@@ -39,6 +39,11 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
         alt={bloc.text_titre}
         fill
         className="absolute z-0 w-[100vw] h-[100vh] inset-0 top-0 object-cover"
+        sizes="
+    (max-width: 640px) 100vw,
+    (max-width: 1024px) 80vw,
+    1440px
+  "
         priority
       />
 

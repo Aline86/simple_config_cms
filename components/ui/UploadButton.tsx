@@ -48,6 +48,7 @@ export default function UploadButton({
       >
         {({ open }) => (
           <button
+            aria-label={loading ? "Chargement..." : "Charger un fichier"}
             type="button"
             className={className}
             onClick={() => open()}

@@ -16,6 +16,7 @@ export function Accordion({ children, header }: AccordionProps) {
     <div className="w-full p-2 mx-auto mb-3">
       {/* Header */}
       <button
+        aria-label="Ouvrir / agrandir"
         className="w-full text-left px-6 py-4 bg-slate-600 hover:bg-slate-700 text-white rounded-lg shadow-md transition-all duration-300 flex items-center justify-between group"
         onClick={toggleAccordion}
       >

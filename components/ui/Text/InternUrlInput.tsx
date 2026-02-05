@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import usePages from "../../../hooks/dropdown/usePages";
 import { PageObject } from "../../../database/model/Page";
 interface InternUrlInputProps<T> {
@@ -25,28 +25,36 @@ export default function InternUrlInput<T>({
   const { pages, loading } = usePages();
 
   if (loading) return <div>Loading...</div>;
+  console.log(value, typeof value);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newValue = e.currentTarget.value;
     onChangeValue(field as string, newValue); // remonte l'état au parent
   };
 
-  return (
+  return value !== undefined ? (
     <div className={`validated-input-wrapper ${className} mb-4`}>
-      {label && <label className="input-label">{label}</label>}
-      <select onChange={handleChange}>
-        <option key="0">- Page -</option>
-        {pages !== undefined &&
-          Object.entries(pages).map(([, p]) => (
-            <option
-              key={new PageObject(p).text_titre}
-              value={new PageObject(p).text_slug}
-              selected={new PageObject(p).text_slug === value}
-            >
-              {new PageObject(p).text_titre}
-            </option>
-          ))}
+      {label && (
+        <label className="input-label" htmlFor="page-select">
+          {label}
+        </label>
+      )}
+
+      <select id="page-select" value={value} onChange={handleChange}>
+        <option value="">- Page -</option>
+
+        {pages &&
+          Object.entries(pages).map(([, p]) => {
+            const page = new PageObject(p);
+            return (
+              <option key={page.text_slug} value={page.text_slug}>
+                {page.text_titre}
+              </option>
+            );
+          })}
       </select>
     </div>
+  ) : (
+    <></>
   );
 }
