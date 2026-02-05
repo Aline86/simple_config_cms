@@ -34,7 +34,9 @@ export function DeleteButton({
   return (
     <>
       <button
-        onClick={() => setShowConfirm(true)}
+        onClick={() => {
+          setShowConfirm(true);
+        }}
         className={`${sizes[size]} border border-red-500 cursor-pointer absolute mt-4 ml-36 flex items-center justify-center rounded-lg bg-slate-100 hover:bg-red-500 text-slate-600 hover:text-white transition-all duration-200 shadow-sm hover:shadow-md group`}
         aria-label="Supprimer"
       >
@@ -65,7 +67,9 @@ export function DeleteButton({
             </p>
             <div className="flex gap-3 justify-end">
               <button
-                onClick={() => setShowConfirm(false)}
+                onClick={() => {
+                  setShowConfirm(false);
+                }}
                 className="px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium transition-colors duration-200"
               >
                 Annuler

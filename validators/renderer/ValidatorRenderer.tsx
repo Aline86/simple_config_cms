@@ -19,7 +19,7 @@ export type ValidatorInstance =
   | CloudinaryValidator
   | NumberValidator;
 
-export type FieldRendererProps<T extends Record<string, any>> = {
+export type FieldRendererProps<T extends Record<string, unknown>> = {
   fieldName: string;
   selectedValidatorKey: string;
   model: T | MediaObject;

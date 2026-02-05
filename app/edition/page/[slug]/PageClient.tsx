@@ -51,8 +51,6 @@ export default function PageClient({
     if (!dragged) return;
 
     setPage((prev) => {
-      if (!prev) return prev;
-
       // Recréer des MediaObject propres avec les bonnes positions
       const reordered = reorderArray(
         prev.blocs,

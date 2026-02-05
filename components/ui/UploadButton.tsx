@@ -39,8 +39,12 @@ export default function UploadButton({
             onChangeValue(fieldName, url);
           }
         }}
-        onOpen={() => setLoading(true)}
-        onError={() => setLoading(false)}
+        onOpen={() => {
+          setLoading(true);
+        }}
+        onError={() => {
+          setLoading(false);
+        }}
       >
         {({ open }) => (
           <button

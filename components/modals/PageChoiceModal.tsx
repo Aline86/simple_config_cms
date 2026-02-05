@@ -79,7 +79,9 @@ export default function BlocChoiceModal({
     <div className="space-y-6">
       <div className="">
         <button
-          onClick={() => setOpen(true)}
+          onClick={() => {
+            setOpen(true);
+          }}
           className="rounded bg-slate-600 px-2 py-2 text-white text-lg hover:bg-slate-700 transition"
         >
           Créer un bloc
@@ -91,65 +93,87 @@ export default function BlocChoiceModal({
           onOpenChange={setOpen}
           primaryAction={{
             label: "Confirmer",
-            onClick: () => setOpen(false),
+            onClick: () => {
+              setOpen(false);
+            },
           }}
           secondaryAction={{
             label: "Annuler",
-            onClick: () => setOpen(false),
+            onClick: () => {
+              setOpen(false);
+            },
           }}
         >
           <div className="flex flex-col space-y-2 w-115">
             <button
               className="px-4 py-4 rounded bg-slate-600 text-white text-lg hover:bg-slate-700 transition"
-              onClick={() => addBlocToPage(options_carousel_miniature)}
+              onClick={() => {
+                addBlocToPage(options_carousel_miniature);
+              }}
             >
               Carousel d'images avec miniatures
             </button>
             <button
               className="px-4 py-4 rounded bg-slate-600 text-white text-lg hover:bg-slate-700 transition"
-              onClick={() => addBlocToPage(options_carousel_classique)}
+              onClick={() => {
+                addBlocToPage(options_carousel_classique);
+              }}
             >
               Carousel d'images classique
             </button>
             <button
               className="px-4 py-4 rounded bg-slate-600 text-white text-lg hover:bg-slate-700 transition"
-              onClick={() => addBlocToPage(options_carousel_automatique)}
+              onClick={() => {
+                addBlocToPage(options_carousel_automatique);
+              }}
             >
               Carousel d'images automatique
             </button>
             <button
               className="px-4 py-4 rounded bg-slate-600 text-white text-lg hover:bg-slate-700 transition"
-              onClick={() => addBlocToPage(options_image_group)}
+              onClick={() => {
+                addBlocToPage(options_image_group);
+              }}
             >
               Groupe d'images avec redirections
             </button>
             <button
               className="px-4 py-4 rounded bg-slate-600 text-white text-lg hover:bg-slate-700 transition"
-              onClick={() => addBlocToPage(options_image_grid)}
+              onClick={() => {
+                addBlocToPage(options_image_grid);
+              }}
             >
               Groupe d'images à afficher (photographie)
             </button>
             <button
               className="px-4 py-4 rounded bg-slate-600 text-white text-lg hover:bg-slate-700 transition"
-              onClick={() => addBlocToPage(options_screen)}
+              onClick={() => {
+                addBlocToPage(options_screen);
+              }}
             >
               Ecran (image pleine page)
             </button>
             <button
               className="px-4 py-4 rounded bg-slate-600 text-white text-lg hover:bg-slate-700 transition"
-              onClick={() => addBlocToPage(options_video)}
+              onClick={() => {
+                addBlocToPage(options_video);
+              }}
             >
               Vidéo
             </button>
             <button
               className="px-4 py-4 rounded bg-slate-600 text-white text-lg hover:bg-slate-700 transition"
-              onClick={() => addBlocToPage(options_button)}
+              onClick={() => {
+                addBlocToPage(options_button);
+              }}
             >
               Bouton
             </button>
             <button
               className="px-4 py-4 rounded bg-slate-600 text-white text-lg hover:bg-slate-700 transition"
-              onClick={() => addBlocToPage(options_texte)}
+              onClick={() => {
+                addBlocToPage(options_texte);
+              }}
             >
               Texte
             </button>

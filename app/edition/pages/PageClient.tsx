@@ -223,21 +223,18 @@ export default function PageClient({
       <div className="grid grid-cols-1 gap-6">
         {pages !== undefined &&
           Array.isArray(pages) &&
-          pages.map(
-            (page, index) =>
-              page !== undefined && (
-                <PageCrud
-                  key={index}
-                  page_data={pages[index]}
-                  onDelete={handleDelete}
-                  onEdit={handleEdit}
-                  onDrop={onDrop}
-                  onDragStart={onDragStart}
-                  draggableEnabled={draggableEnabled}
-                  pages={pages}
-                />
-              ),
-          )}
+          pages.map((_, index) => (
+            <PageCrud
+              key={index}
+              page_data={pages[index]}
+              onDelete={handleDelete}
+              onEdit={handleEdit}
+              onDrop={onDrop}
+              onDragStart={onDragStart}
+              draggableEnabled={draggableEnabled}
+              pages={pages}
+            />
+          ))}
       </div>
     </body>
   );

@@ -15,7 +15,7 @@ export default function usePages() {
       });
   };
   useEffect(() => {
-    getPages();
+    void getPages();
   }, []);
 
   if (pages !== undefined) {
