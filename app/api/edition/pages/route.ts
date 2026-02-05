@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { BlocObject } from "../../../../database/model/Bloc";
 import { PageObject } from "../../../../database/model/Page";
-import { prisma } from "./../../../../lib/prisma/prisma";
+import { prisma } from "../../../../prisma/prisma";
 import { ApiResponse } from "../../../../lib/helpers/ApiResponse";
 export async function GET(request: NextRequest) {
   return ApiResponse.handle(

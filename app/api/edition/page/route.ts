@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
 import { PageObject } from "../../../../database/model/Page";
-import { prisma } from "./../../../../lib/prisma/prisma";
+import { prisma } from "../../../../prisma/prisma";
 import { RequestHelper } from "../../../../lib/helpers/RequestHelper";
 import { ApiResponse } from "../../../../lib/helpers/ApiResponse";
 

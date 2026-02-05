@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "./../../../../../lib/prisma/prisma";
+import { prisma } from "../../../../../prisma/prisma";
 import { ApiResponse } from "../../../../../lib/helpers/ApiResponse";
 import { MediaObject } from "../../../../../database/model/bloc/MediaObject";
 export async function GET(request: NextRequest) {
