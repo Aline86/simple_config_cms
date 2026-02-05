@@ -26,7 +26,7 @@ export default function ButtonEdit<T>({
   show_debug = false,
 }: ButtonEditorProps<T>) {
   return (
-    <div className="mx-auto max-w-2xl space-y-6 p-6">
+    <section className="mx-auto max-w-2xl space-y-6 p-6">
       <div className="space-y-2">
         <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
           Configuration du composant "Bouton"
@@ -36,7 +36,7 @@ export default function ButtonEdit<T>({
         </p>
       </div>
 
-      <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-200 dark:bg-slate-950">
+      <section className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-200 dark:bg-slate-950">
         <FieldRenderer
           fieldName="color_background_color"
           model={button as BlocObject}
@@ -55,7 +55,7 @@ export default function ButtonEdit<T>({
           model={button as BlocObject}
           setField={onChange}
         />
-        <div
+        <section
           className={
             button.image_medias.length === 1
               ? "grid grid-cols-1 "
@@ -75,8 +75,8 @@ export default function ButtonEdit<T>({
               />
             );
           })}
-        </div>
-      </div>
+        </section>
+      </section>
 
       {/* Debug panel */}
       {show_debug ? (
@@ -91,6 +91,6 @@ export default function ButtonEdit<T>({
       ) : (
         <></>
       )}
-    </div>
+    </section>
   );
 }

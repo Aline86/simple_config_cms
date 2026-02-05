@@ -19,9 +19,9 @@ export default function ComponentBloc({
   if (!Renderer) return null;
 
   return (
-    <div className="flex flex-col ">
+    <main className="flex flex-col ">
       <DeleteButton onDelete={onDelete} bloc={bloc} />
       <Renderer bloc={bloc} onChange={updateBloc} />
-    </div>
+    </main>
   );
 }

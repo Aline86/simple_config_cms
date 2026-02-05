@@ -70,7 +70,7 @@ function ArticleView({ bloc }: BlocParams) {
   }, [html]);
 
   return (
-    <div className="w-full">
+    <section className="w-full">
       {sanitizedHtml.map((out, index) => (
         <div
           key={index}
@@ -78,7 +78,7 @@ function ArticleView({ bloc }: BlocParams) {
           dangerouslySetInnerHTML={{ __html: out }}
         />
       ))}
-    </div>
+    </section>
   );
 }
 

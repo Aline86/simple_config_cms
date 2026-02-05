@@ -22,7 +22,7 @@ const CarouselAutoView: React.FC<CardDatas> = ({
       <h2 className="text-2xl text-center font-bold text-slate-800">
         {bloc.text_titre}
       </h2>
-      <div className="embla__viewport w-full" ref={emblaRef}>
+      <section className="embla__viewport w-full" ref={emblaRef}>
         <div className="embla__container w-full">
           {bloc.image_medias.map((item, idx) => (
             <div className="embla__slide" key={String(idx)}>
@@ -53,7 +53,7 @@ const CarouselAutoView: React.FC<CardDatas> = ({
             </div>
           ))}
         </div>
-      </div>
+      </section>
     </section>
   ) : (
     <></>

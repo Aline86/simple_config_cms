@@ -22,7 +22,7 @@ export default function HeaderEdit<T>({
   show_debug = false,
 }: MediaEditorProps<T>) {
   return (
-    <div className="mx-auto max-w-2xl space-y-6 p-6">
+    <section className="mx-auto max-w-2xl space-y-6 p-6">
       <div className="space-y-2">
         <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
           Configuration de l'en-tête du site
@@ -100,6 +100,6 @@ export default function HeaderEdit<T>({
       ) : (
         <></>
       )}
-    </div>
+    </section>
   );
 }

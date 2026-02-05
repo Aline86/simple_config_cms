@@ -97,7 +97,7 @@ export default function CarouselContainer({
   }, [trigger]);
 
   return (
-    <div>
+    <section>
       <div
         style={{
           display: "flex",
@@ -225,6 +225,6 @@ export default function CarouselContainer({
           →
         </button>
       </div>
-    </div>
+    </section>
   );
 }

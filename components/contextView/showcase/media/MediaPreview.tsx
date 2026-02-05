@@ -20,7 +20,7 @@ export function MediaPreview({ media, isLink }: MediaPreviewProps) {
   const hasLink = Boolean(media.text_image_lien);
 
   return (
-    <div className="mx-auto max-w-2xl space-y-6 p-6">
+    <section className="mx-auto max-w-2xl space-y-6 p-6">
       <div className="space-y-2">
         <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
           Visualisation du Media Object
@@ -79,6 +79,6 @@ export function MediaPreview({ media, isLink }: MediaPreviewProps) {
           {JSON.stringify(media, null, 2)}
         </pre>
       </div>
-    </div>
+    </section>
   );
 }

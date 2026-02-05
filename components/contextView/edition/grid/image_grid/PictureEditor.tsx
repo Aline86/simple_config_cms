@@ -20,7 +20,7 @@ export function PictureEditor<T>({ ...props }: MediaEditorProps<T>) {
   const context_medias =
     props.context === "article" ? `articles.0.images.` : `image_medias.`;
   return (
-    <div
+    <section
       className={
         "border rounded-lg overflow-hidden cursor-grab active:cursor-grabbing " +
         isOpen
@@ -166,6 +166,6 @@ export function PictureEditor<T>({ ...props }: MediaEditorProps<T>) {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
