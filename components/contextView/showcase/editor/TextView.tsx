@@ -18,10 +18,10 @@ type ImagePosition = "top" | "left" | "right";
 
 // Version refactorisée du composant
 export default function TextView({ bloc }: BlocParams) {
-  const article = bloc.articles?.[0];
+  const article = bloc.articles[0];
   if (!article) return null;
-  const hasImages = article?.images?.length > 0;
-  const hasText = article?.text_article !== null;
+  const hasImages = article.images.length > 0;
+  const hasText = article.text_article !== null;
   const imagePosition = (article.text_images_position ||
     "top") as ImagePosition;
 

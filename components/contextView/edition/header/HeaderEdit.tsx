@@ -8,9 +8,10 @@ import { SocialMediaModal } from "../../../modals/SocialMediaModal";
 
 interface MediaEditorProps<T> {
   header: HeaderObject;
-  onChange: (fieldName: string, newValue: any) => void;
+  onChange: (fieldName: string, newValue: unknown) => void;
   addElement: () => void;
   removeElement: (socialMedia: T) => void;
+  show_debug?;
 }
 
 export default function HeaderEdit<T>({
@@ -18,9 +19,8 @@ export default function HeaderEdit<T>({
   onChange,
   addElement,
   removeElement,
+  show_debug = false,
 }: MediaEditorProps<T>) {
-  const debug = false;
-
   return (
     <div className="mx-auto max-w-2xl space-y-6 p-6">
       <div className="space-y-2">
@@ -88,7 +88,7 @@ export default function HeaderEdit<T>({
       </div>
 
       {/* Debug panel */}
-      {debug ? (
+      {show_debug ? (
         <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-200 dark:bg-slate-900">
           <h3 className="text-sm font-semibold mb-2">
             Props reçues (HeaderEdit)

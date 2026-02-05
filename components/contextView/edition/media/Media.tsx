@@ -5,12 +5,12 @@ import { FieldRenderer } from "../../../../validators/renderer/TextRenderer";
 
 interface MediaEditorProps<T> {
   socialMedia: MediaObject;
-  onChange: (fieldName: string, newValue: any) => void;
+  onChange: (fieldName: string, newValue: unknown) => void;
   removeElement: (socialMedia: T) => void;
   isLink?: boolean;
+  show_debug?: boolean;
 }
 export function MediaEditor<T>({ ...props }: MediaEditorProps<T>) {
-  const debug = false;
   return (
     <div className="mx-auto max-w-2xl space-y-6 p-6">
       <div className="space-y-2">
@@ -47,19 +47,19 @@ export function MediaEditor<T>({ ...props }: MediaEditorProps<T>) {
           <FieldRenderer
             label="Nom du réseau social"
             fieldName={`reseaux.${(props.socialMedia as MediaObject).number_position_image}.text_titre`}
-            model={props.socialMedia as Record<string, any>}
+            model={props.socialMedia as MediaObject}
             setField={props.onChange}
           />
           <FieldRenderer
             label="Lien du réseau social"
             fieldName={`reseaux.${(props.socialMedia as MediaObject).number_position_image}.text_image_lien`}
-            model={props.socialMedia as Record<string, any>}
+            model={props.socialMedia as MediaObject}
             setField={props.onChange}
           />
           <FieldRenderer
             label="Image associée au réseau social"
             fieldName={`reseaux.${(props.socialMedia as MediaObject).number_position_image}.image_url`}
-            model={props.socialMedia as Record<string, any>}
+            model={props.socialMedia as MediaObject}
             setField={props.onChange}
           />
 
@@ -70,7 +70,7 @@ export function MediaEditor<T>({ ...props }: MediaEditorProps<T>) {
       </div>
 
       {/* Debug panel */}
-      {debug && (
+      {props.show_debug && (
         <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-200 dark:bg-slate-900">
           <h3 className="text-sm font-semibold mb-2">
             Props reçues (MediaEditor)

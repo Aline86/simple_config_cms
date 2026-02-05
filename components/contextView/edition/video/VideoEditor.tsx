@@ -6,7 +6,7 @@ import { FieldRenderer } from "../../../../validators/renderer/TextRenderer";
 
 interface VideoEditorProps<T> {
   media: MediaObject;
-  onChange: (fieldName: string, newValue: any) => void;
+  onChange: (fieldName: string, newValue: unknown) => void;
   removeElement: (media: T) => void;
   onDragStart: (page: MediaObject) => void;
   onDrop: (page: MediaObject) => void;
@@ -88,7 +88,7 @@ export function VideoEditor<T>({ ...props }: VideoEditorProps<T>) {
                         context_medias +
                         `${(props.media as MediaObject).number_position_image}.text_titre`
                       }
-                      model={props.media as Record<string, any>}
+                      model={props.media as MediaObject}
                       setField={props.onChange}
                     />
                     <FieldRenderer
@@ -97,7 +97,7 @@ export function VideoEditor<T>({ ...props }: VideoEditorProps<T>) {
                         context_medias +
                         `${(props.media as MediaObject).number_position_image}.text_image_lien`
                       }
-                      model={props.media as Record<string, any>}
+                      model={props.media as MediaObject}
                       setField={props.onChange}
                     />
                   </>
@@ -108,7 +108,7 @@ export function VideoEditor<T>({ ...props }: VideoEditorProps<T>) {
                     context_medias +
                     `${(props.media as MediaObject).number_position_image}.image_url`
                   }
-                  model={props.media as Record<string, any>}
+                  model={props.media as MediaObject}
                   setField={props.onChange}
                   isVideo={true}
                 />

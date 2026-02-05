@@ -76,7 +76,7 @@ export default function TextEditor({
           <FieldRenderer
             label="text_titre du bloc d'images avec lien de redirection"
             fieldName="text_titre"
-            model={bloc as Record<string, any>}
+            model={bloc as BlocObject}
             setField={onChange}
           />
 

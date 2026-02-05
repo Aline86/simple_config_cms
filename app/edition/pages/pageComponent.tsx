@@ -27,6 +27,7 @@ interface PageCrudProps {
   onDrop: (page: PageObject) => void;
   draggableEnabled: boolean;
   pages: PageObject[];
+  show_debug: boolean;
 }
 
 export default function PageCrud({
@@ -37,8 +38,8 @@ export default function PageCrud({
   onDrop,
   draggableEnabled,
   pages,
+  show_debug = false,
 }: PageCrudProps) {
-  const show_debug = false;
   const handleEdit = (fieldName: string, newValue: any) => {
     onEdit(page_data, fieldName as keyof PageObject, newValue);
   };

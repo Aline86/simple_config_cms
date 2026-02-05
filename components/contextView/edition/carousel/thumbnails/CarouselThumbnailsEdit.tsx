@@ -14,6 +14,7 @@ interface CarouselThumbnailsProps<T> {
   onDrop: (page: MediaObject) => void;
   isLink?: boolean;
   showWidth?: boolean;
+  debug?: boolean;
 }
 
 export default function CarouselThumbnailsEdit<T>({
@@ -25,8 +26,8 @@ export default function CarouselThumbnailsEdit<T>({
   onDrop,
   isLink,
   showWidth,
+  debug = false,
 }: CarouselThumbnailsProps<T>) {
-  const debug = false;
   return (
     <div className="mx-auto w-full min-w-[43vw] space-y-6 p-6">
       <div className="space-y-2">
@@ -57,21 +58,21 @@ export default function CarouselThumbnailsEdit<T>({
         <FieldRenderer
           label="text_titre du bloc carousel d'images"
           fieldName={`text_titre`}
-          model={bloc as Record<string, any>}
+          model={bloc as BlocObject}
           setField={onChange}
         />
         {showWidth && (
           <FieldRenderer
             label="Largeur de l'image sur grand écran"
             fieldName={`number_width`}
-            model={bloc as Record<string, any>}
+            model={bloc as BlocObject}
             setField={onChange}
           />
         )}
         <FieldRenderer
           label="Hauteur de l'image sur grand écran"
           fieldName={`number_height`}
-          model={bloc as Record<string, any>}
+          model={bloc as BlocObject}
           setField={onChange}
         />
         <div className="grid grid-cols-2 gap-6">

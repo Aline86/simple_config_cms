@@ -13,6 +13,7 @@ interface ButtonEditorProps<T> {
   onDragStart: (page: MediaObject) => void;
   onDrop: (page: MediaObject) => void;
   isLink: boolean;
+  show_debug?: boolean;
 }
 
 export default function ButtonEdit<T>({
@@ -23,8 +24,8 @@ export default function ButtonEdit<T>({
   onDragStart,
   onDrop,
   isLink,
+  show_debug = false,
 }: ButtonEditorProps<T>) {
-  const debug = false;
   return (
     <div className="mx-auto min-w-2xl max-w-2xl space-y-6 p-6">
       <div className="space-y-2">
@@ -73,7 +74,7 @@ export default function ButtonEdit<T>({
       </div>
 
       {/* Debug panel */}
-      {debug ? (
+      {show_debug ? (
         <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-200 dark:bg-slate-900">
           <h3 className="text-sm font-semibold mb-2">
             Props reçues (HeaderEdit)

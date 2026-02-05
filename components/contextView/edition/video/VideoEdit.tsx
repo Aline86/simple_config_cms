@@ -5,7 +5,7 @@ import { MediaObject } from "../../../../model/bloc/MediaObject";
 import { FieldRenderer } from "../../../../validators/renderer/TextRenderer";
 import { VideoEditor } from "./VideoEditor";
 
-interface ButtonEditorProps<T> {
+interface VideoEditorProps<T> {
   bloc: BlocObject;
   onChange: (fieldName: string, newValue: any) => void;
   addElement: () => void;
@@ -23,7 +23,7 @@ export default function VideoEdit<T>({
   onDragStart,
   onDrop,
   isLink,
-}: ButtonEditorProps<T>) {
+}: VideoEditorProps<T>) {
   const debug = false;
   return (
     <div className="mx-auto max-w-2xl space-y-6 p-6">

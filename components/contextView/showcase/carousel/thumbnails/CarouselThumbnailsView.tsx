@@ -4,14 +4,19 @@ import { BlocObject } from "../../../../../model/Bloc";
 import { MediaObject } from "../../../../../model/bloc/MediaObject";
 import CarouselContainer from "./CarouselContainer";
 
-export default function CarouselThumbnailsView({ bloc }: { bloc: BlocObject }) {
+export default function CarouselThumbnailsView({
+  bloc,
+  show_debug = false,
+}: {
+  bloc: BlocObject;
+  show_debug: boolean;
+}) {
   const [medias, setMedias] = useState<MediaObject[]>([
     ...bloc.image_medias,
     ...bloc.image_medias,
     ...bloc.image_medias,
   ]);
 
-  const debug = false;
   const [transitionFinished, setTransitionFinished] = useState(false);
   const [cardWidth, setCardWidth] = useState<number>(0);
   const cardRef = useRef<HTMLDivElement | null>(null);
@@ -79,7 +84,7 @@ export default function CarouselThumbnailsView({ bloc }: { bloc: BlocObject }) {
         />
       )}
 
-      {debug && (
+      {show_debug && (
         <div className="mt-6 rounded-lg border border-slate-200 bg-slate-50 p-4 text-slate-800 dark:border-slate-200 dark:bg-slate-900 dark:text-slate-200">
           <h3 className="mb-2 text-sm font-semibold">
             Props reçues (HeaderEdit)

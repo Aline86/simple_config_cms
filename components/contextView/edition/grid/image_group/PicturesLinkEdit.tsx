@@ -13,6 +13,7 @@ interface PicturesLinkEditorProps<T> {
   onDragStart: (page: MediaObject) => void;
   onDrop: (page: MediaObject) => void;
   isLink: boolean;
+  show_debug: boolean;
 }
 
 export default function PicturesLinkEdit<T>({
@@ -23,8 +24,8 @@ export default function PicturesLinkEdit<T>({
   onDragStart,
   onDrop,
   isLink,
+  show_debug = false,
 }: PicturesLinkEditorProps<T>) {
-  const debug = false;
   return (
     <div className="mx-auto max-w-2xl space-y-6 p-6">
       <div className="space-y-2">
@@ -61,13 +62,13 @@ export default function PicturesLinkEdit<T>({
         <FieldRenderer
           label="Nombre de colonnes par ligne"
           fieldName={`number_columns`}
-          model={images_group as Record<string, any>}
+          model={images_group as BlocObject}
           setField={onChange}
         />
         <FieldRenderer
           label="Espacement entre les images"
           fieldName={`number_gap`}
-          model={images_group as Record<string, any>}
+          model={images_group as BlocObject}
           setField={onChange}
         />
         <div className="grid grid-cols-2 gap-6">
@@ -88,7 +89,7 @@ export default function PicturesLinkEdit<T>({
       </div>
 
       {/* Debug panel */}
-      {debug ? (
+      {show_debug ? (
         <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-200 dark:bg-slate-900">
           <h3 className="text-sm font-semibold mb-2">
             Props reçues (HeaderEdit)

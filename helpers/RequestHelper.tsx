@@ -32,20 +32,22 @@ export class RequestHelper {
   /**
    * Parse le body JSON de la requête
    */
-  static async getBody<T = any>(request: NextRequest): Promise<T> {
+  static async getBody<T = Record<string, Record<string, unknown>>>(
+    request: NextRequest,
+  ): Promise<T> {
     return await request.json();
   }
 
   /**
    * Extrait une propriété du body
    */
-  static async getBodyProperty<T = unknown>(
+  static async getBodyProperty<T = Record<string, Record<string, unknown>>>(
     request: NextRequest,
     propertyName: string,
     required: boolean = true,
-  ): Promise<T | undefined> {
+  ): Promise<T> {
     const body = await this.getBody(request);
-    const value = body[propertyName];
+    const value = body[propertyName] as T;
 
     if (required && !value) {
       throw new Error(`${propertyName} missing`);

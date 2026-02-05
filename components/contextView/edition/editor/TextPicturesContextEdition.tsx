@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { cloneArticleWithImages } from "../../../../helpers/article.helper";
 import { updateArticleImages } from "../../../../helpers/article.media.helper";
 import { cloneBlocWithArticles } from "../../../../helpers/bloc.helper";
@@ -27,7 +27,7 @@ const TextPicturesContextEdition: React.FC<TextPicturesContextEditionProps> = ({
 }: TextPicturesContextEditionProps) => {
   const [dragged, setDragged] = useState<MediaObject | null>(null);
   const [localBloc, setLocalBloc] = useState(bloc);
-
+  const [pendingUpdate, setPendingUpdate] = useState<BlocObject | null>(null);
   // Sync avec le parent uniquement quand l'ID change
   useEffect(() => {
     setLocalBloc(bloc);
@@ -67,16 +67,20 @@ const TextPicturesContextEdition: React.FC<TextPicturesContextEditionProps> = ({
     [dragged, onChange],
   );
 
-  const updateField = useCallback(
-    (field: string, value: unknown) => {
-      setLocalBloc((prev) => {
-        const updatedBloc = updateObjectBySetter(prev, field, value);
-        onChange(updatedBloc.data);
-        return updatedBloc.data;
-      });
-    },
-    [onChange],
-  );
+  useEffect(() => {
+    if (pendingUpdate) {
+      onChange(pendingUpdate);
+      setPendingUpdate(null);
+    }
+  }, [pendingUpdate, onChange]);
+
+  const updateField = useCallback((field: string, value: unknown) => {
+    setLocalBloc((prev) => {
+      const updatedBloc = updateObjectBySetter(prev, field, value);
+      setPendingUpdate(updatedBloc.data);
+      return updatedBloc.data;
+    });
+  }, []);
 
   const handleAdd = useCallback(() => {
     setLocalBloc((prev) => {
@@ -92,7 +96,7 @@ const TextPicturesContextEdition: React.FC<TextPicturesContextEditionProps> = ({
       onChange(updatedBloc);
       return updatedBloc;
     });
-  }, [onChange]);
+  }, []);
 
   const handleRemove = useCallback(
     (media: MediaObject) => {

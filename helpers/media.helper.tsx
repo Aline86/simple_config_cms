@@ -21,6 +21,7 @@ export function createMedia(position: number, bloc_id: string | number | null) {
   const width = Math.floor(Math.random() * (maxW - minW + 1)) + minW;
   const height = Math.floor(Math.random() * (maxH - minH + 1)) + minH;
   const image_url = `https://picsum.photos/${width}/${height}?random=${Date.now()}-${position}`;
+
   return new MediaObject({
     id: nanoid(),
     text_bloc_id: bloc_id,

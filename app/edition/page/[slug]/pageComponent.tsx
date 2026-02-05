@@ -14,6 +14,7 @@ interface PageCrudProps {
   onDragStart: (page: BlocObject) => void;
   onDrop: (page: BlocObject) => void;
   draggableEnabled: boolean;
+  show_debug: boolean;
 }
 
 export default function PageBlocs({
@@ -23,8 +24,8 @@ export default function PageBlocs({
   onDragStart,
   onDrop,
   draggableEnabled,
+  show_debug = false,
 }: PageCrudProps) {
-  const show_debug = false;
   useEffect(() => {}, [draggableEnabled]);
   return (
     <div className="p-6  space-y-6 ">

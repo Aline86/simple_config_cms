@@ -11,6 +11,7 @@ interface PageCrudProps {
   onDragStart: (page: BlocObject) => void;
   onDrop: (page: BlocObject) => void;
   draggableEnabled: boolean;
+  show_debug?: boolean;
 }
 
 export default function PageBlocs({
@@ -19,9 +20,8 @@ export default function PageBlocs({
   onDragStart,
   onDrop,
   draggableEnabled,
+  show_debug = false,
 }: PageCrudProps) {
-  const show_debug = false;
-
   return (
     <div className="p-6 space-y-6 ">
       {page_data.blocs.length > 0 &&
@@ -30,9 +30,15 @@ export default function PageBlocs({
             <div
               key={index}
               draggable={draggableEnabled}
-              onDragStart={() => onDragStart(bloc)}
-              onDragOver={(e) => e.preventDefault()}
-              onDrop={() => onDrop(bloc)}
+              onDragStart={() => {
+                onDragStart(bloc);
+              }}
+              onDragOver={(e) => {
+                e.preventDefault();
+              }}
+              onDrop={() => {
+                onDrop(bloc);
+              }}
               className="grid  lg:grid-cols-1 gap-6  cursor-grab active:cursor-grabbing"
             >
               <ComponentBloc bloc={bloc} />

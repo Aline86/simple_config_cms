@@ -13,9 +13,9 @@ interface MediaEditorProps<T> {
   onDrop: (page: MediaObject) => void;
   context?: string;
   isLink?: boolean;
+  show_debug?: boolean;
 }
 export function PictureEditor<T>({ ...props }: MediaEditorProps<T>) {
-  const debug = false;
   const [isOpen, setIsOpen] = useState(false);
   const context_medias =
     props.context === "article" ? `articles.0.images.` : `image_medias.`;
@@ -153,7 +153,7 @@ export function PictureEditor<T>({ ...props }: MediaEditorProps<T>) {
             </div>
 
             {/* Debug panel */}
-            {debug && (
+            {props.show_debug && (
               <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-200 dark:bg-slate-900">
                 <h3 className="text-sm font-semibold mb-2">
                   Props reçues (MediaEditor)

@@ -13,18 +13,18 @@ interface ButtonEditorProps<T> {
   onDragStart: (page: MediaObject) => void;
   onDrop: (page: MediaObject) => void;
   isLink: boolean;
+  show_debug?: boolean;
 }
 
 export default function ButtonEdit<T>({
   button,
   onChange,
-
   removeElement,
   onDragStart,
   onDrop,
   isLink,
+  show_debug = false,
 }: ButtonEditorProps<T>) {
-  const debug = false;
   return (
     <div className="mx-auto max-w-2xl space-y-6 p-6">
       <div className="space-y-2">
@@ -39,20 +39,20 @@ export default function ButtonEdit<T>({
       <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-200 dark:bg-slate-950">
         <FieldRenderer
           fieldName="color_background_color"
-          model={button as unknown}
+          model={button as BlocObject}
           setField={onChange}
           label={"Couleur de fond de la carte de redirection"}
         />
         <FieldRenderer
           label="text_titre de la carte de redirection"
           fieldName={`text_titre`}
-          model={button as unknown}
+          model={button as BlocObject}
           setField={onChange}
         />
         <FieldRenderer
           label="text_description courte (texte court - 500 caractères)"
           fieldName={`text_description`}
-          model={button as unknown}
+          model={button as BlocObject}
           setField={onChange}
         />
         <div
@@ -79,7 +79,7 @@ export default function ButtonEdit<T>({
       </div>
 
       {/* Debug panel */}
-      {debug ? (
+      {show_debug ? (
         <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-200 dark:bg-slate-900">
           <h3 className="text-sm font-semibold mb-2">
             Props reçues (HeaderEdit)
