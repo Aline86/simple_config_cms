@@ -13,7 +13,7 @@ interface PicturesLinkEditorProps<T> {
   onDragStart: (page: MediaObject) => void;
   onDrop: (page: MediaObject) => void;
   isLink: boolean;
-  show_debug: boolean;
+  show_debug?: boolean;
 }
 
 export default function PicturesLinkEdit<T>({

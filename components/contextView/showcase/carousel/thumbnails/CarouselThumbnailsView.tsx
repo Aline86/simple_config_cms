@@ -9,7 +9,7 @@ export default function CarouselThumbnailsView({
   show_debug = false,
 }: {
   bloc: BlocObject;
-  show_debug: boolean;
+  show_debug?: boolean;
 }) {
   const [medias, setMedias] = useState<MediaObject[]>([
     ...bloc.image_medias,

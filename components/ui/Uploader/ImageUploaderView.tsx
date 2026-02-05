@@ -21,7 +21,7 @@ export default function ImageUploaderView<T>({
   className?: string;
   model: MediaObject;
   field: string;
-  onChangeValue: (fieldName: string, value: any) => void;
+  onChangeValue: (fieldName: string, value: unknown) => void;
 }) {
   const uploader = ImageUploader({
     field: field,
@@ -45,15 +45,12 @@ export default function ImageUploaderView<T>({
           onClearAll={uploader.clearAll}
         />
       ) : (
-        value !== "" &&
-        value !== undefined && (
-          <PreviewSection
-            value={value}
-            onRemove={uploader.removeImage}
-            onClearAll={uploader.clearAll}
-            images={[]}
-          />
-        )
+        <PreviewSection
+          value={value}
+          onRemove={uploader.removeImage}
+          onClearAll={uploader.clearAll}
+          images={[]}
+        />
       )}
 
       <UploaderStyles />

@@ -14,7 +14,7 @@ interface PageCrudProps {
   onDragStart: (page: BlocObject) => void;
   onDrop: (page: BlocObject) => void;
   draggableEnabled: boolean;
-  show_debug: boolean;
+  show_debug?: boolean;
 }
 
 export default function PageBlocs({

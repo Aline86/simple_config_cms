@@ -27,7 +27,7 @@ interface PageCrudProps {
   onDrop: (page: PageObject) => void;
   draggableEnabled: boolean;
   pages: PageObject[];
-  show_debug: boolean;
+  show_debug?: boolean;
 }
 
 export default function PageCrud({

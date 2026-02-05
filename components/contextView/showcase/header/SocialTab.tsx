@@ -8,8 +8,12 @@ export default function SocialTab({ network }: { network: MediaObject }) {
   return (
     <div
       className="absolue  mb-2 flex flex-col gap-2"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseEnter={() => {
+        setIsHovered(true);
+      }}
+      onMouseLeave={() => {
+        setIsHovered(false);
+      }}
     >
       <div
         className={`relative  flex items-center transition-transform duration-700 ease-in-out ${
@@ -17,16 +21,14 @@ export default function SocialTab({ network }: { network: MediaObject }) {
         }`}
       >
         <a
-          href={
-            network?.text_image_lien !== null ? network?.text_image_lien : "#"
-          }
+          href={network.text_image_lien !== "" ? network.text_image_lien : "#"}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center bg-white rounded-l-xl shadow-lg overflow-hidden h-8 w-[200px]"
         >
           <div className="items-center justify-center">
-            {network?.image_url !== null &&
-            network?.text_titre !== null &&
+            {network.image_url !== null &&
+            network.text_titre !== null &&
             !isHovered ? (
               <Image
                 className={`inset-0 bg-cover ml-2 bg-center w-6 h-6 flex items-center justify-center object-cover rounded`}
