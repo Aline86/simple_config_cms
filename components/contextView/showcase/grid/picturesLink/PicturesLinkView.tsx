@@ -3,7 +3,7 @@
 import clsx from "clsx";
 import { BlocObject } from "../../../../../database/model/Bloc";
 import PicturesLinkItemView from "./PictureLinkItemView";
-import { getgridClasses } from "../../../../../lib/helpers/functions";
+import { getgridClasses } from "../../../../../lib/helpers/tiptapAndSetterFunctions";
 
 export default function PicturesLinkView({ bloc }: { bloc: BlocObject }) {
   return (

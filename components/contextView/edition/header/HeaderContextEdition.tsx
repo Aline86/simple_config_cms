@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { HeaderObject } from "../../../../database/model/bloc/Header";
-import { updateObjectBySetter } from "../../../../lib/helpers/functions";
+import { updateObjectBySetter } from "../../../../lib/helpers/tiptapAndSetterFunctions";
 import {
   cloneHeaderWithReseau,
   cloneHeaderWithReseaux,

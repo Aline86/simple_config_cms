@@ -5,7 +5,7 @@ import {
   cloneMediaWithPosition,
   createMedia,
 } from "../../lib/helpers/media.helper";
-import { updateObjectBySetter } from "../../lib/helpers/functions";
+import { updateObjectBySetter } from "../../lib/helpers/tiptapAndSetterFunctions";
 import { BlocObject } from "../../database/model/Bloc";
 import { MediaObject } from "../../database/model/bloc/MediaObject";
 
