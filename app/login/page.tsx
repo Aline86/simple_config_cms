@@ -24,7 +24,7 @@ export default function Page() {
     if (res !== undefined) {
       if (res.ok) {
         // Redirect to protected page
-        router.push("/edition");
+        router.push("/edition/pages");
       } else {
         const data = await res.json();
         setError(data.message || "Login failed");
