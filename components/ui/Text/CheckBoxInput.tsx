@@ -30,19 +30,17 @@ export default function CheckboxInput<T>({
   pages,
   onChangeValue,
 }: ValidatedCheckboxInputProps<T>) {
-  const [touched, setTouched] = useState(false);
   const [localValue, setLocalValue] = useState<boolean>(value);
 
   // Sync avec le parent
   useEffect(() => {
     setLocalValue(!!value);
     validator.value = String(!!value);
-    setTouched(false);
   }, [value, field]);
 
   // Validation
   const validation = validator.validate(String(localValue));
-  const showError = touched && !validation.valid;
+  const showError = !validation.valid;
   const resetOtherInputs = () => {
     pages !== undefined &&
       Array.isArray(pages) &&
@@ -59,10 +57,6 @@ export default function CheckboxInput<T>({
     onChangeValue(field, checked);
   };
 
-  const handleBlur = () => {
-    setTouched(true);
-  };
-
   return (
     <div className={`validated-input-wrapper ${className} mb-4`}>
       <label className="checkbox-label flex items-center gap-2">
@@ -71,7 +65,6 @@ export default function CheckboxInput<T>({
           type="checkbox"
           checked={localValue}
           onChange={handleChange}
-          onBlur={handleBlur}
           disabled={disabled}
         />
 

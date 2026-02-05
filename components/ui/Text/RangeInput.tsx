@@ -31,14 +31,13 @@ export default function NumberInput<T>({
   validator,
 }: NumberInputProps<T>) {
   const [localValue, setLocalValue] = useState<number>(value ?? 1);
-  const [touched, setTouched] = useState(false);
 
   const params = validator.getParams();
 
   // Validation
   const validation = validator.validate();
 
-  const showError = touched && !validation.valid;
+  const showError = !validation.valid;
   const commonProps: React.InputHTMLAttributes<HTMLInputElement> &
     React.TextareaHTMLAttributes<HTMLTextAreaElement> = {
     value: localValue as string | number,

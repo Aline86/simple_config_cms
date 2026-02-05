@@ -46,7 +46,7 @@ export default function TextInput<T>({
 
   // Validation
   const validation = validator.validate(localValue);
-  const showError = touched && !validation.valid;
+  const showError = !validation.valid;
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -58,16 +58,12 @@ export default function TextInput<T>({
     onChangeValue(field as string, newValue); // remonte l'état au parent
   };
 
-  const handleBlur = () => {
-    setTouched(true);
-  };
-
   const commonProps: React.InputHTMLAttributes<HTMLInputElement> &
     React.TextareaHTMLAttributes<HTMLTextAreaElement> = {
     value: localValue as string | number,
 
     onChange: handleChange,
-    onBlur: handleBlur,
+
     disabled,
 
     className: `input ${showError ? "error" : ""}`,

@@ -30,17 +30,13 @@ export function ColorInput<T>({
   className = "",
   disabled = false,
 }: ColorInputProps<T>) {
-  const [touched, setTouched] = useState(false);
   const params = validator.getParams();
   const [currentValue, setCurrentValue] = useState(value);
   const validation = validator.validate(value);
-  const showError = touched && !validation.valid;
+  const showError = !validation.valid;
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentValue(e.target.value);
     onChange(field, e.target.value);
-  };
-  const handleBlur = () => {
-    setTouched(true);
   };
 
   return (
@@ -59,7 +55,6 @@ export function ColorInput<T>({
           type="color"
           value={currentValue}
           onChange={handleChange}
-          onBlur={handleBlur}
           disabled={disabled}
           className={`color-input ${showError ? "error" : ""}`}
           required={params.required}
@@ -68,7 +63,6 @@ export function ColorInput<T>({
           type="text"
           value={currentValue}
           onChange={handleChange}
-          onBlur={handleBlur}
           disabled={disabled}
           className={`input color-text-input ${showError ? "error" : ""}`}
           placeholder="#000000"
