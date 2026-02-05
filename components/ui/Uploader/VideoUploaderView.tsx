@@ -66,8 +66,7 @@ export default function VideoUploaderView<T>({
           onClearAll={uploader.clearAll}
         />
       ) : (
-        value !== "" &&
-        value !== undefined && (
+        value !== "" && (
           <PreviewSection
             value={value}
             onRemove={uploader.removeMedia}

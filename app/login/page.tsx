@@ -47,7 +47,9 @@ export default function Page() {
           type="email"
           className="w-full  p-2 rounded mb-4"
           value={text_email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => {
+            setEmail(e.target.value);
+          }}
           required
         />
 
@@ -56,7 +58,9 @@ export default function Page() {
           type="password"
           className="w-full  p-2 rounded mb-4"
           value={text_password}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
           required
         />
 

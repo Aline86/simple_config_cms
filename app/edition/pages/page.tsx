@@ -6,6 +6,6 @@ export default async function Page() {
   if (pages !== undefined) {
     return <PageClient initialPages={pages.pages} />;
   } else {
-    return <div>Pages non trouvée</div>;
+    return <body>Pages non trouvée</body>;
   }
 }

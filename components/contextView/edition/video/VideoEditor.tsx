@@ -12,9 +12,9 @@ interface VideoEditorProps<T> {
   onDrop: (page: MediaObject) => void;
   context?: string;
   isLink?: boolean;
+  show_debug?: boolean;
 }
 export function VideoEditor<T>({ ...props }: VideoEditorProps<T>) {
-  const debug = false;
   const [isOpen, setIsOpen] = useState(false);
   const context_medias =
     props.context === "article" ? `articles.0.images.` : `image_medias.`;
@@ -27,9 +27,15 @@ export function VideoEditor<T>({ ...props }: VideoEditorProps<T>) {
           : "h-[10vh]"
       }
       draggable
-      onDragStart={() => props.onDragStart(props.media as MediaObject)}
-      onDragOver={(e) => e.preventDefault()}
-      onDrop={() => props.onDrop(props.media)}
+      onDragStart={() => {
+        props.onDragStart(props.media as MediaObject);
+      }}
+      onDragOver={(e) => {
+        e.preventDefault();
+      }}
+      onDrop={() => {
+        props.onDrop(props.media);
+      }}
     >
       <button
         onClick={() => setIsOpen(!isOpen)}
@@ -120,7 +126,7 @@ export function VideoEditor<T>({ ...props }: VideoEditorProps<T>) {
             </div>
 
             {/* Debug panel */}
-            {debug && (
+            {props.show_debug && (
               <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-200 dark:bg-slate-900">
                 <h3 className="text-sm font-semibold mb-2">
                   Props reçues (MediaEditor)

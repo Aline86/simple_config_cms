@@ -77,7 +77,7 @@ export function ColorInput<T>({
         />
       </div>
 
-      {showError && validation.errors && (
+      {
         <div className="error-messages">
           {validation.errors.map((error: string, index: number) => (
             <p key={index} className="error-message">
@@ -85,7 +85,7 @@ export function ColorInput<T>({
             </p>
           ))}
         </div>
-      )}
+      }
     </div>
   );
 }

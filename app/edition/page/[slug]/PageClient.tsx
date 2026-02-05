@@ -166,9 +166,7 @@ export default function PageClient({
   };
   const handleRemove = (model: BlocObject) => {
     setPage((prev) => {
-      if (!prev || !prev.blocs?.length) return prev;
       const filteredImages = prev.blocs.filter((img) => img.id !== model.id);
-
       return clonePageWithBlocs(prev, filteredImages);
     });
     setMessage(

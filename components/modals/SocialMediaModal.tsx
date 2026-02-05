@@ -39,7 +39,7 @@ export const SocialMediaModal = <T,>({
                 <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border border-slate-200 overflow-hidden group">
                   {/* Image */}
                   <div className="relative h-48 bg-gradient-to-br from-slate-300 to-slate-400 overflow-hidden">
-                    {(reseau as MediaObject)?.image_url !== null ? (
+                    {(reseau as MediaObject).image_url !== null ? (
                       <Image
                         className="object-cover"
                         src={(reseau as MediaObject).image_url}

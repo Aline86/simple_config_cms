@@ -28,10 +28,10 @@ export default function ButtonView({ bloc }: { bloc: BlocObject }) {
             fill
             className="object-cover transform "
             src={
-              picture?.image_url ??
+              picture.image_url ??
               "https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?w=800&q=80"
             }
-            alt={picture?.text_titre ?? "Preview"}
+            alt={picture.text_titre ?? "Preview"}
           />
           {/* Overlay */}
           <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -47,7 +47,7 @@ export default function ButtonView({ bloc }: { bloc: BlocObject }) {
                   ? "#535c78"
                   : (bloc.color_background_color ?? "#535c78"),
             }}
-            href={picture?.text_image_lien ?? "#"}
+            href={picture.text_image_lien ?? "#"}
             className="relative flex items-center justify-center gap-2 px-6 py-3 bg-slate-800 text-white rounded-xl overflow-hidden group/btn transition-shadow duration-300 hover:shadow-lg hover:shadow-slate-800/50"
           >
             {/* Shine */}

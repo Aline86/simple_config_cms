@@ -21,7 +21,9 @@ export default function ErrorMessage({
       setShowErrorMessage(!errorMessage);
     }, 5000); // 5 secondes
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+    };
   }, [message]);
 
   if (!errorMessage) return null;

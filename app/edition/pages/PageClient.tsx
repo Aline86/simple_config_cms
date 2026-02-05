@@ -221,8 +221,7 @@ export default function PageClient({
 
       {/* Grille des pages */}
       <div className="grid grid-cols-1 gap-6">
-        {pages !== undefined &&
-          Array.isArray(pages) &&
+        {Array.isArray(pages) &&
           pages.map((_, index) => (
             <PageCrud
               key={index}

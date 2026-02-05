@@ -46,5 +46,5 @@ export function deleteItemAndReorder(
       return media;
     });
 
-  return reordered ?? [];
+  return reordered;
 }
