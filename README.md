@@ -323,7 +323,7 @@ Pour toute question ou problème :
 
 - Ouvrir une issue sur GitHub
 - Consulter la documentation dans `/docs`
-- Contacter l'équipe de développement
+- Me contacter
 
 ```
 
