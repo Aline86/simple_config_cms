@@ -22,6 +22,7 @@ The architecture is **data-driven, maintainable, and extensible**, and includes:
   - generate the appropriate editing component (text input, number input, checkbox, color picker, image upload)
   - ensure consistency between validation logic and the user interface
 - **Centralized error handling** for consistent user feedback
+- Medias are managed via Cloudinary, enabling efficient handling of large files, automatic optimization, and on-the-fly transformations, while keeping the database lightweight and the CMS fast.
 
 ---
 

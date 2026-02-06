@@ -21,6 +21,7 @@ L'architecture est **data-driven, maintenable et extensible**, avec :
   Générer le bon composant d'édition (input text, number, checkbox, color picker, upload d'image),
   Assurer la cohérence entre validation et interface utilisateur**
 - **Gestion des erreurs centralisée** pour un retour utilisateur cohérent
+- Les médias sont gérés via Cloudinary, permettant la gestion efficace de fichiers volumineux, l’optimisation automatique et la transformation à la volée, tout en gardant la base de données légère et le CMS rapide.
 
 ---
 
