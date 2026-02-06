@@ -2,11 +2,16 @@
 
 ## Overview
 
-This project is a **configurable website built with Next.js**, where pages are entirely driven by configuration stored in a database (Prisma + PostgreSQL).  
-Each block is defined by a `type` (component family) and a `bloc_name` (sub-type / variant).
+This project is a lightweight, configurable CMS built with Next.js, enabling easy creation of dynamic showcase websites. Pages are fully driven by configuration stored in a database (Prisma + PostgreSQL). Each page consists of blocks, defined by a type (component family) and a bloc_name (variant).
 
 Blocks are automatically sorted and rendered based on a `position` field updated during CRUD operations.  
 Database queries retrieve blocks ordered by `bloc_page_position` ascending, enabling rendering **without complex business logic or scattered conditional statements**.
+
+## Business objective
+
+The goal is to enable non-technical users to easily modify page content and structure via a modular interface without coding. The CMS automatically generates the UI and validates data, ensuring consistency between configuration and rendering.
+
+## Architecture
 
 The architecture is **data-driven, maintainable, and extensible**, and includes:
 
@@ -19,10 +24,6 @@ The architecture is **data-driven, maintainable, and extensible**, and includes:
 - **Centralized error handling** for consistent user feedback
 
 ---
-
-## Architecture Type
-
-**Data-driven monolith (frontend and backend within the same project)**
 
 ### Justification
 
@@ -45,6 +46,24 @@ The architecture is **data-driven, maintainable, and extensible**, and includes:
   Clear separation into components, hooks, libraries, utilities, and validators helps manage complexity.
 
 ---
+
+## Critical analysis and challenges encountered
+
+Code duplication in some similar blocks, due to the data-driven structure
+
+Fine-grained validation management for different field types using BaseValidator and prefixes, requiring a flexible but complex system
+
+Maintaining strong consistency between configuration, validation, and UI rendering
+
+Solutions implemented
+
+Central registry to map types → components
+
+Typed prefixes to automate validation and generate the correct editing inputs
+
+Strict TypeScript checks to ensure data robustness
+
+Quality monitoring with Codacy and CodeScene, tracking complexity and duplication metrics
 
 ## Technical Stack
 

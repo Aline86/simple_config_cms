@@ -4,7 +4,13 @@
 
 ## Résumé
 
-Ce projet est un **site configurable effectué en Next.js**, où les pages sont entièrement pilotées par la configuration stockée en base de données (Prisma + PostgreSQL). Chaque bloc est défini par un `type` (famille de composants) et un `bloc_name` (sous-type / déclinaison). Les composants sont triés et affichés automatiquement selon le champ position mis à jour lors des opérations de CRUD, les requêtes en base récupèrent les blocs ordonnés selon ce critère 'bloc_page_position' asc, sans logique métier complexe.
+Ce projet est un CMS léger et configurable, réalisé en Next.js, permettant de créer facilement des sites vitrines dynamiques. Toutes les pages sont entièrement pilotées par une configuration stockée en base de données (Prisma + PostgreSQL). Chaque bloc est défini par un `type` (famille de composants) et un `bloc_name` (variante). Les composants sont triés et affichés automatiquement selon le champ position mis à jour lors des opérations de CRUD, les requêtes en base récupèrent les blocs ordonnés selon ce critère 'bloc_page_position' asc, sans logique métier complexe.
+
+## Objectif métier
+
+L’objectif est de permettre à des utilisateurs non techniques de modifier facilement le contenu et la structure des pages via une interface modulaire, sans écrire de code. Le CMS génère automatiquement l’interface utilisateur et valide les données, garantissant la cohérence entre configuration et rendu.
+
+## Architecture
 
 L'architecture est **data-driven, maintenable et extensible**, avec :
 
@@ -32,6 +38,24 @@ L'architecture est **data-driven, maintenable et extensible**, avec :
 - **Maintenable et évolutif** : découpage en composants, hooks, lib, utils et validateurs pour gérer la complexité
 
 ---
+
+## Analyse critique et défis rencontrés
+
+Duplication de code dans certains blocs similaires, due à la structure data-driven
+
+Gestion des validations selon les types de champs avec BaseValidator et préfixes, nécessitant un système flexible mais complexe
+
+Maintenir une cohérence forte entre configuration, validation et rendu UI
+
+Solutions apportées
+
+Utilisation d’un registry central pour mapper types → composants
+
+Préfixes typés pour automatiser la validation et la génération des inputs d’édition
+
+Contrôle strict avec TypeScript pour garantir la robustesse des données
+
+Monitoring qualité avec Codacy et CodeScene, suivi de métriques de complexité et duplication
 
 ## Stack technique
 
@@ -133,15 +157,12 @@ Le schéma de base de données illustre les relations entre les différentes ent
 
 ![Structure du projet](./docs/project-structure.png)
 
-````
-
-
 ## Système de validation avec BaseValidator
+
 Le projet repose sur un système de validation modulaire et réutilisable, basé sur une classe BaseValidator dont héritent l’ensemble des modèles.
 Cette classe permet de valider n’importe quelle structure de données, de manière centralisée et cohérente.
 
 Chaque champ est automatiquement associé à un validateur dédié grâce à son préfixe ainsi qu’à une configuration spécifique grâce à son intitulé, permettant d’appliquer une validation Zod adaptée aux critères définis au moment de la validation.
-
 
 ### Avantages du système de validation
 
@@ -194,7 +215,7 @@ Chaque champ est automatiquement associé à un validateur dédié grâce à son
 │  React Component│
 │  (Hero, Gallery)│
 └─────────────────┘
-````
+```
 
 ## Qualité du code & métriques
 
