@@ -1,4 +1,6 @@
-# Site Configurable Next.js avec Validation Data-Driven
+[<img src="https://flagcdn.com/w20/fr.png" alt="FR"> Français](README.md) | [<img src="https://flagcdn.com/w20/gb.png" alt="EN"> English](README.en.md)
+
+# Site Configurable Next.js (CMS)
 
 ## Résumé
 
@@ -223,6 +225,8 @@ Les métriques de qualité sont suivies via **Codacy** et **CodeScene**, afin d�
 
 ### Santé du code (CodeScene)
 
+![CodeScene dashboard](./docs/codescene.png)
+
 ![CodeScene code health](./docs/codescene-code-health.png)
 
 - **Code Health global** : **9.84 / 10 – Healthy**
@@ -322,5 +326,6 @@ Pour toute question ou problème :
 - Contacter l'équipe de développement
 
 ```
+
 
 ```
