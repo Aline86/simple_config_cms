@@ -4,7 +4,7 @@
 
 ## Résumé
 
-Ce projet est un **site configurable effectué en Next.js**, où les pages sont entièrement pilotées par la configuration stockée en base de données (Prisma + PostgreSQL). Chaque bloc est défini par un `type` (famille de composants) et un `bloc_name` (sous-type / déclinaison). Les composants sont triés et affichés automatiquement selon le champ position mis à jour lors des opérations de CRUD, les requêtes en base récupèrent les blocs ordonnés selon ce critère 'bloc_page_position' asc, sans logique métier complexe ni conditions dispersées.
+Ce projet est un **site configurable effectué en Next.js**, où les pages sont entièrement pilotées par la configuration stockée en base de données (Prisma + PostgreSQL). Chaque bloc est défini par un `type` (famille de composants) et un `bloc_name` (sous-type / déclinaison). Les composants sont triés et affichés automatiquement selon le champ position mis à jour lors des opérations de CRUD, les requêtes en base récupèrent les blocs ordonnés selon ce critère 'bloc_page_position' asc, sans logique métier complexe.
 
 L'architecture est **data-driven, maintenable et extensible**, avec :
 
@@ -265,55 +265,50 @@ La priorité future concerne principalement :
 
 - Node.js 18+
 - PostgreSQL (ou compte Neon)
-- pnpm, npm ou yarn
+- npm, npm ou yarn
 
 ### Installation
 
 ```bash
 # Cloner le projet
-git clone <repository-url>
-cd <project-name>
-
+git clone https://github.com/Aline86/simple_config_cms.git
+cd simple_config_cms
 # Installer les dépendances
-pnpm install
+npm install
 
 # Configurer les variables d'environnement
 cp .env.example .env
 # Éditer .env avec votre DATABASE_URL
 
 # Générer le client Prisma
-pnpm prisma generate
+npm prisma generate
 
 # Exécuter les migrations
-pnpm prisma migrate dev
+npm prisma migrate dev
 
 # (Optionnel) Seed de données de démonstration
-pnpm prisma db seed
+npm prisma db seed
 ```
 
 ### Développement
 
 ```bash
 # Lancer le serveur de développement
-pnpm dev
+npm dev
 
 # Ouvrir Prisma Studio
-pnpm prisma studio
+npm prisma studio
 
 # Lancer les tests
-pnpm test
+npm test
 
 # Build de production
-pnpm build
+npm build
 ```
 
 ---
 
 ## Tests
-
----
-
-## Métrics
 
 ---
 
