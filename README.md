@@ -127,64 +127,12 @@ Le schéma de base de données illustre les relations entre les différentes ent
 - Méthode principale : `validateAll()` avec support des préfixes
 - Toutes les entités passent par la validation avant persistance
 
-```
-
----
-
 ## Structure des dossiers
 
-```
-
-CMS/
-├─ app/ # App Router Next.js (pages, layouts, API)
-│ ├─ [slug]/ # Pages dynamiques pilotées par la configuration
-│ ├─ api/ # API Routes (CRUD, validation, persistence)
-│ ├─ edition/ # Interface d’édition du CMS
-│ ├─ login/ # Authentification
-│ ├─ layout.tsx # Layout racine
-│ ├─ page.tsx # Page d’entrée
-│ └─ PageContainer.tsx # Conteneur principal de rendu des pages
-│
-├─ components/ # Composants React
-│ ├─ contextView/ # Composants dépendants du contexte (édition / preview)
-│ ├─ showcase/ # Blocs renderables (data-driven)
-│ │ ├─ header/ # Header, navigation, hero
-│ │ ├─ grid/ # Grilles de contenu
-│ │ ├─ media/ # Images, médias
-│ │ └─ video/ # Vidéos
-│ ├─ ComponentBloc.tsx # Composant générique de rendu des blocs
-│ ├─ modals/ # Modales (édition, confirmation, etc.)
-│ └─ ui/ # Composants UI génériques (buttons, inputs…)
-│
-├─ context/ # Context React globaux
-│
-├─ database/ # Logique liée aux données
-│ ├─ model/ # Modèles métier (héritent du BaseValidator)
-│ └─ user/ # Gestion des utilisateurs
-│
-├─ hooks/ # Hooks React personnalisés
-│ ├─ editor/ # Hooks liés à l’édition de contenu
-│ ├─ dropdown/ # Gestion des dropdowns
-│ └─ screenSize/ # Responsive / tailles d’écran
-│
-├─ lib/ # Cœur logique du projet
-│ ├─ config/
-│ │ └─ fieldConfig/ # Configuration des champs (par préfixe)
-│ ├─ validators/ # Validateurs (Zod + règles custom)
-│ ├─ factories/ # Factories (création de blocs, modèles…)
-│ ├─ helpers/ # Fonctions utilitaires
-│ └─ mediaUploader/ # Upload et gestion des médias
-│
-├─ prisma/ # ORM Prisma
-│ ├─ migrations/ # Migrations de la base
-│ └─ schema.prisma # Schéma de la base de données
-│
-├─ styles/ # Styles globaux
-└─ .env # Variables d’environnement
+![Structure du projet](./project-structure.png)
 
 ````
 
----
 
 ## Système de validation avec BaseValidator
 Le projet repose sur un système de validation modulaire et réutilisable, basé sur une classe BaseValidator dont héritent l’ensemble des modèles.
@@ -244,9 +192,68 @@ Chaque champ est automatiquement associé à un validateur dédié grâce à son
 │  React Component│
 │  (Hero, Gallery)│
 └─────────────────┘
-```
+````
+
+## Qualité du code & métriques
+
+Les métriques de qualité sont suivies via **Codacy** et **CodeScene**, afin d’évaluer la maintenabilité, la complexité et la santé globale du codebase.
 
 ---
+
+### Vue d’ensemble (Codacy)
+
+![Codacy dashboard](./docs/codacy-dashboard.png)
+
+- **Issues** : **5.007 / kLoC**
+  → Niveau faible et stable, indiquant peu de problèmes rapportés par millier de lignes de code.
+
+- **Complexité** : **7 %**
+  → Complexité maîtrisée, avec une structure globalement simple et lisible.
+
+- **Duplication** : **26 %**
+  → Duplication notable, principalement due :
+  - aux patterns répétitifs des composants data-driven
+  - aux variantes de blocs partageant une structure similaire
+    Ce point est identifié comme axe d’amélioration potentiel (factorisation).
+
+- **Coverage** : non mesurée
+  → Pas encore de couverture de tests automatisés configurée.
+
+---
+
+### Santé du code (CodeScene)
+
+![CodeScene code health](./docs/codescene-code-health.png)
+
+- **Code Health global** : **9.84 / 10 – Healthy**
+- La majorité des fichiers sont classés comme **Healthy**
+- Très peu de zones considérées comme problématiques ou à risque
+
+#### Observations principales
+
+- Les dossiers **lib**, **hooks**, **database** et **app** présentent une excellente santé
+- Les composants UI et blocs sont bien regroupés, avec un couplage limité
+- L’architecture data-driven limite la dette technique malgré la taille croissante du projet
+
+---
+
+### Lecture globale
+
+- Code **lisible et maintenable**
+- Faible complexité
+- Architecture cohérente et bien découpée
+- Duplication à surveiller (acceptable dans un CMS configurable)
+- Tests automatisés à ajouter pour améliorer la couverture
+
+---
+
+### Conclusion
+
+Les métriques confirment que le projet repose sur une **base saine**, avec une architecture robuste et évolutive.
+La priorité future concerne principalement :
+
+- la réduction de la duplication sur certains blocs
+- l’introduction progressive de tests automatisés
 
 ## Installation et démarrage
 
@@ -300,7 +307,6 @@ pnpm build
 
 ## Tests
 
-
 ---
 
 ## Métrics
@@ -314,4 +320,7 @@ Pour toute question ou problème :
 - Ouvrir une issue sur GitHub
 - Consulter la documentation dans `/docs`
 - Contacter l'équipe de développement
-````
+
+```
+
+```
