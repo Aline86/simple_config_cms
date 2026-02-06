@@ -61,7 +61,7 @@ L'architecture est **data-driven, maintenable et extensible**, avec :
 
 Le schéma de base de données illustre les relations entre les différentes entités du système :
 
-![Diagramme UML](./uml-diagram.png)
+![Diagramme UML](./docs/uml-diagram.png)
 
 ### Entités principales
 
@@ -129,7 +129,7 @@ Le schéma de base de données illustre les relations entre les différentes ent
 
 ## Structure des dossiers
 
-![Structure du projet](./project-structure.png)
+![Structure du projet](./docs/project-structure.png)
 
 ````
 
