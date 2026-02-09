@@ -9,7 +9,7 @@ import { PageObject } from "../../../../database/model/Page";
 interface PageCrudProps {
   page_data: PageObject;
   onDelete: (page: BlocObject) => void;
-  updateBloc: (updatedBloc: BlocObject) => void;
+  updateBloc: (fieldName: string, value: unknown) => void;
   onAdd?: () => void; // optionnel, si tu veux un bouton "Ajouter une page"
   onDragStart: (page: BlocObject) => void;
   onDrop: (page: BlocObject) => void;

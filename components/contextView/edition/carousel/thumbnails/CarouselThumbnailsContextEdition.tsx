@@ -8,28 +8,22 @@ import EditionDoubleView from "../../../../ui/EditionDoubleView";
 
 interface CarouselThumbnailsContextEditionProps {
   bloc: BlocObject;
-  onChange: (bloc: BlocObject) => void;
+  onChange: (fieldName: string, value: unknown) => void;
 }
 
 const CarouselThumbnailsContextEdition: React.FC<
   CarouselThumbnailsContextEditionProps
 > = ({ bloc, onChange }: CarouselThumbnailsContextEditionProps) => {
-  const {
-    dragged,
-    localBloc,
-    handleRemove,
-    handleAdd,
-    updateField,
-    onDrop,
-    onDragStart,
-  } = useUpdateUI({ bloc, onChange });
+  const { dragged, handleRemove, handleAdd, onDrop, onDragStart } = useUpdateUI(
+    { bloc, onChange },
+  );
 
   return (
     <EditionDoubleView
       EditComponent={
         <CarouselThumbnailsEdit
-          bloc={localBloc}
-          onChange={updateField}
+          bloc={bloc}
+          onChange={onChange}
           addElement={handleAdd}
           removeElement={handleRemove}
           onDrop={onDrop}

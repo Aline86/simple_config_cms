@@ -18,7 +18,7 @@ import { updateObjectBySetter } from "../../../../lib/helpers/tiptapAndSetterFun
 
 interface TextPicturesContextEditionProps {
   bloc: BlocObject;
-  onChange: (bloc: BlocObject) => void;
+  onChange: (fieldName: string, newValue: unknown) => void;
 }
 
 const TextPicturesContextEdition: React.FC<TextPicturesContextEditionProps> = ({
@@ -26,12 +26,7 @@ const TextPicturesContextEdition: React.FC<TextPicturesContextEditionProps> = ({
   onChange,
 }: TextPicturesContextEditionProps) => {
   const [dragged, setDragged] = useState<MediaObject | null>(null);
-  const [localBloc, setLocalBloc] = useState(bloc);
   const [pendingUpdate, setPendingUpdate] = useState<BlocObject | null>(null);
-  // Sync avec le parent uniquement quand l'ID change
-  useEffect(() => {
-    setLocalBloc(bloc);
-  }, [bloc.id]);
 
   const onDragStart = (media: MediaObject) => {
     setDragged(media);
@@ -41,89 +36,68 @@ const TextPicturesContextEdition: React.FC<TextPicturesContextEditionProps> = ({
     (target: MediaObject) => {
       if (!dragged) return;
 
-      setLocalBloc((prev) => {
-        const article = prev.articles[0];
+      const article = bloc.articles[0];
 
-        const reordered = reorderArray(
-          article.images,
-          dragged,
-          target,
-          "number_position_image",
-        );
-        const cleanImages = reordered.map(cloneMediaWithPosition);
-        const updatedArticles = updateArticleImages(
-          prev.articles,
-          0,
-          cleanImages,
-        );
-        const updatedBloc = cloneBlocWithArticles(prev, updatedArticles);
+      const reordered = reorderArray(
+        article.images,
+        dragged,
+        target,
+        "number_position_image",
+      );
+      const cleanImages = reordered.map(cloneMediaWithPosition);
+      const updatedArticles = updateArticleImages(
+        bloc.articles,
+        0,
+        cleanImages,
+      );
+      const updatedBloc = cloneBlocWithArticles(bloc, updatedArticles);
 
-        onChange(updatedBloc);
-        return updatedBloc;
-      });
+      onChange("blocs." + bloc.bloc_position, updatedBloc);
+      return updatedBloc;
 
       setDragged(null);
     },
     [dragged, onChange],
   );
 
-  useEffect(() => {
-    if (pendingUpdate) {
-      onChange(pendingUpdate);
-      setPendingUpdate(null);
-    }
-  }, [pendingUpdate, onChange]);
-
-  const updateField = useCallback((field: string, value: unknown) => {
-    setLocalBloc((prev) => {
-      const updatedBloc = updateObjectBySetter(prev, field, value);
-      setPendingUpdate(updatedBloc.data);
-      return updatedBloc.data;
-    });
-  }, []);
-
   const handleAdd = useCallback(() => {
-    setLocalBloc((prev) => {
-      const article = prev.articles?.[0];
-      if (!article) return prev;
+    const article = bloc.articles?.[0];
+    if (!article) return bloc;
 
-      const newMedia = createMedia(article.images.length, prev.id);
-      const updatedArticles = [
-        cloneArticleWithImages(article, [...article.images, newMedia]),
-      ];
-      const updatedBloc = cloneBlocWithArticles(prev, updatedArticles);
+    const newMedia = createMedia(article.images.length, bloc.id);
+    const updatedArticles = [
+      cloneArticleWithImages(article, [...article.images, newMedia]),
+    ];
+    const updatedBloc = cloneBlocWithArticles(bloc, updatedArticles);
 
-      onChange(updatedBloc);
-      return updatedBloc;
-    });
+    onChange("blocs." + bloc.bloc_position, updatedBloc);
+    return updatedBloc;
   }, []);
 
   const handleRemove = useCallback(
     (media: MediaObject) => {
-      setLocalBloc((prev) => {
-        const article = prev.articles?.[0];
-        if (!article) return prev;
+      const article = bloc.articles?.[0];
+      if (!article) return bloc;
 
-        const filteredImages = article.images.filter(
-          (img) => img.id !== media.id,
-        );
-        const cleanImages = filteredImages.map(cloneMediaWithPosition);
-        const updatedArticles = [cloneArticleWithImages(article, cleanImages)];
-        const updatedBloc = cloneBlocWithArticles(prev, updatedArticles);
+      const filteredImages = article.images.filter(
+        (img) => img.id !== media.id,
+      );
+      const cleanImages = filteredImages.map(cloneMediaWithPosition);
+      const updatedArticles = [cloneArticleWithImages(article, cleanImages)];
+      const updatedBloc = cloneBlocWithArticles(bloc, updatedArticles);
 
-        onChange(updatedBloc);
-        return updatedBloc;
-      });
+      onChange("blocs." + bloc.bloc_position, updatedBloc);
+      return updatedBloc;
     },
     [onChange],
   );
-  useEffect(() => {}, [localBloc]);
+
   return (
     <EditionDoubleView
       EditComponent={
         <TextEditor
           bloc={bloc}
-          onChange={updateField}
+          onChange={onChange}
           addElement={handleAdd}
           removeElement={handleRemove}
           onDrop={onDrop}

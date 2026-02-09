@@ -15,7 +15,7 @@ export function updateObjectBySetter<T>(
 ): UpdateResult<T> {
   const keys = path.split(".");
   let updated = false;
-
+  console.log("keys", keys);
   const result = produce(obj, (draft: unknown) => {
     let current = draft;
 

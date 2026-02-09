@@ -19,6 +19,7 @@ import ErrorMessage from "../../../../components/ui/ErrorMessage";
 import { Accordion } from "../../../../components/ui/Accordeon";
 import { cloneBlocWithArticlesAndMedia } from "../../../../lib/helpers/bloc.helper";
 import ThemeToggle from "../../../../components/ui/ThemeToggle";
+import { updateObjectBySetter } from "../../../../lib/helpers/tiptapAndSetterFunctions";
 
 export default function PageClient({
   initialpage,
@@ -37,6 +38,7 @@ export default function PageClient({
   const [message, setMessage] = useState("");
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [hasSucceeded, setHasSucceeded] = useState(false);
+  const [toggle, setToggle] = useState(false);
 
   const onDragStart = (bloc: BlocObject) => {
     if (bloc !== null) {
@@ -72,21 +74,11 @@ export default function PageClient({
     setHasSucceeded(true);
   };
 
-  const updateBloc = (updatedBloc: BlocObject) => {
+  const updateBloc = (fieldName: string, value: unknown) => {
     setPage((prevPage) => {
-      const newBlocs = prevPage.blocs.map((bloc) =>
-        bloc.id === updatedBloc.id
-          ? cloneBlocWithArticlesAndMedia(
-              updatedBloc,
-              updatedBloc.articles,
-              updatedBloc.image_medias,
-            )
-          : bloc,
-      );
-      const up = clonePageWithBlocs(prevPage, newBlocs);
-
-      return up;
+      return updateObjectBySetter(prevPage, fieldName, value).data;
     });
+    setToggle(!toggle);
   };
   const handleSavePage = async () => {
     try {
@@ -163,20 +155,37 @@ export default function PageClient({
   };
   const handleRemove = (model: BlocObject) => {
     setPage((prev) => {
-      const filteredImages = prev.blocs.filter((img) => img.id !== model.id);
-      return clonePageWithBlocs(prev, filteredImages);
+      // 1️⃣ retirer le bloc (on garde les mêmes instances)
+      const remainingBlocs = prev.blocs.filter((bloc) => bloc.id !== model.id);
+
+      // 2️⃣ réindexer SANS recréer les blocs
+      remainingBlocs.forEach((bloc, index) => {
+        bloc.bloc_position = index;
+      });
+
+      // 3️⃣ assigner les blocs à la page
+      prev.blocs = remainingBlocs;
+
+      // 4️⃣ retourner une nouvelle référence PageObject
+      return Object.assign(Object.create(Object.getPrototypeOf(prev)), prev);
     });
+
     setMessage(
       "Action réussie mais veuillez enregistrer tout le contenu pour sauvegarder la suppression",
     );
-    setShowErrorMessage(!showErrorMessage);
+    setShowErrorMessage(true);
     setHasSucceeded(true);
   };
-  const updateHeader = (updatedBloc: HeaderObject) => {
-    setHeader(updatedBloc);
+
+  const updateHeader = (fieldName: string, value: unknown) => {
+    setHeader((prev) => {
+      return updateObjectBySetter(prev, fieldName, value).data;
+    });
   };
-  const updateFooter = (updatedBloc: FooterObject) => {
-    setFooter(updatedBloc);
+  const updateFooter = (fieldName: string, value: unknown) => {
+    setFooter((prev) => {
+      return updateObjectBySetter(prev, fieldName, value).data;
+    });
   };
   const logout = async () => {
     await fetch("/api/auth/logout", {
@@ -192,6 +201,7 @@ export default function PageClient({
     showErrorMessage,
     message,
     hasSucceeded,
+    toggle,
   ]);
 
   return (

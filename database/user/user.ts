@@ -1,8 +1,6 @@
-import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 
-const prisma = new PrismaClient();
-
+import { prisma } from "./../../prisma/prisma";
 export type CreateUserInput = {
   text_email: string;
   text_password: string;

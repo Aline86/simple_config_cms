@@ -8,7 +8,7 @@ import EditionDoubleView from "../../../../ui/EditionDoubleView";
 
 interface CarouselsSimpleContextEditionProps {
   bloc: BlocObject;
-  onChange: (bloc: BlocObject) => void;
+  onChange: (fieldName: string, value: unknown) => void;
 }
 
 const CarouselsSimpleContextEdition: React.FC<
@@ -16,10 +16,10 @@ const CarouselsSimpleContextEdition: React.FC<
 > = ({ bloc, onChange }: CarouselsSimpleContextEditionProps) => {
   const {
     dragged,
-    localBloc,
+
     handleRemove,
     handleAdd,
-    updateField,
+
     onDrop,
     onDragStart,
   } = useUpdateUI({ bloc, onChange });
@@ -28,8 +28,8 @@ const CarouselsSimpleContextEdition: React.FC<
     <EditionDoubleView
       EditComponent={
         <CarouselThumbnailsEdit
-          bloc={localBloc}
-          onChange={updateField}
+          bloc={bloc}
+          onChange={onChange}
           addElement={handleAdd}
           removeElement={handleRemove}
           onDrop={onDrop}

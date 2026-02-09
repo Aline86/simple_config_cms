@@ -7,7 +7,7 @@ import { PictureEditor } from "../../grid/image_grid/PictureEditor";
 
 interface CarouselThumbnailsProps<T> {
   bloc: BlocObject;
-  onChange: (fieldName: string, newValue: any) => void;
+  onChange: (fieldName: string, newValue: unknown) => void;
   addElement: () => void;
   removeElement: (bloc: MediaObject) => void;
   onDragStart: (page: MediaObject) => void;
@@ -58,14 +58,14 @@ export default function CarouselThumbnailsEdit<T>({
         </button>
         <FieldRenderer
           label="text_titre du bloc carousel d'images"
-          fieldName={`text_titre`}
+          fieldName={`blocs.` + bloc.bloc_position + `.text_titre`}
           model={bloc as BlocObject}
           setField={onChange}
         />
         {showWidth && (
           <FieldRenderer
             label="Largeur de l'image sur grand écran"
-            fieldName={`number_width`}
+            fieldName={`blocs.` + bloc.bloc_position + `.number_width`}
             model={bloc as BlocObject}
             setField={onChange}
           />
@@ -87,6 +87,7 @@ export default function CarouselThumbnailsEdit<T>({
                 onDragStart={onDragStart}
                 onDrop={onDrop}
                 isLink={isLink}
+                blocNumber={bloc.bloc_position}
               />
             );
           })}

@@ -7,7 +7,7 @@ import { PictureEditor } from "../image_grid/PictureEditor";
 
 interface PicturesLinkEditorProps<T> {
   images_group: BlocObject;
-  onChange: (fieldName: string, newValue: any) => void;
+  onChange: (fieldName: string, newValue: unknown) => void;
   addElement: () => void;
   removeElement: (images_group: T) => void;
   onDragStart: (page: MediaObject) => void;

@@ -10,7 +10,7 @@ import { FieldRenderer } from "../../../../lib/validators/renderer/TextRenderer"
 
 interface TextEditorProps {
   bloc: BlocObject;
-  onChange: (fieldName: string, newValue: any) => void;
+  onChange: (fieldName: string, newValue: unknown) => void;
   addElement: () => void;
   removeElement: (media: MediaObject) => void;
   onDragStart: (page: MediaObject) => void;
@@ -44,7 +44,12 @@ export default function TextEditor({
     const newValidatorKey = e.target.value;
     setSelectedValidatorKey(newValidatorKey);
 
-    onChange(`articles.0.text_images_position` as string, newValidatorKey);
+    onChange(
+      (`blocs.` +
+        bloc.bloc_position +
+        `articles.0.text_images_position`) as string,
+      newValidatorKey,
+    );
   };
   return (
     <section className="mx-auto w-full space-y-6 p-6">

@@ -21,18 +21,14 @@ import { TypeBloc } from "../../database/model/Page";
 
 type BlocEditionProps = {
   bloc: BlocObject;
-  onChange: (updatedBloc: BlocObject) => void;
+  onChange: (fieldName: string, value: unknown) => void;
 };
 type BlocFrontProps = {
   bloc: BlocObject;
 };
 type BlocComponent = React.FC<BlocEditionProps>;
 type BlocFrontComponent = React.FC<BlocFrontProps>;
-type BlockRendererMap = {
-  [key in TypeBloc]: {
-    backend: BlocComponent | null;
-  };
-};
+
 type SubGroupRenderType = {
   [key: string]: {
     [key: string]: BlocComponent | null;

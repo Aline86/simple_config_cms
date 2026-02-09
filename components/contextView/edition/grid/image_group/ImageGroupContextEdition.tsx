@@ -1,22 +1,13 @@
 "use client";
-import { useCallback, useState, useEffect } from "react";
 import PicturesLinkEdit from "./PicturesLinkEdit";
-import { cloneBlocWithMedias } from "../../../../../lib/helpers/bloc.helper";
-import { reorderArray } from "../../../../../lib/helpers/changeComponentPosition";
-import {
-  cloneMediaWithPosition,
-  createMedia,
-} from "../../../../../lib/helpers/media.helper";
-import { updateObjectBySetter } from "../../../../../lib/helpers/tiptapAndSetterFunctions";
 import { BlocObject } from "../../../../../database/model/Bloc";
-import { MediaObject } from "../../../../../database/model/bloc/MediaObject";
 import PicturesLinkView from "../../../showcase/grid/picturesLink/PicturesLinkView";
 import EditionDoubleView from "../../../../ui/EditionDoubleView";
 import useUpdateUI from "../../../../../hooks/editor/useUpdateUI";
 
 interface ImageGroupContextEditionProps {
   bloc: BlocObject;
-  onChange: (bloc: BlocObject) => void;
+  onChange: (fieldName: string, newValue: unknown) => void;
 }
 
 const ImageGroupContextEdition: React.FC<ImageGroupContextEditionProps> = ({
@@ -25,10 +16,10 @@ const ImageGroupContextEdition: React.FC<ImageGroupContextEditionProps> = ({
 }: ImageGroupContextEditionProps) => {
   const {
     dragged,
-    localBloc,
+
     handleRemove,
     handleAdd,
-    updateField,
+
     onDrop,
     onDragStart,
   } = useUpdateUI({ bloc, onChange });
@@ -38,7 +29,7 @@ const ImageGroupContextEdition: React.FC<ImageGroupContextEditionProps> = ({
       EditComponent={
         <PicturesLinkEdit
           images_group={bloc} //  Passer localBloc
-          onChange={updateField}
+          onChange={onChange}
           addElement={handleAdd}
           removeElement={handleRemove}
           onDrop={onDrop}

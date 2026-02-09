@@ -11,89 +11,61 @@ import { MediaObject } from "../../database/model/bloc/MediaObject";
 
 interface ContextEditionProps {
   bloc: BlocObject;
-  onChange: (bloc: BlocObject) => void;
+  onChange: (fieldName: string, newValue: unknown) => void;
 }
 
 const useUpdateUI = ({ bloc, onChange }: ContextEditionProps) => {
   const [dragged, setDragged] = useState<MediaObject | null>(null);
-  const [localBloc, setLocalBloc] = useState(bloc);
-
-  // Sync avec le parent uniquement quand l'ID change
-  useEffect(() => {
-    setLocalBloc(bloc);
-  }, [bloc.id]);
 
   const onDragStart = (media: MediaObject) => {
     setDragged(media);
   };
 
-  const onDrop = useCallback(
-    (target: MediaObject) => {
-      if (!dragged) return;
+  const onDrop = (target: MediaObject) => {
+    if (!dragged) return;
 
-      setLocalBloc((prev) => {
-        const reordered = reorderArray(
-          prev.image_medias, //  Utiliser prev (localBloc)
-          dragged,
-          target,
-          "number_position_image",
-        );
-        const cleanimage_medias = reordered.map(cloneMediaWithPosition);
-        const updatedBloc = cloneBlocWithMedias(prev, cleanimage_medias);
+    const reordered = reorderArray(
+      bloc.image_medias, //  Utiliser prev (localBloc)
+      dragged,
+      target,
+      "number_position_image",
+    );
+    const cleanimage_medias = reordered.map(cloneMediaWithPosition);
+    const updatedBloc = cloneBlocWithMedias(bloc, cleanimage_medias);
 
-        onChange(updatedBloc);
-        return updatedBloc;
-      });
-
-      setDragged(null);
-    },
-    [dragged, onChange],
-  );
-
-  const updateField = useCallback((field: string, value: unknown) => {
-    setLocalBloc((prev) => updateObjectBySetter(prev, field, value).data);
-  }, []);
-
-  useEffect(() => {
-    onChange(localBloc);
-  }, [localBloc]);
+    onChange("blocs." + bloc.bloc_position, updatedBloc);
+    return updatedBloc;
+  };
 
   const handleAdd = useCallback(() => {
-    setLocalBloc((prev) => {
-      const newMedia = createMedia(prev.image_medias.length, prev.id);
-      const updatedBloc = cloneBlocWithMedias(prev, [
-        ...prev.image_medias,
-        newMedia,
-      ]);
+    const newMedia = createMedia(bloc.image_medias.length, bloc.id);
 
-      onChange(updatedBloc);
-      return updatedBloc;
-    });
+    const updatedBloc = {
+      ...bloc,
+      image_medias: [...bloc.image_medias, newMedia],
+    };
+
+    onChange(`blocs.${bloc.bloc_position}`, updatedBloc);
   }, [onChange]);
-
   const handleRemove = useCallback(
     (media: MediaObject) => {
-      setLocalBloc((prev) => {
-        const filteredimage_medias = prev.image_medias.filter(
-          (img) => img.id !== media.id,
-        );
-        const cleanimage_medias = filteredimage_medias.map(
-          cloneMediaWithPosition,
-        );
-        const updatedBloc = cloneBlocWithMedias(prev, cleanimage_medias);
+      const cleanimage_medias = bloc.image_medias
+        .filter((img) => img.id !== media.id)
+        .map(cloneMediaWithPosition);
 
-        onChange(updatedBloc);
-        return updatedBloc;
+      onChange(`blocs.${bloc.bloc_position}`, {
+        ...bloc,
+        image_medias: cleanimage_medias,
       });
     },
-    [onChange],
+    [bloc, onChange],
   );
+
   return {
     dragged,
-    localBloc,
-    handleRemove,
+
     handleAdd,
-    updateField,
+    handleRemove,
     onDrop,
     onDragStart,
   };

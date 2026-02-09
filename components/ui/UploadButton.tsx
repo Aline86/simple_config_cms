@@ -36,6 +36,7 @@ export default function UploadButton({
 
           const url = (result as CloudinarySuccessResult).info?.secure_url;
           if (url) {
+            console.log("fielName", fieldName);
             onChangeValue(fieldName, url);
           }
         }}

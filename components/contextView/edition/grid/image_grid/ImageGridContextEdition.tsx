@@ -8,7 +8,7 @@ import EditionDoubleView from "../../../../ui/EditionDoubleView";
 
 interface ImageGridContextEditionProps {
   bloc: BlocObject;
-  onChange: (bloc: BlocObject) => void;
+  onChange: (fieldName: string, newValue: unknown) => void;
 }
 
 const ImageGridContextEdition: React.FC<ImageGridContextEditionProps> = ({
@@ -17,10 +17,10 @@ const ImageGridContextEdition: React.FC<ImageGridContextEditionProps> = ({
 }: ImageGridContextEditionProps) => {
   const {
     dragged,
-    localBloc,
+
     handleRemove,
     handleAdd,
-    updateField,
+
     onDrop,
     onDragStart,
   } = useUpdateUI({ bloc, onChange });
@@ -30,7 +30,7 @@ const ImageGridContextEdition: React.FC<ImageGridContextEditionProps> = ({
       EditComponent={
         <PicturesLinkEdit
           images_group={bloc} //  Passer localBloc
-          onChange={updateField}
+          onChange={onChange}
           addElement={handleAdd}
           removeElement={handleRemove}
           onDrop={onDrop}

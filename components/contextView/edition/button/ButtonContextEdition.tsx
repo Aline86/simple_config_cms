@@ -8,26 +8,21 @@ import ButtonView from "../../showcase/button/ButtonView";
 
 interface EditionProps {
   bloc: BlocObject;
-  onChange: (bloc: BlocObject) => void;
+  onChange: (fieldName: string, value: unknown) => void;
 }
 
 const Edition: React.FC<EditionProps> = ({ bloc, onChange }) => {
-  const {
-    dragged,
-    localBloc,
-    handleRemove,
-    handleAdd,
-    updateField,
-    onDrop,
-    onDragStart,
-  } = useUpdateUI({ bloc, onChange });
+  const { handleRemove, handleAdd, onDrop, onDragStart } = useUpdateUI({
+    bloc,
+    onChange,
+  });
 
   return (
     <EditionDoubleView
       EditComponent={
         <ButtonEdit
-          button={localBloc}
-          onChange={updateField}
+          button={bloc}
+          onChange={onChange}
           addElement={handleAdd}
           removeElement={handleRemove}
           onDrop={onDrop}
@@ -35,7 +30,7 @@ const Edition: React.FC<EditionProps> = ({ bloc, onChange }) => {
           isLink={true}
         />
       }
-      ViewComponent={<ButtonView bloc={localBloc} />}
+      ViewComponent={<ButtonView bloc={bloc} />}
     />
   );
 };

@@ -7,7 +7,7 @@ import { DeleteButton } from "../ui/DeleteButton";
 interface PageCrudProps {
   bloc: BlocObject;
   onDelete: (bloc: BlocObject) => void;
-  updateBloc: (updatedBloc: BlocObject) => void;
+  updateBloc: (fieldName: string, value: unknown) => void;
 }
 
 export default function ComponentBloc({

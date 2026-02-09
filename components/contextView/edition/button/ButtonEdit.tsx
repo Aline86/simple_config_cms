@@ -38,20 +38,20 @@ export default function ButtonEdit<T>({
 
       <section className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-200 dark:bg-slate-950">
         <FieldRenderer
-          fieldName="color_background_color"
+          fieldName={`blocs.${button.bloc_position}.color_background_color`}
           model={button as BlocObject}
           setField={onChange}
           label={"Couleur de fond de la carte de redirection"}
         />
         <FieldRenderer
           label="text_titre de la carte de redirection"
-          fieldName={`text_titre`}
+          fieldName={`blocs.${button.bloc_position}.text_titre`}
           model={button as BlocObject}
           setField={onChange}
         />
         <FieldRenderer
           label="text_description courte (texte court - 500 caractères)"
-          fieldName={`text_description`}
+          fieldName={`blocs.${button.bloc_position}.text_description`}
           model={button as BlocObject}
           setField={onChange}
         />
@@ -66,6 +66,7 @@ export default function ButtonEdit<T>({
             return (
               <PictureEditor
                 key={(media as MediaObject).id}
+                blocNumber={button.bloc_position}
                 media={media as MediaObject}
                 onChange={onChange}
                 removeElement={removeElement}

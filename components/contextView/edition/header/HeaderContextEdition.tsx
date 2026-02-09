@@ -19,72 +19,48 @@ import EditionDoubleView from "../../../ui/EditionDoubleView";
 
 interface HeaderContextEditionProps {
   bloc: HeaderObject;
-  onChange: (bloc: HeaderObject) => void;
+  onChange: (fieldName: string, newValue: unknown) => void;
 }
 
 const HeaderContextEdition: React.FC<HeaderContextEditionProps> = ({
   bloc,
   onChange,
 }: HeaderContextEditionProps) => {
-  const [localBloc, setLocalBloc] = useState(bloc);
+  const updateMediaObject = (fieldName: string, newValue: any) => {
+    if (!bloc) return bloc;
+    updateObjectBySetter(bloc, fieldName, newValue);
+  };
 
-  // Sync avec le parent uniquement quand l'ID change
-  useEffect(() => {
-    setLocalBloc(bloc);
-  }, [bloc.number_id]);
-
-  const updateMediaObject = useCallback(
-    (fieldName: string, newValue: any) => {
-      setLocalBloc((prev) => {
-        if (!prev) return prev;
-        const newObj = updateObjectBySetter(prev, fieldName, newValue);
-        onChange(newObj.data);
-        return newObj.data;
-      });
-    },
-    [onChange],
-  );
-
-  const handleRemove = useCallback(
-    (model: MediaObject) => {
-      setLocalBloc((prev) => {
-        const res = deleteItemAndReorder(
-          prev.reseaux,
-          model,
-          "number_position_image",
-        );
-        const cleanReseaux = res.map((reseau, index) => {
-          return cloneMediaWithPosition(reseau, index);
-        });
-        const updatedHeader = cloneHeaderWithReseaux(prev, cleanReseaux);
-
-        onChange(updatedHeader);
-        return updatedHeader;
-      });
-    },
-    [onChange],
-  );
-
-  const handleAdd = useCallback(() => {
-    setLocalBloc((prev) => {
-      const newMedia = createMedia(prev.reseaux.length, 1);
-      const updatedHeader = cloneHeaderWithReseau(prev, newMedia);
-      onChange(updatedHeader);
-      return updatedHeader;
+  const handleRemove = (model: MediaObject) => {
+    const res = deleteItemAndReorder(
+      bloc.reseaux,
+      model,
+      "number_position_image",
+    );
+    const cleanReseaux = res.map((reseau, index) => {
+      return cloneMediaWithPosition(reseau, index);
     });
-  }, [onChange]);
+    const updatedFooter = cloneHeaderWithReseaux(bloc, cleanReseaux);
+
+    return updatedFooter;
+  };
+
+  const handleAdd = () => {
+    const newMedia = createMedia(bloc.reseaux.length, 1);
+    bloc.addReseau(newMedia);
+  };
 
   return (
     <EditionDoubleView
       EditComponent={
         <HeaderEdit
-          header={localBloc}
+          header={bloc}
           onChange={updateMediaObject}
           addElement={handleAdd}
           removeElement={handleRemove}
         />
       }
-      ViewComponent={<HeaderView header={localBloc} />}
+      ViewComponent={<HeaderView header={bloc} />}
     />
   );
 };

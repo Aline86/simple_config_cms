@@ -7,6 +7,7 @@ import { DynamicValidatorDropDown } from "../../../../../lib/validators/DynamicV
 
 interface MediaEditorProps<T> {
   media: MediaObject;
+  blocNumber: number;
   onChange: (fieldName: string, newValue: unknown) => void;
   removeElement: (media: T) => void;
   onDragStart: (page: MediaObject) => void;
@@ -18,7 +19,9 @@ interface MediaEditorProps<T> {
 export function PictureEditor<T>({ ...props }: MediaEditorProps<T>) {
   const [isOpen, setIsOpen] = useState(false);
   const context_medias =
-    props.context === "article" ? `articles.0.images.` : `image_medias.`;
+    props.context === "article"
+      ? "blocs." + props.blocNumber + `.articles.0.images.`
+      : "blocs." + props.blocNumber + `.image_medias.`;
   return (
     <section
       className={
