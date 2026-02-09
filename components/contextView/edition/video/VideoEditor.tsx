@@ -13,6 +13,7 @@ interface VideoEditorProps<T> {
   context?: string;
   isLink?: boolean;
   show_debug?: boolean;
+  blocNumber: number;
 }
 export function VideoEditor<T>({ ...props }: VideoEditorProps<T>) {
   const [isOpen, setIsOpen] = useState(false);
@@ -92,6 +93,9 @@ export function VideoEditor<T>({ ...props }: VideoEditorProps<T>) {
                     <FieldRenderer
                       label="text_titre de la vidéo"
                       fieldName={
+                        `blocs.` +
+                        props.blocNumber +
+                        `.` +
                         context_medias +
                         `${(props.media as MediaObject).number_position_image}.text_titre`
                       }
@@ -101,6 +105,9 @@ export function VideoEditor<T>({ ...props }: VideoEditorProps<T>) {
                     <FieldRenderer
                       label="Lien de la vidéo"
                       fieldName={
+                        `blocs.` +
+                        props.blocNumber +
+                        `.` +
                         context_medias +
                         `${(props.media as MediaObject).number_position_image}.text_image_lien`
                       }
@@ -112,6 +119,9 @@ export function VideoEditor<T>({ ...props }: VideoEditorProps<T>) {
                 <FieldRenderer
                   label="Image associée à la vidéo"
                   fieldName={
+                    `blocs.` +
+                    props.blocNumber +
+                    `.` +
                     context_medias +
                     `${(props.media as MediaObject).number_position_image}.image_url`
                   }

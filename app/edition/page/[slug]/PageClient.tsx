@@ -155,18 +155,14 @@ export default function PageClient({
   };
   const handleRemove = (model: BlocObject) => {
     setPage((prev) => {
-      // 1️⃣ retirer le bloc (on garde les mêmes instances)
       const remainingBlocs = prev.blocs.filter((bloc) => bloc.id !== model.id);
 
-      // 2️⃣ réindexer SANS recréer les blocs
       remainingBlocs.forEach((bloc, index) => {
         bloc.bloc_position = index;
       });
 
-      // 3️⃣ assigner les blocs à la page
       prev.blocs = remainingBlocs;
 
-      // 4️⃣ retourner une nouvelle référence PageObject
       return Object.assign(Object.create(Object.getPrototypeOf(prev)), prev);
     });
 

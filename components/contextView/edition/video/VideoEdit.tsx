@@ -67,6 +67,7 @@ export default function VideoEdit<T>({
                 onDragStart={onDragStart}
                 onDrop={onDrop}
                 isLink={isLink}
+                blocNumber={bloc.bloc_position}
               />
             );
           })}

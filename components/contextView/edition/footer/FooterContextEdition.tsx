@@ -16,6 +16,7 @@ import { MediaObject } from "../../../../database/model/bloc/MediaObject";
 import FooterView from "../../showcase/footer/FooterView";
 import FooterEdit from "./FooterEdit";
 import EditionDoubleView from "../../../ui/EditionDoubleView";
+import useUpdateUI from "../../../../hooks/editor/useUpdateUI";
 
 interface FooterContextEditionProps {
   bloc: FooterObject;
@@ -26,36 +27,14 @@ const FooterContextEdition: React.FC<FooterContextEditionProps> = ({
   bloc,
   onChange,
 }: FooterContextEditionProps) => {
-  const updateMediaObject = (fieldName: string, newValue: any) => {
-    if (!bloc) return bloc;
-    updateObjectBySetter(bloc, fieldName, newValue);
-  };
-
-  const handleRemove = (model: MediaObject) => {
-    const res = deleteItemAndReorder(
-      bloc.reseaux,
-      model,
-      "number_position_image",
-    );
-    const cleanReseaux = res.map((reseau, index) => {
-      return cloneMediaWithPosition(reseau, index);
-    });
-    const updatedFooter = cloneFooterWithReseaux(bloc, cleanReseaux);
-
-    return updatedFooter;
-  };
-
-  const handleAdd = () => {
-    const newMedia = createMedia(bloc.reseaux.length, 1);
-    bloc.addReseau(newMedia);
-  };
+  const { handleRemove, handleAdd } = useUpdateUI({ bloc, onChange });
 
   return (
     <EditionDoubleView
       EditComponent={
         <FooterEdit
           footer={bloc}
-          onChange={updateMediaObject}
+          onChange={onChange}
           addElement={handleAdd}
           removeElement={handleRemove}
         />

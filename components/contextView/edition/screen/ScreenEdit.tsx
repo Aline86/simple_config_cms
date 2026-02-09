@@ -40,13 +40,13 @@ export default function ButtonEdit<T>({
       <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-200 dark:bg-slate-950">
         <FieldRenderer
           label="text_titre de la carte de redirection"
-          fieldName={`text_titre`}
+          fieldName={`blocs.` + bloc.bloc_position + `.` + `text_titre`}
           model={bloc as Record<string, any>}
           setField={onChange}
         />
         <FieldRenderer
           label="text_description courte (texte court - 500 caractères)"
-          fieldName={`text_description`}
+          fieldName={`blocs.` + bloc.bloc_position + `.` +`text_description`}
           model={bloc as Record<string, any>}
           setField={onChange}
         />
@@ -67,6 +67,7 @@ export default function ButtonEdit<T>({
                 onDragStart={onDragStart}
                 onDrop={onDrop}
                 isLink={false}
+                blocNumber={bloc.bloc_position}
               />
             );
           })}

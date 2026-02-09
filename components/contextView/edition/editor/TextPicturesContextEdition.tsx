@@ -26,7 +26,6 @@ const TextPicturesContextEdition: React.FC<TextPicturesContextEditionProps> = ({
   onChange,
 }: TextPicturesContextEditionProps) => {
   const [dragged, setDragged] = useState<MediaObject | null>(null);
-  const [pendingUpdate, setPendingUpdate] = useState<BlocObject | null>(null);
 
   const onDragStart = (media: MediaObject) => {
     setDragged(media);
@@ -61,7 +60,7 @@ const TextPicturesContextEdition: React.FC<TextPicturesContextEditionProps> = ({
   );
 
   const handleAdd = useCallback(() => {
-    const article = bloc.articles?.[0];
+    const article = bloc.articles[0];
     if (!article) return bloc;
 
     const newMedia = createMedia(article.images.length, bloc.id);
@@ -71,8 +70,7 @@ const TextPicturesContextEdition: React.FC<TextPicturesContextEditionProps> = ({
     const updatedBloc = cloneBlocWithArticles(bloc, updatedArticles);
 
     onChange("blocs." + bloc.bloc_position, updatedBloc);
-    return updatedBloc;
-  }, []);
+  }, [onChange]);
 
   const handleRemove = useCallback(
     (media: MediaObject) => {
@@ -87,7 +85,6 @@ const TextPicturesContextEdition: React.FC<TextPicturesContextEditionProps> = ({
       const updatedBloc = cloneBlocWithArticles(bloc, updatedArticles);
 
       onChange("blocs." + bloc.bloc_position, updatedBloc);
-      return updatedBloc;
     },
     [onChange],
   );

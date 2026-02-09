@@ -47,7 +47,7 @@ export default function TextEditor({
     onChange(
       (`blocs.` +
         bloc.bloc_position +
-        `articles.0.text_images_position`) as string,
+        `.articles.0.text_images_position`) as string,
       newValidatorKey,
     );
   };
@@ -80,7 +80,7 @@ export default function TextEditor({
         <div className="space-y-4 mb-6">
           <FieldRenderer
             label="text_titre du bloc d'images avec lien de redirection"
-            fieldName="text_titre"
+            fieldName={`blocs.` + bloc.bloc_position + ".text_titre"}
             model={bloc as BlocObject}
             setField={onChange}
           />
@@ -120,7 +120,7 @@ export default function TextEditor({
               </div>
               <FieldRenderer
                 label="Nombre de colonnes par ligne"
-                fieldName="number_columns"
+                fieldName={`blocs.` + bloc.bloc_position + ".number_columns"}
                 model={bloc as Record<string, any>}
                 setField={onChange}
               />
@@ -140,6 +140,7 @@ export default function TextEditor({
                 onDragStart={onDragStart}
                 onDrop={onDrop}
                 context="article"
+                blocNumber={bloc.bloc_position}
               />
             ))}
           </div>
@@ -157,7 +158,11 @@ export default function TextEditor({
             <h3 className="mb-3 text-sm font-semibold text-slate-700 dark:text-slate-300">
               Contenu de l'article
             </h3>
-            <Tiptap bloc={bloc.articles[0]} updateComponent={onChange} />
+            <Tiptap
+              bloc={bloc.articles[0]}
+              updateComponent={onChange}
+              blocNumber={bloc.bloc_position}
+            />
           </div>
         )}
       </section>

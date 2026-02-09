@@ -8,9 +8,10 @@ import { EditorToolbar } from "./EditorToolbar";
 interface TiptapProps {
   bloc: ArticleObject;
   updateComponent: (fieldName: string, newValue: JSONContent) => void;
+  blocNumber: number;
 }
 
-export const Tiptap = ({ bloc, updateComponent }: TiptapProps) => {
+export const Tiptap = ({ bloc, updateComponent, blocNumber }: TiptapProps) => {
   const { handleEditorUpdate } = useEditorContent(bloc, updateComponent);
 
   const editor = useEditor({
@@ -20,7 +21,10 @@ export const Tiptap = ({ bloc, updateComponent }: TiptapProps) => {
     content: bloc.text_article,
     onCreate: ({ editor }) => handleEditorUpdate(editor),
     onUpdate: ({ editor }) =>
-      updateComponent("articles.0.text_article", editor.getJSON()),
+      updateComponent(
+        "blocs." + blocNumber + ".articles.0.text_article",
+        editor.getJSON(),
+      ),
     extensions: getEditorExtensions(),
   });
 
