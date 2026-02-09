@@ -3,6 +3,8 @@ import { BlocObject } from "../../../../database/model/Bloc";
 import { PageObject } from "../../../../database/model/Page";
 import { prisma } from "../../../../prisma/prisma";
 import { ApiResponse } from "../../../../lib/helpers/ApiResponse";
+export const runtime = "nodejs";
+
 export async function GET(request: NextRequest) {
   return ApiResponse.handle(
     async () => {

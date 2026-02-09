@@ -1,5 +1,6 @@
 import { NextRequest } from "next/server";
 import { PageObject } from "../../../../database/model/Page";
+export const runtime = "nodejs";
 import { prisma } from "../../../../prisma/prisma";
 import { RequestHelper } from "../../../../lib/helpers/RequestHelper";
 import { ApiResponse } from "../../../../lib/helpers/ApiResponse";
