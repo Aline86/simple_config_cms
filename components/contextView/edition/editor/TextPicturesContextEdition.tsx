@@ -30,7 +30,7 @@ const TextPicturesContextEdition: React.FC<TextPicturesContextEditionProps> = ({
   const onDragStart = (media: MediaObject) => {
     setDragged(media);
   };
-
+  //
   const onDrop = useCallback(
     (target: MediaObject) => {
       if (!dragged) return;
