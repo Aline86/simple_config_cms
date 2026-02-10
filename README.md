@@ -1,5 +1,55 @@
 [<img src="https://flagcdn.com/w20/fr.png" alt="FR"> Français](README.md) | [<img src="https://flagcdn.com/w20/gb.png" alt="EN"> English](README.en.md)
 
+## Projet en Production Réelle
+
+### Utilisateur : Association Welcome Poitiers
+
+Ce CMS est utilisé en production par l'association **Welcome Poitiers** (aide aux 
+réfugiés et migrants) depuis **janvier 2025**.
+
+**Timeline du projet :**
+- **Janvier 2025** : Mise en production V1 (architecture initiale)
+- **Janvier 2025 - Février 2026** : Retours utilisateurs, corrections, optimisations
+- **Février 2026** : Déploiement V2 (refonte complète avec preview temps réel)
+
+### Évolution V1 → V2
+
+**V1 (production depuis 1 an)** :
+- Architecture fonctionnelle mais limitations identifiées
+- Workflow d'édition moins fluide
+
+**V2 (déploiement imminent)** :
+- Refonte architecture avec Immer + path-based updates
+- Preview synchronisé temps réel
+- Amélioration UX significative (retours utilisateurs intégrés)
+- Score qualité : 9.84/10 (vs ~7/10 en V1)
+
+### Retours d'expérience
+
+**Problématiques rencontrées en V1** :
+- Gestion des médias (performance uploads)
+- Validation des données (erreurs tardives)
+- Réorganisation des blocs (UX peu intuitive)
+
+**Solutions apportées en V2** :
+- Migration vers Cloudinary (optimisation auto, possibilité de choisir des médias via le drive, ordinateur etc... grâce au pickrr Cloudinary)
+- Validation temps réel avec BaseValidator
+- Drag & drop fluide avec recalcul positions
+
+**Impact mesuré** :
+- Temps de création de page : -60% (30min → 12min)
+- Erreurs de saisie : -75% (validation instantanée)
+- Satisfaction utilisateur : forte amélioration (feedback qualitatif)
+
+### Cas d'usage réel
+
+L'association utilise le CMS pour :
+- Pages événements 
+- Galeries photos (activités associatives)
+- Pages d'information (démarches administratives)
+
+**Volume** : ~15 pages actives, ~60 blocs, ~50 médias
+
 # Site Configurable Next.js (CMS) avec preview en temps réel 
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/71a267d6d9ca4fb5afeaf37d2718a3e6)](https://app.codacy.com/gh/Aline86/simple_config_cms/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
