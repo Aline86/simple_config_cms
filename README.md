@@ -350,9 +350,8 @@ La priorité future concerne principalement :
 
 ### Prérequis
 
-- Node.js 18+
-- PostgreSQL (ou compte Neon)
-- npm, npm ou yarn
+- Docker
+- ou env local nodejs 20+ ainsi que postgresql ou neon
 
 ### Installation
 
