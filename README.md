@@ -76,22 +76,19 @@ Ce mécanisme est utilisé notamment pour la gestion des blocs, médias, headers
 
 ## Type d'architecture
 
-**Monolithique data-driven (frontend + backend dans le même projet)**
+**Monolithique (frontend + backend dans le même projet)**
 
 ### Justification
 
 - **Frontend et backend intégrés** : Next.js gère à la fois le rendu React et l'accès à la base via Prisma
 - **Monolithique mais modulable** : chaque bloc est isolé, testable et extensible, mais tout est contenu dans un seul projet
 - **Pas de microservices** : inutile ici, car la logique métier est quasi inexistante et le moteur de rendu est auto-suffisant
-- **Data-driven** : l'architecture repose sur la configuration stockée en BDD, permettant de modifier le rendu sans toucher au code
 - **Validation modulaire** : système de validateurs avec préfixes permettant de valider n'importe quelle structure de données de manière cohérente
 - **Maintenable et évolutif** : découpage en composants, hooks, lib, utils et validateurs pour gérer la complexité
 
 ---
 
-## Analyse critique et défis rencontrés
-
-Duplication de code dans certains blocs similaires, due à la structure data-driven
+## Analyse critique et défis rencontrées
 
 Gestion des validations selon les types de champs avec BaseValidator et préfixes, nécessitant un système flexible mais complexe
 
@@ -124,7 +121,6 @@ Monitoring qualité avec Codacy et CodeScene, suivi de métriques de complexité
 
 ## Principe général
 
-- Projet **data-driven** : tout est piloté par la configuration
 - **Absence de logique métier complexe** : les blocs sont affichés tels quels
 - **Validation déclarative** : les règles de validation sont définies de manière modulaire avec préfixes
 - Les décisions de rendu dépendent uniquement des données provenant de la base
