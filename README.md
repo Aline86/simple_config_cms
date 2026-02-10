@@ -1,18 +1,61 @@
 [<img src="https://flagcdn.com/w20/fr.png" alt="FR"> Français](README.md) | [<img src="https://flagcdn.com/w20/gb.png" alt="EN"> English](README.en.md)
 
-# Site Configurable Next.js (CMS)
+# Site Configurable Next.js (CMS) avec preview en temps réel 
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/71a267d6d9ca4fb5afeaf37d2718a3e6)](https://app.codacy.com/gh/Aline86/simple_config_cms/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
 ## Résumé
 
-Ce projet est un CMS léger et configurable, réalisé en Next.js, permettant de créer facilement des sites vitrines dynamiques. Toutes les pages sont entièrement pilotées par une configuration stockée en base de données (Prisma + PostgreSQL). Chaque bloc est défini par un `type` (famille de composants) et un `bloc_name` (variante). Les composants sont triés et affichés automatiquement selon le champ position mis à jour lors des opérations de CRUD, les requêtes en base récupèrent les blocs ordonnés selon ce critère 'bloc_page_position' asc, sans logique métier complexe.
+Ce projet est un CMS et configurable permettant une visualisation en direct, réalisé en Next.js, permettant de créer facilement des sites vitrines dynamiques. Toutes les pages sont entièrement pilotées par une configuration stockée en base de données (Prisma + PostgreSQL). Chaque bloc est défini par un `type` (famille de composants) et un `bloc_name` (variante). Les composants sont triés et affichés automatiquement selon le champ position mis à jour lors des opérations de CRUD, les requêtes en base récupèrent les blocs ordonnés selon ce critère 'bloc_page_position' asc, sans logique métier complexe.
 
 ## Objectif métier
 
 L’objectif est de permettre à des utilisateurs non techniques de modifier facilement le contenu et la structure des pages via une interface modulaire, sans écrire de code. Le CMS génère automatiquement l’interface utilisateur et valide les données, garantissant la cohérence entre configuration et rendu.
 
-## Architecture
+
+## Système de Preview en Temps Réel
+
+Le CMS intègre un **système de prévisualisation synchronisée** permettant de voir 
+instantanément le rendu des modifications sans sauvegarder en base.
+
+### Architecture technique
+```
+┌─────────────────────────────────────────────────────────┐
+│                    Interface d'édition                   │
+│  ┌─────────────────┐              ┌──────────────────┐  │
+│  │   Form Editor   │────onChange──│  Preview Panel   │  │
+│  │  (inputs, drag) │              │  (render live)   │  │
+│  └────────┬────────┘              └──────────────────┘  │
+│           │                                              │
+│           │ updateByPath(path, value)                    │
+│           ▼                                              │
+│  ┌──────────────────────────────────────────────────┐   │
+│  │         État centralisé (Immer + Context)        │   │
+│  │  - Page complète en mémoire                      │   │
+│  │  - Mise à jour immutable par chemin              │   │
+│  │  - Synchronisation bidirectionnelle              │   │
+│  └──────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────┘
+```
+
+### Fonctionnement
+
+1. **Modification** : L'utilisateur édite un champ (ex: titre d'un bloc)
+2. **Path resolution** : Le système identifie le chemin (`blocs.0.text_titre`)
+3. **Update immutable** : Immer produit un nouvel état sans mutation
+4. **Re-render** : Le preview se met à jour instantanément
+5. **Validation** : Les erreurs s'affichent en temps réel
+6. **Sauvegarde** : L'utilisateur décide quand persister en base
+
+### Avantages
+
+- **UX moderne** : WYSIWYG sans latence réseau
+- **Validation instantanée** : Les erreurs sont visibles avant sauvegarde
+- **Performances** : Pas de requête serveur à chaque modification
+- **Rollback facile** : Annuler sans polluer la base de données
+
+
+## Architecture globale 
 
 L'architecture est **data-driven, maintenable et extensible**, avec :
 
