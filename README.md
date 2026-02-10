@@ -25,7 +25,54 @@ L'architecture est **data-driven, maintenable et extensible**, avec :
 - **Gestion des erreurs centralisée** pour un retour utilisateur cohérent
 - Les médias sont gérés via Cloudinary, permettant la gestion efficace de fichiers volumineux, l’optimisation automatique et la transformation à la volée, tout en gardant la base de données légère et le CMS rapide.
 
----
+## Pattern Factory pour le rendu des blocs
+
+Le système de rendu des blocs repose sur l’utilisation d’un **pattern Factory**, implémenté via un **registry central**.  
+Ce registry agit comme un point unique de résolution entre la configuration issue de la base de données et les composants React à instancier.
+
+### Principe
+
+- Chaque bloc est défini par :
+  - un `type` représentant une famille de blocs ex: Carrousel
+  - un `bloc_name` représentant une variante
+- Le registry implémente une **Factory déclarative** :
+  - le couple `type + bloc_name` est utilisé comme clé de résolution des composants d'édition et visuels à afficher 
+  - la Factory retourne automatiquement le composant React correspondant
+- Le moteur de rendu n’a aucune connaissance des implémentations concrètes
+  
+## Mise à jour immutable par chemin dans l’arborescence des blocs et de la page plus globalement 
+
+La mise à jour de l’état repose sur un mécanisme **path-based**, permettant de modifier de manière ciblée n’importe quelle propriété au sein d’une structure de données imbriquée.
+
+Ce mécanisme est implémenté via une fonction utilitaire générique utilisant **Immer**, garantissant une gestion stricte de l’immutabilité.
+
+### Principe
+
+- L’état est considéré comme une **arborescence de données**
+- Chaque mise à jour est définie par :
+  - un **chemin textuel** (`path`) utilisant la notation pointée (`a.b.c`)
+  - une valeur cible
+- Le chemin est résolu dynamiquement pour atteindre la propriété à modifier
+- La mise à jour est produite sans mutation directe de l’objet source
+
+### Fonctionnement
+
+- Le chemin est découpé en clés successives
+- L’arborescence est parcourue jusqu’à la clé finale
+- Les nœuds intermédiaires sont créés si nécessaire
+- La valeur est remplacée uniquement si elle diffère de l’existante
+- Immer génère une **nouvelle version cohérente de l’état**
+
+### Bénéfices architecturaux
+
+- Mise à jour ciblée et prévisible
+- Support des structures profondément imbriquées
+- Immutabilité garantie sans complexité syntaxique
+- Réduction des effets de bord
+- Alignement avec l’architecture data-driven du CMS
+
+Ce mécanisme est utilisé notamment pour la gestion des blocs, médias, headers et footers lors des opérations d’édition (CRUD, drag & drop, réorganisation).
+
 
 ## Type d'architecture
 
