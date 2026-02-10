@@ -2,6 +2,8 @@
 
 # Site Configurable Next.js (CMS)
 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/71a267d6d9ca4fb5afeaf37d2718a3e6)](https://app.codacy.com/gh/Aline86/simple_config_cms/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+
 ## Résumé
 
 Ce projet est un CMS léger et configurable, réalisé en Next.js, permettant de créer facilement des sites vitrines dynamiques. Toutes les pages sont entièrement pilotées par une configuration stockée en base de données (Prisma + PostgreSQL). Chaque bloc est défini par un `type` (famille de composants) et un `bloc_name` (variante). Les composants sont triés et affichés automatiquement selon le champ position mis à jour lors des opérations de CRUD, les requêtes en base récupèrent les blocs ordonnés selon ce critère 'bloc_page_position' asc, sans logique métier complexe.
