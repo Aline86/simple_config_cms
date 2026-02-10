@@ -191,7 +191,7 @@ Le schéma de base de données illustre les relations entre les différentes ent
   - `TEXTE`
   - `SCREEN`
   - `VIDEO`
-  - `BOUTON`
+  - `BUTTON`
 
 #### **BaseValidator**
 
@@ -317,8 +317,8 @@ La priorité future concerne principalement :
 # Cloner le projet
 git clone https://github.com/Aline86/simple_config_cms.git
 cd simple_config_cms
-# Installer les dépendances
-npm install
+
+# Pour visualiser le projet vous pouvez utiliser un environnement **docker** de développement 
 
 # Configurer les variables d'environnement
 créer un fichier .env à la racine du projet et y ajouter les variables suivantes pour visualiser le projet dans un environnement de développement :
