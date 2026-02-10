@@ -19,7 +19,6 @@ interface ContextEditionProps {
 
 const useUpdateUI = ({ bloc, onChange }: ContextEditionProps) => {
   const [dragged, setDragged] = useState<MediaObject | null>(null);
-
   // Helper pour obtenir la liste de médias et la propriété appropriée
   const getMediaConfig = useCallback(() => {
     if (bloc instanceof BlocObject) {

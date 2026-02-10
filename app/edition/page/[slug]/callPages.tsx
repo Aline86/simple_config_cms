@@ -14,11 +14,7 @@ export async function getPageBySlug(slug: string) {
 }
 
 export async function getPageHeader() {
-  console.log("🔵 Starting getPageHeader");
-  console.log(
-    "🔵 URL:",
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/edition/page/header`,
-  );
+
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_APP_URL}/api/edition/page/header`,
@@ -27,11 +23,10 @@ export async function getPageHeader() {
     },
   );
 
-  console.log("🔵 Response status:", res.status);
-  console.log("🔵 Response ok:", res.ok);
+ 
 
   if (res.status === 404) {
-    console.log("🔵 404 detected, creating header...");
+
     const headerData = {
       text_nom_site: "",
       text_background_url: "",
@@ -52,7 +47,7 @@ export async function getPageHeader() {
       reseaux: [],
     };
     const result = await postPageHeader(headerData);
-    console.log("🔵 Header created:", result);
+
     return result;
   }
 
@@ -81,17 +76,16 @@ async function postPageHeader(headerData: { [key: string]: unknown }) {
     },
   );
 
-  console.log("🟢 POST Response status:", res.status);
-  console.log("🟢 POST Response ok:", res.ok);
+
 
   if (!res.ok) {
     const error = await res.json();
-    console.log("🟢 POST Error:", error);
+
     throw new Error(error.error || "Erreur création header");
   }
 
   const result = await res.json();
-  console.log("🟢 POST Result:", result);
+
   return result;
 }
 export async function getPageFooter() {

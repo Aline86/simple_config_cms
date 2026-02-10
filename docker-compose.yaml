@@ -22,7 +22,6 @@ services:
     networks:
       - app_network
 
-  # Next.js Application
   cms:
     container_name: cms
     build:
@@ -32,6 +31,7 @@ services:
     ports:
       - "${APP_PORT:-3000}:3000"
     environment:
+      CHOKIDAR_USEPOLLING: "true"
       NODE_ENV: development
       NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL}
       NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: ${NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}
@@ -43,26 +43,14 @@ services:
     volumes:
       # Mount source code for hot-reload
       - .:/cms
-      - /cms/node_modules
-      - /cms/.next
-      - /cms/prisma/generated
+
     depends_on:
       db:
         condition: service_healthy
     networks:
       - app_network
-    command: >
-      sh -c "
-        echo '🔄 Generating Prisma Client...' &&
-        npx prisma generate &&
-        echo '🔄 Running migrations...' &&
-        npx prisma migrate deploy &&
-        echo '🌱 Seeding database...' &&
-        npx prisma db seed &&
-        echo '✅ Database ready!' &&
-        echo '🚀 Starting development server...' &&
-        npm run dev
-      "
+
+    command: sh ./docker-entrypoint.sh
 
 volumes:
   postgres_data:

@@ -1,20 +1,14 @@
 #!/bin/sh
 set -e
 
-echo "Waiting for PostgreSQL to be ready..."
-
-
-
-echo "PostgreSQL is ready!"
-
-echo "Generating Prisma client..."
+echo "Generating Prisma Client..."
 npx prisma generate
 
-echo "Running database migrations..."
+echo "Running migrations..."
 npx prisma migrate deploy
 
 echo "Seeding database..."
-node prisma/seed.js
+npx prisma db seed
 
-echo "Starting Next.js dev server..."
-npm run dev
+echo "Starting development server..."
+npm run dev 
