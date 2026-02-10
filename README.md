@@ -2,6 +2,8 @@
 
 # Site Configurable Next.js (CMS)
 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/71a267d6d9ca4fb5afeaf37d2718a3e6)](https://app.codacy.com/gh/Aline86/simple_config_cms/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+
 ## Résumé
 
 Ce projet est un CMS léger et configurable, réalisé en Next.js, permettant de créer facilement des sites vitrines dynamiques. Toutes les pages sont entièrement pilotées par une configuration stockée en base de données (Prisma + PostgreSQL). Chaque bloc est défini par un `type` (famille de composants) et un `bloc_name` (variante). Les composants sont triés et affichés automatiquement selon le champ position mis à jour lors des opérations de CRUD, les requêtes en base récupèrent les blocs ordonnés selon ce critère 'bloc_page_position' asc, sans logique métier complexe.
@@ -23,7 +25,54 @@ L'architecture est **data-driven, maintenable et extensible**, avec :
 - **Gestion des erreurs centralisée** pour un retour utilisateur cohérent
 - Les médias sont gérés via Cloudinary, permettant la gestion efficace de fichiers volumineux, l’optimisation automatique et la transformation à la volée, tout en gardant la base de données légère et le CMS rapide.
 
----
+## Pattern Factory pour la création des blocs
+
+Le système de création des blocs repose sur l’utilisation d’un **pattern Factory* qui permet la création centralisée des blocs, ce qui rend cette fonctionnalité testable.
+
+### Principe
+
+- Chaque bloc est défini par :
+  - un `type` représentant une famille de blocs ex: Carrousel
+  - un `bloc_name` représentant une variante
+    
+ ### conséquence du principe précédent 
+ 
+  - le couple `type + bloc_name` est utilisé comme clé de résolution des composants d'édition et visuels à afficher 
+  - Le moteur de rendu n’a aucune connaissance des implémentations concrètes
+  
+## Mise à jour immutable par chemin dans l’arborescence des blocs et de la page plus globalement 
+
+La mise à jour de l’état repose sur un mécanisme **path-based**, permettant de modifier de manière ciblée n’importe quelle propriété au sein d’une structure de données imbriquée.
+
+Ce mécanisme est implémenté via une fonction utilitaire générique utilisant **Immer**, garantissant une gestion stricte de l’immutabilité.
+
+### Principe
+
+- L’état est considéré comme une **arborescence de données**
+- Chaque mise à jour est définie par :
+  - un **chemin textuel** (`path`) utilisant la notation pointée (`a.b.c`)
+  - une valeur cible
+- Le chemin est résolu dynamiquement pour atteindre la propriété à modifier
+- La mise à jour est produite sans mutation directe de l’objet source
+
+### Fonctionnement
+
+- Le chemin est découpé en clés successives
+- L’arborescence est parcourue jusqu’à la clé finale
+- Les nœuds intermédiaires sont créés si nécessaire
+- La valeur est remplacée uniquement si elle diffère de l’existante
+- Immer génère une **nouvelle version cohérente de l’état**
+
+### Bénéfices architecturaux
+
+- Mise à jour ciblée et prévisible
+- Support des structures profondément imbriquées
+- Immutabilité garantie sans complexité syntaxique
+- Réduction des effets de bord
+- Alignement avec l’architecture data-driven du CMS
+
+Ce mécanisme est utilisé notamment pour la gestion des blocs, médias, headers et footers lors des opérations d’édition (CRUD, drag & drop, réorganisation).
+
 
 ## Type d'architecture
 
@@ -223,29 +272,6 @@ Chaque champ est automatiquement associé à un validateur dédié grâce à son
 Les métriques de qualité sont suivies via **Codacy** et **CodeScene**, afin d’évaluer la maintenabilité, la complexité et la santé globale du codebase.
 
 ---
-
-### Vue d’ensemble (Codacy)
-
-![Codacy dashboard](./docs/codacy-dashboard.png)
-
-- **Issues** : **5.007 / kLoC**
-  → Niveau faible et stable, indiquant peu de problèmes rapportés par millier de lignes de code.
-
-- **Complexité** : **7 %**
-  → Complexité maîtrisée, avec une structure globalement simple et lisible.
-
-- **Duplication** : **26 %**
-  → Duplication notable, principalement due :
-  - aux patterns répétitifs des composants data-driven
-  - aux variantes de blocs partageant une structure similaire
-    Ce point est identifié comme axe d’amélioration potentiel (factorisation).
-
-- **Coverage** : non mesurée
-  → Pas encore de couverture de tests automatisés configurée.
-
----
-
-### Santé du code (CodeScene)
 
 ![CodeScene dashboard](./docs/codescene.png)
 
