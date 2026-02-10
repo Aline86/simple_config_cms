@@ -25,20 +25,20 @@ L'architecture est **data-driven, maintenable et extensible**, avec :
 - **Gestion des erreurs centralisée** pour un retour utilisateur cohérent
 - Les médias sont gérés via Cloudinary, permettant la gestion efficace de fichiers volumineux, l’optimisation automatique et la transformation à la volée, tout en gardant la base de données légère et le CMS rapide.
 
-## Pattern Factory pour le rendu des blocs
+## Pattern Factory pour la création des blocs
 
-Le système de rendu des blocs repose sur l’utilisation d’un **pattern Factory**, implémenté via un **registry central**.  
-Ce registry agit comme un point unique de résolution entre la configuration issue de la base de données et les composants React à instancier.
+Le système de création des blocs repose sur l’utilisation d’un **pattern Factory* qui permet la création centralisée des blocs, ce qui rend cette fonctionnalité testable.
 
 ### Principe
 
 - Chaque bloc est défini par :
   - un `type` représentant une famille de blocs ex: Carrousel
   - un `bloc_name` représentant une variante
-- Le registry implémente une **Factory déclarative** :
+    
+ ### conséquence du principe précédent 
+ 
   - le couple `type + bloc_name` est utilisé comme clé de résolution des composants d'édition et visuels à afficher 
-  - la Factory retourne automatiquement le composant React correspondant
-- Le moteur de rendu n’a aucune connaissance des implémentations concrètes
+  - Le moteur de rendu n’a aucune connaissance des implémentations concrètes
   
 ## Mise à jour immutable par chemin dans l’arborescence des blocs et de la page plus globalement 
 
@@ -272,29 +272,6 @@ Chaque champ est automatiquement associé à un validateur dédié grâce à son
 Les métriques de qualité sont suivies via **Codacy** et **CodeScene**, afin d’évaluer la maintenabilité, la complexité et la santé globale du codebase.
 
 ---
-
-### Vue d’ensemble (Codacy)
-
-![Codacy dashboard](./docs/codacy-dashboard.png)
-
-- **Issues** : **5.007 / kLoC**
-  → Niveau faible et stable, indiquant peu de problèmes rapportés par millier de lignes de code.
-
-- **Complexité** : **7 %**
-  → Complexité maîtrisée, avec une structure globalement simple et lisible.
-
-- **Duplication** : **26 %**
-  → Duplication notable, principalement due :
-  - aux patterns répétitifs des composants data-driven
-  - aux variantes de blocs partageant une structure similaire
-    Ce point est identifié comme axe d’amélioration potentiel (factorisation).
-
-- **Coverage** : non mesurée
-  → Pas encore de couverture de tests automatisés configurée.
-
----
-
-### Santé du code (CodeScene)
 
 ![CodeScene dashboard](./docs/codescene.png)
 
