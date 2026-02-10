@@ -349,12 +349,16 @@ Vous pourrez accéder au bo à l'adresse http://localhost:3000/login grâce ux i
 npm prisma studio
 
 # Lancer les tests
-npm test
+npm run test
 
 ---
 
 ## Tests
 
+Des tests ont été prévus pour la création de blocs. Les tests sont gérés à l'aide de jest.
+Vous pouvez les jouer à l'aide de la commande npm run tests.
+
+Les tests sont présents dans le dossier tests.
 
 ---
 
