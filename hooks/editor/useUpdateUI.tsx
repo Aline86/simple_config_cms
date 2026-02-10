@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { cloneBlocWithMedias } from "../../lib/helpers/bloc.helper";
 import { reorderArray } from "../../lib/helpers/changeComponentPosition";
 import {
@@ -20,90 +20,81 @@ interface ContextEditionProps {
 const useUpdateUI = ({ bloc, onChange }: ContextEditionProps) => {
   const [dragged, setDragged] = useState<MediaObject | null>(null);
 
-  const onDragStart = (media: MediaObject) => {
+  // Helper pour obtenir la liste de médias et la propriété appropriée
+  const getMediaConfig = useCallback(() => {
+    if (bloc instanceof BlocObject) {
+      return {
+        medias: bloc.image_medias,
+        propertyName: `blocs.${bloc.bloc_position}`,
+        positionKey: "number_position_image" as const,
+        parentId: bloc.id,
+      };
+    }
+    return {
+      medias: bloc.reseaux,
+      propertyName: "reseaux",
+      positionKey: "number_position_image" as const,
+      parentId: bloc.number_id,
+    };
+  }, [bloc]);
+
+  // Helper pour cloner le bloc avec les nouveaux médias
+  const cloneBlocWithNewMedias = useCallback(
+    (newMedias: MediaObject[]) => {
+      if (bloc instanceof BlocObject) {
+        return cloneBlocWithMedias(bloc, newMedias);
+      }
+      if (bloc instanceof HeaderObject) {
+        return cloneHeaderWithReseaux(bloc, newMedias);
+      }
+      return cloneFooterWithReseaux(bloc, newMedias);
+    },
+    [bloc],
+  );
+
+  const onDragStart = useCallback((media: MediaObject) => {
     setDragged(media);
-  };
+  }, []);
 
-  const onDrop = (target: MediaObject) => {
-    if (!dragged) return;
-    let reordered;
-    if (bloc instanceof BlocObject) {
-      reordered = reorderArray(
-        bloc.image_medias, //  Utiliser prev (localBloc)
-        dragged,
-        target,
-        "number_position_image",
-      );
-    } else {
-      reordered = reorderArray(
-        bloc.reseaux, //  Utiliser prev (localBloc)
-        dragged,
-        target,
-        "number_position_image",
-      );
-    }
-    const cleanimage_medias = reordered.map(cloneMediaWithPosition);
+  const onDrop = useCallback(
+    (target: MediaObject) => {
+      if (!dragged) return;
 
-    if (bloc instanceof BlocObject) {
-      const updatedBloc = cloneBlocWithMedias(bloc, cleanimage_medias);
-      onChange("blocs." + bloc.bloc_position, updatedBloc);
-    } else if (bloc instanceof HeaderObject) {
-      const updatedBloc = cloneHeaderWithReseaux(bloc, cleanimage_medias);
-      onChange("reseaux", updatedBloc);
-    } else {
-      const updatedBloc = cloneFooterWithReseaux(bloc, cleanimage_medias);
-      onChange("reseaux", updatedBloc);
-    }
-  };
+      const { medias, propertyName, positionKey } = getMediaConfig();
+      const reordered = reorderArray(medias, dragged, target, positionKey);
+      const updatedMedias = reordered.map(cloneMediaWithPosition);
+      const updatedBloc = cloneBlocWithNewMedias(updatedMedias);
+
+      onChange(propertyName, updatedBloc);
+      setDragged(null);
+    },
+    [dragged, getMediaConfig, cloneBlocWithNewMedias, onChange],
+  );
 
   const handleAdd = useCallback(() => {
-    if (bloc instanceof BlocObject) {
-      const newMedia = createMedia(bloc.image_medias.length, bloc.id);
+    const { medias, propertyName, parentId } = getMediaConfig();
+    const newMedia = createMedia(medias.length, parentId);
+    const updatedMedias = [...medias, newMedia];
+    const updatedBloc = cloneBlocWithNewMedias(updatedMedias);
 
-      const updatedBloc = {
-        ...bloc,
-        image_medias: [...bloc.image_medias, newMedia],
-      };
+    onChange(propertyName, updatedBloc);
+  }, [getMediaConfig, cloneBlocWithNewMedias, onChange]);
 
-      onChange(`blocs.${bloc.bloc_position}`, updatedBloc);
-    } else {
-      const newMedia = createMedia(bloc.reseaux.length, bloc.number_id);
-
-      const updatedBloc = {
-        ...bloc,
-        reseaux: [...bloc.reseaux, newMedia],
-      };
-      onChange(`reseaux`, updatedBloc.reseaux);
-    }
-  }, [onChange]);
   const handleRemove = useCallback(
     (media: MediaObject) => {
-      if (bloc instanceof BlocObject) {
-        const cleanimage_medias = bloc.image_medias
-          .filter((img) => img.id !== media.id)
-          .map(cloneMediaWithPosition);
+      const { medias, propertyName } = getMediaConfig();
+      const updatedMedias = medias
+        .filter((img) => img.id !== media.id)
+        .map(cloneMediaWithPosition);
+      const updatedBloc = cloneBlocWithNewMedias(updatedMedias);
 
-        onChange(`blocs.${bloc.bloc_position}`, {
-          ...bloc,
-          image_medias: cleanimage_medias,
-        });
-      } else {
-        const cleanimage_medias = bloc.reseaux
-          .filter((img) => img.id !== media.id)
-          .map(cloneMediaWithPosition);
-
-        onChange(`reseaux`, {
-          ...bloc,
-          reseaux: cleanimage_medias,
-        });
-      }
+      onChange(propertyName, updatedBloc);
     },
-    [bloc, onChange],
+    [getMediaConfig, cloneBlocWithNewMedias, onChange],
   );
 
   return {
     dragged,
-
     handleAdd,
     handleRemove,
     onDrop,

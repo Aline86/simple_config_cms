@@ -16,7 +16,7 @@ COPY package.json package-lock.json* ./
 # Install dependencies
 RUN npm ci
 # Copy rest of the app
-COPY . .
+# COPY . .
 RUN mkdir -p .next
 
 RUN chmod -R 777 .next

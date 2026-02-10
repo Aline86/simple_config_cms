@@ -56,19 +56,19 @@ export default function PicturesLinkEdit<T>({
         </button>
         <FieldRenderer
           label="text_titre du bloc d'images avec lien de redirection"
-          fieldName={`text_titre`}
+          fieldName={`blocs.${images_group.bloc_position}.text_titre`}
           model={images_group as Record<string, any>}
           setField={onChange}
         />
         <FieldRenderer
           label="Nombre de colonnes par ligne"
-          fieldName={`number_columns`}
+          fieldName={`blocs.${images_group.bloc_position}.number_columns`}
           model={images_group as BlocObject}
           setField={onChange}
         />
         <FieldRenderer
           label="Espacement entre les images"
-          fieldName={`number_gap`}
+          fieldName={`blocs.${images_group.bloc_position}.number_gap`}
           model={images_group as BlocObject}
           setField={onChange}
         />
@@ -82,6 +82,7 @@ export default function PicturesLinkEdit<T>({
                 removeElement={removeElement}
                 onDragStart={onDragStart}
                 onDrop={onDrop}
+                blocNumber={images_group.bloc_position}
                 isLink={isLink}
               />
             );
