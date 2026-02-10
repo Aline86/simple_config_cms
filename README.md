@@ -321,24 +321,29 @@ cd simple_config_cms
 npm install
 
 # Configurer les variables d'environnement
-cp .env.example .env
-# Éditer .env avec votre DATABASE_URL
+créer un fichier .env à la racine du projet et y ajouter les variables suivantes pour visualiser le projet dans un environnement de développement :
+- créer un compte sur Cloudinary et ajouter un upload preset de type unsigned puis récupérer les variables cloudname, api_key et api_secret dans la section api key et enfin ajouter un nom de dossier à côté de NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER
 
-# Générer le client Prisma
-npm prisma generate
+NEXT_PUBLIC_APP_URL:
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: 
+CLOUDINARY_API_KEY:
+CLOUDINARY_API_SECRET: 
+JWT_SECRET: 
+NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER: 
 
-# Exécuter les migrations
-npm prisma migrate dev
+une fois cette étape effectuée vous pouvez lancer les commandes :
 
-# (Optionnel) Seed de données de démonstration
-npm prisma db seed
-```
+- docker-compose build
+- docker-compose up
+
+la création des tables en base de données postgresql est automatisée ainsi que la création d'un user à l'aide d'un script de seed.
+
+Vous pourrez accéder au bo à l'adresse http://localhost:3000/login grâce ux identifiants suivants :
+
+- login: test@test.com
+- mot de passe : test
 
 ### Développement
-
-```bash
-# Lancer le serveur de développement
-npm dev
 
 # Ouvrir Prisma Studio
 npm prisma studio
@@ -346,13 +351,10 @@ npm prisma studio
 # Lancer les tests
 npm test
 
-# Build de production
-npm build
-```
-
 ---
 
 ## Tests
+
 
 ---
 
