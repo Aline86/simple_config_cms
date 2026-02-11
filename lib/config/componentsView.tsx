@@ -35,7 +35,7 @@ type BlocEditionProps = {
 type BlocFrontProps = {
   bloc: BlocObject;
 };
-type BlocComponent = React.FC<BlocEditionProps | MediaEditorProps<MediaObject>>;
+type BlocComponent = React.FC<BlocEditionProps>;
 type BlocFrontComponent = React.FC<BlocFrontProps>;
 
 type SubGroupRenderType = {
