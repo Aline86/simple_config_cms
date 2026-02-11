@@ -4,13 +4,12 @@
 
 ### Utilisateur : Association Welcome Poitiers
 
-Ce CMS est utilisé en production par l'association **Welcome Poitiers** (aide aux 
-réfugiés et migrants) depuis **janvier 2025**.
+Ce CMS est utilisé en production par l'association **Welcome Poitiers** depuis **janvier 2025**.
 
 **Timeline du projet :**
 - **Janvier 2025** : Mise en production V1 (architecture initiale)
 - **Janvier 2025 - Février 2026** : Retours utilisateurs, corrections, optimisations
-- **Février 2026** : Déploiement V2 (refonte complète avec preview temps réel)
+- **Février 2026** : Déploiement V2 (refonte complète avec ux optimisée)
 
 ### Évolution V1 → V2
 
@@ -27,14 +26,15 @@ réfugiés et migrants) depuis **janvier 2025**.
 ### Retours d'expérience
 
 **Problématiques rencontrées en V1** :
-- Gestion des médias (performance uploads)
+- Gestion des médias (performances au niveaude l'affichage, les médias n'étaient pas optimisés)
 - Validation des données (erreurs tardives)
-- Réorganisation des blocs (UX peu intuitive)
+- UX peu intuitive
 
 **Solutions apportées en V2** :
-- Migration vers Cloudinary (optimisation auto, possibilité de choisir des médias via le drive, ordinateur etc... grâce au pickrr Cloudinary)
+- Migration vers Cloudinary (optimisation auto, possibilité de choisir des médias via le drive, ordinateur etc... grâce au picker de Cloudinary)
 - Validation temps réel avec BaseValidator
 - Drag & drop fluide avec recalcul positions
+- ux modernisée, réactivité à tous les niveaux 
 
 **Impact mesuré** :
 - Temps de création de page : -60% (30min → 12min)
