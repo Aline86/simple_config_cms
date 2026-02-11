@@ -56,7 +56,7 @@ L'association utilise le CMS pour :
 
 ## Résumé
 
-Ce projet est un CMS et configurable permettant une visualisation en direct, réalisé en Next.js, permettant de créer facilement des sites vitrines dynamiques. Toutes les pages sont entièrement pilotées par le contenu stocké en base de données (Prisma + PostgreSQL). Chaque bloc est défini par un `type` (famille de composants) et un `bloc_name` (variante). Les composants sont triés et affichés automatiquement selon le champ position mis à jour lors des opérations de CRUD, les requêtes en base récupèrent les blocs ordonnés selon ce critère 'bloc_page_position' asc, sans logique métier complexe.
+Ce projet est un CMS configurable permettant une visualisation en direct, réalisé en Next.js. Il permet de créer facilement des sites vitrines dynamiques. Toutes les pages sont entièrement pilotées par le contenu stocké en base de données (Prisma + PostgreSQL). Chaque bloc est défini par un `type` (famille de composants) et un `bloc_name` (variante). Les composants sont triés et affichés automatiquement selon le champ position mis à jour lors des opérations de CRUD, les requêtes en base récupèrent les blocs ordonnés selon ce critère 'bloc_page_position' asc, sans logique métier complexe.
 
 ## Objectif métier
 
