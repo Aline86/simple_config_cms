@@ -15,19 +15,7 @@ import PicturesGridView from "../../components/contextView/showcase/grid/picture
 import ScreenView from "../../components/contextView/showcase/screen/ScreenView";
 import VideoView from "../../components/contextView/showcase/video/VideoView";
 import { BlocObject } from "../../database/model/Bloc";
-import { MediaObject } from "../../database/model/bloc/MediaObject";
 
-type MediaEditorProps<T extends MediaObject> = {
-  media: MediaObject;
-  blocNumber: number;
-  onChange: (fieldName: string, newValue: unknown) => void;
-  removeElement: (media: T) => void;
-  onDragStart: (page: MediaObject) => void;
-  onDrop: (page: MediaObject) => void;
-  context?: string;
-  isLink?: boolean;
-  show_debug?: boolean;
-};
 type BlocEditionProps = {
   bloc: BlocObject;
   onChange: (fieldName: string, value: unknown) => void;
