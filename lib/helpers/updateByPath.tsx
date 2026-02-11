@@ -5,23 +5,30 @@ type UpdateResult<T> = {
   data: T;
 };
 
+const UNSAFE_KEYS = ["__proto__", "constructor", "prototype"];
+
 export function updateObjectByPath<T>(
   obj: T,
   path: string,
   value: unknown,
 ): UpdateResult<T> {
   const keys = path.split(".");
+
+  // Validation simple
+  if (keys.some((key) => UNSAFE_KEYS.includes(key))) {
+    throw new Error("Unsafe path detected");
+  }
+
   let updated = false;
-  console.log("keys", keys);
-  const result = produce(obj, (draft: unknown) => {
+
+  const result = produce(obj, (draft: any) => {
     let current = draft;
 
     for (let i = 0; i < keys.length - 1; i++) {
-      const key = keys[i];
-      if (!current[key] || typeof current[key] !== "object") {
-        current[key] = {};
+      if (!current[keys[i]] || typeof current[keys[i]] !== "object") {
+        current[keys[i]] = {};
       }
-      current = current[key];
+      current = current[keys[i]];
     }
 
     const lastKey = keys[keys.length - 1];

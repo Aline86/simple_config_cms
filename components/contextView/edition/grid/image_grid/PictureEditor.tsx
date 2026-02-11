@@ -116,7 +116,7 @@ export function PictureEditor<T>({ ...props }: MediaEditorProps<T>) {
                 {props.isLink && (
                   <>
                     <FieldRenderer
-                      label="text_titre de la carte"
+                      label="Titre de la carte"
                       fieldName={
                         context_medias +
                         `${(props.media as MediaObject).number_position_image}.text_titre`
