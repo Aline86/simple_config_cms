@@ -1,9 +1,9 @@
 "use client";
 
-import { BlocObject } from "../../../../../database/model/Bloc";
-import { MediaObject } from "../../../../../database/model/bloc/MediaObject";
-import { FieldRenderer } from "../../../../../lib/validators/renderer/TextRenderer";
-import { PictureEditor } from "../../grid/image_grid/PictureEditor";
+import { BlocObject } from "../../../../database/model/Bloc";
+import { MediaObject } from "../../../../database/model/bloc/MediaObject";
+import { FieldRenderer } from "../../../../lib/validators/renderer/TextRenderer";
+import { PictureEditor } from "../grid/image_grid/PictureEditor";
 
 interface CarouselThumbnailsProps<T> {
   bloc: BlocObject;
@@ -12,22 +12,22 @@ interface CarouselThumbnailsProps<T> {
   removeElement: (bloc: MediaObject) => void;
   onDragStart: (page: MediaObject) => void;
   onDrop: (page: MediaObject) => void;
-  isLink?: boolean;
-  showWidth?: boolean;
+
   debug?: boolean;
 }
 
-export default function CarouselThumbnailsEdit<T>({
+export default function CarouselEdit<T>({
   bloc,
   onChange,
   addElement,
   removeElement,
   onDragStart,
   onDrop,
-  isLink,
-  showWidth,
+
   debug = false,
 }: CarouselThumbnailsProps<T>) {
+  const isLink = bloc.text_nom_bloc !== "miniatures";
+  const showWidth = bloc.text_nom_bloc !== "auto";
   return (
     <section className="mx-auto w-full min-w-[43vw] space-y-6 p-6">
       <div className="space-y-2">

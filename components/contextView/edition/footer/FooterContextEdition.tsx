@@ -16,7 +16,7 @@ import { MediaObject } from "../../../../database/model/bloc/MediaObject";
 import FooterView from "../../showcase/footer/FooterView";
 import FooterEdit from "./FooterEdit";
 import EditionDoubleView from "../../../ui/EditionDoubleView";
-import useUpdateUI from "../../../../hooks/editor/useUpdateUI";
+import useUpdateUI from "../../../../hooks/updateByPath/useUpdateUI";
 
 interface FooterContextEditionProps {
   bloc: FooterObject;

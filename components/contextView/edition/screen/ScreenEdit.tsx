@@ -5,7 +5,7 @@ import { MediaObject } from "../../../../database/model/bloc/MediaObject";
 import { FieldRenderer } from "../../../../lib/validators/renderer/TextRenderer";
 import { PictureEditor } from "../grid/image_grid/PictureEditor";
 
-interface ButtonEditorProps<T> {
+interface ScreenEditorProps<T> {
   bloc: BlocObject;
   onChange: (fieldName: string, newValue: any) => void;
   addElement: () => void;
@@ -16,7 +16,7 @@ interface ButtonEditorProps<T> {
   show_debug?: boolean;
 }
 
-export default function ButtonEdit<T>({
+export default function ScreenEdit<T>({
   bloc,
   onChange,
 
@@ -25,7 +25,7 @@ export default function ButtonEdit<T>({
   onDrop,
   isLink,
   show_debug = false,
-}: ButtonEditorProps<T>) {
+}: ScreenEditorProps<T>) {
   return (
     <section className="mx-auto min-w-2xl max-w-2xl space-y-6 p-6">
       <div className="space-y-2">
@@ -46,7 +46,7 @@ export default function ButtonEdit<T>({
         />
         <FieldRenderer
           label="text_description courte (texte court - 500 caractères)"
-          fieldName={`blocs.` + bloc.bloc_position + `.` +`text_description`}
+          fieldName={`blocs.` + bloc.bloc_position + `.` + `text_description`}
           model={bloc as Record<string, any>}
           setField={onChange}
         />

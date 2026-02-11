@@ -52,7 +52,7 @@ export default function PageBlocs({
                   <ComponentBloc
                     bloc={bloc}
                     onDelete={onDelete}
-                    updateBloc={updateBloc}
+                    onChange={updateBloc}
                   />
                 }
                 header={" Bloc n° : " + num + " " + bloc.type}

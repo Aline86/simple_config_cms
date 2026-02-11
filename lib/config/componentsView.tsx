@@ -1,12 +1,10 @@
-import ButtonContextEdition from "../../components/contextView/edition/button/ButtonContextEdition";
-import CarouselsAutoContextEdition from "../../components/contextView/edition/carousel/automatic/CarouselsAutoContextEdition";
-import CarouselsSimpleContextEdition from "../../components/contextView/edition/carousel/simple/CarouselsSimpleContextEdition";
-import CarouselThumbnailsContextEdition from "../../components/contextView/edition/carousel/thumbnails/CarouselThumbnailsContextEdition";
+import ButtonEdit from "../../components/contextView/edition/button/ButtonEdit";
+import CarouselEdit from "../../components/contextView/edition/carousel/CarouselEdit";
 import TextPicturesContextEdition from "../../components/contextView/edition/editor/TextPicturesContextEdition";
-import ImageGridContextEdition from "../../components/contextView/edition/grid/image_grid/ImageGridContextEdition";
-import ImageGroupContextEdition from "../../components/contextView/edition/grid/image_group/ImageGroupContextEdition";
-import ScreenContextEdition from "../../components/contextView/edition/screen/ScreenContextEdition";
-import VideoContextEdition from "../../components/contextView/edition/video/VideoContextEdition";
+import { PictureEditor } from "../../components/contextView/edition/grid/image_grid/PictureEditor";
+import PicturesLinkEdit from "../../components/contextView/edition/grid/image_group/PicturesLinkEdit";
+import ScreenEdit from "../../components/contextView/edition/screen/ScreenEdit";
+import VideoEdit from "../../components/contextView/edition/video/VideoEdit";
 import ButtonView from "../../components/contextView/showcase/button/ButtonView";
 import CarouselAutoView from "../../components/contextView/showcase/carousel/automatic/CarouselAutoView";
 import CarouselSimple from "../../components/contextView/showcase/carousel/simple/Carousel";
@@ -17,8 +15,19 @@ import PicturesGridView from "../../components/contextView/showcase/grid/picture
 import ScreenView from "../../components/contextView/showcase/screen/ScreenView";
 import VideoView from "../../components/contextView/showcase/video/VideoView";
 import { BlocObject } from "../../database/model/Bloc";
-import { TypeBloc } from "../../database/model/Page";
+import { MediaObject } from "../../database/model/bloc/MediaObject";
 
+type MediaEditorProps<T extends MediaObject> = {
+  media: MediaObject;
+  blocNumber: number;
+  onChange: (fieldName: string, newValue: unknown) => void;
+  removeElement: (media: T) => void;
+  onDragStart: (page: MediaObject) => void;
+  onDrop: (page: MediaObject) => void;
+  context?: string;
+  isLink?: boolean;
+  show_debug?: boolean;
+};
 type BlocEditionProps = {
   bloc: BlocObject;
   onChange: (fieldName: string, value: unknown) => void;
@@ -26,12 +35,12 @@ type BlocEditionProps = {
 type BlocFrontProps = {
   bloc: BlocObject;
 };
-type BlocComponent = React.FC<BlocEditionProps>;
+type BlocComponent = React.FC<BlocEditionProps | MediaEditorProps<MediaObject>>;
 type BlocFrontComponent = React.FC<BlocFrontProps>;
 
 type SubGroupRenderType = {
   [key: string]: {
-    [key: string]: BlocComponent | null;
+    [key: string]: BlocComponent | boolean;
   };
 };
 type FrontRenderType = {
@@ -40,18 +49,20 @@ type FrontRenderType = {
 
 export const blocksToRender: SubGroupRenderType = {
   CAROUSEL: {
-    classique: CarouselsSimpleContextEdition,
-    miniatures: CarouselThumbnailsContextEdition,
-    automatique: CarouselsAutoContextEdition,
+    is_custom: false,
+    classique: CarouselEdit,
+    miniatures: CarouselEdit,
+    automatique: CarouselEdit,
   },
-  TEXTE: { texte: TextPicturesContextEdition },
+  TEXTE: { is_custom: true, texte: TextPicturesContextEdition },
   IMAGE_GROUPE: {
-    image_group: ImageGroupContextEdition,
-    grid: ImageGridContextEdition,
+    is_custom: false,
+    image_group: PicturesLinkEdit,
+    grid: PicturesLinkEdit,
   },
-  BOUTON: { bouton: ButtonContextEdition },
-  SCREEN: { screen: ScreenContextEdition },
-  VIDEO: { video: VideoContextEdition },
+  BOUTON: { is_custom: false, bouton: ButtonEdit },
+  SCREEN: { is_custom: false, screen: ScreenEdit },
+  VIDEO: { is_custom: false, video: VideoEdit },
 };
 
 export const blocksFrontToRender: FrontRenderType = {

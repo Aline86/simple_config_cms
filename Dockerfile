@@ -1,6 +1,4 @@
-FROM node:20-alpine
-
-RUN apk add --no-cache libc6-compat openssl
+FROM node:20
 
 WORKDIR /cms
 
@@ -16,7 +14,7 @@ COPY package.json package-lock.json* ./
 # Install dependencies
 RUN npm ci
 # Copy rest of the app
-# COPY . .
+#COPY . .
 RUN mkdir -p .next
 
 RUN chmod -R 777 .next

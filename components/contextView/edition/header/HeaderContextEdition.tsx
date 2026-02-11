@@ -16,7 +16,7 @@ import { MediaObject } from "../../../../database/model/bloc/MediaObject";
 import HeaderView from "../../showcase/header/HeaderView";
 import HeaderEdit from "./HeaderEdit";
 import EditionDoubleView from "../../../ui/EditionDoubleView";
-import useUpdateUI from "../../../../hooks/editor/useUpdateUI";
+import useUpdateUI from "../../../../hooks/updateByPath/useUpdateUI";
 
 interface HeaderContextEditionProps {
   bloc: HeaderObject;

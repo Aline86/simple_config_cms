@@ -40,17 +40,28 @@ services:
       JWT_SECRET: ${JWT_SECRET}
       NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER: ${NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER}
       DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-myapp}?schema=public
-    volumes:
-      # Mount source code for hot-reload
-      - .:/cms
 
+    volumes:
+      - .:/cms
+      - /cms/node_modules
+      - /cms/.next
     depends_on:
       db:
         condition: service_healthy
     networks:
       - app_network
 
-    command: sh ./docker-entrypoint.sh
+    command: >
+      sh -c "
+        echo 'Generating Prisma Client...' &&
+        npx prisma generate &&
+        echo 'Running migrations...' &&
+        npx prisma migrate deploy &&
+        echo 'Seeding database...' &&
+        npx prisma db seed || true &&
+        echo 'Starting development server...' &&
+        npm run dev
+      "
 
 volumes:
   postgres_data:

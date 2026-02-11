@@ -1,23 +1,13 @@
 // PicturesLinkItemView.tsx
 
 import Image from "next/image";
-import FIELD_CONFIGS from "../../../../lib/config/fieldConfig";
 import { BlocObject } from "../../../../database/model/Bloc";
-import CloudinaryValidator, {
-  CloudinaryParameter,
-} from "../../../../lib/validators/MediaValidator";
+
 import { useAppContext } from "../../../../context/DomDataProvider";
 export default function ScreenView({ bloc }: { bloc: BlocObject }) {
-  const picture = bloc.image_medias[0];
-  const isValid = new CloudinaryValidator(
-    bloc.image_medias[0].image_url,
-    FIELD_CONFIGS["image_url"] instanceof CloudinaryParameter
-      ? FIELD_CONFIGS["image_url"]
-      : new CloudinaryParameter(),
-  ).validate();
   const { hasH1InPage } = useAppContext();
   return bloc.bloc_position === 0 && bloc.mode === "edition" ? (
-    <section className="z-0 mt-[-95px] relative w-screen h-screen ">
+    <section className="z-0 mt-[-95px] relative w-full h-screen ">
       <div className="relative z-10 w-screen h-screen  p-24  title text-white flex flex-col justify-end pb-24">
         {hasH1InPage ? (
           <h2 style={{ color: "white", fontSize: "65px" }}>
@@ -33,31 +23,35 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
           {bloc.text_description}
         </h2>
       </div>
-
-      <Image
-        src={bloc.image_medias[0].image_url}
-        alt={bloc.text_titre}
-        fill
-        className="absolute z-0 w-[100vw] h-[100vh] inset-0 top-0 object-cover"
-        sizes="
+      {bloc.image_medias !== undefined && (
+        <Image
+          src={bloc.image_medias[0].image_url}
+          alt={bloc.text_titre}
+          fill
+          className="absolute z-0 w-[100vw] h-[100vh] inset-0 top-0 object-cover"
+          sizes="
     (max-width: 640px) 100vw,
     (max-width: 1024px) 80vw,
     1440px
   "
-        priority
-      />
+          priority
+        />
+      )}
 
       <span className="absolute inset-0 bg-black/20"></span>
     </section>
   ) : (
     <section className="z-0 relative h-[400px] w-screen overflow-hidden">
       {/* Background parallaxe */}
-      <div
-        className="absolute inset-0 bg-center bg-cover bg-fixed"
-        style={{
-          backgroundImage: `url(${bloc.image_medias[0].image_url})`,
-        }}
-      />
+      {bloc.image_medias !== undefined &&
+        bloc.image_medias[0] !== undefined && (
+          <div
+            className="absolute inset-0 bg-center bg-cover bg-fixed"
+            style={{
+              backgroundImage: `url(${bloc.image_medias[0].image_url})`,
+            }}
+          />
+        )}
 
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/30"></div>
