@@ -17,9 +17,8 @@ import { reorderArray } from "../../../../lib/helpers/changeComponentPosition";
 import NavBarEdition from "../../../../components/ui/NavBarEdition";
 import ErrorMessage from "../../../../components/ui/ErrorMessage";
 import { Accordion } from "../../../../components/ui/Accordeon";
-import { cloneBlocWithArticlesAndMedia } from "../../../../lib/helpers/bloc.helper";
 import ThemeToggle from "../../../../components/ui/ThemeToggle";
-import { updateObjectBySetter } from "../../../../lib/helpers/tiptapAndSetterFunctions";
+import { updateObjectByPath } from "../../../../lib/helpers/updateByPath";
 
 export default function PageClient({
   initialpage,
@@ -76,7 +75,7 @@ export default function PageClient({
 
   const updateBloc = (fieldName: string, value: unknown) => {
     setPage((prevPage) => {
-      return updateObjectBySetter(prevPage, fieldName, value).data;
+      return updateObjectByPath(prevPage, fieldName, value).data;
     });
     setToggle(!toggle);
   };
@@ -175,13 +174,15 @@ export default function PageClient({
 
   const updateHeader = (fieldName: string, value: unknown) => {
     setHeader((prev) => {
-      return updateObjectBySetter(prev, fieldName, value).data;
+      return updateObjectByPath(prev, fieldName, value).data;
     });
+    setToggle(!toggle);
   };
   const updateFooter = (fieldName: string, value: unknown) => {
     setFooter((prev) => {
-      return updateObjectBySetter(prev, fieldName, value).data;
+      return updateObjectByPath(prev, fieldName, value).data;
     });
+    setToggle(!toggle);
   };
   const logout = async () => {
     await fetch("/api/auth/logout", {

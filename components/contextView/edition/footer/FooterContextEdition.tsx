@@ -10,7 +10,6 @@ import {
   cloneMediaWithPosition,
   createMedia,
 } from "../../../../lib/helpers/media.helper";
-import { updateObjectBySetter } from "../../../../lib/helpers/tiptapAndSetterFunctions";
 import { FooterObject } from "../../../../database/model/bloc/Footer";
 import { MediaObject } from "../../../../database/model/bloc/MediaObject";
 import FooterView from "../../showcase/footer/FooterView";

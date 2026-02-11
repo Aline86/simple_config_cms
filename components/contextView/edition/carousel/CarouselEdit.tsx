@@ -72,7 +72,7 @@ export default function CarouselEdit<T>({
         )}
         <FieldRenderer
           label="Hauteur de l'image sur grand écran"
-          fieldName={`number_height`}
+          fieldName={`blocs.` + bloc.bloc_position + `.number_height`}
           model={bloc as BlocObject}
           setField={onChange}
         />

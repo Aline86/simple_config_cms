@@ -14,7 +14,6 @@ import { MediaObject } from "../../../../database/model/bloc/MediaObject";
 import TextView from "../../showcase/editor/TextView";
 import TextEditor from "./TextEdit";
 import EditionDoubleView from "../../../ui/EditionDoubleView";
-import { updateObjectBySetter } from "../../../../lib/helpers/tiptapAndSetterFunctions";
 
 interface TextPicturesContextEditionProps {
   bloc: BlocObject;

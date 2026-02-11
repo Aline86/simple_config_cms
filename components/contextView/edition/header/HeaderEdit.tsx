@@ -63,17 +63,7 @@ export default function HeaderEdit<T>({
             model={header}
             onChange={onChange}
           />
-          <DynamicValidatorDropDown
-            label="Image"
-            fieldKey="text_image_lien"
-            availableValidators={[
-              "text_url_interne",
-              "text_url",
-              "text_mailto",
-            ]}
-            model={header}
-            onChange={onChange}
-          />
+
           <SocialMediaModal
             socialMedia={header.reseaux as T[]}
             onChange={onChange}

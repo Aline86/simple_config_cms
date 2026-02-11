@@ -60,21 +60,11 @@ export default function HeaderView({ header }: MediaViewProps) {
     setPages(pages.pages ?? []);
   };
 
-  let ticking = false;
-
   const handleScroll = () => {
-    if (!ticking) {
-      window.requestAnimationFrame(() => {
-        if (!scrollRef.current) return;
+    if (!scrollRef.current) return;
 
-        const scrollY = window.scrollY;
-        setIsSticky(scrollY < window.innerHeight * 2);
-
-        ticking = false;
-      });
-
-      ticking = true;
-    }
+    const scrollY = window.scrollY;
+    setIsSticky(scrollY < window.innerHeight * 2);
   };
 
   useEffect(() => {
@@ -119,8 +109,10 @@ export default function HeaderView({ header }: MediaViewProps) {
           style={{
             backgroundColor:
               stateBG !== "image"
-                ? ((header.text_background_url + "40") as string)
+                ? isValidColor(header.text_background_url) &&
+                  ((header.text_background_url + "40") as string)
                 : undefined,
+
             backgroundImage:
               stateBG === "image" && header.text_background_url
                 ? `url(${header.text_background_url})`
