@@ -26,7 +26,7 @@ Ce CMS est utilisé en production par l'association **Welcome Poitiers** depuis 
 ### Retours d'expérience
 
 **Problématiques rencontrées en V1** :
-- Gestion des médias (performances au niveaude l'affichage, les médias n'étaient pas optimisés)
+- Gestion des médias (performances au niveau de l'affichage, les médias n'étaient pas optimisés)
 - Validation des données (erreurs tardives)
 - UX peu intuitive
 
