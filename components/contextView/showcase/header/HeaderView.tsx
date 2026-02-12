@@ -71,11 +71,7 @@ export default function HeaderView({ bloc }: ViewProps) {
     showPages();
   }, []);
   useEffect(() => {
-    bloc !== undefined &&
-      bloc !== null &&
-      bloc.text_nom_site !== null &&
-      bloc.text_nom_site !== undefined &&
-      setHasH1InPage(bloc.text_nom_site.trim().length > 0);
+    setHasH1InPage(bloc.text_nom_site.trim().length > 0);
   }, [bloc]);
 
   useEffect(() => {
