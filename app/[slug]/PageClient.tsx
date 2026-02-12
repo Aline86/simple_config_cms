@@ -23,14 +23,14 @@ export default function PageClient({
 
   return (
     <body className="mt-[-1px]">
-      <HeaderView header={headerData} />
+      <HeaderView bloc={headerData} />
       <ThemeToggle />
       <div className="mt-24 ">
         {page.blocs.map((bloc, index) => {
           return <ComponentBloc key={index} bloc={bloc} />;
         })}
       </div>
-      <FooterView footer={footerData} />
+      <FooterView bloc={footerData} />
     </body>
   );
 }

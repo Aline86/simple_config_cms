@@ -1,8 +1,9 @@
 import ButtonEdit from "../../components/contextView/edition/button/ButtonEdit";
 import CarouselEdit from "../../components/contextView/edition/carousel/CarouselEdit";
 import TextPicturesContextEdition from "../../components/contextView/edition/editor/TextPicturesContextEdition";
-import { PictureEditor } from "../../components/contextView/edition/grid/image_grid/PictureEditor";
+import FooterEdit from "../../components/contextView/edition/footer/FooterEdit";
 import PicturesLinkEdit from "../../components/contextView/edition/grid/image_group/PicturesLinkEdit";
+import HeaderEdit from "../../components/contextView/edition/header/HeaderEdit";
 import ScreenEdit from "../../components/contextView/edition/screen/ScreenEdit";
 import VideoEdit from "../../components/contextView/edition/video/VideoEdit";
 import ButtonView from "../../components/contextView/showcase/button/ButtonView";
@@ -10,19 +11,27 @@ import CarouselAutoView from "../../components/contextView/showcase/carousel/aut
 import CarouselSimple from "../../components/contextView/showcase/carousel/simple/Carousel";
 import CarouselThumbnailsView from "../../components/contextView/showcase/carousel/thumbnails/CarouselThumbnailsView";
 import TextView from "../../components/contextView/showcase/editor/TextView";
+import FooterView from "../../components/contextView/showcase/footer/FooterView";
 import PicturesLinkView from "../../components/contextView/showcase/grid/picturesLink/PicturesLinkView";
 import PicturesGridView from "../../components/contextView/showcase/grid/picturesView/PicturesGridView";
+import HeaderView from "../../components/contextView/showcase/header/HeaderView";
 import ScreenView from "../../components/contextView/showcase/screen/ScreenView";
 import VideoView from "../../components/contextView/showcase/video/VideoView";
 import { BlocObject } from "../../database/model/Bloc";
+import { FooterObject } from "../../database/model/bloc/Footer";
+import { HeaderObject } from "../../database/model/bloc/Header";
+import { MediaObject } from "../../database/model/bloc/MediaObject";
 
+// props blocs traditionnels
 type BlocEditionProps = {
-  bloc: BlocObject;
+  bloc: BlocObject | HeaderObject | FooterObject;
   onChange: (fieldName: string, value: unknown) => void;
 };
+
 type BlocFrontProps = {
-  bloc: BlocObject;
+  bloc: BlocObject | HeaderObject | FooterObject;
 };
+
 type BlocComponent = React.FC<BlocEditionProps>;
 type BlocFrontComponent = React.FC<BlocFrontProps>;
 
@@ -51,6 +60,8 @@ export const blocksToRender: SubGroupRenderType = {
   BOUTON: { is_custom: false, bouton: ButtonEdit },
   SCREEN: { is_custom: false, screen: ScreenEdit },
   VIDEO: { is_custom: false, video: VideoEdit },
+  HEADER: { is_custom: false, header: HeaderEdit },
+  FOOTER: { is_custom: false, footer: FooterEdit },
 };
 
 export const blocksFrontToRender: FrontRenderType = {
@@ -60,6 +71,8 @@ export const blocksFrontToRender: FrontRenderType = {
     classique: CarouselSimple,
   },
   TEXTE: { texte: TextView },
+  HEADER: { header: HeaderView },
+  FOOTER: { footer: FooterView },
   IMAGE_GROUPE: { image_group: PicturesLinkView, grid: PicturesGridView },
   BOUTON: { bouton: ButtonView },
   SCREEN: { screen: ScreenView },

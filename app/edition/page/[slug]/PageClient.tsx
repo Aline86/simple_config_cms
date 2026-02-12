@@ -11,14 +11,14 @@ import {
 } from "../../../../lib/factories/Bloc.factory";
 import { BlocObject } from "../../../../database/model/Bloc";
 import { clonePageWithBlocs } from "../../../../lib/helpers/page.helper";
-import HeaderContextEdition from "../../../../components/contextView/edition/header/HeaderContextEdition";
-import FooterContextEdition from "../../../../components/contextView/edition/footer/FooterContextEdition";
+
 import { reorderArray } from "../../../../lib/helpers/changeComponentPosition";
 import NavBarEdition from "../../../../components/ui/NavBarEdition";
 import ErrorMessage from "../../../../components/ui/ErrorMessage";
 import { Accordion } from "../../../../components/ui/Accordeon";
 import ThemeToggle from "../../../../components/ui/ThemeToggle";
 import { updateObjectByPath } from "../../../../lib/helpers/updateByPath";
+import ComponentBloc from "../../../../components/contextView/ComponentBloc";
 
 export default function PageClient({
   initialpage,
@@ -229,9 +229,7 @@ export default function PageClient({
       </h1>
       <div className="">
         <Accordion
-          children={
-            <HeaderContextEdition bloc={headerData} onChange={updateHeader} />
-          }
+          children={<ComponentBloc bloc={headerData} onChange={updateHeader} />}
           header={"En-tête"}
         />
       </div>
@@ -245,9 +243,7 @@ export default function PageClient({
         draggableEnabled={draggableEnabled}
       />
       <Accordion
-        children={
-          <FooterContextEdition bloc={footerData} onChange={updateFooter} />
-        }
+        children={<ComponentBloc bloc={footerData} onChange={updateFooter} />}
         header={"Pied de page"}
       />
     </body>

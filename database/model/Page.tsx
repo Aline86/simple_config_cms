@@ -3,15 +3,6 @@ import { BlocObject } from "./Bloc";
 import { BaseValidatable } from "./BaseValidator";
 import slugify from "slugify";
 
-// enums/TypeMedia.ts
-export enum TypeMedia {
-  RESEAU_SOCIAL = "RESEAU_SOCIAL",
-  LOGO = "LOGO",
-  FAVICON = "FAVICON",
-  IMAGE_BLOC = "IMAGE_BLOC",
-  IMAGE_ARTICLE = "IMAGE_ARTICLE",
-}
-
 // enums/TypeBloc.ts
 export enum TypeBloc {
   CAROUSEL = "CAROUSEL",
@@ -20,6 +11,8 @@ export enum TypeBloc {
   BUTTON = "BOUTON",
   SCREEN = "SCREEN",
   VIDEO = "VIDEO",
+  HEADER = "HEADER",
+  FOOTER = "FOOTER",
 }
 
 export class PageObject extends BaseValidatable {

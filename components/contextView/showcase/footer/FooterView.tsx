@@ -4,11 +4,11 @@ import { useEffect, useRef, useState } from "react";
 
 import Image from "next/image";
 import { FooterObject } from "../../../../database/model/bloc/Footer";
-interface MediaViewProps {
-  footer: FooterObject;
+interface ViewProps {
+  bloc: FooterObject;
 }
 
-export default function FooterView({ footer }: MediaViewProps) {
+export default function FooterView({ bloc }: ViewProps) {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -30,18 +30,18 @@ export default function FooterView({ footer }: MediaViewProps) {
     <>
       <footer
         className="p-8  border-gray-800"
-        style={{ backgroundColor: footer.color_background_color ?? "#fff" }}
+        style={{ backgroundColor: bloc.color_background_color ?? "#fff" }}
       >
         <div className="max-w-7xl mx-auto px-4">
           <div className="space-y-4 font-bold text-lg">
-            {footer.text_nom_site_adresse}
+            {bloc.text_nom_site_adresse}
           </div>
-          <div className="space-y-4">{footer.text_adresse_footer}</div>
-          <div className="space-y-4 mb-4">{footer.text_code_postal}</div>
+          <div className="space-y-4">{bloc.text_adresse_footer}</div>
+          <div className="space-y-4 mb-4">{bloc.text_code_postal}</div>
           <div className="pt-8 border-t border-gray-800">
             <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
               <div className="flex space-x-4">
-                {footer.reseaux.map((social) => {
+                {bloc.reseaux.map((social) => {
                   return (
                     <a
                       key={social.id}
@@ -70,7 +70,7 @@ export default function FooterView({ footer }: MediaViewProps) {
 
               {/* Copyright */}
               <p className="text-sm">
-                © {footer.text_nom_site_adresse}. Tous droits réservés.
+                © {bloc.text_nom_site_adresse}. Tous droits réservés.
               </p>
             </div>
           </div>

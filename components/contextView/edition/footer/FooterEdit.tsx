@@ -5,8 +5,8 @@ import { MediaObject } from "../../../../database/model/bloc/MediaObject";
 import { FieldRenderer } from "../../../../lib/validators/renderer/TextRenderer";
 import { SocialMediaModal } from "../../../modals/SocialMediaModal";
 
-interface MediaEditorProps<T> {
-  footer: FooterObject;
+interface EditorProps<T> {
+  bloc: FooterObject;
   onChange: (fieldName: string, newValue: unknown) => void;
   addElement: () => void;
   removeElement: (socialMedia: MediaObject) => void;
@@ -14,12 +14,12 @@ interface MediaEditorProps<T> {
 }
 
 export default function FooterEdit<T>({
-  footer,
+  bloc,
   onChange,
   addElement,
   removeElement,
   show_debug = false,
-}: MediaEditorProps<T>) {
+}: EditorProps<T>) {
   return (
     <section className="mx-auto max-w-2xl space-y-6 p-6">
       <div className="space-y-2">
@@ -35,30 +35,30 @@ export default function FooterEdit<T>({
         <div className="space-y-6">
           <FieldRenderer
             fieldName="text_nom_site_adresse"
-            model={footer}
+            model={bloc}
             setField={onChange}
             label={"Nom du site"}
           />
           <FieldRenderer
             fieldName="color_background_color"
-            model={footer}
+            model={bloc}
             setField={onChange}
             label={"Couleur du pied de page"}
           />
           <FieldRenderer
             fieldName="text_adresse_footer"
-            model={footer}
+            model={bloc}
             setField={onChange}
             label={"Adresse du site"}
           />
           <FieldRenderer
             fieldName="text_code_postal"
-            model={footer}
+            model={bloc}
             setField={onChange}
             label={"Code postal et Ville"}
           />
           <SocialMediaModal
-            socialMedia={footer.reseaux as MediaObject[]}
+            socialMedia={bloc.reseaux as MediaObject[]}
             onChange={onChange}
             addElement={addElement}
             removeElement={removeElement}
@@ -80,7 +80,7 @@ export default function FooterEdit<T>({
             Props reçues (footerEdit)
           </h3>
           <pre className="text-xs overflow-auto">
-            {JSON.stringify(footer, null, 2)}
+            {JSON.stringify(bloc, null, 2)}
           </pre>
         </div>
       ) : (

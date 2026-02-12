@@ -7,12 +7,12 @@ import getPages from "../../../../app/edition/pages/callPages";
 import { PageObject } from "../../../../database/model/Page";
 import { useAppContext } from "../../../../context/DomDataProvider";
 import Image from "next/image";
-interface MediaViewProps {
-  header: HeaderObject;
+interface ViewProps {
+  bloc: HeaderObject;
 }
 
 // Validators
-const isValidColor = (value?: string): boolean => {
+export const isValidColor = (value?: string): boolean => {
   if (!value) return false;
   return (
     /^#([0-9A-F]{3}){1,2}$/i.test(value) ||
@@ -36,7 +36,7 @@ const getBackgroundType = (url?: string): "color" | "image" | "empty" => {
   return "empty";
 };
 
-export default function HeaderView({ header }: MediaViewProps) {
+export default function HeaderView({ bloc }: ViewProps) {
   const navRef = useRef<HTMLElement>(null);
   const scrollRef = useRef<HTMLElement>(null);
   const [isSticky, setIsSticky] = useState(true);
@@ -71,12 +71,12 @@ export default function HeaderView({ header }: MediaViewProps) {
     showPages();
   }, []);
   useEffect(() => {
-    header !== undefined &&
-      header !== null &&
-      header.text_nom_site !== null &&
-      header.text_nom_site !== undefined &&
-      setHasH1InPage(header.text_nom_site.trim().length > 0);
-  }, [header]);
+    bloc !== undefined &&
+      bloc !== null &&
+      bloc.text_nom_site !== null &&
+      bloc.text_nom_site !== undefined &&
+      setHasH1InPage(bloc.text_nom_site.trim().length > 0);
+  }, [bloc]);
 
   useEffect(() => {
     if (!pages) return;
@@ -98,8 +98,8 @@ export default function HeaderView({ header }: MediaViewProps) {
   }, [pages]);
 
   useEffect(() => {
-    setStateBG(getBackgroundType(header.text_background_url as string));
-  }, [header.text_background_url]);
+    setStateBG(getBackgroundType(bloc.text_background_url as string));
+  }, [bloc.text_background_url]);
 
   return (
     pages !== undefined && (
@@ -109,13 +109,13 @@ export default function HeaderView({ header }: MediaViewProps) {
           style={{
             backgroundColor:
               stateBG !== "image"
-                ? isValidColor(header.text_background_url) &&
-                  ((header.text_background_url + "40") as string)
+                ? isValidColor(bloc.text_background_url) &&
+                  ((bloc.text_background_url + "40") as string)
                 : undefined,
 
             backgroundImage:
-              stateBG === "image" && header.text_background_url
-                ? `url(${header.text_background_url})`
+              stateBG === "image" && bloc.text_background_url
+                ? `url(${bloc.text_background_url})`
                 : undefined,
             backgroundSize: "cover",
             backgroundPosition: "center",
@@ -123,7 +123,7 @@ export default function HeaderView({ header }: MediaViewProps) {
               stateBG === "image" || stateBG === "color" ? "white" : "black",
           }}
           className={
-            header.mode === "edition"
+            bloc.mode === "edition"
               ? `shadow ${isSticky ? "sticky" : "relative"} top-24 left-0 right-0 z-20`
               : " shadow fixed  top-0 left-0 right-0 z-20"
           }
@@ -135,10 +135,10 @@ export default function HeaderView({ header }: MediaViewProps) {
                 href="/"
                 className="text-xl font-bold text-indigo-600 relative  flex-shrink-0 z-0"
               >
-                {header.logo?.image_url ? (
+                {bloc.logo?.image_url ? (
                   <Image
-                    src={header.logo.image_url}
-                    alt={header.text_nom_site || "Logo"}
+                    src={bloc.logo.image_url}
+                    alt={bloc.text_nom_site || "Logo"}
                     height="100"
                     width="100"
                     sizes="
@@ -152,7 +152,7 @@ export default function HeaderView({ header }: MediaViewProps) {
                 )}
               </a>
 
-              <h1 className="flex-shrink-0 mx-4 ">{header.text_nom_site}</h1>
+              <h1 className="flex-shrink-0 mx-4 ">{bloc.text_nom_site}</h1>
 
               <nav
                 ref={navRef}
@@ -217,16 +217,16 @@ export default function HeaderView({ header }: MediaViewProps) {
             </div>
           </div>
         </header>
-        {header.reseaux !== null ? (
+        {bloc.reseaux !== null ? (
           <div
             className={
-              header.mode === "edition"
+              bloc.mode === "edition"
                 ? ` ${isSticky ? "fixed w-fit h-fit mt-5 right-[30px] z-0" : "absolute w-fit h-fit mt-20 right-[30px] z-0"}`
                 : "fixed w-fit h-fit mt-5 right-[15px] z-15 "
             }
           >
             <div className="social-media absolute mb-2 right-[-160px] ">
-              {header.reseaux.map((network, index) => {
+              {bloc.reseaux.map((network, index) => {
                 return <SocialTab key={index} network={network} />;
               })}
             </div>

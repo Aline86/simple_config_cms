@@ -74,8 +74,9 @@ const FIELD_CONFIGS: Record<string, FieldParameter> = {
       positive: "L'id du bloc doit être positif",
     },
   }),
+  // car est égal à #000000
   text_empty: new TextParameter({
-    maxLength: 0,
+    maxLength: 7,
 
     trim: true,
     type: "hidden",

@@ -1,6 +1,7 @@
 import { immerable } from "immer";
 import { MediaObject } from "./MediaObject";
 import { BaseValidatable } from "../BaseValidator";
+import { TypeBloc } from "../Page";
 
 export class FooterObject extends BaseValidatable {
   [immerable] = true;
@@ -12,7 +13,8 @@ export class FooterObject extends BaseValidatable {
   public text_nom_site_adresse: string | null;
   public text_adresse_footer: string | null;
   public text_code_postal: string | null;
-
+  public text_nom_bloc = "footer";
+  public type = TypeBloc.FOOTER;
   // Relation
   public reseaux: MediaObject[];
   public mode: string;

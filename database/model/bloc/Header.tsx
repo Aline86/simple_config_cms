@@ -1,13 +1,15 @@
 import { immerable } from "immer";
 import { MediaObject } from "./MediaObject";
 import { BaseValidatable } from "../BaseValidator";
+import { TypeBloc } from "../Page";
 
 export class HeaderObject extends BaseValidatable {
   [immerable] = true;
 
   // Aligné sur Prisma Header: id, number_page_id, nom_site, background_url
   public number_id: number | null;
-
+  public text_nom_bloc = "header";
+  public type = TypeBloc.HEADER;
   public text_nom_site: string | null;
   public text_background_url: string | null;
 

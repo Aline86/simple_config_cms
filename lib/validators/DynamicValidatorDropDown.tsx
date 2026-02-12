@@ -32,7 +32,7 @@ export function DynamicValidatorDropDown<T extends Record<keyof T, any>>({
   defaultValidator,
 }: DynamicValidatorDropDownProps<T>) {
   const [selectedValidatorKey, setSelectedValidatorKey] = useState<string>(
-    defaultValidator || availableValidators[0] || "",
+    defaultValidator !== undefined ? defaultValidator : availableValidators[0],
   );
 
   const handleValidatorChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

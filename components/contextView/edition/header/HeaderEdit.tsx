@@ -5,22 +5,30 @@ import { MediaObject } from "../../../../database/model/bloc/MediaObject";
 import { DynamicValidatorDropDown } from "../../../../lib/validators/DynamicValidatorDropDown";
 import { FieldRenderer } from "../../../../lib/validators/renderer/TextRenderer";
 import { SocialMediaModal } from "../../../modals/SocialMediaModal";
+import { isValidColor } from "../../showcase/header/HeaderView";
 
-interface MediaEditorProps<T> {
-  header: HeaderObject;
+interface EditorProps {
+  bloc: HeaderObject;
   onChange: (fieldName: string, newValue: unknown) => void;
   addElement: () => void;
-  removeElement: (socialMedia: T) => void;
+  removeElement: (socialMedia: MediaObject) => void;
   show_debug?;
 }
 
 export default function HeaderEdit<T>({
-  header,
+  bloc,
   onChange,
   addElement,
   removeElement,
   show_debug = false,
-}: MediaEditorProps<T>) {
+}: EditorProps) {
+  const defaultValidator =
+    bloc.text_background_url === "#000000"
+      ? "text_empty"
+      : isValidColor(bloc.text_background_url)
+        ? "color_background_color"
+        : "image_url";
+
   return (
     <section className="mx-auto max-w-2xl space-y-6 p-6">
       <div className="space-y-2">
@@ -36,19 +44,19 @@ export default function HeaderEdit<T>({
         <div className="space-y-6">
           <FieldRenderer
             fieldName="text_nom_site"
-            model={header}
+            model={bloc}
             setField={onChange}
             label={"Nom du site"}
           />
           <FieldRenderer
             fieldName="logo.image_url"
-            model={header.logo !== null ? header.logo : new MediaObject()}
+            model={bloc.logo !== null ? bloc.logo : new MediaObject()}
             setField={onChange}
             label={"Logo du site"}
           />
           <FieldRenderer
             fieldName="favicon.image_url"
-            model={header.favicon !== null ? header.favicon : new MediaObject()}
+            model={bloc.favicon !== null ? bloc.favicon : new MediaObject()}
             setField={onChange}
             label={"Favicon du site"}
           />
@@ -60,12 +68,13 @@ export default function HeaderEdit<T>({
               "text_empty",
               "color_background_color",
             ]}
-            model={header}
+            model={bloc}
             onChange={onChange}
+            defaultValidator={defaultValidator}
           />
 
           <SocialMediaModal
-            socialMedia={header.reseaux as T[]}
+            socialMedia={bloc.reseaux as MediaObject[]}
             onChange={onChange}
             addElement={addElement}
             removeElement={removeElement}
@@ -87,7 +96,7 @@ export default function HeaderEdit<T>({
             Props reçues (HeaderEdit)
           </h3>
           <pre className="text-xs overflow-auto">
-            {JSON.stringify(header, null, 2)}
+            {JSON.stringify(bloc, null, 2)}
           </pre>
         </div>
       ) : (

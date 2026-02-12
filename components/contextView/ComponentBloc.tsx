@@ -10,14 +10,16 @@ import EditionDoubleView from "../ui/EditionDoubleView";
 import ScreenView from "./showcase/screen/ScreenView";
 import { MediaObject } from "../../database/model/bloc/MediaObject";
 import { DeleteButton } from "../ui/DeleteButton";
+import { HeaderObject } from "../../database/model/bloc/Header";
+import { FooterObject } from "../../database/model/bloc/Footer";
 
 interface PageCrudProps {
-  bloc: BlocObject;
-  onDelete: (bloc: BlocObject) => void;
+  bloc: BlocObject | HeaderObject | FooterObject;
+  onDelete?: (bloc: BlocObject) => void;
   onChange: (fieldName: string, value: unknown) => void;
 }
 interface EditorProps {
-  bloc: BlocObject;
+  bloc: BlocObject | HeaderObject | FooterObject;
   onChange: (fieldName: string, newValue: any) => void;
   addElement: () => void;
   removeElement: (button: MediaObject) => void;
@@ -46,9 +48,11 @@ export default function ComponentBloc({
 
   return (
     <main className="flex flex-col ">
-      <div className="flex justify-end w-[45%]">
-        <DeleteButton bloc={bloc} onDelete={onDelete} />
-      </div>
+      {bloc instanceof BlocObject && (
+        <div className="flex justify-end w-[45%]">
+          <DeleteButton bloc={bloc} onDelete={onDelete} />
+        </div>
+      )}
 
       {!is_custom ? (
         <EditionDoubleView
