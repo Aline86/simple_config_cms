@@ -44,9 +44,9 @@ const useUpdateUI = ({ bloc, onChange }: ContextEditionProps) => {
         return cloneBlocWithMedias(bloc, newMedias);
       }
       if (bloc instanceof HeaderObject) {
-        return cloneHeaderWithReseaux(bloc, newMedias);
+        return cloneHeaderWithReseaux(bloc, newMedias).reseaux;
       }
-      return cloneFooterWithReseaux(bloc, newMedias);
+      return cloneFooterWithReseaux(bloc, newMedias).reseaux;
     },
     [bloc],
   );
@@ -60,6 +60,7 @@ const useUpdateUI = ({ bloc, onChange }: ContextEditionProps) => {
       if (!dragged) return;
 
       const { medias, propertyName, positionKey } = getMediaConfig();
+
       const reordered = reorderArray(medias, dragged, target, positionKey);
       const updatedMedias = reordered.map(cloneMediaWithPosition);
       const updatedBloc = cloneBlocWithNewMedias(updatedMedias);
