@@ -9,8 +9,8 @@ import ImageUploaderView from "../../../components/ui/Uploader/ImageUploaderView
 import VideoUploaderView from "../../../components/ui/Uploader/VideoUploaderView";
 import { MediaObject } from "../../../database/model/bloc/MediaObject";
 import { PageObject } from "../../../database/model/Page";
-import { extractPrefix } from "../../helpers/objectUpdater";
-import { createValidator } from "../../helpers/validators.utils";
+
+import { createValidator, extractPrefix } from "../../helpers/validators.utils";
 import { NumberValidator } from "../NumberValidator";
 import { TextValidator } from "../TextValidator";
 

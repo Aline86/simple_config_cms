@@ -3,6 +3,7 @@
 import { BlocObject } from "../../database/model/Bloc";
 import { MediaObject } from "../../database/model/bloc/MediaObject";
 import { ReactElement } from "react";
+import { DeleteButton } from "./DeleteButton";
 
 interface EditionDoubleViewProps {
   EditComponent: ReactElement;

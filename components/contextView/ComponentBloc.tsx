@@ -9,6 +9,7 @@ import useUpdateUI from "../../hooks/updateByPath/useUpdateUI";
 import EditionDoubleView from "../ui/EditionDoubleView";
 import ScreenView from "./showcase/screen/ScreenView";
 import { MediaObject } from "../../database/model/bloc/MediaObject";
+import { DeleteButton } from "../ui/DeleteButton";
 
 interface PageCrudProps {
   bloc: BlocObject;
@@ -26,7 +27,11 @@ interface EditorProps {
   show_debug?: boolean;
 }
 
-export default function ComponentBloc({ bloc, onChange }: PageCrudProps) {
+export default function ComponentBloc({
+  bloc,
+  onChange,
+  onDelete,
+}: PageCrudProps) {
   const is_custom = blocksToRender[bloc.type as string].is_custom;
   const ComponentBackend = blocksToRender[bloc.type][
     bloc.text_nom_bloc
@@ -41,6 +46,7 @@ export default function ComponentBloc({ bloc, onChange }: PageCrudProps) {
 
   return (
     <main className="flex flex-col ">
+      <DeleteButton bloc={bloc} onDelete={onDelete} />
       {!is_custom ? (
         <EditionDoubleView
           EditComponent={
