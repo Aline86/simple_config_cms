@@ -433,7 +433,7 @@ la création des tables en base de données postgresql est automatisée ainsi qu
 Vous pourrez accéder au bo à l'adresse http://localhost:3000/login grâce ux identifiants suivants :
 
 - login: test@test.com
-- mot de passe : test
+- mot de passe : test1234
 
 ### Développement
 
