@@ -9,7 +9,7 @@ export const runtime = "nodejs";
 export async function GET(request: NextRequest) {
   return ApiResponse.handle(
     async () => {
-      const user = await requireAuth(request);
+    
       const { searchParams } = new URL(request.url);
       const with_homepage = searchParams.get("with_homepage");
       let dbPages = [];
