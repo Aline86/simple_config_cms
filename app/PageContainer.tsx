@@ -1,7 +1,10 @@
 import { PageObject } from "../database/model/Page";
-import { getPageBySlug, getPageFooter } from "./[slug]/callPages";
+import getHomePage, {
+  getPageBySlug,
+  getPageFooter,
+  getPageHeader,
+} from "./[slug]/callPages";
 import PageClient from "./[slug]/PageClient";
-import getHomePage, { getPageHeader } from "./callPages";
 
 type Props = {
   params: Promise<{ slug: string }>;

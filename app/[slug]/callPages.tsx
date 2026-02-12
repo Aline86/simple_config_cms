@@ -46,3 +46,16 @@ export async function getPageFooter() {
   const footer = await res.json();
   return footer;
 }
+export default async function getHomePage() {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_APP_URL}/api/page/homepage`,
+    {
+      cache: "no-store", // important pour SSR dynamique
+    },
+  );
+  if (!res.ok) {
+    return false;
+  }
+
+  return res.json();
+}
