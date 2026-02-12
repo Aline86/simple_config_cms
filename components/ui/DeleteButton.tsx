@@ -37,7 +37,7 @@ export function DeleteButton({
         onClick={() => {
           setShowConfirm(true);
         }}
-        className={`${sizes[size]} border border-red-500 cursor-pointer absolute mt-4 ml-36 flex items-center justify-center rounded-lg bg-slate-100 hover:bg-red-500 text-slate-600 hover:text-white transition-all duration-200 shadow-sm hover:shadow-md group`}
+        className={`block ${sizes[size]} absolute border border-red-500 cursor-pointer  mt-4 ml-36 flex items-center justify-center rounded-lg bg-slate-100 hover:bg-red-500 text-slate-600 hover:text-white transition-all duration-200 shadow-sm hover:shadow-md group`}
         aria-label="Supprimer"
       >
         <svg

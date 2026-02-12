@@ -46,7 +46,10 @@ export default function ComponentBloc({
 
   return (
     <main className="flex flex-col ">
-      <DeleteButton bloc={bloc} onDelete={onDelete} />
+      <div className="flex justify-end w-[45%]">
+        <DeleteButton bloc={bloc} onDelete={onDelete} />
+      </div>
+
       {!is_custom ? (
         <EditionDoubleView
           EditComponent={
