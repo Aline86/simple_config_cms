@@ -284,7 +284,7 @@ Le schéma de base de données illustre les relations entre les différentes ent
   - `TEXTE`
   - `SCREEN`
   - `VIDEO`
-  - `BUTTON`
+  - `BOUTON`
 
 #### **BaseValidator**
 
@@ -430,10 +430,12 @@ une fois cette étape effectuée vous pouvez lancer les commandes :
 
 la création des tables en base de données postgresql est automatisée ainsi que la création d'un user à l'aide d'un script de seed.
 
-Vous pourrez accéder au bo à l'adresse http://localhost:3000/login grâce ux identifiants suivants :
+Vous pourrez accéder au bo à l'adresse http://localhost:3000/login grâce aux identifiants suivants :
 
 - login: test@test.com
 - mot de passe : test1234
+
+Penser à cocher isHomePage sur l'une des page de l'édition à l'adresse http://localhost:3000/edition/pages pour que la racine du site expose un contenu.
 
 ### Développement
 
