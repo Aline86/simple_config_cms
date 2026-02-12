@@ -1,24 +1,35 @@
-import { PrismaClient } from "../prisma/generated/client"; // ✅ Votre custom output
-import bcrypt from "bcrypt";
+// prisma/seed.ts
+import { PrismaClient } from "../prisma/generated/client"; // ton client custom
+import bcrypt from "bcryptjs"; // on prend bcryptjs pour être sûr que ça matche partout
 
 const prisma = new PrismaClient();
 
 async function main() {
-  const hashedPassword = await bcrypt.hash("test1234", 10);
+  const email = "test@test.com";
+  const passwordPlain = "test1234";
 
-  const user = await prisma.user.upsert({
-    where: { text_email: "test@test.com" },
-    update: {},
-    create: {
-      text_name: "test1234",
-      text_email: "test@test.com",
+  // Supprime l'utilisateur existant pour être sûr
+  await prisma.user.deleteMany({
+    where: { text_email: email },
+  });
+
+  // Hash du mot de passe
+  const hashedPassword = await bcrypt.hash(passwordPlain, 10);
+
+  // Création de l'utilisateur
+  const user = await prisma.user.create({
+    data: {
+      text_name: "Test User",
+      text_email: email,
       text_password: hashedPassword,
       text_createdAt: new Date(),
       text_updatedAt: new Date(),
     },
   });
 
-  console.log("User created:", user);
+  console.log("Utilisateur seedé !");
+  console.log("Email:", user.text_email);
+  console.log("Password (pour dev):", passwordPlain);
 }
 
 main()
