@@ -165,7 +165,7 @@ export default function PageClient({
 
       prev.blocs = remainingBlocs;
 
-      return Object.assign(Object.create(Object.getPrototypeOf(prev)), prev);
+      return clonePageWithBlocs(prev, remainingBlocs);
     });
 
     setMessage(
