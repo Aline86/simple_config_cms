@@ -3,10 +3,13 @@ export const runtime = "nodejs";
 import { prisma } from "../../../../../prisma/prisma";
 import { ApiResponse } from "../../../../../lib/helpers/ApiResponse";
 import { MediaObject } from "../../../../../database/model/bloc/MediaObject";
+import { requireAuth } from "../../requireAuth";
 
 export async function GET(request: NextRequest) {
   return ApiResponse.handle(
     async () => {
+      const user = await requireAuth(request);
+
       const header = await prisma.header.findFirst({
         orderBy: {
           number_id: "asc",

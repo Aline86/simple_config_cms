@@ -3,11 +3,13 @@ import { BlocObject } from "../../../../database/model/Bloc";
 import { PageObject } from "../../../../database/model/Page";
 import { prisma } from "../../../../prisma/prisma";
 import { ApiResponse } from "../../../../lib/helpers/ApiResponse";
+import { requireAuth } from "../requireAuth";
 export const runtime = "nodejs";
 
 export async function GET(request: NextRequest) {
   return ApiResponse.handle(
     async () => {
+      const user = await requireAuth(request);
       const { searchParams } = new URL(request.url);
       const with_homepage = searchParams.get("with_homepage");
       let dbPages = [];
@@ -67,6 +69,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   return ApiResponse.handle(
     async () => {
+      const user = await requireAuth(request);
       const body = await request.json();
       const pagesPayload = Array.isArray(body) ? body : body.data;
 

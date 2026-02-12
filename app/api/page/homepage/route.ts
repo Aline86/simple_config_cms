@@ -1,12 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "../../../../prisma/prisma";
 export const runtime = "nodejs";
-import { prisma } from "../../../../../prisma/prisma";
-import { requireAuth } from "../../requireAuth";
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
-    const user = await requireAuth(request);
-
     const dbPage = await prisma.page.findFirst({
       where: { checkbox_home_page: true },
     });

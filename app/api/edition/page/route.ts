@@ -2,13 +2,15 @@ import { NextRequest } from "next/server";
 import { PageObject } from "../../../../database/model/Page";
 export const runtime = "nodejs";
 import { prisma } from "../../../../prisma/prisma";
-import { RequestHelper } from "../../../../lib/helpers/RequestHelper";
 import { ApiResponse } from "../../../../lib/helpers/ApiResponse";
+import { requireAuth } from "../requireAuth";
+import { RequestHelper } from "../../../../lib/helpers/RequestHelper";
 
 // ========== GET PAGE BY SLUG ==========
 export async function GET(request: NextRequest) {
   return ApiResponse.handle(
     async () => {
+      const user = await requireAuth(request);
       const slug = RequestHelper.getRequiredSearchParam(request, "slug");
 
       const dbPage = await prisma.page.findFirst({
@@ -44,6 +46,7 @@ export async function GET(request: NextRequest) {
 export async function DELETE(request: NextRequest) {
   return ApiResponse.handle(
     async () => {
+      const user = await requireAuth(request);
       const id = await RequestHelper.getBodyProperty<number>(
         request,
         "id",
@@ -71,6 +74,7 @@ export async function DELETE(request: NextRequest) {
 export async function PUT(request: NextRequest) {
   return ApiResponse.handle(
     async () => {
+      const user = await requireAuth(request);
       const body = await RequestHelper.getBody(request);
       const rawPage = body.data;
 

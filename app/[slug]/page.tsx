@@ -1,9 +1,10 @@
 import { HeaderObject } from "../../database/model/bloc/Header";
 import { PageObject } from "../../database/model/Page";
-import { getPageBySlug, getPageHeader } from "../edition/page/[slug]/callPages";
+
 import PageContainer from "../PageContainer";
 
 import type { Metadata } from "next";
+import { getPageBySlug, getPageHeader } from "./callPages";
 
 type Props = {
   params: Promise<{ slug: string }>;

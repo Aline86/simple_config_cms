@@ -1,7 +1,7 @@
 import { HeaderObject } from "../database/model/bloc/Header";
 import { PageObject } from "../database/model/Page";
-import getHomePage from "./callPages";
-import { getPageHeader } from "./edition/page/[slug]/callPages";
+import getHomePage, { getPageHeader } from "./callPages";
+
 import type { Metadata } from "next";
 import PageContainer from "./PageContainer";
 

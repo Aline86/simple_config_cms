@@ -1,8 +1,18 @@
+"use server";
+import { headers } from "next/headers";
+import { getBaseUrl } from "../../../../lib/helpers/baseUrl";
+
 export async function getPageBySlug(slug: string) {
+  const cookie = (await headers()).get("cookie") ?? "";
+  const base_url = await getBaseUrl();
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/edition/page?slug=${encodeURIComponent(slug)}`,
+    `${base_url}/api/edition/page?slug=${encodeURIComponent(slug)}`,
     {
       cache: "no-store",
+      credentials: "include",
+      headers: {
+        Cookie: cookie,
+      },
     },
   );
   if (!res.ok) {
@@ -14,19 +24,16 @@ export async function getPageBySlug(slug: string) {
 }
 
 export async function getPageHeader() {
-
-
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/edition/page/header`,
-    {
-      cache: "no-store",
+  const cookie = (await headers()).get("cookie") ?? "";
+  const base_url = await getBaseUrl();
+  const res = await fetch(base_url + `/api/edition/page/header`, {
+    cache: "no-store",
+    headers: {
+      Cookie: cookie,
     },
-  );
-
- 
+  });
 
   if (res.status === 404) {
-
     const headerData = {
       text_nom_site: "",
       text_background_url: "",
@@ -52,31 +59,24 @@ export async function getPageHeader() {
   }
 
   if (!res.ok) {
-    console.log("🔵 Non-404 error:", res.status);
     throw new Error("Erreur chargement page");
   }
 
   const header = await res.json();
-  console.log("🔵 Header fetched:", header);
   return header;
 }
 async function postPageHeader(headerData: { [key: string]: unknown }) {
-  console.log("🟢 Starting postPageHeader");
-  console.log("🟢 Data:", headerData);
-
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/edition/page/header`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(headerData),
-      cache: "no-store",
+  const cookie = (await headers()).get("cookie") ?? "";
+  const base_url = await getBaseUrl();
+  const res = await fetch(base_url + `/api/edition/page/header`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: cookie,
     },
-  );
-
-
+    body: JSON.stringify(headerData),
+    cache: "no-store",
+  });
 
   if (!res.ok) {
     const error = await res.json();
@@ -89,12 +89,14 @@ async function postPageHeader(headerData: { [key: string]: unknown }) {
   return result;
 }
 export async function getPageFooter() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/edition/page/footer`,
-    {
-      cache: "no-store",
+  const cookie = (await headers()).get("cookie") ?? "";
+  const base_url = await getBaseUrl();
+  const res = await fetch(base_url + `/api/edition/page/footer`, {
+    cache: "no-store",
+    headers: {
+      Cookie: cookie,
     },
-  );
+  });
 
   // If 404, create a new footer
   if (res.status === 404) {
@@ -117,17 +119,17 @@ export async function getPageFooter() {
   return footer;
 }
 async function postPageFooter(footerData: { [key: string]: unknown }) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/edition/page/footer`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(footerData),
-      cache: "no-store",
+  const cookie = (await headers()).get("cookie") ?? "";
+  const base_url = await getBaseUrl();
+  const res = await fetch(base_url + `/api/edition/page/footer`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Cookie: cookie,
     },
-  );
+    body: JSON.stringify(footerData),
+    cache: "no-store",
+  });
 
   if (!res.ok) {
     const error = await res.json();

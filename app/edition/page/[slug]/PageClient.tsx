@@ -86,6 +86,7 @@ export default function PageClient({
         // Promise 1 : Sauvegarder la page
         fetch("/api/edition/page", {
           method: "PUT",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
@@ -97,6 +98,7 @@ export default function PageClient({
         // Promise 2 : Sauvegarder le header
         fetch("/api/edition/page/header", {
           method: "PUT",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
@@ -110,6 +112,7 @@ export default function PageClient({
           headers: {
             "Content-Type": "application/json",
           },
+          credentials: "include",
           body: JSON.stringify({
             data: footerData,
           }), // Assurez-vous d'avoir un state 'header'
