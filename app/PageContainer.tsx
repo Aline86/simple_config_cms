@@ -28,7 +28,7 @@ export default async function Page({ params }: Props) {
   ]);
 
   if (!header || !footer) {
-    return <div>Erreur lors du chargement du layout</div>;
+    return <body>Erreur lors du chargement du layout</body>;
   }
 
   return (
