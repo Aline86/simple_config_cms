@@ -7,6 +7,7 @@ import { PictureEditor } from "../grid/image_grid/PictureEditor";
 import { MediaObject } from "../../../../database/model/bloc/MediaObject";
 import { BlocObject } from "../../../../database/model/Bloc";
 import { FieldRenderer } from "../../../../lib/validators/renderer/TextRenderer";
+import { DeleteButton } from "../../../ui/DeleteButton";
 
 interface TextEditorProps {
   bloc: BlocObject;
@@ -16,6 +17,7 @@ interface TextEditorProps {
   onDragStart: (page: MediaObject) => void;
   onDrop: (page: MediaObject) => void;
   debug?: boolean;
+  onDelete?: (bloc: BlocObject) => void;
 }
 
 export default function TextEditor({
@@ -26,6 +28,7 @@ export default function TextEditor({
   onDragStart,
   onDrop,
   debug = false,
+  onDelete,
 }: TextEditorProps) {
   // Vérification de sécurité
 

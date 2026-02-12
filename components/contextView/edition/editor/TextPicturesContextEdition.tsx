@@ -18,11 +18,13 @@ import EditionDoubleView from "../../../ui/EditionDoubleView";
 interface TextPicturesContextEditionProps {
   bloc: BlocObject;
   onChange: (fieldName: string, newValue: unknown) => void;
+  onDelete?: (bloc: BlocObject) => void;
 }
 
 const TextPicturesContextEdition: React.FC<TextPicturesContextEditionProps> = ({
   bloc,
   onChange,
+  onDelete,
 }: TextPicturesContextEditionProps) => {
   const [dragged, setDragged] = useState<MediaObject | null>(null);
 
@@ -98,6 +100,7 @@ const TextPicturesContextEdition: React.FC<TextPicturesContextEditionProps> = ({
           removeElement={handleRemove}
           onDrop={onDrop}
           onDragStart={onDragStart}
+          onDelete={onDelete}
         />
       }
       ViewComponent={<TextView bloc={bloc} />}
