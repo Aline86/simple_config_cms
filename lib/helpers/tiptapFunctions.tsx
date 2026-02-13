@@ -36,31 +36,28 @@ const VALID_MARK_TYPES = [
   "textStyle",
 ];
 
+const MARK_HANDLERS: Record<string, (html: string, attrs?: any) => string> = {
+  bold: (html) => `<strong>${html}</strong>`,
+  code: (html) => `<code>${html}</code>`,
+  italic: (html) => `<em>${html}</em>`,
+  underline: (html) => `<u>${html}</u>`,
+  strike: (html) => `<strike>${html}</strike>`,
+  link: (html, attrs) => {
+    const href = attrs.href || "#";
+    const target = attrs.target || "_blank";
+    const rel = attrs.rel || "noopener noreferrer";
+    return `<a title="${target}" href="${href}" target="${target}" rel="${rel}">${html}</a>`;
+  },
+  textStyle: (html, attrs) => {
+    const size = FONT_SIZE_MAP[attrs.fontSize || ""];
+    return size ? `<span style="font-size: ${size};">${html}</span>` : html;
+  },
+};
+
 function applyMarks(text: string, marks: Mark[] = []): string {
   return marks.reduce((html, mark) => {
-    switch (mark.type) {
-      case "bold":
-        return `<strong>${html}</strong>`;
-      case "code":
-        return `<code>${html}</code>`;
-      case "italic":
-        return `<em>${html}</em>`;
-      case "underline":
-        return `<u>${html}</u>`;
-      case "strike":
-        return `<strike>${html}</strike>`;
-      case "link":
-        const href = mark.attrs?.href || "#";
-        const target = mark.attrs?.target || "_blank";
-        const rel = mark.attrs?.rel || "noopener noreferrer";
-        return `<a title="${target}" href="${href}" target="${target}" rel="${rel}">${html}</a>`;
-      case "textStyle":
-        const size = FONT_SIZE_MAP[mark.attrs?.fontSize || ""];
-
-        return size ? `<span style="font-size: ${size};">${html}</span>` : html;
-      default:
-        return html;
-    }
+    const handler = MARK_HANDLERS[mark.type];
+    return handler ? handler(html, mark.attrs) : html;
   }, text);
 }
 
@@ -75,47 +72,68 @@ function processTextNode(node: JSONContent): string {
   return applyMarks(node.text, getValidMarks(node));
 }
 
-function processListItem(item: JSONContent): string {
-  if (item.type !== "listItem" || !item.content) return "";
-
-  return item.content
-    .filter((child) => child.type === "paragraph" && child.content)
-    .map((paragraph) => paragraph.content!.map(processTextNode).join(""))
-    .join("");
-}
-
 function convertHeading(node: JSONContent): string {
-  const textAlign = node.attrs?.textAlign || "left";
-  const text = node.content?.map((n) => n.text || "").join(" ") || "";
+  const textAlign = node.attrs.textAlign || "left";
+  const text = node.content.map((n) => n.text || "").join(" ") || "";
 
   return `<h2 style="text-align: ${textAlign}; font-size: 65px">${text}</h2>`;
+}
+
+function convertParagraph(node: JSONContent): string {
+  if (!node.content) return "";
+
+  const textAlign = node.attrs.textAlign || "left";
+  const content = node.content.map(processTextNode).join("");
+
+  return `<p style="text-align: ${textAlign}">${content}</p>`;
+}
+// 1. Extraction des validations
+function isValidListItem(item: JSONContent): boolean {
+  return item.type === "listItem" && !!item.content;
+}
+
+function isValidParagraph(child: JSONContent): boolean {
+  return child.type === "paragraph" && !!child.content;
+}
+
+function hasContent(items: string[]): boolean {
+  return items.length > 0;
+}
+
+// 2. Extraction des transformations
+function extractParagraphText(paragraph: JSONContent): string {
+  return paragraph.content.map(processTextNode).join("") || "";
+}
+
+function extractListItemText(item: JSONContent): string {
+  const paragraphs = item.content.filter(isValidParagraph) || [];
+  return paragraphs.map(extractParagraphText).join("");
+}
+
+function wrapInListItem(text: string): string {
+  return `<li class="mb-4 w-full"><span class="mr-2 mt-1">•</span>${text}</li>`;
+}
+
+function wrapInBulletList(itemsHtml: string): string {
+  return `<div class="ml-6"><ul class="flex flex-col">${itemsHtml}</ul></div>`;
+}
+
+// 3. Fonctions simplifiées (1-2 conditions max)
+function processListItem(item: JSONContent): string {
+  if (!isValidListItem(item)) return "";
+  return extractListItemText(item);
 }
 
 function convertBulletList(node: JSONContent): string {
   if (!node.content) return "";
 
   const items = node.content.map(processListItem).filter(Boolean);
-  if (items.length === 0) return "";
 
-  const itemsHtml = items
-    .map(
-      (item) =>
-        `<li class="mb-4 w-full"><span class="mr-2 mt-1">•</span>${item}</li>`,
-    )
-    .join("");
+  if (!hasContent(items)) return "";
 
-  return `<div class="ml-6"><ul class="flex flex-col">${itemsHtml}</ul></div>`;
+  const itemsHtml = items.map(wrapInListItem).join("");
+  return wrapInBulletList(itemsHtml);
 }
-
-function convertParagraph(node: JSONContent): string {
-  if (!node.content) return "";
-
-  const textAlign = node.attrs?.textAlign || "left";
-  const content = node.content.map(processTextNode).join("");
-
-  return `<p style="text-align: ${textAlign}">${content}</p>`;
-}
-
 function convertTiptapToHTML(node: JSONContent): string {
   if (!node) return "";
 
@@ -134,7 +152,7 @@ function convertTiptapToHTML(node: JSONContent): string {
 export const output = (
   text_article: Record<string, any>,
 ): string[] | undefined => {
-  if (!text_article?.content?.length) return undefined;
+  if (!text_article.content.length) return undefined;
 
   return text_article.content.map(convertTiptapToHTML);
 };
