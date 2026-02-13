@@ -18,7 +18,7 @@ interface ValidatedTextInputProps<T> extends BaseInputProps<T> {
   rows?: number;
   model: T;
   field: string; // champ du modèle sur lequel on agit
-  onChangeValue: (fieldName: string, value: any) => void; // remonte l'état au parent
+  onChangeValue: (fieldName: string, value: unknown) => void; // remonte l'état au parent
 }
 
 export default function TextInput<T>({

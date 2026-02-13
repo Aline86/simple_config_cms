@@ -7,7 +7,7 @@ import { PictureEditor } from "../grid/image_grid/PictureEditor";
 
 interface ScreenEditorProps<T> {
   bloc: BlocObject;
-  onChange: (fieldName: string, newValue: any) => void;
+  onChange: (fieldName: string, newValue: unknown) => void;
   addElement: () => void;
   removeElement: (button: MediaObject) => void;
   onDragStart: (page: MediaObject) => void;

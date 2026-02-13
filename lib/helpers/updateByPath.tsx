@@ -21,7 +21,7 @@ export function updateObjectByPath<T>(
 
   let updated = false;
 
-  const result = produce(obj, (draft: any) => {
+  const result = produce(obj, (draft: unknown) => {
     let current = draft;
 
     for (let i = 0; i < keys.length - 1; i++) {

@@ -13,7 +13,7 @@ export type PrismaError = {
     field_name?: string;
     object_name?: string;
     database_error?: string;
-    [key: string]: any;
+    [key: string]: unknown;
   };
   message: string;
   clientVersion?: string;

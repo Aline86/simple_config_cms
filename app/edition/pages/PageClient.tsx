@@ -92,8 +92,10 @@ export default function PageClient({
             // Parser les blocs si c'est une string
             const blocs =
               typeof dbPage.blocs === "string"
-                ? JSON.parse(dbPage.blocs).map((b: any) => new BlocObject(b))
-                : dbPage.blocs.map((b: any) => new BlocObject(b));
+                ? JSON.parse(dbPage.blocs).map(
+                    (b: unknown) => new BlocObject(b),
+                  )
+                : dbPage.blocs.map((b: unknown) => new BlocObject(b));
 
             return new PageObject({
               number_id: dbPage.number_id,
@@ -125,14 +127,14 @@ export default function PageClient({
   };
 
   const handleEdit = useCallback(
-    (page: PageObject, fieldName: keyof PageObject, newValue: any) => {
+    (page: PageObject, fieldName: keyof PageObject, newValue: unknown) => {
       setPages((prev) =>
         prev.map((p) => {
           if (
             (p.text_slug === page.text_slug && page.text_slug !== "") ||
             p.number_page_position === page.number_page_position
           ) {
-            p.setField(fieldName, newValue);
+            p.setField(fieldName, newValue as string);
           }
           return p;
         }),

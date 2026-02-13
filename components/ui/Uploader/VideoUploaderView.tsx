@@ -36,7 +36,7 @@ export default function VideoUploaderView<T>({
   className?: string;
   model: MediaObject;
   field: string;
-  onChangeValue: (fieldName: string, value: any) => void;
+  onChangeValue: (fieldName: string, value: unknown) => void;
 }) {
   const uploader = VideoUploader({
     value: value,

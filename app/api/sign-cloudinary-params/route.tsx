@@ -160,7 +160,7 @@ export async function POST(request: NextRequest) {
       };
     },
     {
-      errorHandler: (err: any) => {
+      errorHandler: (err: unknown) => {
         // Erreurs de validation de fichier
         if (err instanceof FileValidationError) {
           return ApiResponse.validationError(err.message);

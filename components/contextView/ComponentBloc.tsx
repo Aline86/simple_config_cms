@@ -20,7 +20,7 @@ interface PageCrudProps {
 }
 interface EditorProps {
   bloc: BlocObject | HeaderObject | FooterObject;
-  onChange: (fieldName: string, newValue: any) => void;
+  onChange: (fieldName: string, newValue: unknown) => void;
   addElement: () => void;
   removeElement: (button: MediaObject) => void;
   onDragStart: (page: MediaObject) => void;

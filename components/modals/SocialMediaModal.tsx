@@ -7,7 +7,7 @@ import { MediaObject } from "../../database/model/bloc/MediaObject";
 
 interface MediaEditorProps<T> {
   socialMedia: T[];
-  onChange: (fieldName: string, newValue: any) => void;
+  onChange: (fieldName: string, newValue: unknown) => void;
   addElement: () => void;
   removeElement: (model: T) => void;
 }

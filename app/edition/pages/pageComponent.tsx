@@ -40,7 +40,7 @@ export default function PageCrud({
   pages,
   show_debug = false,
 }: PageCrudProps) {
-  const handleEdit = (fieldName: string, newValue: any) => {
+  const handleEdit = (fieldName: string, newValue: unknown) => {
     onEdit(page_data, fieldName as keyof PageObject, newValue);
   };
   const num = Number(page_data.number_page_position);

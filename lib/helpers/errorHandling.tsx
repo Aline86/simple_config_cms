@@ -17,7 +17,7 @@ export class ApiResponse {
   static error(
     message: string,
     status: number = 500,
-    details?: any,
+    details?: unknown,
   ): NextResponse {
     const response: Record<string, unknown> = { error: message };
     if (details) {
@@ -31,7 +31,7 @@ export class ApiResponse {
    */
   static validationError(
     message: string = "Validation failed",
-    details?: any,
+    details?: unknown,
   ): NextResponse {
     return this.error(message, 400, details);
   }

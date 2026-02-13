@@ -12,7 +12,7 @@ export default function ImageUploader<T>({
   onChange,
 }: {
   field: string;
-  onChange: (fieldName: string, value: any) => void;
+  onChange: (fieldName: string, value: unknown) => void;
 }) {
   const [images, setImages] = useState<UploadedImage[]>([]);
 

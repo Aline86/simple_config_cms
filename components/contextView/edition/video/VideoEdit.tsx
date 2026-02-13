@@ -7,7 +7,7 @@ import { VideoEditor } from "./VideoEditor";
 
 interface VideoEditorProps<T> {
   bloc: BlocObject;
-  onChange: (fieldName: string, newValue: any) => void;
+  onChange: (fieldName: string, newValue: unknown) => void;
   addElement: () => void;
   removeElement: (button: MediaObject) => void;
   onDragStart: (page: MediaObject) => void;

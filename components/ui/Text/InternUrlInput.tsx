@@ -7,7 +7,7 @@ interface InternUrlInputProps<T> {
   value: string;
   model: T;
   field: string;
-  onChangeValue: (fieldName: string, value: any) => void;
+  onChangeValue: (fieldName: string, value: unknown) => void;
   label?: string;
   className?: string;
   disabled?: boolean;

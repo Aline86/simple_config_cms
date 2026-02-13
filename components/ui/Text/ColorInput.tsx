@@ -17,7 +17,7 @@ interface ColorInputProps<T> extends BaseInputProps {
   validator: ValidatorInstance;
   value: string;
   field: string;
-  onChange: (fieldName: string, value: any) => void;
+  onChange: (fieldName: string, value: unknown) => void;
 }
 
 export function ColorInput<T>({

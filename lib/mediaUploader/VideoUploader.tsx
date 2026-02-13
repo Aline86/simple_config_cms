@@ -27,7 +27,7 @@ export default function VideoUploader<T>({
   value: string;
   model: T;
   field: string;
-  onChange: (fieldName: string, value: any) => void;
+  onChange: (fieldName: string, value: unknown) => void;
 }) {
   const [media, setMedia] = useState<MediaItem[]>([]);
   const [isDragging, setIsDragging] = useState(false);

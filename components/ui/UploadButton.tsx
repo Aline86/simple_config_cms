@@ -12,7 +12,7 @@ type CloudinarySuccessResult = CloudinaryUploadWidgetResults & {
 };
 
 interface UploadButtonProps {
-  onChangeValue: (fieldName: string | undefined, value: any) => void;
+  onChangeValue: (fieldName: string | undefined, value: unknown) => void;
   fieldName?: string;
   className?: string;
   children?: React.ReactNode;

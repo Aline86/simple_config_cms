@@ -19,11 +19,11 @@ interface DynamicValidatorDropDownProps<T> {
   fieldKey: string;
   availableValidators: string[];
   model: T;
-  onChange: (fieldName: string, newValue: any) => void;
+  onChange: (fieldName: string, newValue: unknown) => void;
   defaultValidator?: string;
 }
 
-export function DynamicValidatorDropDown<T extends Record<keyof T, any>>({
+export function DynamicValidatorDropDown<T extends Record<keyof T, unknown>>({
   label,
   fieldKey,
   availableValidators,
@@ -56,7 +56,7 @@ export function DynamicValidatorDropDown<T extends Record<keyof T, any>>({
   };
 
   // Helper pour obtenir la valeur par défaut selon le type
-  const getDefaultValue = (validatorKey: string): any => {
+  const getDefaultValue = (validatorKey: string): unknown => {
     const prefix = validatorKey.split("_")[0];
     switch (prefix) {
       case "text":
