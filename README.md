@@ -61,6 +61,8 @@ L'association utilise le CMS pour :
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/bbfd73c1bff54a40a323b074a284092f)](https://app.codacy.com/gh/Aline86/simple_config_cms/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
+Ci-dessus : badge codacy (analyse statique du code) / La section métriques comprend une analyse dynamique du code avec l'outil Codescene.
+
 ## Résumé
 
 Ce projet est un CMS configurable permettant une visualisation en direct, réalisé en Next.js. Il permet de créer facilement des sites vitrines dynamiques. Toutes les pages sont entièrement pilotées par le contenu stocké en base de données (Prisma + PostgreSQL). Chaque bloc est défini par un `type` (famille de composants) et un `bloc_name` (variante). Les composants sont triés et affichés automatiquement selon le champ position mis à jour lors des opérations de CRUD, les requêtes en base récupèrent les blocs ordonnés selon ce critère 'bloc_page_position' asc, sans logique métier complexe.
