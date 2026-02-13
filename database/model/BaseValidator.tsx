@@ -21,7 +21,7 @@ export abstract class BaseValidatable {
         return value.every((item) => validateValue(item));
       }
 
-      // Objet avec validateAll → délégation
+      // Objet avec validateAll
       if (value && typeof value === "object") {
         if (
           typeof (value as BlocObject | MediaObject | PageObject)
@@ -44,7 +44,7 @@ export abstract class BaseValidatable {
         }
       }
 
-      return true; // skip fields that don't match
+      return true;
     };
 
     return (Object.keys(this) as Array<keyof this>).every((fieldName) => {
