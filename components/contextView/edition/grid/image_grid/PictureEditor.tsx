@@ -68,7 +68,7 @@ export function PictureEditor<T>({ ...props }: MediaEditorProps<T>) {
 
       <div
         className={`overflow-hidden transition-all duration-300 ${
-          isOpen ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0 hidden"
+          isOpen ? " opacity-100" : "max-h-0 opacity-0 hidden"
         }`}
       >
         <div className="p-4 border-t">
