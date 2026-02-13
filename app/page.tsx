@@ -23,14 +23,11 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 
   const pageData = new PageObject(page);
-  const headerData = new HeaderObject(header, "view");
-
+  const headerData = new HeaderObject(header.header, "view");
   return {
     title: pageData.text_titre,
     description: pageData.text_description,
-    icons: headerData.favicon?.image_url
-      ? { icon: headerData.favicon.image_url }
-      : undefined,
+    icons: headerData.favicon.image_url ?? undefined,
   };
 }
 
@@ -38,5 +35,5 @@ export async function generateMetadata(): Promise<Metadata> {
    PAGE HOME
 =========================== */
 export default async function Page({ params }: Props) {
-  return <PageContainer params={params} searchParams={undefined} />;
+  return <PageContainer params={params} />;
 }

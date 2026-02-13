@@ -8,14 +8,10 @@ import PageClient from "./[slug]/PageClient";
 
 type Props = {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<PageObject>;
 };
 
 export default async function Page({ params }: Props) {
   const { slug } = await params;
-  if (slug === "/") {
-    return <></>;
-  }
 
   let page;
 
