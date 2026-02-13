@@ -7,6 +7,7 @@
 Ce CMS est utilisé en production par l'association **Welcome Poitiers** depuis **janvier 2025**.
 
 **Timeline du projet :**
+
 - **Janvier 2025** : Mise en production V1 (architecture initiale)
 - **Janvier 2025 - Février 2026** : Retours utilisateurs, corrections, optimisations
 - **Février 2026** : Déploiement V2 (refonte complète avec ux optimisée)
@@ -14,10 +15,12 @@ Ce CMS est utilisé en production par l'association **Welcome Poitiers** depuis 
 ### Évolution V1 → V2
 
 **V1 (production depuis 1 an)** :
+
 - Architecture fonctionnelle mais limitations identifiées
 - Workflow d'édition moins fluide
 
 **V2 (déploiement imminent)** :
+
 - Refonte architecture avec Immer + path-based updates
 - Preview synchronisé temps réel
 - Amélioration UX significative (retours utilisateurs intégrés)
@@ -26,17 +29,20 @@ Ce CMS est utilisé en production par l'association **Welcome Poitiers** depuis 
 ### Retours d'expérience
 
 **Problématiques rencontrées en V1** :
+
 - Gestion des médias (performances au niveau de l'affichage, les médias n'étaient pas optimisés)
 - Validation des données (erreurs tardives)
 - UX peu intuitive
 
 **Solutions apportées en V2** :
+
 - Migration vers Cloudinary (optimisation auto, possibilité de choisir des médias via le drive, ordinateur etc... grâce au picker de Cloudinary)
 - Validation temps réel avec BaseValidator
 - Drag & drop fluide avec recalcul positions
-- ux modernisée, réactivité à tous les niveaux 
+- ux modernisée, réactivité à tous les niveaux
 
 **Impact mesuré** :
+
 - Temps de création de page : -60% (30min → 12min)
 - Erreurs de saisie : -75% (validation instantanée)
 - Satisfaction utilisateur : forte amélioration (feedback qualitatif)
@@ -44,15 +50,16 @@ Ce CMS est utilisé en production par l'association **Welcome Poitiers** depuis 
 ### Cas d'usage réel
 
 L'association utilise le CMS pour :
-- Pages événements 
+
+- Pages événements
 - Galeries photos (activités associatives)
 - Pages d'information (démarches administratives)
 
 **Volume** : ~15 pages actives, ~60 blocs, ~50 médias
 
-# Site Configurable Next.js (CMS) avec preview en temps réel 
+# Site Configurable Next.js (CMS) avec preview en temps réel
 
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/71a267d6d9ca4fb5afeaf37d2718a3e6)](https://app.codacy.com/gh/Aline86/simple_config_cms/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/bbfd73c1bff54a40a323b074a284092f)](https://app.codacy.com/gh/Aline86/simple_config_cms/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
 ## Résumé
 
@@ -62,13 +69,13 @@ Ce projet est un CMS configurable permettant une visualisation en direct, réali
 
 L’objectif est de permettre à des utilisateurs non techniques de modifier facilement le contenu et la structure des pages via une interface modulaire, sans écrire de code. Le CMS génère automatiquement l’interface utilisateur et valide les données, garantissant la cohérence entre configuration et rendu.
 
-
 ## Système de Preview en Temps Réel
 
-Le CMS intègre un **système de prévisualisation synchronisée** permettant de voir 
+Le CMS intègre un **système de prévisualisation synchronisée** permettant de voir
 instantanément le rendu des modifications sans sauvegarder en base.
 
 ### Architecture technique
+
 ```
 ┌─────────────────────────────────────────────────────────┐
 │                    Interface d'édition                   │
@@ -104,8 +111,7 @@ instantanément le rendu des modifications sans sauvegarder en base.
 - **Performances** : Pas de requête serveur à chaque modification
 - **Rollback facile** : Annuler sans polluer la base de données
 
-
-## Architecture globale 
+## Architecture globale
 
 L'architecture est **data-driven, maintenable et extensible**, avec :
 
@@ -120,20 +126,20 @@ L'architecture est **data-driven, maintenable et extensible**, avec :
 
 ## Pattern Factory pour la création des blocs
 
-Le système de création des blocs repose sur l’utilisation d’un **pattern Factory* qui permet la création centralisée des blocs, ce qui rend cette fonctionnalité testable.
+Le système de création des blocs repose sur l’utilisation d’un \*_pattern Factory_ qui permet la création centralisée des blocs, ce qui rend cette fonctionnalité testable.
 
 ### Principe
 
 - Chaque bloc est défini par :
   - un `type` représentant une famille de blocs ex: Carrousel
   - un `bloc_name` représentant une variante
-    
- ### conséquence du principe précédent 
- 
-  - le couple `type + bloc_name` est utilisé comme clé de résolution des composants d'édition et visuels à afficher 
-  - Le moteur de rendu n’a aucune connaissance des implémentations concrètes
-  
-## Mise à jour immutable par chemin dans l’arborescence des blocs et de la page plus globalement 
+
+### conséquence du principe précédent
+
+- le couple `type + bloc_name` est utilisé comme clé de résolution des composants d'édition et visuels à afficher
+- Le moteur de rendu n’a aucune connaissance des implémentations concrètes
+
+## Mise à jour immutable par chemin dans l’arborescence des blocs et de la page plus globalement
 
 La mise à jour de l’état repose sur un mécanisme **path-based**, permettant de modifier de manière ciblée n’importe quelle propriété au sein d’une structure de données imbriquée.
 
@@ -165,7 +171,6 @@ Ce mécanisme est implémenté via une fonction utilitaire générique utilisant
 - Alignement avec l’architecture data-driven du CMS
 
 Ce mécanisme est utilisé notamment pour la gestion des blocs, médias, headers et footers lors des opérations d’édition (CRUD, drag & drop, réorganisation).
-
 
 ## Type d'architecture
 
@@ -410,18 +415,18 @@ La priorité future concerne principalement :
 git clone https://github.com/Aline86/simple_config_cms.git
 cd simple_config_cms
 
-# Pour visualiser le projet vous pouvez utiliser un environnement **docker** de développement 
+# Pour visualiser le projet vous pouvez utiliser un environnement **docker** de développement
 
 # Configurer les variables d'environnement
 créer un fichier .env à la racine du projet et y ajouter les variables suivantes pour visualiser le projet dans un environnement de développement :
 - créer un compte sur Cloudinary et ajouter un upload preset de type unsigned puis récupérer les variables cloudname, api_key et api_secret dans la section api key et enfin ajouter un nom de dossier à côté de NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER
 
 NEXT_PUBLIC_APP_URL:
-NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: 
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME:
 CLOUDINARY_API_KEY:
-CLOUDINARY_API_SECRET: 
-JWT_SECRET: 
-NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER: 
+CLOUDINARY_API_SECRET:
+JWT_SECRET:
+NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER:
 
 une fois cette étape effectuée vous pouvez lancer les commandes :
 
@@ -466,5 +471,6 @@ Pour toute question ou problème :
 
 ```
 
+```
 
 ```
