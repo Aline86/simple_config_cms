@@ -65,10 +65,7 @@ export default function PageCrud({
               <CardHeader>
                 <CardTitle>{page_data.text_titre}</CardTitle>
                 <Cardtext_description>
-                  Créé le{" "}
-                  {page_data !== null && page_data !== undefined
-                    ? page_data.text_createdAt?.toString()
-                    : ""}
+                  Créé le {page_data.text_createdAt?.toString()}
                 </Cardtext_description>
               </CardHeader>
               <CardContent>

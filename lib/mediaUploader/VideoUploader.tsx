@@ -19,13 +19,9 @@ interface YouTubeVideo {
 type MediaItem = UploadedImage | YouTubeVideo;
 
 export default function VideoUploader<T>({
-  value,
-  model,
   field,
   onChange,
 }: {
-  value: string;
-  model: T;
   field: string;
   onChange: (fieldName: string, value: unknown) => void;
 }) {

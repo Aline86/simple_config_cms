@@ -31,7 +31,7 @@ export default function InternUrlInput<T>({
     onChangeValue(field as string, newValue); // remonte l'état au parent
   };
 
-  return value !== undefined ? (
+  return (
     <div className={`validated-input-wrapper ${className} mb-4`}>
       {label && (
         <label className="input-label" htmlFor="page-select">
@@ -42,18 +42,15 @@ export default function InternUrlInput<T>({
       <select id="page-select" value={value} onChange={handleChange}>
         <option value="">- Page -</option>
 
-        {pages &&
-          Object.entries(pages).map(([, p]) => {
-            const page = new PageObject(p);
-            return (
-              <option key={page.text_slug} value={page.text_slug}>
-                {page.text_titre}
-              </option>
-            );
-          })}
+        {Object.entries(pages).map(([, p]) => {
+          const page = new PageObject(p);
+          return (
+            <option key={page.text_slug} value={page.text_slug}>
+              {page.text_titre}
+            </option>
+          );
+        })}
       </select>
     </div>
-  ) : (
-    <></>
   );
 }

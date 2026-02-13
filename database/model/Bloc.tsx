@@ -46,7 +46,7 @@ export class BlocObject extends BaseValidatable {
       number_columns?: number | null;
       text_createdAt?: Date | null;
       text_updatedAt?: Date | null;
-      image_medias?: MediaObject[] | any[];
+      image_medias?: MediaObject[] | unknown[];
       articles?: ArticleObject[];
     } = {},
     mode: string = "edition",

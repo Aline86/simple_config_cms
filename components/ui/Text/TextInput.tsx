@@ -77,7 +77,7 @@ export default function TextInput<T>({
   switch (true) {
     case params.multiline !== undefined:
       // Texte multiligne
-      InputComponent = <textarea {...commonProps} rows={rows ?? 4} />;
+      InputComponent = <textarea {...commonProps} rows={rows} />;
       break;
 
     case params.type === "color":

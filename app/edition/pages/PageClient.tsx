@@ -53,7 +53,7 @@ export default function PageClient({
                 slug: p.text_slug ?? "",
                 number_page_position: index + 1,
                 langue: p.text_langue ?? "fr_FR",
-                blocs: p.blocs ?? [],
+                blocs: p.blocs,
                 text_createdAt: p.text_createdAt ?? new Date(),
                 text_updatedAt: p.text_updatedAt ?? new Date(),
               },

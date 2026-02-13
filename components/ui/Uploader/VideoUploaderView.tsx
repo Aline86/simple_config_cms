@@ -39,8 +39,6 @@ export default function VideoUploaderView<T>({
   onChangeValue: (fieldName: string, value: unknown) => void;
 }) {
   const uploader = VideoUploader({
-    value: value,
-    model: model,
     field: field,
     onChange: onChangeValue,
   });
@@ -221,31 +219,29 @@ function PreviewSection({
       </div>
 
       <div className="preview-grid">
-        {value !== undefined && value !== null && value !== "" ? (
-          <div className="preview-item">
-            {value.includes("youtube.com") || value.includes("youtu.be") ? (
-              <YouTubePreview url={value} />
-            ) : (
-              <div className="image-wrapper">
-                <Image
-                  src={value}
-                  alt="preview"
-                  fill
-                  className="preview-image"
-                  sizes="
+        <div className="preview-item">
+          {value.includes("youtube.com") || value.includes("youtu.be") ? (
+            <YouTubePreview url={value} />
+          ) : (
+            <div className="image-wrapper">
+              <Image
+                src={value}
+                alt="preview"
+                fill
+                className="preview-image"
+                sizes="
     (max-width: 640px) 100vw,
     (max-width: 1024px) 80vw,
     1440px
   "
-                />
-              </div>
-            )}
-          </div>
-        ) : (
-          media.map((item) => (
-            <PreviewItem key={item.id} item={item} onRemove={onRemove} />
-          ))
-        )}
+              />
+            </div>
+          )}
+        </div>
+
+        {media.map((item) => (
+          <PreviewItem key={item.id} item={item} onRemove={onRemove} />
+        ))}
       </div>
     </div>
   );

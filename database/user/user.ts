@@ -40,7 +40,7 @@ export async function updateUser(
   number_id: number,
   data: { text_name?: string; text_password?: string },
 ) {
-  const updateData: unknown = {};
+  const updateData: any = {};
   if (data.text_name) updateData.text_name = data.text_name;
   if (data.text_password)
     updateData.text_password = await bcrypt.hash(data.text_password, 10);
