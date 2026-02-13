@@ -10,7 +10,7 @@ interface PageCrudProps {
   page_data: PageObject;
   onDelete: (page: BlocObject) => void;
   updateBloc: (fieldName: string, value: unknown) => void;
-  onAdd?: () => void; // optionnel, si tu veux un bouton "Ajouter une page"
+  onAdd?: () => void; 
   onDragStart: (page: BlocObject) => void;
   onDrop: (page: BlocObject) => void;
   draggableEnabled: boolean;
