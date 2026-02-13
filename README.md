@@ -374,8 +374,8 @@ Les métriques de qualité sont suivies via **Codacy** et **CodeScene**, afin d�
 ![CodeScene code health](./docs/codescene-code-health.png)
 
 - **Code Health global** : **9.84 / 10 – Healthy**
-- La majorité des fichiers sont classés comme **Healthy**
-- Très peu de zones considérées comme problématiques ou à risque
+- Tous les fichiers sont classés comme **Healthy**
+- Aucune zone à risque
 
 #### Observations principales
 
