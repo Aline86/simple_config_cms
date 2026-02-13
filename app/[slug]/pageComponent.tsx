@@ -6,20 +6,11 @@ import ComponentBloc from "./BlocComponent";
 
 interface PageCrudProps {
   page_data: PageObject;
-
-  onAdd?: () => void; // optionnel, si tu veux un bouton "Ajouter une page"
-  onDragStart: (page: BlocObject) => void;
-  onDrop: (page: BlocObject) => void;
-  draggableEnabled: boolean;
   show_debug?: boolean;
 }
 
 export default function PageBlocs({
   page_data,
-
-  onDragStart,
-  onDrop,
-  draggableEnabled,
   show_debug = false,
 }: PageCrudProps) {
   return (
@@ -29,16 +20,6 @@ export default function PageBlocs({
           return (
             <div
               key={index}
-              draggable={draggableEnabled}
-              onDragStart={() => {
-                onDragStart(bloc);
-              }}
-              onDragOver={(e) => {
-                e.preventDefault();
-              }}
-              onDrop={() => {
-                onDrop(bloc);
-              }}
               className="grid  lg:grid-cols-1 gap-6  cursor-grab active:cursor-grabbing"
             >
               <ComponentBloc bloc={bloc} />
