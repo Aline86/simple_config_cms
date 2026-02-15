@@ -30,10 +30,8 @@ export default function TextEditor({
   debug = false,
   onDelete,
 }: TextEditorProps) {
-  // Vérification de sécurité
-
-  const hasArticles = bloc?.articles?.[0];
-  const images = hasArticles?.images || [];
+  const hasArticles = bloc.articles?.[0];
+  const images = hasArticles.images || [];
   const [selectedValidatorKey, setSelectedValidatorKey] = useState<string>(
     hasArticles?.text_images_position,
   );
@@ -82,7 +80,7 @@ export default function TextEditor({
         {/* Configuration Fields */}
         <div className="space-y-4 mb-6">
           <FieldRenderer
-            label="text_titre du bloc d'images avec lien de redirection"
+            label="Titre du bloc d'images avec lien de redirection"
             fieldName={`blocs.` + bloc.bloc_position + ".text_titre"}
             model={bloc as BlocObject}
             setField={onChange}

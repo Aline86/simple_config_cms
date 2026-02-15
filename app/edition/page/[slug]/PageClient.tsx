@@ -163,8 +163,6 @@ export default function PageClient({
         bloc.bloc_position = index;
       });
 
-      prev.blocs = remainingBlocs;
-
       return clonePageWithBlocs(prev, remainingBlocs);
     });
 
