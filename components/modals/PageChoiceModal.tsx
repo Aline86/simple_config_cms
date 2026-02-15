@@ -89,7 +89,7 @@ export default function BlocChoiceModal({
         </button>
 
         <Modal
-          title="Créer un block"
+          title="Créer un bloc"
           open={open}
           onOpenChange={setOpen}
           primaryAction={{
