@@ -69,7 +69,7 @@ Ce projet est un CMS configurable permettant une visualisation en direct, réali
 
 ## Démo en images des possibilités offertes par le CMS
 
-![edition-bloc](edition_bloc.gif)
+![edition-bloc](docs/edition_bloc.gif)
 
 ## Objectif métier
 
