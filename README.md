@@ -71,10 +71,6 @@ Ce projet est un CMS configurable permettant une visualisation en direct, réali
 
 ![edition-bloc](docs/edition_bloc.gif)
 
-![pages](docs/pages.png)
-![edition-pages-ouvertes](docs/page_ouverte.png)
-![edition-creation-bloc](docs/page_blocs.png)
-
 ## Objectif métier
 
 L’objectif est de permettre à des utilisateurs non techniques de modifier facilement le contenu et la structure des pages via une interface modulaire, sans écrire de code. Le CMS génère automatiquement l’interface utilisateur et valide les données, garantissant la cohérence entre configuration et rendu.
@@ -484,5 +480,13 @@ Pour toute question ou problème :
 ```
 
 ```
+
+## Edition pages :
+
+![pages](docs/pages.png)
+![edition-pages-ouvertes](docs/page_ouverte.png)
+![edition-creation-bloc](docs/page_blocs.png)
+
+## Rendu final possible
 
 ![screeshot-landing-page-pc](./docs/Démo-du-site-vitrine.png)
