@@ -460,10 +460,8 @@ npm run test
 
 ## Tests
 
-Des tests ont été prévus pour la création de blocs. Les tests sont gérés à l'aide de jest.
-Vous pouvez les jouer à l'aide de la commande npm run tests.
-
-Les tests sont présents dans le dossier tests.
+Des tests sont présents pour la création de blocs et la vérification de la mise à jour des données à partir du chemin dans la structure imbriquée. Les tests sont gérés à l'aide de jest et sont présents dans le dossier __tests__ .
+Vous pouvez les jouer à l'aide de la commande npm test -- --clearCache  .
 
 ---
 
