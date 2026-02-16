@@ -26,8 +26,19 @@ export default async function Page({ params }: Props) {
     getPageFooter(),
   ]);
 
-  if (!header || !footer) {
-    return <body>Erreur lors du chargement du layout</body>;
+  if (!header || !footer || !page) {
+    return (
+      <body>
+        <div className="flex justify-center align-center h-screen">
+          <div className="bg-blue-500 p-6 text-white justify-center align-center">
+            <h1>
+              Veuillez créer une page. N'oubliez pas de sélectionner une page
+              d'accueil.
+            </h1>
+          </div>
+        </div>
+      </body>
+    );
   }
 
   return (
