@@ -192,7 +192,7 @@ Ce mécanisme est utilisé notamment pour la gestion des blocs, médias, headers
 
 ---
 
-## Analyse critique et défis rencontrées
+## Analyse critique et défis rencontrés
 
 Gestion des validations selon les types de champs avec BaseValidator et préfixes, nécessitant un système flexible mais complexe
 
