@@ -1,10 +1,10 @@
 [<img src="https://flagcdn.com/w20/fr.png" alt="FR"> Français](README.md) | [<img src="https://flagcdn.com/w20/gb.png" alt="EN"> English](README.en.md)
 
-## Projet en Production Réelle
+## Moteur déclaratif configurable en Production
 
 ### Utilisateur : Association Welcome Poitiers
 
-Ce CMS est utilisé en production par l'association **Welcome Poitiers** depuis **janvier 2025**.
+J’ai conçu un moteur déclaratif configurable reposant sur un système de résolution dynamique typé (basé sur des préfixes sémantiques), intégrant un mécanisme de mise à jour immuable d’arbre par chemins et un système de validation modulaire générique. Celui-ci est utilisé en production par l'association **Welcome Poitiers** depuis **janvier 2025**.
 
 **Timeline du projet :**
 
