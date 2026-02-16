@@ -29,9 +29,9 @@ export default async function Page({ params }: Props) {
   if (!header || !footer || !page) {
     return (
       <body>
-        <div className="flex justify-center align-center h-screen">
+        <div className="flex justify-center items-center h-screen">
           <div className="bg-blue-500 p-6 text-white">
-            <h1 className="justify-center align-center">
+            <h1 className="text-2xl text-center">
               Veuillez créer une page. N'oubliez pas de sélectionner une page
               d'accueil.
             </h1>

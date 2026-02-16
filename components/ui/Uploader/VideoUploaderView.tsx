@@ -57,21 +57,8 @@ export default function VideoUploaderView<T>({
 
       {uploader.errors.length > 0 && <ErrorBox errors={uploader.errors} />}
 
-      {previewMedia && uploader.media.length > 0 ? (
-        <PreviewSection
-          media={uploader.media}
-          onRemove={uploader.removeMedia}
-          onClearAll={uploader.clearAll}
-        />
-      ) : (
-        value !== "" && (
-          <PreviewSection
-            value={value}
-            onRemove={uploader.removeMedia}
-            onClearAll={uploader.clearAll}
-            media={[]}
-          />
-        )
+      {previewMedia && uploader.media.length > 0 && (
+        <PreviewSection media={uploader.media} onClearAll={uploader.clearAll} />
       )}
 
       <UploaderStyles />
@@ -190,14 +177,14 @@ function ErrorBox({ errors }: { errors: string[] }) {
 interface PreviewSectionProps {
   value?: string;
   media: MediaItem[];
-  onRemove: (id: string) => void;
+
   onClearAll: () => void;
 }
 
 function PreviewSection({
   value,
   media,
-  onRemove,
+
   onClearAll,
 }: PreviewSectionProps) {
   return (
@@ -239,9 +226,10 @@ function PreviewSection({
           )}
         </div>
 
-        {media.map((item) => (
-          <PreviewItem key={item.id} item={item} onRemove={onRemove} />
-        ))}
+        {media !== undefined &&
+          media.map((item) => (
+            <PreviewItem key={item.id} item={item} onRemove={onClearAll} />
+          ))}
       </div>
     </div>
   );
