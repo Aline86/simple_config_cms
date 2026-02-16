@@ -1,6 +1,6 @@
 [<img src="https://flagcdn.com/w20/fr.png" alt="FR"> Français](README.md) | [<img src="https://flagcdn.com/w20/gb.png" alt="EN"> English](README.en.md)
 
-## Moteur déclaratif configurable en Production
+## Moteur déclaratif configurable en production
 
 ### Utilisateur : Association Welcome Poitiers
 
