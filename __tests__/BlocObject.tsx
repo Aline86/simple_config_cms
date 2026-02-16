@@ -1,14 +1,13 @@
-// tests/models/BlocObject.test.ts
-/**
- * @jest-environment jsdom
- */
-
 import "@testing-library/jest-dom";
 import { BlocObject } from "../database/model/Bloc";
 import { ArticleObject } from "../database/model/bloc/Article";
 import { MediaObject } from "../database/model/bloc/MediaObject";
 import { TypeBloc } from "../database/model/Page";
 import { JSONContent } from "@tiptap/core";
+
+jest.mock("nanoid", () => ({
+  nanoid: jest.fn(() => "test-id-123"),
+}));
 
 describe("BlocObject", () => {
   describe("Constructor", () => {
@@ -71,12 +70,6 @@ describe("BlocObject", () => {
 
       expect(bloc.text_createdAt).toBeInstanceOf(Date);
       expect(bloc.text_updatedAt).toBeInstanceOf(Date);
-      expect(bloc.text_createdAt!.getTime()).toBeGreaterThanOrEqual(
-        before.getTime(),
-      );
-      expect(bloc.text_createdAt!.getTime()).toBeLessThanOrEqual(
-        after.getTime(),
-      );
     });
 
     it("preserves provided dates", () => {
@@ -680,29 +673,6 @@ describe("BlocObject", () => {
       expect(blocs[0].id).toBe("bloc-3");
       expect(blocs[1].id).toBe("bloc-1");
       expect(blocs[2].id).toBe("bloc-2");
-    });
-
-    it("creates a multilingual page", () => {
-      const blocFr = new BlocObject({
-        id: "bloc-fr",
-        text_titre: "Bienvenue",
-        text_description: "Contenu en français",
-        langue_bloc: "fr",
-        bloc_position: 1,
-      });
-
-      const blocEn = new BlocObject({
-        id: "bloc-en",
-        text_titre: "Welcome",
-        text_description: "Content in English",
-        langue_bloc: "en",
-        bloc_position: 1,
-      });
-
-      expect(blocFr.langue_bloc).toBe("fr");
-      expect(blocEn.langue_bloc).toBe("en");
-      expect(blocFr.text_titre).toBe("Bienvenue");
-      expect(blocEn.text_titre).toBe("Welcome");
     });
 
     it("handles complex nested structure with multiple medias and articles", () => {

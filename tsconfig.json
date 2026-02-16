@@ -26,7 +26,8 @@
     "**/*.mts",
     "**/*.ts",
     "**/*.tsx",
-    "prisma/seed.js"
+    "prisma/seed.js",
+    "jest.setup.js"
   ],
   "exclude": ["node_modules"]
 }
