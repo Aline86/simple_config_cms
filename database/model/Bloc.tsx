@@ -87,23 +87,6 @@ export class BlocObject extends BaseValidatable {
     this.mode = mode;
   }
 
-  addMedia(media: MediaObject): this {
-    this.image_medias.push(media);
-    return this;
-  }
-
-  removeMedia(index: number): void {
-    this.image_medias.splice(index, 1);
-  }
-
-  addArticle(article: ArticleObject): void {
-    this.articles.push(article);
-  }
-
-  removeArticle(index: number): void {
-    this.articles.splice(index, 1);
-  }
-
   toJSON() {
     return {
       id: this.id,
