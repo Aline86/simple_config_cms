@@ -82,8 +82,7 @@ bcrypt.hash(password, saltRounds, function(err, hash) {
 
 - Lancer la commande suivante dans le terminal en remplaçant le mot de passe par votre mot de passe
   `node hash.js monMotDePasse123`
-- recopier la sortie et la placer dans le champ motDePasse de l'entité User en bdd de neon (cliquer sur tables à gauche puis l'entité User sur le site qui stocke votre base de données neon)
-  Remplir tous les autres champs de la ligne avec vos identifiants et données personnelles associées au site à déployer.
+- recopier la sortie et la placer dans le champ motDePasse de l'entité User en bdd de neon (cliquer sur tables à gauche puis l'entité User). Remplir tous les autres champs de la ligne avec vos identifiants et données personnelles associées au site à déployer.
 - une fois ces actions effectuées supprimer le fichier hash.js
 
 - Il vous faudra maintenant push le projet sur votre environnement github pour pouvoir le lier à netlify `https://app.netlify.com`
