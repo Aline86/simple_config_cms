@@ -51,6 +51,7 @@ If it follows the usual display pattern, set is_custom: false.
 If you create a complex editing block, like the text editor, set is_custom: true.
 This allows you to add a custom edition template, which you can assign to the name of your custom block — this corresponds to the text_nom_bloc option chosen during step 2 in PageChoiceModal.tsx.
 
+Finally add your showcase visualization file in blocksFrontToRender following the pattern.
 
 ## Business objective
 
