@@ -90,4 +90,4 @@ bcrypt.hash(password, saltRounds, function(err, hash) {
 
 - Par la suite si vous devez changer ces variables, elles seront accessibles via les actions suivantes : Cliquer sur `Project Configuration` puis cliquer sur `Environnment Variables`.
 
-- Une fois ces actions effectuées cliquer sur Deploys à gauche pluis `Trigger deploy` à gauche.
+- Une fois ces actions effectuées cliquer sur Deploys à gauche puis `Trigger Deploy` à droite.
