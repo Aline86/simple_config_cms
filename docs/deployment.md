@@ -25,10 +25,10 @@ cd simple_config_cms
 créer un fichier .env à la racine du projet et y ajouter les variables suivantes pour visualiser le projet dans un environnement de développement :
 
 ````
-Les variable d'environnement sont les suivantes :
+Les variables d'environnement sont les suivantes :
 
 NEXT_PUBLIC_APP_URL: url de votre app ( locale ou de production en fonction de l'environnement de montage )
-JWT_SECRET: chaîne aléatoire que vous seul connaissez
+JWT_SECRET: chaîne aléatoire que vous seul connaissez et que vous inventez
 
 Les quatre variables cloudinary se récupèrent de la façon suivante:
 - créer un compte sur cloudinary : https://console.cloudinary.com
