@@ -44,7 +44,7 @@ en suivant la logique des fichiers d'édition pour le fichier d'édition de bloc
 Et enfin, pour que le bloc apparaissent au clic sur le bouton de la modal de choix de bloc, éditer le fichier ```lib\config\componentsView.tsx``` :
 - blocksToRender : y ajouter votre bloc, si celui-ci suit le pattern d'affichage habituel, mettre is_custom: false, si vous créez un bloc d'édition complexe, à l'image de l'éditeur de texte, veuillez renseigner is_custom: true qui vous permettra d'ajouter un template d'édition custom que vous pourrez indiquer en valeur de votre nom de bloc custom, il s'agit de l'option text_nom_bloc choisie lors la création de l'option dans PageChoiceModal.tsx en étape 2.
 
-- 
+
 ## Installation et démarrage
 
 ### Prérequis
