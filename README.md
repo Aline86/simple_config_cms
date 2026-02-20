@@ -32,6 +32,10 @@ Simple Config CMS est un moteur déclaratif configurable reposant sur un **syst�
 
 Il permet à des utilisateurs non techniques de créer et modifier facilement des sites vitrines via une interface modulaire, sans écrire de code.
 
+## Lien du site de démo :
+
+<a href="simple-config-cms.vercel.app" target="_blank">Voir le site de démo en ligne en cliquant sur ce lien : click-me.</a>
+
 ## Vidéo de présentation du fonctionnement du BO / FO
 
 [<img src="docs/edition_bloc.gif" >](Gif_presentation)

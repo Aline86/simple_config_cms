@@ -32,6 +32,14 @@ Simple Config CMS is a configurable declarative engine based on a **typed dynami
 
 It allows non-technical users to easily create and modify showcase websites through a modular interface, without writing any code.
 
+## Website demo link
+
+<a href="simple-config-cms.vercel.app" target="_blank">You can look at the demo website by clicking this link</a>
+
+## Presentation of the FO / BO
+
+[<img src="docs/edition_bloc.gif" >](Gif_presentation)
+
 ### History
 
 | Period                | Event                                      |
