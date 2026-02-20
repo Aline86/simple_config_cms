@@ -32,7 +32,7 @@ JWT_SECRET: chaîne aléatoire que vous seul connaissez et que vous inventez
 
 Les quatre variables cloudinary se récupèrent de la façon suivante:
 - créer un compte sur cloudinary : https://console.cloudinary.com
-- cliquer sur la base de donnée nouvellement créée, cliquer sur ``Dashboard``` puis Connect, vous aurez alors accès à votre url de connexion. Récupérez-là avec le mot de passe en clair et mettez l'url de connexion dans votre fichier .env à la racine en valeur de la variable DATABASE_URL.
+
 
 NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=
 CLOUDINARY_API_KEY=
@@ -59,6 +59,8 @@ Ces actions vous permettent de faire fonctionner le picker de Cloudinary utilis�
 
 ![Cloudinary pres](./cloudinary_picker.png)
 
+- Maintenant mettre en place la bdd neon : `https://neon.com/` 
+- cliquer sur la base de donnée nouvellement créée, cliquer sur ``Dashboard``` puis Connect, vous aurez alors accès à votre url de connexion. Récupérez-là avec le mot de passe en clair et mettez l'url de connexion dans votre fichier .env à la racine en valeur de la variable DATABASE_URL.
 - une fois cette étape effectuée vous devrez lancer les commandes prisma depuis votre environnement local pour créer le shéma de votre base de données en ligne Neon :
 
   `npx prisma init`
