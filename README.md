@@ -6,6 +6,45 @@
 
 J’ai conçu un moteur déclaratif configurable reposant sur un système de résolution dynamique typé (basé sur des préfixes sémantiques), intégrant un mécanisme de mise à jour immuable d’arbre par chemins et un système de validation modulaire générique. Celui-ci est utilisé en production par l'association **Welcome Poitiers** depuis **janvier 2025**.
 
+Ce CMS avec pré-visualisation en direct permet de créer des sites vitrines en direct. Le code a été conçu de manière extensible pour pouvoir être modifier facilement. Il est ainsi possible d'ajouter un bloc facilement. Il suffit d'ajouter un type de bloc dans 
+
+```
+database/model/Page.tsx
+
+export enum TypeBloc {
+  CAROUSEL = "CAROUSEL",
+  IMAGE_GROUPE = "IMAGE_GROUPE",
+  TEXTE = "TEXTE",
+  BUTTON = "BOUTON",
+  SCREEN = "SCREEN",
+  VIDEO = "VIDEO",
+  HEADER = "HEADER",
+  FOOTER = "FOOTER",
+}
+
+```
+
+D'aller créer ses options dans ```components\modals\PageChoiceModal.tsx``` et de lui ajouter son bouton associé sur la base des boutons du fichier
+
+```
+   <button
+     aria-label="Créer un bloc Custom avec options ...."
+     className="px-4 py-4 rounded bg-slate-600 text-white text-lg hover:bg-slate-700 transition"
+     onClick={() => {
+       addBlocToPage(options_custom_bloc);
+     }}
+   >
+     Texte
+   </button>
+```
+
+De créer son fichier d'édition et de visualisation dans ```components/contextView/edition``` et ```components/contextView/showcase```
+en suivant la logique des fichiers d'édition pour le fichier d'édition de bloc custom nouvellement créé.
+
+Et enfin, pour que le bloc apparaissent au clic sur le bouton de la modal de choix de bloc, éditer le fichier ```lib\config\componentsView.tsx``` :
+- blocksToRender : y ajouter votre bloc, si celui-ci suit le pattern d'affichage habituel, mettre is_custom: false, si vous créez un bloc d'édition complexe, à l'image de l'éditeur de texte, veuillez renseigner is_custom: true qui vous permettra d'ajouter un template d'édition custom que vous pourrez indiquer en valeur de votre nom de bloc custom, il s'agit de l'option text_nom_bloc choisie lors la création de l'option dans PageChoiceModal.tsx en étape 2.
+
+- 
 ## Installation et démarrage
 
 ### Prérequis
