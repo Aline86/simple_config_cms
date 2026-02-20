@@ -19,9 +19,10 @@ J’ai conçu un moteur déclaratif configurable reposant sur un système de ré
 
 # Cloner le projet
 
+```
 git clone https://github.com/Aline86/simple_config_cms.git
 cd simple_config_cms
-
+```
 # Pour visualiser le projet vous pouvez utiliser un environnement **docker** de développement
 
 ## Configurer les variables d'environnement
