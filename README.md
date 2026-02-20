@@ -541,7 +541,6 @@ Pour toute question ou problème :
 
 - Ouvrir une issue sur GitHub
 - Consulter la documentation dans `/docs`
-- Me contacter ca.haestie@gmail.com
 
 ``
 
