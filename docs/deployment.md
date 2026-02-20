@@ -65,7 +65,7 @@ Ces actions vous permettent de faire fonctionner le picker de Cloudinary utilis�
   `npx prisma generate`
   `npx prisma migrate dev --name init`
 
-- Je n'ai pas fait de script de seed pour créer un user en db en prod pour des résons de sécurité.
+- Je n'ai pas fait de script de seed pour créer un user en db en prod pour des raisons de sécurité.
 - créer un fichier hash.js à la racine du projet, y placer le code suivant :
 
 ```
