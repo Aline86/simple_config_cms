@@ -6,7 +6,7 @@
 
 J’ai conçu un moteur déclaratif configurable reposant sur un système de résolution dynamique typé (basé sur des préfixes sémantiques), intégrant un mécanisme de mise à jour immuable d’arbre par chemins et un système de validation modulaire générique. Celui-ci est utilisé en production par l'association **Welcome Poitiers** depuis **janvier 2025**.
 
-Ce CMS avec pré-visualisation en direct permet de créer des sites vitrines en direct. Le code a été conçu de manière extensible pour pouvoir être modifier facilement. Il est ainsi possible d'ajouter un bloc facilement. Il suffit d'ajouter un type de bloc dans 
+Ce CMS avec pré-visualisation en direct permet de créer des sites vitrines en direct. Le code a été conçu de manière extensible pour pouvoir être modifié facilement. Il est ainsi possible d'ajouter un bloc rapidement. Il suffit d'ajouter un type de bloc dans 
 
 ```
 database/model/Page.tsx
