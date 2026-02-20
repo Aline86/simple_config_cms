@@ -1,5 +1,3 @@
-[<img src="https://flagcdn.com/w20/fr.png" alt="FR"> Français](README.md) | [<img src="https://flagcdn.com/w20/gb.png" alt="EN"> English](README.en.md)
-
 # Comment déployer le CMS en production avec un plan de hosting gratuit (bdd et solution d'hébergement du code) ?
 
 ## Installation et démarrage
