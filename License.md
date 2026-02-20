@@ -1,21 +1,23 @@
-MIT License
-
+Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)
 Copyright (c) 2026 Claire-Aline Haestie
+Ce travail est protégé par la licence Creative Commons Attribution-NonCommercial 4.0 International.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Vous êtes autorisé à :
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+Partager — copier et redistribuer le contenu sous n'importe quel format ou support.
+Adapter — remixer, transformer et créer à partir du contenu.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Le donneur de licence ne peut pas révoquer ces autorisations tant que vous respectez les conditions de la licence.
+
+Selon les conditions suivantes :
+
+Attribution (BY) — Vous devez créditer l'auteur original, fournir un lien vers la licence et indiquer si des modifications ont été effectuées. Vous devez le faire de manière raisonnable, sans suggérer que le donneur de licence vous soutient ou approuve votre utilisation.
+Non Commercial (NC) — Vous n'êtes pas autorisé à utiliser ce contenu à des fins commerciales. Toute utilisation visant un avantage commercial ou une compensation financière directe ou indirecte est interdite.
+
+Pas de restrictions supplémentaires
+Vous n'êtes pas autorisé à appliquer des conditions juridiques ou des mesures techniques qui restreindraient légalement autrui à faire ce que la licence permet.
+
+Avertissements
+
+Vous n'avez pas à respecter la licence pour les éléments du contenu qui appartiennent au domaine public ou pour les utilisations autorisées par une exception ou limitation légale applicable.
+Aucune garantie n'est donnée. La licence peut ne pas vous donner toutes les autorisations nécessaires pour votre utilisation prévue. Par exemple, d'autres droits comme les droits à la vie privée, les droits à l'image ou les droits moraux peuvent limiter votre utilisation du contenu.
