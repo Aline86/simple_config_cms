@@ -34,7 +34,7 @@ It allows non-technical users to easily create and modify showcase websites thro
 
 ## Website demo link
 
-<a href="simple-config-cms.vercel.app" target="_blank">You can look at the demo website by clicking this link</a>
+<a href="https://simple-config-cms.vercel.app" target="_blank">You can look at the demo website by clicking this link</a>
 
 ## Presentation of the FO / BO
 
