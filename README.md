@@ -1,563 +1,291 @@
-[<img src="https://flagcdn.com/w20/fr.png" alt="FR"> Français](README.md) | [<img src="https://flagcdn.com/w20/gb.png" alt="EN"> English](README.en.md)
+# Simple Config CMS
 
-## Moteur déclaratif configurable en production
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/bbfd73c1bff54a40a323b074a284092f)](https://app.codacy.com/gh/Aline86/simple_config_cms/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+![License](https://img.shields.io/badge/license-CC%20BY--NC%204.0-blue)
+![Next.js](https://img.shields.io/badge/Next.js-15+-black)
+![TypeScript](https://img.shields.io/badge/TypeScript-84.6%25-blue)
 
-### Utilisateur : Association Welcome Poitiers
+**FR Français | [EN English](./README.en.md)**
 
-J’ai conçu un moteur déclaratif configurable reposant sur un système de résolution dynamique typé (basé sur des préfixes sémantiques), intégrant un mécanisme de mise à jour immuable d’arbre par chemins et un système de validation modulaire générique. Celui-ci est utilisé en production par l'association **Welcome Poitiers** depuis **janvier 2025**.
+CMS configurable avec prévisualisation en temps réel, conçu en Next.js. Utilisé en production par l'**association Welcome Poitiers** depuis janvier 2025.
 
-Ce CMS avec pré-visualisation en direct permet de créer des sites vitrines en direct. Le code a été conçu de manière extensible pour pouvoir être modifié facilement. Il est ainsi possible d'ajouter un bloc rapidement. Il suffit d'ajouter un type de bloc dans
+---
+
+## Table des matières
+
+- [Présentation](#présentation)
+- [Fonctionnalités](#fonctionnalités)
+- [Stack technique](#stack-technique)
+- [Architecture](#architecture)
+- [Installation](#installation)
+- [Ajouter un bloc](#ajouter-un-bloc)
+- [Système de validation](#système-de-validation)
+- [Qualité du code](#qualité-du-code)
+- [Tests](#tests)
+- [Support](#support)
+
+---
+
+## Présentation
+
+Simple Config CMS est un moteur déclaratif configurable reposant sur un **système de résolution dynamique typé** (basé sur des préfixes sémantiques), intégrant un mécanisme de mise à jour immutable d'arbre par chemins et un système de validation modulaire générique.
+
+Il permet à des utilisateurs non techniques de créer et modifier facilement des sites vitrines via une interface modulaire, sans écrire de code.
+
+### Historique
+
+| Période               | Événement                                        |
+| --------------------- | ------------------------------------------------ |
+| Janvier 2025          | Mise en production V1                            |
+| Jan. 2025 – Fév. 2026 | Retours utilisateurs, corrections, optimisations |
+| Février 2026          | Déploiement V2 — refonte complète, UX optimisée  |
+
+---
+
+## Fonctionnalités
+
+- Prévisualisation synchronisée en temps réel (WYSIWYG sans latence réseau)
+- Système de blocs modulaire et extensible
+- Validation instantanée des données avant sauvegarde
+- Drag & drop avec recalcul automatique des positions
+- Gestion des médias via Cloudinary (optimisation auto, picker intégré)
+- Architecture data-driven pilotée entièrement par la base de données
+
+---
+
+## Stack technique
+
+| Couche          | Technologie                   |
+| --------------- | ----------------------------- |
+| Framework       | Next.js 15+ (App Router, RSC) |
+| Langage         | TypeScript                    |
+| Base de données | PostgreSQL (Neon)             |
+| ORM             | Prisma                        |
+| Médias          | Cloudinary                    |
+| État            | Immer + Context API           |
+| Tests           | Jest                          |
+| Qualité         | Codacy, CodeScene             |
+
+---
+
+## Architecture
+
+### Vue d'ensemble
 
 ```
-database/model/Page.tsx
-
-export enum TypeBloc {
-  CAROUSEL = "CAROUSEL",
-  IMAGE_GROUPE = "IMAGE_GROUPE",
-  TEXTE = "TEXTE",
-  BUTTON = "BOUTON",
-  SCREEN = "SCREEN",
-  VIDEO = "VIDEO",
-  HEADER = "HEADER",
-  FOOTER = "FOOTER",
-}
-
+┌─────────────────────────────────────────────────────────┐
+│                  Interface d'édition                     │
+│  ┌─────────────────┐         ┌──────────────────┐       │
+│  │   Form Editor   │─onChange─│  Preview Panel   │       │
+│  │  (inputs, drag) │         │  (render live)   │       │
+│  └────────┬────────┘         └──────────────────┘       │
+│           │ updateByPath(path, value)                    │
+│           ▼                                              │
+│  ┌──────────────────────────────────────────────────┐   │
+│  │          État centralisé (Immer + Context)        │   │
+│  │  - Page complète en mémoire                       │   │
+│  │  - Mise à jour immutable par chemin               │   │
+│  │  - Synchronisation bidirectionnelle               │   │
+│  └──────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────┘
 ```
 
-D'aller créer ses options dans `components\modals\PageChoiceModal.tsx` et de lui ajouter son bouton associé sur la base des boutons du fichier
+### Flux de données
 
 ```
-   <button
-     aria-label="Créer un bloc Custom avec options ...."
-     className="px-4 py-4 rounded bg-slate-600 text-white text-lg hover:bg-slate-700 transition"
-     onClick={() => {
-       addBlocToPage(options_custom_bloc);
-     }}
-   >
-     Texte
-   </button>
+Base de données (Prisma)
+        │ SELECT * FROM blocks ORDER BY position
+        ▼
+  Server Action / API Route
+        │
+        ▼
+  Page Component (SSR)
+        │ map(renderBlock)
+        ▼
+  Block Registry (type + name)
+        │ Mapping vers composant
+        ▼
+  React Component (Hero, Gallery…)
 ```
 
-De créer son fichier d'édition et de visualisation dans `components/contextView/edition` et `components/contextView/showcase`
-en suivant la logique des fichiers d'édition pour le fichier d'édition de bloc custom nouvellement créé.
+### Mise à jour immutable par chemin
 
-Et enfin, pour que le bloc apparaissent au clic sur le bouton de la modal de choix de bloc, éditer le fichier `lib\config\componentsView.tsx` :
+Chaque modification est définie par un **chemin textuel** (`blocs.0.text_titre`) et une valeur cible. Immer produit un nouvel état sans mutation directe, garantissant immutabilité et prévisibilité.
 
-- blocksToRender : y ajouter votre bloc, si celui-ci suit le pattern d'affichage habituel, mettre is_custom: false, si vous créez un bloc d'édition complexe, à l'image de l'éditeur de texte, veuillez renseigner is_custom: true qui vous permettra d'ajouter un template d'édition custom que vous pourrez indiquer en valeur de votre nom de bloc custom, il s'agit de l'option text_nom_bloc choisie lors la création de l'option dans PageChoiceModal.tsx en étape 2.
-- blocksFrontToRender: y ajouter votre bloc de visualisation
+### Pattern Factory
 
-## Installation et démarrage
+La création des blocs repose sur un pattern Factory centralisé, ce qui rend la fonctionnalité testable et découple le moteur de rendu des implémentations concrètes.
+
+### Préfixes typés
+
+Les champs sont préfixés de manière sémantique : `text_`, `number_`, `checkbox_`, `image_`, `color_`. Ces préfixes permettent de :
+
+- déterminer automatiquement le type de validation à appliquer
+- générer le bon composant d'édition (input text, number, checkbox, color picker, upload d'image)
+- assurer la cohérence entre validation et interface utilisateur
+
+---
+
+## Installation
 
 ### Prérequis
 
-- Docker
-- ou env local nodejs 20+ ainsi que postgresql ou neon pour la production
+- Docker **ou** Node.js 20+ avec PostgreSQL / Neon (production)
 
-# Installation
+### Étapes
 
-### Cloner le projet
+**1. Cloner le projet**
 
-```
+```bash
 git clone https://github.com/Aline86/simple_config_cms.git
 cd simple_config_cms
 ```
 
-# Pour visualiser le projet vous pouvez utiliser un environnement **docker** de développement
+**2. Configurer les variables d'environnement**
 
-## Configurer les variables d'environnement
+Créer un fichier `.env` à la racine du projet :
 
-créer un fichier .env à la racine du projet et y ajouter les variables suivantes pour visualiser le projet dans un environnement de développement :
+```env
+NEXT_PUBLIC_APP_URL=http://localhost:3000
 
-```
-Les variable d'environnement sont les suivantes :
+JWT_SECRET=votre_chaine_aleatoire_secrete
 
-NEXT_PUBLIC_APP_URL: url de votre app ( locale ou de production en fonction de l'environnement de montage )
-JWT_SECRET: chaîne aléatoire que vous seul connaissez
-
-Les quatre variables cloudinary se récupèrent de la façon suivante:
-- créer un compte sur cloudinary : https://console.cloudinary.com
-
-NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME:
-CLOUDINARY_API_KEY:
-CLOUDINARY_API_SECRET:
-NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER:
+# Récupérées depuis https://console.cloudinary.com
+# (roue crantée → API Keys → Generate New Api Key)
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
+NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER=
 ```
 
-Pour récupérer les quatre valeurs des variables suivantes, suivre les indications suivantes :
+> ⚠️ Pensez également à créer un **preset unsigned** sur Cloudinary pour que le picker d'images fonctionne.
 
-![Cloudinary pres](./docs/cloudinary_api_key.png)
+**3. Lancer avec Docker**
 
-(roue crantée, API Keys puis Generate New Api Key)
-
-Il vous faudra ensuite créer un preset (unsigned):
-
-![Cloudinary explanation](./docs/unigned_preset.png)
-
-Ces actions vous permettent de faire fonctionner le picker de Cloudinary utilisé dans l'app pour le chargement d'images sur votre cloud Cloudinary nouvellement créé :
-
-![Cloudinary pres](./docs/cloudinary_picker.png)
-
-une fois cette étape effectuée vous pouvez lancer les commandes :
-
-`docker compose build`
-`docker compose up`
-
-la création des tables en base de données postgresql est automatisée ainsi que la création d'un user à l'aide d'un script de seed.
-
-Vous pourrez accéder au bo à l'adresse http://localhost:3000/login grâce aux identifiants suivants :
-
-- login: test@test.com
-- mot de passe : test1234
-
-Penser à cocher `Page d'accueil` sur l'une des page de l'édition à l'adresse http://localhost:3000/edition/pages pour que la racine du site expose un contenu.
-
-### Développement
-
-npm prisma studio
-
-# Le projet - architecture et choix conceptuels
-
-**Timeline du projet :**
-
-- **Janvier 2025** : Mise en production V1 (architecture initiale)
-- **Janvier 2025 - Février 2026** : Retours utilisateurs, corrections, optimisations
-- **Février 2026** : Déploiement V2 (refonte complète avec ux optimisée)
-
-### Évolution V1 → V2
-
-**V1 (production depuis 1 an)** :
-
-- Architecture fonctionnelle mais limitations identifiées
-- Workflow d'édition moins fluide
-
-**V2 (déploiement imminent)** :
-
-- Refonte architecture avec Immer + path-based updates
-- Preview synchronisé temps réel
-- Amélioration UX significative (retours utilisateurs intégrés)
-- Score qualité : 9.84/10 (vs ~7/10 en V1)
-
-### Retours d'expérience
-
-**Problématiques rencontrées en V1** :
-
-- Gestion des médias (performances au niveau de l'affichage, les médias n'étaient pas optimisés)
-- Validation des données (erreurs tardives)
-- UX peu intuitive
-
-**Solutions apportées en V2** :
-
-- Migration vers Cloudinary (optimisation auto, possibilité de choisir des médias via le drive, ordinateur etc... grâce au picker de Cloudinary)
-- Validation temps réel avec BaseValidator
-- Drag & drop fluide avec recalcul positions
-- ux modernisée, réactivité à tous les niveaux
-
-**Impact mesuré** :
-
-- Temps de création de page : -60% (30min → 12min)
-- Erreurs de saisie : -75% (validation instantanée)
-- Satisfaction utilisateur : forte amélioration (feedback qualitatif)
-
-### Cas d'usage réel
-
-L'association utilise le CMS pour :
-
-- Pages événements
-- Galeries photos (activités associatives)
-- Pages d'information (démarches administratives)
-
-**Volume** : ~15 pages actives, ~60 blocs, ~50 médias
-
-# Site Configurable Next.js (CMS) avec preview en temps réel
-
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/bbfd73c1bff54a40a323b074a284092f)](https://app.codacy.com/gh/Aline86/simple_config_cms/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
-
-Ci-dessus : badge codacy (analyse statique du code) / La section métriques comprend une analyse dynamique du code avec l'outil Codescene.
-
-## Résumé
-
-Ce projet est un CMS configurable permettant une visualisation en direct, réalisé en Next.js. Il permet de créer facilement des sites vitrines dynamiques. Toutes les pages sont entièrement pilotées par le contenu stocké en base de données (Prisma + PostgreSQL). Chaque bloc est défini par un `type` (famille de composants) et un `bloc_name` (variante). Les composants sont triés et affichés automatiquement selon le champ position mis à jour lors des opérations de CRUD, les requêtes en base récupèrent les blocs ordonnés selon ce critère 'bloc_page_position' asc.
-
-## Démo en images des possibilités offertes par le CMS
-
-![edition-bloc](docs/edition_bloc.gif)
-
-## Objectif métier
-
-L’objectif est de permettre à des utilisateurs non techniques de modifier facilement le contenu et la structure des pages via une interface modulaire, sans écrire de code. Le CMS génère automatiquement l’interface utilisateur et valide les données, garantissant la cohérence entre configuration et rendu.
-
-## Système de Preview en Temps Réel
-
-Le CMS intègre un **système de prévisualisation synchronisée** permettant de voir
-instantanément le rendu des modifications sans sauvegarder en base.
-
-### Architecture technique
-
+```bash
+docker compose build
+docker compose up
 ```
 
-┌─────────────────────────────────────────────────────────┐
-│ Interface d'édition │
-│ ┌─────────────────┐ ┌──────────────────┐ │
-│ │ Form Editor │────onChange──│ Preview Panel │ │
-│ │ (inputs, drag) │ │ (render live) │ │
-│ └────────┬────────┘ └──────────────────┘ │
-│ │ │
-│ │ updateByPath(path, value) │
-│ ▼ │
-│ ┌──────────────────────────────────────────────────┐ │
-│ │ État centralisé (Immer + Context) │ │
-│ │ - Page complète en mémoire │ │
-│ │ - Mise à jour immutable par chemin │ │
-│ │ - Synchronisation bidirectionnelle │ │
-│ └──────────────────────────────────────────────────┘ │
-└─────────────────────────────────────────────────────────┘
+La création des tables PostgreSQL et d'un utilisateur de test est automatisée via un script de seed.
+
+**4. Se connecter**
+
+Accédez au back-office sur [http://localhost:3000/login](http://localhost:3000/login) :
 
 ```
-
-### Fonctionnement
-
-1. **Modification** : L'utilisateur édite un champ (ex: titre d'un bloc)
-2. **Path resolution** : Le système identifie le chemin (`blocs.0.text_titre`)
-3. **Update immutable** : Immer produit un nouvel état sans mutation
-4. **Re-render** : Le preview se met à jour instantanément
-5. **Validation** : Les erreurs s'affichent en temps réel
-6. **Sauvegarde** : L'utilisateur décide quand persister en base
-
-### Avantages
-
-- **UX moderne** : WYSIWYG sans latence réseau
-- **Validation instantanée** : Les erreurs sont visibles avant sauvegarde
-- **Performances** : Pas de requête serveur à chaque modification
-- **Rollback facile** : Annuler sans polluer la base de données
-
-## Architecture globale
-
-L'architecture est **data-driven, maintenable et extensible**, avec :
-
-- **Enums** pour sécuriser les types de blocs
-- **Système de validation robuste** avec `BaseValidator` et préfixes pour une validation modulaire et réutilisable
-- Préfixes typés (text\_, number\_, checkbox\_, image\_, color\_) qui servent à :
-  **Déterminer automatiquement le type de validation à appliquer,
-  Générer le bon composant d'édition (input text, number, checkbox, color picker, upload d'image),
-  Assurer la cohérence entre validation et interface utilisateur**
-- **Gestion des erreurs centralisée** pour un retour utilisateur cohérent
-- Les médias sont gérés via Cloudinary, permettant la gestion efficace de fichiers volumineux, l’optimisation automatique et la transformation à la volée, tout en gardant la base de données légère et le CMS rapide.
-
-## Pattern Factory pour la création des blocs
-
-Le système de création des blocs repose sur l’utilisation d’un \*_pattern Factory_ qui permet la création centralisée des blocs, ce qui rend cette fonctionnalité testable.
-
-### Principe
-
-- Chaque bloc est défini par :
-  - un `type` représentant une famille de blocs ex: Carrousel
-  - un `bloc_name` représentant une variante
-
-### conséquence du principe précédent
-
-- le couple `type + bloc_name` est utilisé comme clé de résolution des composants d'édition et visuels à afficher
-- Le moteur de rendu n’a aucune connaissance des implémentations concrètes
-
-## Mise à jour immutable par chemin dans l’arborescence des blocs et de la page plus globalement
-
-La mise à jour de l’état repose sur un mécanisme **path-based**, permettant de modifier de manière ciblée n’importe quelle propriété au sein d’une structure de données imbriquée.
-
-Ce mécanisme est implémenté via une fonction utilitaire générique utilisant **Immer**, garantissant une gestion stricte de l’immutabilité.
-
-### Principe
-
-- L’état est considéré comme une **arborescence de données**
-- Chaque mise à jour est définie par :
-  - un **chemin textuel** (`path`) utilisant la notation pointée (`a.b.c`)
-  - une valeur cible
-- Le chemin est résolu dynamiquement pour atteindre la propriété à modifier
-- La mise à jour est produite sans mutation directe de l’objet source
-
-### Fonctionnement
-
-- Le chemin est découpé en clés successives
-- L’arborescence est parcourue jusqu’à la clé finale
-- Les nœuds intermédiaires sont créés si nécessaire
-- La valeur est remplacée uniquement si elle diffère de l’existante
-- Immer génère une **nouvelle version cohérente de l’état**
-
-### Bénéfices architecturaux
-
-- Mise à jour ciblée et prévisible
-- Support des structures profondément imbriquées
-- Immutabilité garantie sans complexité syntaxique
-- Réduction des effets de bord
-- Alignement avec l’architecture data-driven du CMS
-
-Ce mécanisme est utilisé notamment pour la gestion des blocs, médias, headers et footers lors des opérations d’édition (CRUD, drag & drop, réorganisation).
-
-## Type d'architecture
-
-**Monolithique (frontend + backend dans le même projet)**
-
-### Justification
-
-- **Frontend et backend intégrés** : Next.js gère à la fois le rendu React et l'accès à la base via Prisma
-- **Monolithique mais modulable** : chaque bloc est isolé, testable et extensible, mais tout est contenu dans un seul projet
-- **Pas de microservices** : inutile ici, car la logique métier est quasi inexistante et le moteur de rendu est auto-suffisant
-- **Validation modulaire** : système de validateurs avec préfixes permettant de valider n'importe quelle structure de données de manière cohérente
-- **Maintenable et évolutif** : découpage en composants, hooks, lib, utils et validateurs pour gérer la complexité
-
----
-
-## Analyse critique et défis rencontrés
-
-Gestion des validations selon les types de champs avec BaseValidator et préfixes, nécessitant un système flexible mais complexe
-
-Maintenir une cohérence forte entre configuration, validation et rendu UI
-
-Solutions apportées
-
-Utilisation d’un registry central pour mapper types → composants
-
-Préfixes typés pour automatiser la validation et la génération des inputs d’édition
-
-Contrôle strict avec TypeScript pour garantir la robustesse des données
-
-Monitoring qualité avec Codacy et CodeScene, suivi de métriques de complexité et duplication
-
-## Stack technique
-
-- **Framework principal :** Next.js 15+ (App Router, React Server Components)
-- **Base de données :** PostgreSQL (Neon)
-- **ORM :** Prisma
-- **Validation :** Système custom avec `BaseValidator` et préfixes
-- **Architecture des composants :**
-  - Chaque bloc a un `type` et un `name`
-  - Les composants sont rendus automatiquement selon l'ordre défini en BDD
-  - Mapping `model.type.bloc_name → composant` via un **registry**
-- **Enums :** utilisés pour sécuriser les types de blocs et faciliter l'autocomplétion
-- **TypeScript :** typage strict pour la sécurité du code
-
----
-
-## Principe général
-
-- **Absence de logique métier complexe** : les blocs sont affichés tels quels
-- **Validation déclarative** : les règles de validation sont définies de manière modulaire avec préfixes
-- Les décisions de rendu dépendent uniquement des données provenant de la base
-- Le frontend agit comme un **moteur de rendu pur**
-- Les validateurs assurent l'intégrité des données avant persistance
-
----
-
-## Diagramme UML des données du site
-
-Le schéma de base de données illustre les relations entre les différentes entités du système :
-
-![Diagramme UML](./docs/uml-diagram.png)
-
-### Entités principales
-
-#### **Page**
-
-- Entité centrale représentant une page du site
-- Contient les métadonnées (titre, slug, publication, mode)
-- Relations : peut avoir plusieurs `Header`, `Footer` et `Bloc`
-
-#### **Bloc**
-
-- Représente un bloc de contenu configurable
-- Propriétés clés :
-  - `text_nom_bloc` : identifiant unique du type de bloc (TypeBloc enum)
-  - `text_titre` : titre du bloc
-  - `text_type` : sous-type ou variante du bloc
-  - `number_bloc_position` : ordre d'affichage
-  - `checkbox_is_full_width` : affichage pleine largeur
-  - `text_langue_bloc` : langue du contenu
-- Relations :
-  - Appartient à une `Page`
-  - Peut contenir plusieurs `Media` et `Article`
-
-#### **Header et Footer**
-
-- Composants de layout réutilisables
-- Contiennent leurs propres médias (logos, images)
-- Relations : liés à une `Page`
-
-#### **Media**
-
-- Gestion des ressources média (images, vidéos)
-- Propriétés :
-  - `text_titre` : titre du média
-  - `text_image_lien` : URL ou chemin
-  - `number_position_image` : ordre d'affichage
-- Relations : peut appartenir à un `Bloc`, `Header`, `Footer` ou `Article`
-
-#### **Article**
-
-- Contenu textuel structuré
-- Propriétés :
-  - `text_article` : contenu de l'article
-  - `number_width` et `number_height` : dimensions
-  - `number_position_article` : ordre d'affichage
-- Relations :
-  - Appartient à un `Bloc`
-  - Peut contenir plusieurs `Media` (images intégrées)
-
-#### **TypeBloc (Enum)**
-
-- Énumération des types de blocs disponibles :
-  - `CAROUSEL`
-  - `IMAGE_GROUPE`
-  - `TEXTE`
-  - `SCREEN`
-  - `VIDEO`
-  - `BOUTON`
-
-#### **BaseValidator**
-
-- Classe abstraite pour la validation des données
-- Méthode principale : `validateAll()` avec support des préfixes
-- Toutes les entités passent par la validation avant persistance
-
-## Structure des dossiers
-
-![Structure du projet](./docs/project-structure.png)
-
-## Système de validation avec BaseValidator
-
-Le projet repose sur un système de validation modulaire et réutilisable, basé sur une classe BaseValidator dont héritent l’ensemble des modèles.
-Cette classe permet de valider n’importe quelle structure de données, de manière centralisée et cohérente.
-
-Chaque champ est automatiquement associé à un validateur dédié grâce à son préfixe ainsi qu’à une configuration spécifique grâce à son intitulé, permettant d’appliquer une validation Zod adaptée aux critères définis au moment de la validation.
-
-### Avantages du système de validation
-
-1. **Réutilisabilité** : `BaseValidator` peut être étendu pour valider n'importe quelle structure
-2. **Préfixes** : validation de structures imbriquées avec identification précise des erreurs
-3. **Typage fort** : TypeScript assure la cohérence des types validés
-4. **Testabilité** : chaque validateur peut être testé indépendamment
-5. **Maintenabilité** : les règles de validation sont centralisées et documentées
-6. **Extensibilité** : ajouter de nouveaux validateurs est simple et suit le même pattern
-
----
-
-## Flux de données
-
+login    : test@test.com
+password : test1234
 ```
 
-┌─────────────────┐
-│ Base de données│
-│ (Prisma) │
-└────────┬────────┘
-│
-│ SELECT \* FROM blocks ORDER BY order
-│
-▼
-┌─────────────────┐
-│ Server Action │
-│ ou API Route │
-│
-└────────┬────────┘
-│
-│ Données récupérées via Prisma dans Néon
-│
-▼
-┌─────────────────┐
-│ Page Component │
-│ (SSR) │
-└────────┬────────┘
-│
-│ map(renderBlock)
-│
-▼
-┌─────────────────┐
-│ Block Registry │
-│ type + name │
-└────────┬────────┘
-│
-│ Mapping vers composant
-│
-▼
-┌─────────────────┐
-│ React Component│
-│ (Hero, Gallery)│
-└─────────────────┘
+> 💡 Pensez à cocher **Page d'accueil** sur l'une des pages dans l'édition (`/edition/pages`) pour que la racine du site affiche un contenu.
 
+---
+
+## Ajouter un bloc
+
+L'ajout d'un nouveau type de bloc se fait en **4 étapes** :
+
+**1. Déclarer le type dans l'enum**
+
+```typescript
+// database/model/Page.tsx
+export enum TypeBloc {
+  CAROUSEL = "CAROUSEL",
+  // ... types existants
+  MON_NOUVEAU_BLOC = "MON_NOUVEAU_BLOC",
+}
 ```
 
-## Qualité du code & métriques
+**2. Créer ses options dans la modal de choix**
 
-Les métriques de qualité sont suivies via **Codacy** et **CodeScene**, afin d’évaluer la maintenabilité, la complexité et la santé globale du codebase.
+Dans `components/modals/PageChoiceModal.tsx`, définir les options du bloc et ajouter son bouton :
+
+```tsx
+<button
+  aria-label="Créer un bloc Custom"
+  className="px-4 py-4 rounded bg-slate-600 text-white text-lg hover:bg-slate-700 transition"
+  onClick={() => addBlocToPage(options_mon_nouveau_bloc)}
+>
+  Mon nouveau bloc
+</button>
+```
+
+**3. Créer les composants d'édition et de visualisation**
+
+- Fichier d'édition : `components/contextView/edition/`
+- Fichier de visualisation : `components/contextView/showcase/`
+
+**4. Enregistrer le bloc dans le registry**
+
+Dans `lib/config/componentsView.tsx` :
+
+```typescript
+blocksToRender: {
+  // is_custom: false si le bloc suit le pattern d'affichage habituel
+  // is_custom: true si le bloc possède un template d'édition spécifique
+  MON_NOUVEAU_BLOC: {
+    is_custom: false;
+  }
+}
+
+blocksFrontToRender: {
+  MON_NOUVEAU_BLOC: MonNouveauBlocShowcase;
+}
+```
 
 ---
 
-![CodeScene dashboard](./docs/codescene.png)
+## Système de validation
 
-![CodeScene code health](./docs/codescene-code-health.png)
+Le projet repose sur une classe abstraite `BaseValidator` dont héritent tous les modèles. Chaque champ est automatiquement associé à un validateur dédié grâce à son préfixe et à sa configuration, permettant d'appliquer une validation Zod adaptée.
 
-- **Code Health global** : **9.84 / 10 – Healthy**
-- Tous les fichiers sont classés comme **Healthy**
-- Aucune zone à risque
-
-#### Observations principales
-
-- Les dossiers **lib**, **hooks**, **database** et **app** présentent une excellente santé
-- Les composants UI et blocs sont bien regroupés, avec un couplage limité
-- L’architecture data-driven limite la dette technique malgré la taille croissante du projet
+Avantages : réutilisabilité, typage fort, testabilité indépendante, extensibilité simple.
 
 ---
 
-### Lecture globale
+## Qualité du code
 
-- Code **lisible et maintenable**
-- Faible complexité
-- Architecture cohérente et bien découpée
-- Duplication à surveiller (acceptable dans un CMS configurable)
-- Tests automatisés à ajouter pour améliorer la couverture
+Suivi via **Codacy** et **CodeScene** :
 
----
+| Métrique           | Valeur        |
+| ------------------ | ------------- |
+| Code Health global | **9.84 / 10** |
+| Statut             | ✅ Healthy    |
+| Fichiers à risque  | Aucun         |
 
-### Conclusion
+Axes d'amélioration identifiés :
 
-Les métriques confirment que le projet repose sur une **base saine**, avec une architecture robuste et évolutive.
-La priorité future concerne principalement :
-
-- la réduction de la duplication sur certains blocs
-- l’introduction progressive de tests automatisés
-
-# Lancer les tests
-
-npm run test
+- Réduction de la duplication sur certains blocs
+- Introduction progressive de tests automatisés
 
 ---
 
 ## Tests
 
-Des tests sont présents pour la création de blocs et la vérification de la mise à jour des données à partir du chemin dans la structure imbriquée. Les tests sont gérés à l'aide de jest et sont présents dans le dossier **tests** .
-Vous pouvez les jouer à l'aide de la commande npm test -- --clearCache .
+Des tests couvrent la création de blocs et la mise à jour par chemin dans la structure imbriquée.
+
+```bash
+# Lancer les tests
+npm run test
+
+# Vider le cache Jest avant de jouer les tests
+npm test -- --clearCache
+```
+
+Les tests sont situés dans le dossier `__tests__/` et gérés avec **Jest**.
 
 ---
 
 ## Support
 
-Pour toute question ou problème :
-
-- Ouvrir une issue sur GitHub
+- Ouvrir une **[Issue sur GitHub](https://github.com/Aline86/simple_config_cms/issues)**
 - Consulter la documentation dans `/docs`
+- Consulter le guide de contribution dans [CONTRIBUTING.md](./Contributing.md)
 
-``
+---
 
-```
+## Licence
 
-```
-
-## Edition pages :
-
-![pages](docs/pages.png)
-![edition-pages-ouvertes](docs/page_ouverte.png)
-![edition-creation-bloc](docs/page_blocs.png)
-
-## Rendu final possible
-
-![screeshot-landing-page-pc](./docs/Démo-du-site-vitrine.png)
-
-```
-
-```
+Ce projet est distribué sous licence **[Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)](./License.md)**.  
+Usage commercial interdit sans autorisation explicite.
