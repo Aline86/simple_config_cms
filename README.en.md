@@ -148,7 +148,7 @@ Quality monitoring with Codacy and CodeScene, tracking complexity and duplicatio
 
 ---
 
-## Database UML Diagram
+## Site data UML Diagram
 
 The database schema illustrates the relationships between the main system entities:
 

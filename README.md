@@ -306,7 +306,7 @@ Monitoring qualité avec Codacy et CodeScene, suivi de métriques de complexité
 
 ---
 
-## Diagramme UML de la base de données
+## Diagramme UML des données du site
 
 Le schéma de base de données illustre les relations entre les différentes entités du système :
 
