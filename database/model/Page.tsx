@@ -108,10 +108,6 @@ export class PageObject extends BaseValidatable {
     this.blocs.push(bloc);
   }
 
-  removeBloc(index: number): void {
-    this.blocs.splice(index, 1);
-  }
-
   setField<K extends keyof PageObject>(field: K, value: PageObject[K]) {
     (this as unknown)[field] = value;
     if (field === "text_titre") {
