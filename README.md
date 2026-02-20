@@ -6,7 +6,7 @@
 
 J’ai conçu un moteur déclaratif configurable reposant sur un système de résolution dynamique typé (basé sur des préfixes sémantiques), intégrant un mécanisme de mise à jour immuable d’arbre par chemins et un système de validation modulaire générique. Celui-ci est utilisé en production par l'association **Welcome Poitiers** depuis **janvier 2025**.
 
-Ce CMS avec pré-visualisation en direct permet de créer des sites vitrines en direct. Le code a été conçu de manière extensible pour pouvoir être modifié facilement. Il est ainsi possible d'ajouter un bloc rapidement. Il suffit d'ajouter un type de bloc dans 
+Ce CMS avec pré-visualisation en direct permet de créer des sites vitrines en direct. Le code a été conçu de manière extensible pour pouvoir être modifié facilement. Il est ainsi possible d'ajouter un bloc rapidement. Il suffit d'ajouter un type de bloc dans
 
 ```
 database/model/Page.tsx
@@ -24,7 +24,7 @@ export enum TypeBloc {
 
 ```
 
-D'aller créer ses options dans ```components\modals\PageChoiceModal.tsx``` et de lui ajouter son bouton associé sur la base des boutons du fichier
+D'aller créer ses options dans `components\modals\PageChoiceModal.tsx` et de lui ajouter son bouton associé sur la base des boutons du fichier
 
 ```
    <button
@@ -38,10 +38,11 @@ D'aller créer ses options dans ```components\modals\PageChoiceModal.tsx``` et d
    </button>
 ```
 
-De créer son fichier d'édition et de visualisation dans ```components/contextView/edition``` et ```components/contextView/showcase```
+De créer son fichier d'édition et de visualisation dans `components/contextView/edition` et `components/contextView/showcase`
 en suivant la logique des fichiers d'édition pour le fichier d'édition de bloc custom nouvellement créé.
 
-Et enfin, pour que le bloc apparaissent au clic sur le bouton de la modal de choix de bloc, éditer le fichier ```lib\config\componentsView.tsx``` :
+Et enfin, pour que le bloc apparaissent au clic sur le bouton de la modal de choix de bloc, éditer le fichier `lib\config\componentsView.tsx` :
+
 - blocksToRender : y ajouter votre bloc, si celui-ci suit le pattern d'affichage habituel, mettre is_custom: false, si vous créez un bloc d'édition complexe, à l'image de l'éditeur de texte, veuillez renseigner is_custom: true qui vous permettra d'ajouter un template d'édition custom que vous pourrez indiquer en valeur de votre nom de bloc custom, il s'agit de l'option text_nom_bloc choisie lors la création de l'option dans PageChoiceModal.tsx en étape 2.
 - blocksFrontToRender: y ajouter votre bloc de visualisation
 
@@ -60,6 +61,7 @@ Et enfin, pour que le bloc apparaissent au clic sur le bouton de la modal de cho
 git clone https://github.com/Aline86/simple_config_cms.git
 cd simple_config_cms
 ```
+
 # Pour visualiser le projet vous pouvez utiliser un environnement **docker** de développement
 
 ## Configurer les variables d'environnement
@@ -113,7 +115,7 @@ Penser à cocher `Page d'accueil` sur l'une des page de l'édition à l'adresse 
 
 npm prisma studio
 
-# Le projet - architecture et choix consceptuels
+# Le projet - architecture et choix conceptuels
 
 **Timeline du projet :**
 
