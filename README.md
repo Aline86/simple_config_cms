@@ -6,6 +6,77 @@
 
 J’ai conçu un moteur déclaratif configurable reposant sur un système de résolution dynamique typé (basé sur des préfixes sémantiques), intégrant un mécanisme de mise à jour immuable d’arbre par chemins et un système de validation modulaire générique. Celui-ci est utilisé en production par l'association **Welcome Poitiers** depuis **janvier 2025**.
 
+## Installation et démarrage
+
+### Prérequis
+
+- Docker
+- ou env local nodejs 20+ ainsi que postgresql ou neon pour la production
+
+### Installation
+
+``bash
+
+# Cloner le projet
+
+git clone https://github.com/Aline86/simple_config_cms.git
+cd simple_config_cms
+
+# Pour visualiser le projet vous pouvez utiliser un environnement **docker** de développement
+
+## Configurer les variables d'environnement
+
+créer un fichier .env à la racine du projet et y ajouter les variables suivantes pour visualiser le projet dans un environnement de développement :
+
+```
+Les variable d'environnement sont les suivantes :
+
+NEXT_PUBLIC_APP_URL: url de votre app ( locale ou de production en fonction de l'environnement de montage )
+JWT_SECRET: chaîne aléatoire que vous seul connaissez
+
+Les quatre variables cloudinary se récupèrent de la façon suivante:
+- créer un compte sur cloudinary : https://console.cloudinary.com
+
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME:
+CLOUDINARY_API_KEY:
+CLOUDINARY_API_SECRET:
+NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER:
+```
+
+Pour récupérer les quatre valeurs des variables suivantes, suivre les indications suivantes :
+
+![Cloudinary pres](./docs/cloudinary_api_key.png)
+
+(roue crantée, API Keys puis Generate New Api Key)
+
+Il vous faudra ensuite créer un preset (unsigned):
+
+![Cloudinary explanation](./docs/unigned_preset.png)
+
+Ces actions vous permettent de faire fonctionner le picker de Cloudinary utilisé dans l'app pour le chargement d'images sur votre cloud Cloudinary nouvellement créé :
+
+![Cloudinary pres](./docs/cloudinary_picker.png)
+
+une fois cette étape effectuée vous pouvez lancer les commandes :
+
+`docker compose build`
+`docker compose up`
+
+la création des tables en base de données postgresql est automatisée ainsi que la création d'un user à l'aide d'un script de seed.
+
+Vous pourrez accéder au bo à l'adresse http://localhost:3000/login grâce aux identifiants suivants :
+
+- login: test@test.com
+- mot de passe : test1234
+
+Penser à cocher `Page d'accueil` sur l'une des page de l'édition à l'adresse http://localhost:3000/edition/pages pour que la racine du site expose un contenu.
+
+### Développement
+
+npm prisma studio
+
+# Le projet - architecture et choix consceptuels
+
 **Timeline du projet :**
 
 - **Janvier 2025** : Mise en production V1 (architecture initiale)
@@ -83,22 +154,24 @@ instantanément le rendu des modifications sans sauvegarder en base.
 ### Architecture technique
 
 ```
+
 ┌─────────────────────────────────────────────────────────┐
-│                    Interface d'édition                   │
-│  ┌─────────────────┐              ┌──────────────────┐  │
-│  │   Form Editor   │────onChange──│  Preview Panel   │  │
-│  │  (inputs, drag) │              │  (render live)   │  │
-│  └────────┬────────┘              └──────────────────┘  │
-│           │                                              │
-│           │ updateByPath(path, value)                    │
-│           ▼                                              │
-│  ┌──────────────────────────────────────────────────┐   │
-│  │         État centralisé (Immer + Context)        │   │
-│  │  - Page complète en mémoire                      │   │
-│  │  - Mise à jour immutable par chemin              │   │
-│  │  - Synchronisation bidirectionnelle              │   │
-│  └──────────────────────────────────────────────────┘   │
+│ Interface d'édition │
+│ ┌─────────────────┐ ┌──────────────────┐ │
+│ │ Form Editor │────onChange──│ Preview Panel │ │
+│ │ (inputs, drag) │ │ (render live) │ │
+│ └────────┬────────┘ └──────────────────┘ │
+│ │ │
+│ │ updateByPath(path, value) │
+│ ▼ │
+│ ┌──────────────────────────────────────────────────┐ │
+│ │ État centralisé (Immer + Context) │ │
+│ │ - Page complète en mémoire │ │
+│ │ - Mise à jour immutable par chemin │ │
+│ │ - Synchronisation bidirectionnelle │ │
+│ └──────────────────────────────────────────────────┘ │
 └─────────────────────────────────────────────────────────┘
+
 ```
 
 ### Fonctionnement
@@ -328,43 +401,45 @@ Chaque champ est automatiquement associé à un validateur dédié grâce à son
 ## Flux de données
 
 ```
+
 ┌─────────────────┐
-│  Base de données│
-│    (Prisma)     │
+│ Base de données│
+│ (Prisma) │
 └────────┬────────┘
-         │
-         │ SELECT * FROM blocks ORDER BY order
-         │
-         ▼
+│
+│ SELECT \* FROM blocks ORDER BY order
+│
+▼
 ┌─────────────────┐
-│  Server Action  │
-│  ou API Route   │
+│ Server Action │
+│ ou API Route │
 │
 └────────┬────────┘
-         │
-         │ Données récupérées via Prisma dans Néon
-         │
-         ▼
+│
+│ Données récupérées via Prisma dans Néon
+│
+▼
 ┌─────────────────┐
-│  Page Component │
-│   (SSR)  │
+│ Page Component │
+│ (SSR) │
 └────────┬────────┘
-         │
-         │ map(renderBlock)
-         │
-         ▼
+│
+│ map(renderBlock)
+│
+▼
 ┌─────────────────┐
-│  Block Registry │
-│  type + name    │
+│ Block Registry │
+│ type + name │
 └────────┬────────┘
-         │
-         │ Mapping vers composant
-         │
-         ▼
+│
+│ Mapping vers composant
+│
+▼
 ┌─────────────────┐
-│  React Component│
-│  (Hero, Gallery)│
+│ React Component│
+│ (Hero, Gallery)│
 └─────────────────┘
+
 ```
 
 ## Qualité du code & métriques
@@ -407,61 +482,16 @@ La priorité future concerne principalement :
 - la réduction de la duplication sur certains blocs
 - l’introduction progressive de tests automatisés
 
-## Installation et démarrage
-
-### Prérequis
-
-- Docker
-- ou env local nodejs 20+ ainsi que postgresql ou neon
-
-### Installation
-
-```bash
-# Cloner le projet
-git clone https://github.com/Aline86/simple_config_cms.git
-cd simple_config_cms
-
-# Pour visualiser le projet vous pouvez utiliser un environnement **docker** de développement
-
-# Configurer les variables d'environnement
-créer un fichier .env à la racine du projet et y ajouter les variables suivantes pour visualiser le projet dans un environnement de développement :
-- créer un compte sur Cloudinary et ajouter un upload preset de type unsigned puis récupérer les variables cloudname, api_key et api_secret dans la section api key et enfin ajouter un nom de dossier à côté de NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER
-
-NEXT_PUBLIC_APP_URL:
-NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME:
-CLOUDINARY_API_KEY:
-CLOUDINARY_API_SECRET:
-JWT_SECRET:
-NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER:
-
-une fois cette étape effectuée vous pouvez lancer les commandes :
-
-- docker-compose build
-- docker-compose up
-
-la création des tables en base de données postgresql est automatisée ainsi que la création d'un user à l'aide d'un script de seed.
-
-Vous pourrez accéder au bo à l'adresse http://localhost:3000/login grâce aux identifiants suivants :
-
-- login: test@test.com
-- mot de passe : test1234
-
-Penser à cocher isHomePage sur l'une des page de l'édition à l'adresse http://localhost:3000/edition/pages pour que la racine du site expose un contenu.
-
-### Développement
-
-# Ouvrir Prisma Studio
-npm prisma studio
-
 # Lancer les tests
+
 npm run test
 
 ---
 
 ## Tests
 
-Des tests sont présents pour la création de blocs et la vérification de la mise à jour des données à partir du chemin dans la structure imbriquée. Les tests sont gérés à l'aide de jest et sont présents dans le dossier __tests__ .
-Vous pouvez les jouer à l'aide de la commande npm test -- --clearCache  .
+Des tests sont présents pour la création de blocs et la vérification de la mise à jour des données à partir du chemin dans la structure imbriquée. Les tests sont gérés à l'aide de jest et sont présents dans le dossier **tests** .
+Vous pouvez les jouer à l'aide de la commande npm test -- --clearCache .
 
 ---
 
@@ -471,9 +501,9 @@ Pour toute question ou problème :
 
 - Ouvrir une issue sur GitHub
 - Consulter la documentation dans `/docs`
-- Me contacter
+- Me contacter ca.haestie@gmail.com
 
-```
+``
 
 ```
 
@@ -488,3 +518,7 @@ Pour toute question ou problème :
 ## Rendu final possible
 
 ![screeshot-landing-page-pc](./docs/Démo-du-site-vitrine.png)
+
+```
+
+```

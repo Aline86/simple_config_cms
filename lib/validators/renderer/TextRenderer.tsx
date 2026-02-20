@@ -91,7 +91,6 @@ export function FieldRenderer<T>({
           <VideoUploaderView
             label={label}
             value={currentValue as string}
-            model={model[fieldNameToInvestigate] as MediaObject}
             field={fieldName}
             onChangeValue={setField}
           />

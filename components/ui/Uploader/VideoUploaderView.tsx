@@ -1,15 +1,7 @@
 // ==================== UI COMPONENTS ====================
 
 import Image from "next/image";
-import { MediaObject } from "../../../database/model/bloc/MediaObject";
 import VideoUploader from "../../../lib/mediaUploader/VideoUploader";
-
-interface UploadedImage {
-  file: File;
-  preview: string;
-  id: string;
-  type: "file";
-}
 
 interface YouTubeVideo {
   url: string;
@@ -19,14 +11,14 @@ interface YouTubeVideo {
   type: "youtube";
 }
 
-type MediaItem = UploadedImage | YouTubeVideo;
+type MediaItem = YouTubeVideo;
 
 export default function VideoUploaderView<T>({
   value,
   previewMedia = true,
   label = "Télécharger des médias",
   className = "",
-  model,
+
   field,
   onChangeValue,
 }: {
@@ -34,7 +26,6 @@ export default function VideoUploaderView<T>({
   previewMedia?: boolean;
   label?: string;
   className?: string;
-  model: MediaObject;
   field: string;
   onChangeValue: (fieldName: string, value: unknown) => void;
 }) {
@@ -57,7 +48,7 @@ export default function VideoUploaderView<T>({
 
       {uploader.errors.length > 0 && <ErrorBox errors={uploader.errors} />}
 
-      {previewMedia && uploader.media.length > 0 && (
+      {previewMedia && uploader.media !== undefined && (
         <PreviewSection media={uploader.media} onClearAll={uploader.clearAll} />
       )}
 
@@ -68,17 +59,6 @@ export default function VideoUploaderView<T>({
 
 function UploaderLabel({ label }: { label: string }) {
   return <label className="uploader-label">{label}</label>;
-}
-
-interface DropZoneProps {
-  isDragging: boolean;
-  fileInputRef: React.RefObject<HTMLInputElement | null>;
-  onDragEnter: (e: React.DragEvent<HTMLDivElement>) => void;
-  onDragLeave: (e: React.DragEvent<HTMLDivElement>) => void;
-  onDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
-  onDrop: (e: React.DragEvent<HTMLDivElement>) => void;
-  onFileInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onClick: () => void;
 }
 
 interface YouTubeSectionProps {
@@ -176,7 +156,7 @@ function ErrorBox({ errors }: { errors: string[] }) {
 
 interface PreviewSectionProps {
   value?: string;
-  media: MediaItem[];
+  media: MediaItem;
 
   onClearAll: () => void;
 }
@@ -193,7 +173,7 @@ function PreviewSection({
         <span className="preview-count">
           {value !== "" && value !== undefined
             ? "1 média"
-            : `${media.length} média${media.length > 1 ? "s" : ""}`}
+            : `${media !== undefined} média`}
         </span>
         <button
           aria-label="Tout supprimer"
@@ -207,12 +187,13 @@ function PreviewSection({
 
       <div className="preview-grid">
         <div className="preview-item">
-          {value.includes("youtube.com") || value.includes("youtu.be") ? (
-            <YouTubePreview url={value} />
+          {media.url.includes("youtube.com") ||
+          media.url.includes("youtu.be") ? (
+            <YouTubePreview url={media.url} />
           ) : (
             <div className="image-wrapper">
               <Image
-                src={value}
+                src={media.url}
                 alt="preview"
                 fill
                 className="preview-image"
@@ -226,10 +207,9 @@ function PreviewSection({
           )}
         </div>
 
-        {media !== undefined &&
-          media.map((item) => (
-            <PreviewItem key={item.id} item={item} onRemove={onClearAll} />
-          ))}
+        {media !== undefined && (
+          <PreviewItem key={media.id} item={media} onRemove={onClearAll} />
+        )}
       </div>
     </div>
   );
@@ -268,7 +248,7 @@ function PreviewItem({ item, onRemove }: PreviewItemProps) {
 
   return (
     <div className="preview-item">
-      <img src={item.preview} alt={item.file.name} className="preview-image" />
+      <img src={item.url} alt={item.thumbnail} className="preview-image" />
       <div className="preview-overlay">
         <button
           type="button"
@@ -282,8 +262,7 @@ function PreviewItem({ item, onRemove }: PreviewItemProps) {
           ✕
         </button>
       </div>
-      <p className="preview-name">{item.file.name}</p>
-      <p className="preview-size">{(item.file.size / 1024).toFixed(0)} KB</p>
+      <p className="preview-name">{item.thumbnail}</p>
     </div>
   );
 }

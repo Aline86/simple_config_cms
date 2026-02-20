@@ -27,7 +27,7 @@ export default function ScreenEdit<T>({
   show_debug = false,
 }: ScreenEditorProps<T>) {
   return (
-    <section className="mx-auto width-full space-y-6 p-6">
+    <section className="mx-auto w-full min-w-[44vw] space-y-6 p-6">
       <div className="space-y-2">
         <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
           Configuration du composant "Ecran"

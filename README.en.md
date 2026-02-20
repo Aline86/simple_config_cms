@@ -11,6 +11,62 @@ Database queries retrieve blocks ordered by `bloc_page_position` ascending, enab
 
 The goal is to enable non-technical users to easily modify page content and structure via a modular interface without coding. The CMS automatically generates the UI and validates data, ensuring consistency between configuration and rendering.
 
+# To view the project, you can use a **Docker** development environment
+
+## Configure environment variables
+
+Create a `.env` file at the root of the project and add the following variables to run the project in a development environment:
+
+The environment variables are as follows:
+
+```
+NEXT_PUBLIC_APP_URL: URL of your app (local or production depending on the environment)
+JWT_SECRET: a random string known only to you
+```
+
+The four Cloudinary variables can be obtained as follows:
+
+- Create an account on Cloudinary: https://console.cloudinary.com
+
+```
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME:
+CLOUDINARY_API_KEY:
+CLOUDINARY_API_SECRET:
+NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER:
+```
+
+To retrieve the four values for the variables above, follow these instructions:
+
+![Cloudinary pres](./docs/cloudinary_api_key.png)
+
+(gear icon, API Keys, then Generate New API Key)
+
+You will then need to create an unsigned preset:
+
+![Cloudinary explanation](./docs/unigned_preset.png)
+
+These steps allow the Cloudinary picker used in the app to work for uploading images to your newly created Cloudinary cloud:
+
+![Cloudinary pres](./docs/cloudinary_picker.png)
+
+Once this step is completed, you can run the following commands:
+
+`docker compose build`  
+`docker compose up`
+
+The creation of PostgreSQL database tables is automated, as well as the creation of a user using a seed script.
+
+You can access the back office at http://localhost:3000/login using the following credentials:
+
+- login: test@test.com
+- password: test1234
+
+Remember to check `Home page` on one of the pages in the edition section at http://localhost:3000/edition/pages so that the root of the site displays content.
+
+### Development
+
+`npm prisma studio`
+
 ## Architecture
 
 The architecture is **data-driven, maintainable, and extensible**, and includes:

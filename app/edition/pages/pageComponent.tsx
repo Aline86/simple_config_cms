@@ -1,6 +1,6 @@
 "use client";
 
-import { Trash } from "lucide-react";
+import { Save, Trash } from "lucide-react";
 import {
   Card,
   CardHeader,
@@ -13,6 +13,7 @@ import { RedirectButton } from "../../../components/ui/RedirectButton";
 import { PageObject } from "../../../database/model/Page";
 import { FieldRenderer } from "../../../lib/validators/renderer/TextRenderer";
 import { Accordion } from "../../../components/ui/Accordeon";
+import { useEffect } from "react";
 
 interface PageCrudProps {
   page_data: PageObject;
@@ -22,12 +23,12 @@ interface PageCrudProps {
     fieldName: keyof PageObject,
     newValue: unknown,
   ) => void;
-  onAdd?: () => void; // optionnel, si tu veux un bouton "Ajouter une page"
   onDragStart: (page: PageObject) => void;
   onDrop: (page: PageObject) => void;
   draggableEnabled: boolean;
   pages: PageObject[];
   show_debug?: boolean;
+  handleSavePages: () => void;
 }
 
 export default function PageCrud({
@@ -39,11 +40,13 @@ export default function PageCrud({
   draggableEnabled,
   pages,
   show_debug = false,
+  handleSavePages,
 }: PageCrudProps) {
   const handleEdit = (fieldName: string, newValue: unknown) => {
     onEdit(page_data, fieldName as keyof PageObject, newValue);
   };
   const num = Number(page_data.number_page_position);
+  useEffect(() => {}, [pages]);
   return (
     <div className=" ">
       <div
@@ -98,6 +101,19 @@ export default function PageCrud({
                 </div>
               </CardContent>
               <CardFooter className="flex justify-end items-center">
+                <div className="flex gap-2 mr-2">
+                  {" "}
+                  <button
+                    aria-label="Supprimer"
+                    onClick={() => {
+                      handleSavePages();
+                    }}
+                    className="flex items-center gap-1 px-3 py-1 rounded bg-blue-500 text-white hover:bg-blue-600 transition"
+                  >
+                    <Save size={14} /> Enregistrer la page
+                  </button>
+                </div>
+
                 <div className="flex gap-2">
                   {/* Bouton Delete */}
                   <button
@@ -108,12 +124,16 @@ export default function PageCrud({
                     <Trash size={14} /> Supprimer
                   </button>
                 </div>
-                <div className="flex gap-2">
-                  <RedirectButton slug={page_data.text_slug ?? ""} />
-                </div>
-                <span className="text-xs text-muted-foreground">
-                  id: {page_data.number_id}
-                </span>
+                {page_data.number_id !== null && (
+                  <>
+                    <div className="flex gap-2">
+                      <RedirectButton slug={page_data.text_slug ?? ""} />
+                    </div>
+                    <span className="text-xs text-muted-foreground">
+                      id: {page_data.number_id}
+                    </span>
+                  </>
+                )}
               </CardFooter>
             </Card>
           }
