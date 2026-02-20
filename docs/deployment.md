@@ -18,9 +18,7 @@ git clone https://github.com/Aline86/simple_config_cms.git
 cd simple_config_cms
 ```
 
-- avoir installer les dépendance du projet en local avec la commande suivante `npm install` dans le terminal, attendre 5 min que les dépendances chargent
-
-# Pour visualiser le projet vous pouvez utiliser un environnement **docker** de développement
+- avoir installer les dépendances du projet en local avec la commande suivante `npm install` dans le terminal, attendre 5 min que les dépendances chargent
 
 ## Configurer les variables d'environnement
 
