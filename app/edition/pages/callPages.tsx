@@ -1,6 +1,4 @@
 "use server";
-import { headers } from "next/headers";
-import { getBaseUrl } from "../../../lib/helpers/baseUrl";
 
 export default async function getPages(with_homepage: string = "all_pages") {
   const res = await fetch(

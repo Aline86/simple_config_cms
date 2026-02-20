@@ -16,7 +16,7 @@ export default function VideoUploader<T>({
   field: string;
   onChange: (fieldName: string, value: unknown) => void;
 }) {
-  const [media, setMedia] = useState<YouTubeVideo[]>([]);
+  const [media, setMedia] = useState<YouTubeVideo>();
 
   const [errors, setErrors] = useState<string[]>([]);
   const [youtubeUrl, setYoutubeUrl] = useState("");
@@ -52,13 +52,6 @@ export default function VideoUploader<T>({
       return;
     }
 
-    if (media.length >= MAX_FILES) {
-      setErrors([
-        `Maximum ${MAX_FILES} média${MAX_FILES > 1 ? "s" : ""} autorisé${MAX_FILES > 1 ? "s" : ""}`,
-      ]);
-      return;
-    }
-
     const newYouTubeVideo: YouTubeVideo = {
       url: `https://www.youtube.com/watch?v=${videoid}`,
       videoid,
@@ -67,7 +60,7 @@ export default function VideoUploader<T>({
       type: "youtube",
     };
 
-    setMedia([newYouTubeVideo]);
+    setMedia(newYouTubeVideo);
     onChange(field, newYouTubeVideo.url);
     setYoutubeUrl(newYouTubeVideo.url);
     console.log(field, newYouTubeVideo);
@@ -76,7 +69,7 @@ export default function VideoUploader<T>({
   };
 
   const clearAll = () => {
-    setMedia([]);
+    setMedia(undefined);
     setErrors([]);
     setYoutubeUrl("");
     setShowYoutubeInput(false);

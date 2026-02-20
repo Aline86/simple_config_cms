@@ -3,6 +3,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { callLogin } from "./callPage";
 
 export default function Page() {
   const [text_email, setEmail] = useState("");
@@ -14,21 +15,13 @@ export default function Page() {
     e.preventDefault();
 
     // Call your API route to authenticate
-    const res = await fetch("/api/auth/login", {
-      method: "POST",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text_email, text_password }),
-    });
-
-    if (res !== undefined) {
-      if (res.ok) {
-        // Redirect to protected page
-        router.push("/edition/pages");
-      } else {
-        const data = await res.json();
-        setError(data.message || "Login failed");
-      }
+    const res = await callLogin(text_email, text_password);
+    console.log("res", res);
+    if (res) {
+      // Redirect to protected page
+      router.push("/edition/pages");
+    } else {
+      setError("Connexion impossible");
     }
   };
 

@@ -231,6 +231,7 @@ export default function PageClient({
               onEdit={handleEdit}
               onDrop={onDrop}
               onDragStart={onDragStart}
+              handleSavePages={handleSavePages}
               draggableEnabled={draggableEnabled}
               pages={pages}
             />

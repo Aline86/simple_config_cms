@@ -45,6 +45,9 @@ export default function UploadButton({
         onError={() => {
           setLoading(false);
         }}
+        onClose={() => {
+          setLoading(false);
+        }}
       >
         {({ open }) => (
           <button

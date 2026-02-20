@@ -60,7 +60,7 @@ export default function TextInput<T>({
 
   const commonProps: React.InputHTMLAttributes<HTMLInputElement> &
     React.TextareaHTMLAttributes<HTMLTextAreaElement> = {
-    defaultValue: localValue as string | number,
+    value: localValue as string | number,
 
     onChange: handleChange,
 
