@@ -32,7 +32,7 @@ Simple Config CMS est un moteur déclaratif configurable reposant sur un **syst�
 
 Il permet à des utilisateurs non techniques de créer et modifier facilement des sites vitrines via une interface modulaire, sans écrire de code.
 
-[edition_bloc](docs/edition_blocs.gif)
+[edition_bloc](docs/edition_bloc.gif)
 
 ### Historique
 
