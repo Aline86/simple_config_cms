@@ -5,7 +5,7 @@
 ![Next.js](https://img.shields.io/badge/Next.js-15+-black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-84.6%25-blue)
 
-**FR Français | [EN English](./README.en.md)**
+[<img src="https://flagcdn.com/w20/fr.png" alt="FR"> Français](README.md) | [<img src="https://flagcdn.com/w20/gb.png" alt="EN"> English](README.en.md)
 
 CMS configurable avec prévisualisation en temps réel, conçu en Next.js. Utilisé en production par l'**association Welcome Poitiers** depuis janvier 2025.
 
