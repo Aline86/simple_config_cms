@@ -7,6 +7,51 @@ This project is a lightweight, configurable CMS built with Next.js, enabling eas
 Blocks are automatically sorted and rendered based on a `position` field updated during CRUD operations.  
 Database queries retrieve blocks ordered by `bloc_page_position` ascending, enabling rendering **without complex business logic or scattered conditional statements**.
 
+This CMS with live preview allows you to create showcase websites in real time. The code is designed to be extensible so it can be easily modified. It is thus possible to add a new block easily. You just need to add a block type in:
+
+
+```
+database/model/Page.tsx
+
+export enum TypeBloc {
+  CAROUSEL = "CAROUSEL",
+  IMAGE_GROUPE = "IMAGE_GROUPE",
+  TEXTE = "TEXTE",
+  BUTTON = "BOUTON",
+  SCREEN = "SCREEN",
+  VIDEO = "VIDEO",
+  HEADER = "HEADER",
+  FOOTER = "FOOTER",
+}
+
+```
+
+Then create its options in ```components\modals\PageChoiceModal.tsx``` and add its associated button based on the existing buttons in the file:
+
+```
+   <button
+     aria-label="Créer un bloc Custom avec options ...."
+     className="px-4 py-4 rounded bg-slate-600 text-white text-lg hover:bg-slate-700 transition"
+     onClick={() => {
+       addBlocToPage(options_custom_bloc);
+     }}
+   >
+     Texte
+   </button>
+```
+
+Next, create its editing and display files in components/contextView/edition and components/contextView/showcase, following the logic of the existing edition files for your newly created custom block edition file.
+
+Finally, to make the block appear when clicking the button in the block choice modal, edit the file lib\config\componentsView.tsx:
+
+blocksToRender: add your block here.
+
+If it follows the usual display pattern, set is_custom: false.
+
+If you create a complex editing block, like the text editor, set is_custom: true.
+This allows you to add a custom edition template, which you can assign to the name of your custom block — this corresponds to the text_nom_bloc option chosen during step 2 in PageChoiceModal.tsx.
+
+
 ## Business objective
 
 The goal is to enable non-technical users to easily modify page content and structure via a modular interface without coding. The CMS automatically generates the UI and validates data, ensuring consistency between configuration and rendering.
