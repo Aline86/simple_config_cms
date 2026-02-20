@@ -52,11 +52,9 @@ Et enfin, pour que le bloc apparaissent au clic sur le bouton de la modal de cho
 - Docker
 - ou env local nodejs 20+ ainsi que postgresql ou neon pour la production
 
-### Installation
+# Installation
 
-``bash
-
-# Cloner le projet
+### Cloner le projet
 
 ```
 git clone https://github.com/Aline86/simple_config_cms.git
