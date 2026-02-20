@@ -63,9 +63,9 @@ Ces actions vous permettent de faire fonctionner le picker de Cloudinary utilis�
 - cliquer sur la base de donnée nouvellement créée, cliquer sur ``Dashboard``` puis Connect, vous aurez alors accès à votre url de connexion. Récupérez-là avec le mot de passe en clair et mettez l'url de connexion dans votre fichier .env à la racine en valeur de la variable DATABASE_URL.
 - une fois cette étape effectuée vous devrez lancer les commandes prisma depuis votre environnement local pour créer le shéma de votre base de données en ligne Neon :
 
-  `npx prisma init`
-  `npx prisma generate`
-  `npx prisma migrate dev --name init`
+  `npx prisma init` si ça ne marche pas, la passer
+  `npx prisma generate` 
+  `npx prisma migrate dev --name init` si commande 1 passe sinon lancer seulement `npx prisma migrate dev` 
 
 - Je n'ai pas fait de script de seed pour créer un user en db en prod pour des raisons de sécurité.
 - créer un fichier hash.js à la racine du projet, y placer le code suivant :
