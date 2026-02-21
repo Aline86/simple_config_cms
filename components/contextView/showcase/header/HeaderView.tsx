@@ -129,7 +129,7 @@ export default function HeaderView({ bloc }: ViewProps) {
               <a
                 title="Retour à l'accueil"
                 href="/"
-                className="logo p-2 text-xl font-bold text-indigo-600 relative flex-shrink-0 z-0"
+                className="logo text-xl font-bold text-indigo-600 relative flex-shrink-0 z-0"
               >
                 {bloc.logo?.image_url ? (
                   <Image
