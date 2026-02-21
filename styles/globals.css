@@ -496,6 +496,7 @@ iframe {
     height: 50px !important;
   }
   header h1 {
+    height: 30px !important;
     font-size: 20px !important;
     padding: 0 !important;
     margin-left: -8px !important;
