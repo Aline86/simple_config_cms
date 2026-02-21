@@ -2,10 +2,22 @@
 import Image from "next/image";
 import { ArrowRight, Heart, Sparkles } from "lucide-react";
 import { BlocObject } from "../../../../database/model/Bloc";
+import {
+  convertToFirstPage,
+  extractPublicId,
+  getOriginalPdfUrl,
+  isPdfUrl,
+} from "../../../../lib/helpers/isPdf";
 
 export default function ButtonView({ bloc }: { bloc: BlocObject }) {
   const picture = bloc.image_medias[0];
-
+  const preview = isPdfUrl(picture.image_url)
+    ? convertToFirstPage(picture.image_url)
+    : picture.image_url;
+  let publicId;
+  if (isPdfUrl(preview)) {
+    publicId = extractPublicId(preview);
+  }
   return (
     <section className="button m-auto max-w-[1600px] group perspective w-full p-8">
       <div className="pt-6 relative bg-gradient-to-br from-slate-50 via-white to-slate-50 rounded-2xl overflow-hidden border border-slate-200/50 backdrop-blur-sm transform transition-transform duration-500 hover:scale-[1.02] hover:shadow-2xl h-full flex flex-col">
@@ -23,7 +35,7 @@ export default function ButtonView({ bloc }: { bloc: BlocObject }) {
   "
             className="object-cover transform "
             src={
-              picture.image_url ??
+              preview ??
               "https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?w=800&q=80"
             }
             alt={picture.text_titre ?? "Preview"}
@@ -47,7 +59,11 @@ export default function ButtonView({ bloc }: { bloc: BlocObject }) {
                   ? "#535c78"
                   : (bloc.color_background_color ?? "#535c78"),
             }}
-            href={picture.text_image_lien ?? "#"}
+            href={
+              isPdfUrl(picture.image_url)
+                ? getOriginalPdfUrl(publicId)
+                : (picture.text_image_lien ?? "#")
+            }
             className="relative flex items-center justify-center gap-2 px-6 py-3 bg-slate-800 text-white rounded-xl overflow-hidden group/btn transition-shadow duration-300 hover:shadow-lg hover:shadow-slate-800/50"
           >
             {/* Shine */}
