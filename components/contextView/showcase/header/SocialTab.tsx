@@ -1,10 +1,13 @@
 import Image from "next/image";
 import { useState } from "react";
 import { MediaObject } from "../../../../database/model/bloc/MediaObject";
+import { isPdfUrl, convertToFirstPage } from "../../../../lib/helpers/isPdf";
 
 export default function SocialTab({ network }: { network: MediaObject }) {
   const [isHovered, setIsHovered] = useState(false);
-
+  const preview = isPdfUrl(network.image_url)
+    ? convertToFirstPage(network.image_url)
+    : network.image_url;
   return (
     <div
       className="absolue  mb-2 flex flex-col gap-2"
@@ -33,7 +36,7 @@ export default function SocialTab({ network }: { network: MediaObject }) {
             !isHovered ? (
               <Image
                 className={`inset-0 bg-cover ml-2 bg-center w-6 h-6 flex items-center justify-center object-cover rounded`}
-                src={(network as MediaObject).image_url}
+                src={preview}
                 alt={(network as MediaObject).text_titre}
                 width="15"
                 height="15"
