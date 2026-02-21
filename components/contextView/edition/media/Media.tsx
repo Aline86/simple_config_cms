@@ -3,14 +3,14 @@
 import { MediaObject } from "../../../../database/model/bloc/MediaObject";
 import { FieldRenderer } from "../../../../lib/validators/renderer/TextRenderer";
 
-interface MediaEditorProps<T> {
+interface MediaEditorProps {
   socialMedia: MediaObject;
   onChange: (fieldName: string, newValue: unknown) => void;
-  removeElement: (socialMedia: T) => void;
+  removeElement: (socialMedia: MediaObject) => void;
   isLink?: boolean;
   show_debug?: boolean;
 }
-export function MediaEditor<T>({ ...props }: MediaEditorProps<T>) {
+export function MediaEditor({ ...props }: MediaEditorProps) {
   return (
     <section className="mx-auto max-w-2xl space-y-6 p-6">
       <div className="space-y-2">
@@ -25,7 +25,7 @@ export function MediaEditor<T>({ ...props }: MediaEditorProps<T>) {
       <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-200 dark:bg-slate-950">
         <div
           className="w-full flex justify-end items-center"
-          onClick={() => props.removeElement(props.socialMedia as T)}
+          onClick={() => props.removeElement(props.socialMedia)}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -46,20 +46,20 @@ export function MediaEditor<T>({ ...props }: MediaEditorProps<T>) {
         <div className="space-y-6">
           <FieldRenderer
             label="Nom du réseau social"
-            fieldName={`reseaux.${(props.socialMedia as MediaObject).number_position_image}.text_titre`}
+            fieldName={`reseaux.${props.socialMedia.number_position_image}.text_titre`}
             model={props.socialMedia as MediaObject}
             setField={props.onChange}
           />
           <FieldRenderer
             label="Lien du réseau social"
-            fieldName={`reseaux.${(props.socialMedia as MediaObject).number_position_image}.text_image_lien`}
+            fieldName={`reseaux.${props.socialMedia.number_position_image}.text_image_lien`}
             model={props.socialMedia as MediaObject}
             setField={props.onChange}
           />
           <FieldRenderer
             label="Image associée au réseau social"
-            fieldName={`reseaux.${(props.socialMedia as MediaObject).number_position_image}.image_url`}
-            model={props.socialMedia as MediaObject}
+            fieldName={`reseaux.${props.socialMedia.number_position_image}.image_url`}
+            model={props.socialMedia}
             setField={props.onChange}
           />
         </div>

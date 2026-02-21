@@ -5,6 +5,7 @@ import Image from "next/image";
 import UploadButton from "../UploadButton";
 import ImageUploader from "../../../lib/mediaUploader/ImageUploader";
 import { MediaObject } from "../../../database/model/bloc/MediaObject";
+import { isPdfUrl, convertToFirstPage } from "../../../lib/helpers/isPdf";
 
 export default function ImageUploaderView<T>({
   value,
@@ -80,6 +81,7 @@ function PreviewSection({
   onRemove,
   onClearAll,
 }: PreviewSectionProps) {
+  const preview = isPdfUrl(value) ? convertToFirstPage(value) : value;
   return (
     <div className="preview-section">
       <div className="preview-header">
@@ -99,13 +101,10 @@ function PreviewSection({
       </div>
 
       <div className="preview-grid">
-        {value !== undefined &&
-        value !== null &&
-        value !== "" &&
-        !value.includes("#") ? (
+        {value !== "" && !value.includes("#") ? (
           <div className="image-wrapper">
             <Image
-              src={value}
+              src={preview}
               alt="preview"
               fill
               className="preview-image"
@@ -134,13 +133,12 @@ interface PreviewItemProps {
 }
 
 function PreviewItem({ image, onRemove }: PreviewItemProps) {
+  const preview = isPdfUrl(image.preview)
+    ? convertToFirstPage(image.preview)
+    : image.preview;
   return (
     <div className="preview-item">
-      <img
-        src={image.preview}
-        alt={image.file.name}
-        className="preview-image"
-      />
+      <img src={preview} alt={image.file.name} className="preview-image" />
       <div className="preview-overlay">
         <button
           aria-label="supprimer une image"
