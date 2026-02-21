@@ -124,7 +124,7 @@ export default function HeaderView({ bloc }: ViewProps) {
               : " shadow fixed  top-0 left-0 right-0 z-20"
           }
         >
-          <div className="max-w-7xl mx-auto px-4">
+          <div className="mx-auto px-4">
             <div className="flex items-center justify-between h-16 ">
               <a
                 title="Retour à l'accueil"
@@ -175,7 +175,7 @@ export default function HeaderView({ bloc }: ViewProps) {
                   onClick={() => setIsOpen(!isOpen)}
                   className={
                     isOpen
-                      ? "burger open-nav sticky z-50  cursor-pointer right-[20px] "
+                      ? "burger open-nav sticky z-50  cursor-pointer right-5 "
                       : "burger  relative z-50  cursor-pointer"
                   }
                 >
