@@ -309,7 +309,6 @@ img.logo-site {
 }
 header {
   overflow: hidden;
-  height: 60px;
 }
 .nav-dynamique {
   transition: transform 0.3s ease-in-out;
