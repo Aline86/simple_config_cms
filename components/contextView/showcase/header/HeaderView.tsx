@@ -175,7 +175,7 @@ export default function HeaderView({ bloc }: ViewProps) {
                   onClick={() => setIsOpen(!isOpen)}
                   className={
                     isOpen
-                      ? "burger open-nav relative z-50  cursor-pointer right-[-200px] "
+                      ? "burger open-nav sticky z-50  cursor-pointer right-[20px] "
                       : "burger  relative z-50  cursor-pointer"
                   }
                 >
