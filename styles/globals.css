@@ -309,6 +309,7 @@ img.logo-site {
 }
 header {
   overflow: hidden;
+  height: 60px;
 }
 .nav-dynamique {
   transition: transform 0.3s ease-in-out;
@@ -490,6 +491,9 @@ iframe {
   h1 {
     font-size: 25px !important;
     word-wrap: break-word;
+  }
+  header {
+    height: 50px !important;
   }
   header h1 {
     font-size: 20px !important;
