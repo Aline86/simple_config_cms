@@ -483,6 +483,9 @@ iframe {
 }
 /* Pour les écrans de plus de 768px */
 @media (max-width: 768px) {
+  .logo {
+    transform: scale(0.8);
+  }
   h1 {
     font-size: 20px !important;
   }

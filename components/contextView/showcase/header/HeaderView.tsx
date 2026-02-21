@@ -125,11 +125,11 @@ export default function HeaderView({ bloc }: ViewProps) {
           }
         >
           <div className="mx-auto px-4">
-            <div className="flex items-center justify-between h-16 ">
+            <div className="flex items-center justify-between">
               <a
                 title="Retour à l'accueil"
                 href="/"
-                className="text-xl font-bold text-indigo-600 relative  flex-shrink-0 z-0"
+                className="logo text-xl font-bold text-indigo-600 relative  flex-shrink-0 z-0"
               >
                 {bloc.logo?.image_url ? (
                   <Image
