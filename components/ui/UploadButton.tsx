@@ -4,7 +4,6 @@ import { CldUploadWidget } from "next-cloudinary";
 import { useState } from "react";
 
 import type { CloudinaryUploadWidgetResults } from "next-cloudinary";
-import { isPdfUrl } from "../../lib/helpers/isPdf";
 
 type CloudinarySuccessResult = CloudinaryUploadWidgetResults & {
   info?: {
@@ -36,9 +35,7 @@ export default function UploadButton({
 
           const url = (result as CloudinarySuccessResult).info?.secure_url;
           if (url) {
-            isPdfUrl(url)
-              ? onChangeValue(fieldName, url)
-              : onChangeValue(fieldName, url);
+            onChangeValue(fieldName, url);
           }
         }}
         onOpen={() => {
