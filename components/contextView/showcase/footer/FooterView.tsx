@@ -4,6 +4,12 @@ import { useEffect, useRef, useState } from "react";
 
 import Image from "next/image";
 import { FooterObject } from "../../../../database/model/bloc/Footer";
+import {
+  convertToFirstPage,
+  extractPublicId,
+  getOriginalPdfUrl,
+  isPdfUrl,
+} from "../../../../lib/helpers/isPdf";
 interface ViewProps {
   bloc: FooterObject;
 }
@@ -42,27 +48,44 @@ export default function FooterView({ bloc }: ViewProps) {
             <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
               <div className="flex space-x-4">
                 {bloc.reseaux.map((social) => {
+                  const preview = isPdfUrl(social.image_url)
+                    ? convertToFirstPage(social.image_url)
+                    : social.image_url;
+                  let publicId;
+                  if (isPdfUrl(social.image_url)) {
+                    publicId = extractPublicId(social.image_url);
+                  }
+
                   return (
                     <a
                       key={social.id}
-                      href={social.text_image_lien ?? "#"}
-                      className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors"
+                      href={
+                        isPdfUrl(social.image_url)
+                          ? getOriginalPdfUrl(publicId)
+                          : (social.text_image_lien ?? "#")
+                      }
+                      className={
+                        !isPdfUrl(social.image_url)
+                          ? "w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors"
+                          : "text-xl text-blue-500"
+                      }
                     >
-                      {social.image_url !== undefined &&
-                        social.image_url !== null && (
-                          <Image
-                            src={social.image_url}
-                            alt={social.text_titre ?? ""}
-                            width="50"
-                            height="50"
-                            className="object-cover w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors"
-                            sizes="
+                      {!isPdfUrl(social.image_url) ? (
+                        <Image
+                          src={preview}
+                          alt={social.text_titre ?? ""}
+                          width="50"
+                          height="50"
+                          className="object-cover w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors"
+                          sizes="
     (max-width: 640px) 100vw,
     (max-width: 1024px) 80vw,
     1440px
   "
-                          />
-                        )}
+                        />
+                      ) : (
+                        social.text_titre
+                      )}
                     </a>
                   );
                 })}

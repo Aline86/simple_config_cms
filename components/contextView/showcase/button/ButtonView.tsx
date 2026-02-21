@@ -1,20 +1,10 @@
 // PicturesLinkItemView.tsx
 import Image from "next/image";
 import { ArrowRight, Heart, Sparkles } from "lucide-react";
-import FIELD_CONFIGS from "../../../../lib/config/fieldConfig";
 import { BlocObject } from "../../../../database/model/Bloc";
-import CloudinaryValidator, {
-  CloudinaryParameter,
-} from "../../../../lib/validators/MediaValidator";
 
 export default function ButtonView({ bloc }: { bloc: BlocObject }) {
   const picture = bloc.image_medias[0];
-  const isValid = new CloudinaryValidator(
-    bloc.image_medias[0].image_url,
-    FIELD_CONFIGS["image_url"] instanceof CloudinaryParameter
-      ? FIELD_CONFIGS["image_url"]
-      : new CloudinaryParameter(),
-  ).validate();
 
   return (
     <section className="button m-auto max-w-[1600px] group perspective w-full p-8">
