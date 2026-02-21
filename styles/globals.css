@@ -485,7 +485,7 @@ iframe {
 @media (max-width: 768px) {
   .logo {
     transform: scale(0.8);
-    left: -8px;
+    left: -15px;
   }
   h1 {
     font-size: 20px !important;
