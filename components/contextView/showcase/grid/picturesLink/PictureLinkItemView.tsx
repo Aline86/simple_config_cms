@@ -51,7 +51,7 @@ export default function PicturesLinkItemView({
           )}
           {isLink && (
             <>
-              <div className="relative z-20 p-6 flex h-full flex-col items-center justify-end gap-[30px]">
+              <div className="relative z-10 p-6 flex h-full flex-col items-center justify-end gap-[30px]">
                 <div className="card-bg">
                   <h3 className="text-lg font-semibold text-slate-100 text-center">
                     {mediaObject.text_titre}
@@ -70,7 +70,7 @@ export default function PicturesLinkItemView({
                   <ArrowRight className="w-4 h-4" />
                 </a>
               </div>
-              <span className="absolute inset-0 bg-black/30 z-10"></span>
+              <span className="absolute inset-0 bg-black/30 z-0"></span>
             </>
           )}
         </div>
