@@ -4,12 +4,13 @@ import Image from "next/image";
 import { Heart, PlusIcon } from "lucide-react";
 import { MediaEditor } from "../contextView/edition/media/Media";
 import { MediaObject } from "../../database/model/bloc/MediaObject";
+import { isPdfUrl, convertToFirstPage } from "../../lib/helpers/isPdf";
 
 interface MediaEditorProps<T> {
-  socialMedia: T[];
+  socialMedia: MediaObject[];
   onChange: (fieldName: string, newValue: unknown) => void;
   addElement: () => void;
-  removeElement: (model: T) => void;
+  removeElement: (model: MediaObject) => void;
 }
 
 export const SocialMediaModal = <T,>({
@@ -17,7 +18,7 @@ export const SocialMediaModal = <T,>({
   addElement,
   onChange,
   removeElement,
-}: MediaEditorProps<T>) => {
+}: MediaEditorProps<MediaObject>) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -34,17 +35,20 @@ export const SocialMediaModal = <T,>({
         </button>
 
         {socialMedia.map((reseau, id) => {
+          const preview = isPdfUrl(reseau.image_url)
+            ? convertToFirstPage(reseau.image_url)
+            : reseau.image_url;
           return (
             <div key={id} className=" flex items-center justify-center p-8">
               <div className="w-full max-w-md">
                 <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border border-slate-200 overflow-hidden group">
                   {/* Image */}
                   <div className="relative h-48 bg-gradient-to-br from-slate-300 to-slate-400 overflow-hidden">
-                    {(reseau as MediaObject).image_url !== null ? (
+                    {reseau.image_url !== null ? (
                       <Image
                         className="object-cover"
-                        src={(reseau as MediaObject).image_url}
-                        alt={(reseau as MediaObject).text_titre}
+                        src={preview}
+                        alt={reseau.text_titre}
                         sizes="
     (max-width: 640px) 100vw,
     (max-width: 1024px) 80vw,
@@ -61,7 +65,7 @@ export const SocialMediaModal = <T,>({
                   <div className="p-6">
                     <div className="mb-4">
                       <h3 className="text-lg font-semibold text-slate-800 mb-2">
-                        {(reseau as MediaObject).text_titre}
+                        {reseau.text_titre}
                       </h3>
                     </div>
                   </div>
@@ -82,8 +86,8 @@ export const SocialMediaModal = <T,>({
           {socialMedia.map((reseau) => {
             return (
               <MediaEditor
-                key={(reseau as MediaObject).id}
-                socialMedia={reseau as MediaObject}
+                key={reseau.id}
+                socialMedia={reseau}
                 onChange={onChange}
                 removeElement={removeElement}
               />
