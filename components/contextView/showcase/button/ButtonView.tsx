@@ -19,7 +19,7 @@ export default function ButtonView({ bloc }: { bloc: BlocObject }) {
     publicId = extractPublicId(preview);
   }
   return (
-    <section className="button m-auto max-w-[1600px] group perspective w-full p-8">
+    <section className="button m-auto max-w-[950px] group perspective w-full p-8">
       <div className="pt-6 relative bg-gradient-to-br from-slate-50 via-white to-slate-50 rounded-2xl overflow-hidden border border-slate-200/50 backdrop-blur-sm transform transition-transform duration-500 hover:scale-[1.02] hover:shadow-2xl h-full flex flex-col">
         <h2 className="text-2xl text-center font-bold mb-4">
           {bloc.text_titre}
