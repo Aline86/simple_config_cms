@@ -69,6 +69,7 @@ export default function FooterView({ bloc }: ViewProps) {
                           ? "w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors"
                           : "text-xl text-blue-500"
                       }
+                      target="_blank"
                     >
                       {!isPdfUrl(social.image_url) ? (
                         <Image
