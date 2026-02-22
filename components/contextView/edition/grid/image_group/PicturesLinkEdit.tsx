@@ -5,18 +5,18 @@ import { MediaObject } from "../../../../../database/model/bloc/MediaObject";
 import { FieldRenderer } from "../../../../../lib/validators/renderer/TextRenderer";
 import { PictureEditor } from "../image_grid/PictureEditor";
 
-interface PicturesLinkEditorProps<T> {
+interface PicturesLinkEditorProps {
   bloc: BlocObject;
   onChange: (fieldName: string, newValue: unknown) => void;
   addElement: () => void;
-  removeElement: (bloc: T) => void;
+  removeElement: (bloc: MediaObject) => void;
   onDragStart: (page: MediaObject) => void;
   onDrop: (page: MediaObject) => void;
   isLink?: boolean;
   show_debug?: boolean;
 }
 
-export default function PicturesLinkEdit<T>({
+export default function PicturesLinkEdit({
   bloc,
   onChange,
   addElement,
@@ -25,7 +25,7 @@ export default function PicturesLinkEdit<T>({
   onDrop,
   isLink,
   show_debug = false,
-}: PicturesLinkEditorProps<T>) {
+}: PicturesLinkEditorProps) {
   return (
     <section className="mx-auto max-w-2xl space-y-6 p-6">
       <div className="space-y-2">
@@ -57,27 +57,27 @@ export default function PicturesLinkEdit<T>({
         <FieldRenderer
           label="text_titre du bloc d'images avec lien de redirection"
           fieldName={`blocs.${bloc.bloc_position}.text_titre`}
-          model={bloc as Record<string, any>}
+          model={bloc}
           setField={onChange}
         />
         <FieldRenderer
           label="Nombre de colonnes par ligne"
           fieldName={`blocs.${bloc.bloc_position}.number_columns`}
-          model={bloc as BlocObject}
+          model={bloc}
           setField={onChange}
         />
         <FieldRenderer
           label="Espacement entre les images"
           fieldName={`blocs.${bloc.bloc_position}.number_gap`}
-          model={bloc as BlocObject}
+          model={bloc}
           setField={onChange}
         />
         <div className="grid grid-cols-2 gap-6">
           {bloc.image_medias.map((media) => {
             return (
               <PictureEditor
-                key={(media as MediaObject).id}
-                media={media as MediaObject}
+                key={media.id}
+                media={media}
                 onChange={onChange}
                 removeElement={removeElement}
                 onDragStart={onDragStart}
@@ -94,7 +94,7 @@ export default function PicturesLinkEdit<T>({
       {show_debug ? (
         <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-200 dark:bg-slate-900">
           <h3 className="text-sm font-semibold mb-2">
-            Props reçues (HeaderEdit)
+            Props reçues (Picture Group)
           </h3>
           <pre className="text-xs overflow-auto">
             {JSON.stringify(bloc, null, 2)}

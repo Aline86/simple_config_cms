@@ -9,7 +9,7 @@ interface MediaEditorProps<T> {
   media: MediaObject;
   blocNumber: number;
   onChange: (fieldName: string, newValue: unknown) => void;
-  removeElement: (media: T) => void;
+  removeElement: (media: MediaObject) => void;
   onDragStart: (page: MediaObject) => void;
   onDrop: (page: MediaObject) => void;
   context?: string;
@@ -87,7 +87,7 @@ export function PictureEditor<T>({ ...props }: MediaEditorProps<T>) {
               <div
                 className="w-full flex justify-end items-center"
                 onClick={() => {
-                  props.removeElement(props.media as T);
+                  props.removeElement(props.media);
                 }}
               >
                 <div className="mb-4 flex-1">
@@ -119,9 +119,9 @@ export function PictureEditor<T>({ ...props }: MediaEditorProps<T>) {
                       label="Titre de la carte"
                       fieldName={
                         context_medias +
-                        `${(props.media as MediaObject).number_position_image}.text_titre`
+                        `${props.media.number_position_image}.text_titre`
                       }
-                      model={props.media as MediaObject}
+                      model={props.media}
                       setField={props.onChange}
                     />
                     <DynamicValidatorDropDown
