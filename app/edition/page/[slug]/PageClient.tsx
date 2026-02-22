@@ -200,6 +200,7 @@ export default function PageClient({
     message,
     hasSucceeded,
     toggle,
+    page,
   ]);
 
   return (
