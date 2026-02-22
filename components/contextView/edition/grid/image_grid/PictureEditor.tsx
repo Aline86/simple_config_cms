@@ -32,7 +32,7 @@ export function PictureEditor<T>({ ...props }: MediaEditorProps<T>) {
       }
       draggable
       onDragStart={() => {
-        props.onDragStart(props.media as MediaObject);
+        props.onDragStart(props.media);
       }}
       onDragOver={(e) => {
         e.preventDefault();
@@ -133,9 +133,9 @@ export function PictureEditor<T>({ ...props }: MediaEditorProps<T>) {
                       ]}
                       fieldKey={
                         context_medias +
-                        `${(props.media as MediaObject).number_position_image}.text_image_lien`
+                        `${props.media.number_position_image}.text_image_lien`
                       }
-                      model={props.media as MediaObject}
+                      model={props.media}
                       onChange={props.onChange}
                     />
                   </>
@@ -146,7 +146,7 @@ export function PictureEditor<T>({ ...props }: MediaEditorProps<T>) {
                     context_medias +
                     `${(props.media as MediaObject).number_position_image}.image_url`
                   }
-                  model={props.media as MediaObject}
+                  model={props.media}
                   setField={props.onChange}
                 />
               </div>

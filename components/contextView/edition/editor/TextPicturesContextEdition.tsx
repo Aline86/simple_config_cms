@@ -75,17 +75,16 @@ const TextPicturesContextEdition: React.FC<TextPicturesContextEditionProps> = ({
 
   const handleRemove = useCallback(
     (media: MediaObject) => {
-      const article = bloc.articles?.[0];
+      const article = bloc.articles[0];
       if (!article) return bloc;
 
-      const filteredImages = article.images.filter(
-        (img) => img.id !== media.id,
-      );
-      const cleanImages = filteredImages.map(cloneMediaWithPosition);
+      const cleanImages = bloc.articles[0].images
+        .filter((img) => img.id !== media.id)
+        .map(cloneMediaWithPosition);
       const updatedArticles = [cloneArticleWithImages(article, cleanImages)];
       const updatedBloc = cloneBlocWithArticles(bloc, updatedArticles);
 
-      onChange("blocs." + bloc.bloc_position, updatedBloc);
+      onChange(`blocs.${bloc.bloc_position}`, updatedBloc);
     },
     [onChange],
   );
