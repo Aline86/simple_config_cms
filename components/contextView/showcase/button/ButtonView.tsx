@@ -68,9 +68,7 @@ export default function ButtonView({ bloc }: { bloc: BlocObject }) {
           >
             {/* Shine */}
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-200%] group-hover/btn:translate-x-[200%] transition-transform duration-700"></div>
-            <span className="relative font-semibold">
-              {picture?.text_titre}
-            </span>
+            <span className="relative font-semibold">{picture.text_titre}</span>
             <ArrowRight className="relative w-4 h-4 transform " />
           </a>
         </div>

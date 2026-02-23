@@ -62,27 +62,26 @@ export default function CarouselThumbnailsView({
       <h2 className="text-2xl text-center font-bold text-slate-800 mb-6">
         {bloc.text_titre}
       </h2>
-      {medias && (
-        <CarouselContainer
-          width={!isSm ? width * 0.5 : width}
-          height={!isSm ? height * 0.5 : height}
-          gap={gap}
-          updatemedias={updatemedias}
-          medias={medias}
-          transitionFinished={transitionFinished}
-          updateTransitionState={updateTransitionState}
-          cardWidth={cardWidth}
-          updateCardRef={updateCardRef}
-          cardRef={cardRef}
-          setIsClic={setIsClic}
-          setCardValue={setCardValue}
-          updateCardEnd={updateCardEnd}
-          clic={clic}
-          cardValue={cardValue}
-          cardNumber={cardNumber}
-          isSm={isSm}
-        />
-      )}
+
+      <CarouselContainer
+        width={!isSm ? width * 0.5 : width}
+        height={!isSm ? height * 0.5 : height}
+        gap={gap}
+        updatemedias={updatemedias}
+        medias={medias}
+        transitionFinished={transitionFinished}
+        updateTransitionState={updateTransitionState}
+        cardWidth={cardWidth}
+        updateCardRef={updateCardRef}
+        cardRef={cardRef}
+        setIsClic={setIsClic}
+        setCardValue={setCardValue}
+        updateCardEnd={updateCardEnd}
+        clic={clic}
+        cardValue={cardValue}
+        cardNumber={cardNumber}
+        isSm={isSm}
+      />
 
       {show_debug && (
         <div className="mt-6 rounded-lg border border-slate-200 bg-slate-50 p-4 text-slate-800 dark:border-slate-200 dark:bg-slate-900 dark:text-slate-200">

@@ -71,9 +71,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ bloc }) => {
 
   const toggleFullscreen = (): void => {
     if (videoRef.current) {
-      if (videoRef.current.requestFullscreen) {
-        videoRef.current.requestFullscreen();
-      }
+      videoRef.current.requestFullscreen();
     }
   };
 

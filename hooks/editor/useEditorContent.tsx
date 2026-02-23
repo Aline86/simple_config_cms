@@ -23,9 +23,9 @@ export const useEditorContent = (
       content: init,
     };
 
-    if (bloc?.text_article !== undefined && Array.isArray(bloc.text_article)) {
-      bloc.text_article.forEach((data) => {
-        contentData?.content?.push(data);
+    if (bloc.text_article !== undefined && bloc.text_article.length > 0) {
+      bloc.text_article.forEach((data: JSONContent) => {
+        contentData.content.push(data);
       });
     }
 

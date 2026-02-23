@@ -157,11 +157,14 @@ export default function PageClient({
   };
   const handleRemove = (model: BlocObject) => {
     setPage((prev) => {
-      const remainingBlocs = prev.blocs.filter((bloc) => bloc.id !== model.id);
+      const remainingBlocs = prev.blocs
+        .filter((bloc) => bloc.id !== model.id)
 
-      remainingBlocs.forEach((bloc, index) => {
-        bloc.bloc_position = index;
-      });
+        .map((bloc, index) => {
+          const updated = new BlocObject(bloc);
+          updated.bloc_position = index;
+          return updated;
+        });
 
       return clonePageWithBlocs(prev, remainingBlocs);
     });

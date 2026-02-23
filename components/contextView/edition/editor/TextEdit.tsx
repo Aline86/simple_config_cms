@@ -28,10 +28,9 @@ export default function TextEditor({
   onDragStart,
   onDrop,
   debug = false,
-  onDelete,
 }: TextEditorProps) {
-  const hasArticles = bloc.articles?.[0];
-  const images = hasArticles.images || [];
+  const hasArticles = bloc.articles[0];
+  const images = hasArticles.images;
   const [selectedValidatorKey, setSelectedValidatorKey] = useState<string>(
     hasArticles?.text_images_position,
   );
@@ -154,18 +153,17 @@ export default function TextEditor({
         )}
 
         {/* Rich Text Editor */}
-        {hasArticles && (
-          <div className="border-t border-slate-200 pt-6 dark:border-slate-700">
-            <h3 className="mb-3 text-sm font-semibold text-slate-700 dark:text-slate-300">
-              Contenu de l'article
-            </h3>
-            <Tiptap
-              bloc={bloc.articles[0]}
-              updateComponent={onChange}
-              blocNumber={bloc.bloc_position}
-            />
-          </div>
-        )}
+
+        <div className="border-t border-slate-200 pt-6 dark:border-slate-700">
+          <h3 className="mb-3 text-sm font-semibold text-slate-700 dark:text-slate-300">
+            Contenu de l'article
+          </h3>
+          <Tiptap
+            bloc={bloc.articles[0]}
+            updateComponent={onChange}
+            blocNumber={bloc.bloc_position}
+          />
+        </div>
       </section>
 
       {/* Debug Panel */}

@@ -171,9 +171,7 @@ function PreviewSection({
     <div className="preview-section">
       <div className="preview-header">
         <span className="preview-count">
-          {value !== "" && value !== undefined
-            ? "1 média"
-            : `${media !== undefined} média`}
+          {value !== "" && value !== undefined ? "1 média" : `média`}
         </span>
         <button
           aria-label="Tout supprimer"
