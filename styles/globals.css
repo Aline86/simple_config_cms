@@ -481,6 +481,14 @@ iframe {
   background-color: #2563eb;
   border-color: #2563eb;
 }
+/* screen */
+@supports (-webkit-touch-callout: none) {
+  /* CSS special safari */
+  .bg-fixed {
+    background-attachment: scroll;
+  }
+}
+
 /* Pour les écrans de plus de 768px */
 @media (max-width: 768px) {
   .logo {
