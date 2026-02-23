@@ -27,8 +27,8 @@ export default function PicturesLinkItemView({
       <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border border-slate-200 overflow-hidden group h-full flex flex-col">
         {/* Image */}
         <div className="relative h-48 bg-gradient-to-br from-slate-300 to-slate-400 overflow-hidden">
-          {mediaObject?.image_url !== undefined &&
-          mediaObject?.image_url !== null &&
+          {mediaObject.image_url !== undefined &&
+          mediaObject.image_url !== null &&
           mediaObject.text_titre !== null /*&&
           isValid.valid*/ ? (
             <Image

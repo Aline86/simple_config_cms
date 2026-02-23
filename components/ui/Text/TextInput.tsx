@@ -110,7 +110,7 @@ export default function TextInput<T>({
 
       {InputComponent}
 
-      {showError && validation.errors && validation.errors.length > 0 && (
+      {validation.errors.length > 0 && (
         <div className="error-messages">
           {validation.errors.map((error, idx) => (
             <p key={idx} className="error-message">

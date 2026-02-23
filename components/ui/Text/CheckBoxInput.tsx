@@ -42,8 +42,7 @@ export default function CheckboxInput<T>({
   const validation = validator.validate(String(localValue));
   const showError = !validation.valid;
   const resetOtherInputs = () => {
-    pages !== undefined &&
-      Array.isArray(pages) &&
+    Array.isArray(pages) &&
       pages.map((page) => {
         page.checkbox_home_page = false;
       });
@@ -71,7 +70,7 @@ export default function CheckboxInput<T>({
         {label}
       </label>
 
-      {showError && validation.errors?.length > 0 && (
+      {showError && validation.errors.length > 0 && (
         <div className="error-messages">
           {validation.errors.map((error, idx) => (
             <p key={idx} className="error-message">

@@ -58,11 +58,11 @@ export default function SocialTab({ network }: { network: MediaObject }) {
                 isHovered ? "opacity-30" : "opacity-0"
               }`}
               style={{
-                backgroundImage: `url(${network?.image_url !== null ? network?.image_url : ""})`,
+                backgroundImage: `url(${network?.image_url !== null ? network.image_url : ""})`,
               }}
             />
             <span className="relative z-10 ml-4 font-semibold text-gray-800">
-              {network?.text_titre !== null ? network?.text_titre : ""}
+              {network.text_titre !== null ? network.text_titre : ""}
             </span>
           </div>
         </a>

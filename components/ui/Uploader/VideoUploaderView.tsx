@@ -219,48 +219,26 @@ interface PreviewItemProps {
 }
 
 function PreviewItem({ item, onRemove }: PreviewItemProps) {
-  if (item.type === "youtube") {
-    return (
-      <div className="preview-item youtube-item">
-        <YouTubePreview url={item.url} videoid={item.videoid} />
-        <div className="preview-overlay">
-          <button
-            aria-label="Supprimer le lien Youtube"
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              onRemove(item.id);
-            }}
-            className="remove-button"
-          >
-            ✕
-          </button>
-        </div>
-        <p className="preview-name youtube-label">
-          <YoutubeIcon />
-          Vidéo YouTube
-        </p>
-      </div>
-    );
-  }
-
   return (
-    <div className="preview-item">
-      <img src={item.url} alt={item.thumbnail} className="preview-image" />
+    <div className="preview-item youtube-item">
+      <YouTubePreview url={item.url} videoid={item.videoid} />
       <div className="preview-overlay">
         <button
+          aria-label="Supprimer le lien Youtube"
           type="button"
           onClick={(e) => {
             e.stopPropagation();
             onRemove(item.id);
           }}
           className="remove-button"
-          aria-label="supprimer la video"
         >
           ✕
         </button>
       </div>
-      <p className="preview-name">{item.thumbnail}</p>
+      <p className="preview-name youtube-label">
+        <YoutubeIcon />
+        Vidéo YouTube
+      </p>
     </div>
   );
 }

@@ -32,7 +32,7 @@ export default function TextEditor({
   const hasArticles = bloc.articles[0];
   const images = hasArticles.images;
   const [selectedValidatorKey, setSelectedValidatorKey] = useState<string>(
-    hasArticles?.text_images_position,
+    hasArticles.text_images_position,
   );
   const availableValidators = {
     left: "Gauche",

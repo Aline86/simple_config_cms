@@ -16,7 +16,7 @@ interface CustomCarouselInfo {
 }
 
 export default function CarouselSimple({ bloc }: CustomCarouselInfo) {
-  if (!bloc?.image_medias?.length) return null;
+  if (!bloc.image_medias.length) return null;
   return (
     <section className="p-8 relative max-w-[1650px] w-full mx-auto flex-col justify-center align-center m-auto overflow-hidden">
       <h2 className="text-2xl text-center font-bold text-slate-800 mb-6">

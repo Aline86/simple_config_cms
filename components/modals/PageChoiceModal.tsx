@@ -16,7 +16,7 @@ export default function BlocChoiceModal({
 
   const baseOptions = {
     number_page_id: page.number_id ?? -1,
-    bloc_position: page.blocs?.length ?? 0,
+    bloc_position: page.blocs.length ?? 0,
   };
 
   const options_carousel_miniature: CreateBlocOptions = {

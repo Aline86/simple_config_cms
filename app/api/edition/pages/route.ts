@@ -9,7 +9,6 @@ export const runtime = "nodejs";
 export async function GET(request: NextRequest) {
   return ApiResponse.handle(
     async () => {
-    
       const { searchParams } = new URL(request.url);
       const with_homepage = searchParams.get("with_homepage");
       let dbPages = [];
@@ -96,10 +95,7 @@ export async function POST(request: NextRequest) {
         pagesPayload.map(async (p) => {
           const page = new PageObject(p);
 
-          const isUpdate =
-            page.number_id !== null &&
-            page.number_id !== undefined &&
-            page.number_id > 0;
+          const isUpdate = page.number_id !== null && page.number_id > 0;
 
           if (isUpdate) {
             return prisma.page.update({

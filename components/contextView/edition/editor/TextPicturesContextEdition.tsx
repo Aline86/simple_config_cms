@@ -62,7 +62,6 @@ const TextPicturesContextEdition: React.FC<TextPicturesContextEditionProps> = ({
 
   const handleAdd = useCallback(() => {
     const article = bloc.articles[0];
-    if (!article) return bloc;
 
     const newMedia = createMedia(article.images.length, bloc.id);
     const updatedArticles = [
