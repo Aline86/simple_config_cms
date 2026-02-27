@@ -1,3 +1,4 @@
+import { immerable } from "immer";
 import { BlocObject } from "../../database/model/Bloc";
 import { MediaObject } from "../../database/model/bloc/MediaObject";
 
@@ -6,30 +7,17 @@ export function updateBlocImages(
   index: number,
   image: MediaObject,
 ) {
-  const newImageMedias = [...bloc.image_medias];
+  const { mode, articles, image_medias, [immerable]: _, ...rest } = bloc as any;
+  const newImageMedias = [...image_medias];
   newImageMedias[index] = image;
 
   return new BlocObject(
     {
-      id: bloc.id ?? undefined,
-      text_nom_bloc: bloc.text_nom_bloc ?? undefined,
-      number_page_id: bloc.number_page_id ?? undefined,
-      text_titre: bloc.text_titre ?? undefined,
-      text_description: bloc.text_description ?? "",
-      color_background_color: bloc.color_background_color ?? undefined,
-      type: bloc.type ?? undefined,
-      bloc_position: bloc.bloc_position ?? undefined,
-      langue_bloc: bloc.langue_bloc ?? undefined,
-      checkbox_is_full_width: bloc.checkbox_is_full_width,
-      number_width: bloc.number_width ?? 75,
-      number_height: bloc.number_height ?? 75,
-      number_gap: bloc.number_gap ?? undefined,
-      number_columns: bloc.number_columns ?? undefined,
-      text_createdAt: bloc.text_createdAt ?? undefined,
-      text_updatedAt: new Date(),
+      ...rest,
       image_medias: newImageMedias,
-      articles: bloc.articles,
+      articles,
+      text_updatedAt: new Date(),
     },
-    bloc.mode,
+    mode,
   );
 }

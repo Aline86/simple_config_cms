@@ -81,9 +81,7 @@ export default function PageClient({
   };
   const handleSavePage = async () => {
     try {
-      // Exécuter les 2 requêtes en parallèle
       const [pageRes, headerRes, footerRes] = await Promise.all([
-        // Promise 1 : Sauvegarder la page
         fetch("/api/edition/page", {
           method: "PUT",
           credentials: "include",
@@ -95,7 +93,6 @@ export default function PageClient({
           }),
         }),
 
-        // Promise 2 : Sauvegarder le header
         fetch("/api/edition/page/header", {
           method: "PUT",
           credentials: "include",
@@ -104,9 +101,8 @@ export default function PageClient({
           },
           body: JSON.stringify({
             data: headerData,
-          }), // Assurez-vous d'avoir un state 'header'
+          }),
         }),
-        // Promise 3 : Sauvegarder le footer
         fetch("/api/edition/page/footer", {
           method: "PUT",
           headers: {
@@ -115,11 +111,10 @@ export default function PageClient({
           credentials: "include",
           body: JSON.stringify({
             data: footerData,
-          }), // Assurez-vous d'avoir un state 'header'
+          }),
         }),
       ]);
 
-      // Vérifier les deux réponses
       if (!pageRes.ok) {
         throw new Error("Erreur lors de l'enregistrement de la page");
       }
@@ -127,14 +122,12 @@ export default function PageClient({
         throw new Error("Erreur lors de l'enregistrement du header");
       }
 
-      // Parser les résultats
       const [pageResult, headerResult, footerResult] = await Promise.all([
         pageRes.json(),
         headerRes.json(),
         footerRes.json(),
       ]);
 
-      // Mettre à jour les states
       if (pageResult !== undefined) {
         setPage(new PageObject(pageResult.page));
       }

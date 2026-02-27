@@ -1,13 +1,10 @@
 import { nanoid } from "nanoid";
 import { MediaObject } from "../../database/model/bloc/MediaObject";
+import { stripImmerable } from "./stripImmarable";
 
 export function cloneMediaWithPosition(media: MediaObject, position: number) {
   return new MediaObject({
-    id: media.id as string,
-    text_bloc_id: media.text_bloc_id,
-    text_titre: media.text_titre ?? undefined,
-    text_image_lien: media.text_image_lien ?? undefined,
-    image_url: media.image_url ?? undefined,
+    ...stripImmerable(media),
     number_position_image: position,
   });
 }
