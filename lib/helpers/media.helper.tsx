@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid";
 import { MediaObject } from "../../database/model/bloc/MediaObject";
-import { stripImmerable } from "./stripImmarable";
+import { stripImmerable } from "./stripImmerable";
 
 export function cloneMediaWithPosition(media: MediaObject, position: number) {
   return new MediaObject({

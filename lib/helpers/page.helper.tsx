@@ -1,6 +1,6 @@
 import { BlocObject } from "../../database/model/Bloc";
 import { PageObject } from "../../database/model/Page";
-import { stripImmerable } from "./stripImmarable";
+import { stripImmerable } from "./stripImmerable";
 
 export function clonePageWithBlocs(
   page: PageObject,

@@ -2,7 +2,7 @@ import { immerable } from "immer";
 import { BlocObject } from "../../database/model/Bloc";
 import { ArticleObject } from "../../database/model/bloc/Article";
 import { MediaObject } from "../../database/model/bloc/MediaObject";
-import { stripImmerable } from "./stripImmarable";
+import { stripImmerable } from "./stripImmerable";
 
 export function cloneBlocWithArticles(
   bloc: BlocObject,
