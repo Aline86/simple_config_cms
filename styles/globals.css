@@ -301,11 +301,14 @@ body {
 .logo-site {
   display: block;
   width: 50px;
-  height: 50px;
+  height: 50px !important;
   object-fit: contain;
 }
 img.logo-site {
   z-index: -1 !important;
+}
+header img {
+  height: 50px !important;
 }
 header {
   overflow: hidden;

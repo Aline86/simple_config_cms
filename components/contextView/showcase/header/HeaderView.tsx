@@ -7,6 +7,7 @@ import getPages from "../../../../app/edition/pages/callPages";
 import { PageObject } from "../../../../database/model/Page";
 import { useAppContext } from "../../../../context/DomDataProvider";
 import Image from "next/image";
+
 interface ViewProps {
   bloc: HeaderObject;
 }
