@@ -82,7 +82,7 @@ Il permet à des utilisateurs non techniques de créer et modifier facilement de
 
 ![diagramme uml de l'app](docs/diagramme_uml_cms.png)
 
-# Architecture CMS — Décisions Structurantes
+# Architecture du configurateur de sites vitrine — Décisions Structurantes
 
 ---
 
