@@ -28,7 +28,7 @@ Configurateur de sites vitrine avec prévisualisation en temps réel, conçu en 
 
 ## Présentation
 
-Simple Config CMS est un moteur déclaratif configurable reposant sur un **système de résolution dynamique typé** (basé sur des préfixes sémantiques), intégrant un mécanisme de mise à jour immutable d'arbre par chemins et un système de validation modulaire générique.
+Simple Config Showcase est un moteur déclaratif configurable reposant sur un **système de résolution dynamique typé** (basé sur des préfixes sémantiques), intégrant un mécanisme de mise à jour immutable d'arbre par chemins et un système de validation modulaire générique.
 
 Il permet à des utilisateurs non techniques de créer et modifier facilement des sites vitrines via une interface modulaire, sans écrire de code.
 
