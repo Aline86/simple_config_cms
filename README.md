@@ -1,4 +1,4 @@
-# Simple Config CMS
+# Configurateur de sites vitrine
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/bbfd73c1bff54a40a323b074a284092f)](https://app.codacy.com/gh/Aline86/simple_config_cms/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 ![License](https://img.shields.io/badge/license-CC%20BY--NC%204.0-blue)
@@ -7,7 +7,7 @@
 
 [<img src="https://flagcdn.com/w20/fr.png" alt="FR"> Français](README.md) | [<img src="https://flagcdn.com/w20/gb.png" alt="EN"> English](README.en.md)
 
-CMS configurable avec prévisualisation en temps réel, conçu en Next.js. Utilisé en production par l'**association Welcome Poitiers** depuis janvier 2025.
+Configurateur de sites vitrine avec prévisualisation en temps réel, conçu en Next.js. Utilisé en production par l'**association Welcome Poitiers** depuis janvier 2025.
 
 ---
 
@@ -78,43 +78,80 @@ Il permet à des utilisateurs non techniques de créer et modifier facilement de
 
 ## Architecture
 
-### Vue d'ensemble
+### Vue d'ensemble - Diagramme UML et justifications des choix architecturaux
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                  Interface d'édition                     │
-│  ┌─────────────────┐         ┌──────────────────┐       │
-│  │   Form Editor   │─onChange─│  Preview Panel   │       │
-│  │  (inputs, drag) │         │  (render live)   │       │
-│  └────────┬────────┘         └──────────────────┘       │
-│           │ updateByPath(path, value)                    │
-│           ▼                                              │
-│  ┌──────────────────────────────────────────────────┐   │
-│  │          État centralisé (Immer + Context)        │   │
-│  │  - Page complète en mémoire                       │   │
-│  │  - Mise à jour immutable par chemin               │   │
-│  │  - Synchronisation bidirectionnelle               │   │
-│  └──────────────────────────────────────────────────┘   │
-└─────────────────────────────────────────────────────────┘
-```
+![diagramme uml de l'app](docs/diagramme_uml_cms.png)
+Stockage JSON des blocs dans Page
 
-### Flux de données
+Un configurateur avec prévisualisation temps réel nécessite un état complet en mémoire
 
-```
-Base de données (Prisma)
-        │ SELECT * FROM blocks ORDER BY position
-        ▼
-  Server Action / API Route
-        │
-        ▼
-  Page Component (SSR)
-        │ map(renderBlock)
-        ▼
-  Block Registry (type + name)
-        │ Mapping vers composant
-        ▼
-  React Component (Hero, Gallery…)
-```
+— lire et écrire la page entière en un seul appel est plus adapté que reconstruire l'état depuis plusieurs entités relationnelles
+La modulation entre types de blocs est gérée par composition
+
+— Bloc + Article[] + Media[]
+
+— pas par héritage, pas besoin de classes enfant
+Ce choix est proportionné au domaine d'affichage : pas de logique métier complexe, pas de requête par champ individuel
+Dette assumée : pas de recherche full-text sur les champs de blocs, pas de filtrage par champ individuel
+Extensibilité contrainte côté applicatif : un type de bloc dont la structure dépasse la composition actuelle nécessite de faire évoluer les classes TypeScript, la Factory et le Registry
+
+— pas une migration BDD
+
+Header et Footer en tables séparées
+
+Structure fixe et connue à l'avance — même schéma pour toutes les pages
+Requêtés indépendamment des blocs, cycle de vie distinct de la page
+La distinction reflète une décision sur la nature des données : structurées fixes → tables relationnelles, hétérogènes variables → JSON
+
+Deux niveaux de représentation — BDD vs modèle applicatif
+
+Bloc, Media, Article sont des classes TypeScript désérialisées depuis le JSON à l'exécution
+Ils n'ont pas de table BDD propre
+Le diagramme de classes représente le modèle applicatif en mémoire, pas le schéma BDD
+PageObject est la classe applicative qui encapsule la désérialisation et la validation — elle n'est pas une table
+
+BaseValidator + préfixes typés
+
+Convention text*, image*, number*, color*, checkbox\_ comme contrat entre configuration BDD, validation et rendu
+Le validateur et le composant d'édition sont déterminés automatiquement par le préfixe — aucun switch, aucune condition explicite
+Réutilisable sur n'importe quelle entité qui étend BaseValidator
+CloudinaryValidator : régression connue et documentée — regex commentée, validation image non active
+
+Pattern Factory pour la création des blocs
+
+Création centralisée et testable — createNewBloc() avec options typées
+Le moteur de rendu n'a aucune connaissance des implémentations concrètes
+Ajouter un nouveau type de bloc ne modifie pas le moteur de rendu — ouvert à l'extension, fermé à la modification
+
+État immutable avec Immer + updateByPath
+
+Édition locale sans aucun appel réseau — re-render synchrone, zéro latence
+Notation pointée blocs.2.text_titre pour cibler n'importe quelle propriété dans la hiérarchie imbriquée
+L'utilisateur décide quand persister — rollback possible sans polluer la base
+Immutabilité garantie sans complexité syntaxique
+
+Deux couches de sécurité JWT
+
+Imposé par les deux environnements d'exécution distincts de Next.js App Router
+jose en Edge Runtime — jsonwebtoken indisponible en Edge car dépend des APIs Node.js
+Le chargement initial passe par Edge Runtime puis SSR → le GET /api/edition/page est fait côté serveur par la Server Action, pas par le navigateur
+La sauvegarde PUT arrive directement du navigateur sur les API Routes hors matcher Edge
+Les deux flux n'empruntent pas les mêmes couches — les deux protections sont complémentaires et non redondantes
+
+Cookie retransmis manuellement dans les Server Actions
+
+Contrainte structurelle Next.js SSR — les Server Actions n'ont pas accès automatique aux cookies de la requête entrante
+Nécessaire pour que le fetch interne vers /api/edition/page transmette l'authentification côté serveur
+
+Architecture monolithique
+
+Pas de logique métier complexe — moteur de rendu pur piloté par les données
+Microservices inutiles : coût d'infrastructure et de communication disproportionné au besoin réel
+Monolithique mais modulable : composants isolés, testables, extensibles par convention
+
+### Diagramme de séquence de la sécurité
+
+![securite applicative dans NextJS](docs/securite_applicative_cms.png)
 
 ### Mise à jour immutable par chemin
 

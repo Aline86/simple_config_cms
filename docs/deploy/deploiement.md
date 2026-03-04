@@ -22,7 +22,7 @@ cd simple_config_cms
 
 créer un fichier .env à la racine du projet et y ajouter les variables suivantes pour visualiser le projet dans un environnement de développement :
 
-````
+```
 Les variables d'environnement sont les suivantes :
 
 NEXT_PUBLIC_APP_URL: url de votre app ( locale ou de production en fonction de l'environnement de montage )
@@ -37,7 +37,7 @@ CLOUDINARY_API_KEY=
 CLOUDINARY_API_SECRET=
 NEXT_PUBLIC_CLOUDINARY_UPLOAD_FOLDER=
 DATABASE_URL=
-````
+```
 
 Pour récupérer les quatre valeurs des variables suivantes, suivre les indications suivantes :
 NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=
@@ -57,13 +57,13 @@ Ces actions vous permettent de faire fonctionner le picker de Cloudinary utilis�
 
 ![Cloudinary pres](./cloudinary_picker.png)
 
-- Maintenant mettre en place la bdd neon : `https://neon.com/` 
+- Maintenant mettre en place la bdd neon : `https://neon.com/`
 - cliquer sur la base de donnée nouvellement créée, cliquer sur ``Dashboard``` puis Connect, vous aurez alors accès à votre url de connexion. Récupérez-là avec le mot de passe en clair et mettez l'url de connexion dans votre fichier .env à la racine en valeur de la variable DATABASE_URL.
 - une fois cette étape effectuée vous devrez lancer les commandes prisma depuis votre environnement local pour créer le shéma de votre base de données en ligne Neon :
 
   `npx prisma init` si ça ne marche pas, la passer
-  `npx prisma generate` 
-  `npx prisma migrate dev --name init` si commande 1 passe sinon lancer seulement `npx prisma migrate dev` 
+  `npx prisma generate`
+  `npx prisma migrate dev --name init` si commande 1 passe sinon lancer seulement `npx prisma migrate dev`
 
 - Je n'ai pas fait de script de seed pour créer un user en db en prod pour des raisons de sécurité.
 - créer un fichier hash.js à la racine du projet, y placer le code suivant :
