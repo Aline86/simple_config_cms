@@ -113,9 +113,9 @@ un type de bloc dont la structure dépasse la composition actuelle nécessite de
 
 ## Header et Footer en tables séparées
 
-Structure fixe et connue à l'avance — même schéma pour toutes les pages
+Structure fixe et connue à l'avance — même schéma pour toutes les pages.
 
-Requêtés indépendamment des blocs, cycle de vie distinct de la page
+Requêtés indépendamment des blocs, cycle de vie distinct de la page.
 
 La distinction reflète une décision sur la nature des données :
 
@@ -126,28 +126,28 @@ La distinction reflète une décision sur la nature des données :
 
 ## Deux niveaux de représentation — BDD vs modèle applicatif
 
-Bloc, Media, Article sont des classes TypeScript désérialisées depuis le JSON à l'exécution
+Bloc, Media, Article sont des classes TypeScript désérialisées depuis le JSON à l'exécution.
 
-Ils n'ont pas de table BDD propre
+Ils n'ont pas de table BDD propre.
 
-Le diagramme de classes représente le modèle applicatif en mémoire, pas le schéma BDD
+Le diagramme de classes représente le modèle applicatif en mémoire, pas le schéma BDD.
 
-PageObject est la classe applicative qui encapsule la désérialisation et la validation
+PageObject est la classe applicative qui encapsule la désérialisation et la validation.
 
-— elle n'est pas une table
+— elle n'est pas une table.
 
 ---
 
 ## BaseValidator + préfixes typés
 
-Convention text*, image*, number*, color*, checkbox\_ comme contrat entre configuration BDD, validation et rendu
+Convention text*, image*, number*, color*, checkbox\_ comme contrat entre configuration BDD, validation et rendu.
 
-Le validateur et le composant d'édition sont déterminés automatiquement par le préfixe
+Le validateur et le composant d'édition sont déterminés automatiquement par le préfixe.
 
 — aucun switch  
 — aucune condition explicite
 
-Réutilisable sur n'importe quelle entité qui étend BaseValidator
+Réutilisable sur n'importe quelle entité qui étend BaseValidator.
 
 CloudinaryValidator :  
 régression connue et documentée — regex commentée, validation image non active
@@ -156,9 +156,9 @@ régression connue et documentée — regex commentée, validation image non act
 
 ## Pattern Factory pour la création des blocs
 
-Création centralisée et testable — createNewBloc() avec options typées
+Création centralisée et testable — createNewBloc() avec options typées.
 
-Le moteur de rendu n'a aucune connaissance des implémentations concrètes
+Le moteur de rendu n'a aucune connaissance des implémentations concrètes.
 
 Ajouter un nouveau type de bloc ne modifie pas le moteur de rendu
 
@@ -182,16 +182,17 @@ Immutabilité garantie sans complexité syntaxique
 ## Deux couches de sécurité JWT
 
 Imposé par les deux environnements d'exécution distincts de Next.js App Router
+jose en Edge Runtime
 
-jose en Edge Runtime — jsonwebtoken indisponible en Edge car dépend des APIs Node.js
+— jsonwebtoken indisponible en Edge car dépend des APIs Node.js
 
-Le chargement initial passe par Edge Runtime puis SSR
+Le chargement initial passe par Edge Runtime puis SSR.
 
 → le GET /api/edition/page est fait côté serveur par la Server Action, pas par le navigateur
 
-La sauvegarde PUT arrive directement du navigateur sur les API Routes hors matcher Edge
+La sauvegarde PUT arrive directement du navigateur sur les API Routes hors matcher Edge.
 
-Les deux flux n'empruntent pas les mêmes couches
+Les deux flux n'empruntent pas les mêmes couches.
 
 — les deux protections sont complémentaires et non redondantes
 
@@ -199,9 +200,9 @@ Les deux flux n'empruntent pas les mêmes couches
 
 ## Cookie retransmis manuellement dans les Server Actions
 
-Contrainte structurelle Next.js SSR
+Contrainte structurelle Next.js SSR.
 
-Les Server Actions n'ont pas accès automatique aux cookies de la requête entrante
+Les Server Actions n'ont pas accès automatique aux cookies de la requête entrante.
 
 Nécessaire pour que le fetch interne vers /api/edition/page transmette l'authentification côté serveur
 
@@ -209,9 +210,9 @@ Nécessaire pour que le fetch interne vers /api/edition/page transmette l'authen
 
 ## Architecture monolithique
 
-Pas de logique métier complexe — moteur de rendu pur piloté par les données
+Pas de logique métier complexe — moteur de rendu pur piloté par les données.
 
-Microservices inutiles : coût d'infrastructure et de communication disproportionné au besoin réel
+Microservices inutiles : coût d'infrastructure et de communication disproportionné au besoin réel.
 
 Monolithique mais modulable :
 
