@@ -149,9 +149,6 @@ Le validateur et le composant d'édition sont déterminés automatiquement par l
 
 Réutilisable sur n'importe quelle entité qui étend BaseValidator.
 
-CloudinaryValidator :  
-régression connue et documentée — regex commentée, validation image non active
-
 ---
 
 ## Pattern Factory pour la création des blocs
