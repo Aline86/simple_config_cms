@@ -198,13 +198,9 @@ Les deux flux n'empruntent pas les mêmes couches.
 
 ---
 
-## Cookie retransmis manuellement dans les Server Actions
+## Cookie retransmis manuellement
 
-Contrainte structurelle Next.js SSR.
-
-Les Server Actions n'ont pas accès automatique aux cookies de la requête entrante.
-
-Nécessaire pour que le fetch interne vers /api/edition/page transmette l'authentification côté serveur
+Les Server Actions peuvent lire les cookies via cookies(), mais un fetch interne vers une API Route ne les transmet pas automatiquement. Il est donc nécessaire de les extraire manuellement et de les réinjecter dans les headers du fetch pour que l'authentification soit transmise côté serveur.
 
 ---
 
