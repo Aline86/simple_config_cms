@@ -37,7 +37,6 @@ export default function PageClient({
   const [message, setMessage] = useState("");
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [hasSucceeded, setHasSucceeded] = useState(false);
-  const [toggle, setToggle] = useState(false);
 
   const onDragStart = (bloc: BlocObject) => {
     if (bloc !== null) {
@@ -49,7 +48,6 @@ export default function PageClient({
     if (!dragged) return;
 
     setPage((prev) => {
-      // Recréer des MediaObject propres avec les bonnes positions
       const reordered = reorderArray(
         prev.blocs,
         dragged,
@@ -77,7 +75,6 @@ export default function PageClient({
     setPage((prevPage) => {
       return updateObjectByPath(prevPage, fieldName, value).data;
     });
-    setToggle(!toggle);
   };
   const handleSavePage = async () => {
     try {
@@ -132,10 +129,10 @@ export default function PageClient({
         setPage(new PageObject(pageResult.page));
       }
       if (headerResult !== undefined) {
-        setHeader(new HeaderObject(headerResult.header, "edition")); // Assurez-vous d'avoir un setHeader
+        setHeader(new HeaderObject(headerResult.header, "edition"));
       }
       if (footerResult !== undefined) {
-        setFooter(new FooterObject(footerResult.footer, "edition")); // Assurez-vous d'avoir un setHeader
+        setFooter(new FooterObject(footerResult.footer, "edition"));
       }
       setMessage("L'action a réussi !");
       setShowErrorMessage(!showErrorMessage);
@@ -173,13 +170,11 @@ export default function PageClient({
     setHeader((prev) => {
       return updateObjectByPath(prev, fieldName, value).data;
     });
-    setToggle(!toggle);
   };
   const updateFooter = (fieldName: string, value: unknown) => {
     setFooter((prev) => {
       return updateObjectByPath(prev, fieldName, value).data;
     });
-    setToggle(!toggle);
   };
   const logout = async () => {
     await fetch("/api/auth/logout", {
@@ -189,15 +184,6 @@ export default function PageClient({
 
     window.location.href = "/login";
   };
-  useEffect(() => {}, [
-    headerData,
-    footerData,
-    showErrorMessage,
-    message,
-    hasSucceeded,
-    toggle,
-    page,
-  ]);
 
   return (
     <body className="space-y-6 ">

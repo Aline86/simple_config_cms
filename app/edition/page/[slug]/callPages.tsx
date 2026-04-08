@@ -98,7 +98,6 @@ export async function getPageFooter() {
     },
   });
 
-  // If 404, create a new footer
   if (res.status === 404) {
     const footerData = {
       color_background_color: "",
@@ -110,7 +109,6 @@ export async function getPageFooter() {
     return postPageFooter(footerData);
   }
 
-  // If other error (not 404), throw
   if (!res.ok) {
     throw new Error("Erreur chargement footer");
   }

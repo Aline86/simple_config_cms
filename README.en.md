@@ -298,8 +298,3 @@ Tests are located in the `__tests__/` folder and managed with **Jest**.
 - Read the contribution guide in [CONTRIBUTING.md](./Contributing.md)
 
 ---
-
-## License
-
-This project is distributed under the **[Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)](./License.md)** license.  
-Commercial use is prohibited without explicit authorization.
