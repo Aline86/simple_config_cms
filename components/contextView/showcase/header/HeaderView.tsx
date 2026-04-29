@@ -53,7 +53,7 @@ export default function HeaderView({ bloc }: ViewProps) {
     const containerWidth = scrollRef.current.offsetWidth;
     const navWidth = navRef.current.scrollWidth;
 
-    setIsBurger(navWidth > containerWidth - containerWidth * 0.5);
+    setIsBurger(navWidth > containerWidth - containerWidth * 0.7);
   };
   const showPages = async () => {
     const pages = await getPages();
@@ -149,7 +149,7 @@ export default function HeaderView({ bloc }: ViewProps) {
                 )}
               </a>
 
-              <h1 className="flex-shrink-0 mx-4 max-w-[60%] sm:text-1xl md:text-3xl truncate">
+              <h1 className="flex-shrink-0 mx-4  min-w-0 hidden sm:block text-xl md:text-2xl truncate">
                 {bloc.text_nom_site}
               </h1>
 

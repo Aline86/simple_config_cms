@@ -520,7 +520,8 @@ iframe {
     width: 350px !important;
   }
   .open-nav a {
-    margin-right: 0 !important;
+    margin-right: 15px !important;
     padding-right: 0 !important;
+    border: none;
   }
 }
