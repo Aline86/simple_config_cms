@@ -33,17 +33,17 @@ export default function CarouselContainer({
 
     const centerIndex = cardNumber;
     const delta = centerIndex - rawIndex;
-    const DAMPING = 0.95;
+
     if (delta !== 0) {
       const shiftCount = Math.abs(delta);
-      const bigCardSize = cardWidth * 1.5 + gap;
+      const bigCardSize = cardWidth * 2 + gap;
 
       setCardValue(shiftCount);
       setIsClic(true);
       setIsLeft(delta > 0);
 
       setMove(delta * (cardWidth + gap));
-      setMoveBigCard(delta * bigCardSize * DAMPING);
+      setMoveBigCard(delta * bigCardSize);
 
       setTrigger((prev) => prev + 1);
       updateTransitionState(true);
@@ -73,7 +73,7 @@ export default function CarouselContainer({
     setIsLeft(true);
     setTrigger((prev) => prev + 1);
     updateTransitionState(true);
-    setMoveBigCard(-(cardWidth * 1.5 + gap * 1.5));
+    setMoveBigCard(-(cardWidth * 2 + gap));
   }
 
   function moveRight() {
@@ -81,7 +81,7 @@ export default function CarouselContainer({
     setIsLeft(false);
     setTrigger((prev) => prev + 1);
     updateTransitionState(true);
-    setMoveBigCard(cardWidth * 1.5 + gap * 1.5);
+    setMoveBigCard(cardWidth * 2 + gap);
   }
 
   useEffect(() => {
@@ -102,8 +102,8 @@ export default function CarouselContainer({
         style={{
           display: "flex",
           justifyContent: "center",
-          height: `${height * 1.5}px`,
-          width: width * 1.5 + "px",
+          height: `${height * 2}px`,
+          width: width * 2 + "px",
           margin: "0 auto",
           position: "relative",
           marginBottom: `${gap}px`,
@@ -113,7 +113,7 @@ export default function CarouselContainer({
         <div
           style={{
             display: "flex",
-            width: `${cardWidth * 1.5}px`,
+            width: `${cardWidth * 2}px`,
             height: `${height * 2}px`,
             margin: "0 auto",
 
@@ -124,7 +124,7 @@ export default function CarouselContainer({
           <div
             style={{
               display: "flex",
-              transform: `translateX(${-((cardWidth * 1.5 + gap) * cardNumber)}px)`,
+              transform: `translateX(${-((cardWidth * 2 + gap) * cardNumber)}px)`,
             }}
           >
             {medias.map((value: MediaObject, index: number) => (
@@ -135,9 +135,9 @@ export default function CarouselContainer({
                 cardRef={index === 0 ? cardRef : null}
                 transitionFinished={transitionFinished}
                 transX={moveBigCard}
-                width={cardWidth * 1.5}
+                width={cardWidth}
                 gap={gap}
-                height={height * 1.5}
+                height={height}
                 updateCard={updateCard}
                 isLeft={isLeft}
               />

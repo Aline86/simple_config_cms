@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
 export async function DELETE(request: NextRequest) {
   return ApiResponse.handle(
     async () => {
-      const user = await requireAuth(request);
+      await requireAuth(request);
       const id = await RequestHelper.getBodyProperty<number>(
         request,
         "id",
@@ -74,19 +74,17 @@ export async function DELETE(request: NextRequest) {
 export async function PUT(request: NextRequest) {
   return ApiResponse.handle(
     async () => {
-      const user = await requireAuth(request);
+      await requireAuth(request);
       const body = await RequestHelper.getBody(request);
       const rawPage = body.data;
-
-      // Sérialisation des blocs
-      rawPage.blocs = JSON.stringify(rawPage.blocs);
 
       // Validation
       const page = new PageObject(rawPage);
       if (!page.validateAll()) {
         throw new Error("Validation failed");
       }
-
+      // Sérialisation des blocs
+      rawPage.blocs = JSON.stringify(rawPage.blocs);
       // Mise à jour
       await prisma.page.update({
         where: { number_id: Number(rawPage.number_id) },

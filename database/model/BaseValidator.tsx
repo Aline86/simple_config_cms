@@ -2,6 +2,7 @@ import {
   createValidator,
   FieldConfigsMap,
 } from "../../lib/helpers/validators.utils";
+import { JsonValidator } from "../../lib/validators/JSONValidator";
 import { BlocObject } from "./Bloc";
 import { MediaObject } from "./bloc/MediaObject";
 import { PageObject } from "./Page";
@@ -21,7 +22,6 @@ export abstract class BaseValidatable {
         return value.every((item) => validateValue(item));
       }
 
-      // Objet avec validateAll
       if (value && typeof value === "object") {
         if (
           typeof (value as BlocObject | MediaObject | PageObject)
@@ -29,17 +29,20 @@ export abstract class BaseValidatable {
         ) {
           return (value as BlocObject | MediaObject | PageObject).validateAll();
         }
-        return true;
+        // vérification des erreurs xss avant insertion serveur
+        return new JsonValidator(value).isValid();
       }
 
       // Champs avec prefix text_|image_|video_|number_|color_
       if (fieldName) {
         const match = fieldName.match(/^(text|image|video|number|color)_/);
+
         if (match) {
           const validator = createValidator(
             fieldName as keyof FieldConfigsMap,
             value,
           );
+
           return validator.isValid();
         }
       }

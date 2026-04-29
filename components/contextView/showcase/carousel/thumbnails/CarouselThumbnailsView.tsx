@@ -64,8 +64,8 @@ export default function CarouselThumbnailsView({
       </h2>
 
       <CarouselContainer
-        width={!isSm ? width * 0.5 : width}
-        height={!isSm ? height * 0.5 : height}
+        width={width}
+        height={height}
         gap={gap}
         updatemedias={updatemedias}
         medias={medias}

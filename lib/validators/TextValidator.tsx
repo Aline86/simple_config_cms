@@ -115,7 +115,10 @@ export class TextValidator {
         message: this._params.errorMessages?.pattern || "Format invalide",
       });
     }
-
+    schema = schema.refine(
+      (val) => !/<script|onerror=|onload=|javascript:/i.test(val),
+      { message: "Contenu potentiellement dangereux détecté" },
+    );
     /*if (this._params.multiline) {
       schema = schema.refine(
         (val) => typeof val === "string" && val.includes("\n"),

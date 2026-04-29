@@ -31,47 +31,9 @@ function ArticleView({ bloc }: BlocParams) {
     return output(bloc) ?? [];
   }, [bloc]);
 
-  const sanitizedHtml = useMemo(() => {
-    if (html.length === 0) return [];
-
-    // Vérifier que DOMPurify est disponible (côté client uniquement)
-    if (typeof window === "undefined" || !DOMPurify) return html;
-
-    return html.map((content) =>
-      DOMPurify.sanitize(content, {
-        ALLOWED_TAGS: [
-          "p",
-          "br",
-          "strong",
-          "em",
-          "u",
-          "s",
-          "a",
-          "ul",
-          "ol",
-          "li",
-          "h1",
-          "h2",
-          "h3",
-          "h4",
-          "h5",
-          "h6",
-          "blockquote",
-          "code",
-          "pre",
-          "img",
-          "span",
-          "div",
-        ],
-        ALLOWED_ATTR: ["href", "target", "rel", "src", "alt", "class", "style"],
-        ALLOW_DATA_ATTR: false,
-      }),
-    );
-  }, [html]);
-
   return (
     <section className="w-full">
-      {sanitizedHtml.map((out, index) => (
+      {html.map((out, index) => (
         <div
           key={index}
           className="tiptap none"

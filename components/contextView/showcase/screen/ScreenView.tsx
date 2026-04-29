@@ -43,11 +43,12 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
     <section className="screen z-0 relative h-[400px] w-screen overflow-hidden mt-6">
       {/* Background parallaxe */}
       {bloc.image_medias[0].image_url !== "" && (
-        <div
-          className="absolute inset-0 bg-center bg-cover bg-fixed"
-          style={{
-            backgroundImage: `url(${bloc.image_medias[0].image_url})`,
-          }}
+        <Image
+          src={bloc.image_medias[0].image_url}
+          alt=""
+          fill
+          className="object-cover"
+          priority
         />
       )}
 

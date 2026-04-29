@@ -149,7 +149,7 @@ export default function HeaderView({ bloc }: ViewProps) {
                 )}
               </a>
 
-              <h1 className="flex-shrink-0 mx-4  min-w-0 hidden sm:block text-xl md:text-2xl truncate">
+              <h1 className="flex-shrink-0  min-w-0 hidden sm:block truncate">
                 {bloc.text_nom_site}
               </h1>
 

@@ -52,8 +52,7 @@ export const createValidator = <K extends keyof FieldConfigsMap>(
       `No config found for field: ${String(fieldName)}, using default config`,
     );
 
-    const defaultConfig =
-      prefix === "text" ? new TextParameter({}) : new TextParameter({});
+    const defaultConfig = new TextParameter({});
 
     return new ValidatorClass(value, defaultConfig);
   }
