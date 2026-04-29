@@ -43,7 +43,7 @@ h2 {
   position: relative;
 }
 /* text bloc */
-.text-view::before,
+/*.text-view::before,
 .text-view::after {
   position: absolute;
   content: "";
@@ -60,7 +60,7 @@ h2 {
   border-bottom: 5px solid rgb(133, 133, 133);
   border-right: 5px solid rgb(181, 181, 181);
   right: 0;
-}
+}*/
 .dark footer {
   color: black !important;
 }
