@@ -149,7 +149,9 @@ export default function HeaderView({ bloc }: ViewProps) {
                 )}
               </a>
 
-              <h1 className="flex-shrink-0 mx-4 ">{bloc.text_nom_site}</h1>
+              <h1 className="flex-shrink-0 mx-4 w-[70%] ">
+                {bloc.text_nom_site}
+              </h1>
 
               <nav
                 ref={navRef}

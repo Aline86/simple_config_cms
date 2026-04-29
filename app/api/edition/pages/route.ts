@@ -35,17 +35,17 @@ export async function GET(request: NextRequest) {
             : [];
 
         return new PageObject({
-          id: dbPage.number_id, //  Changé de id
-          parent_id: dbPage.number_parent_id, //  Changé de parent_id
-          published: dbPage.checkbox_published, //  Changé de published
+          id: dbPage.number_id,
+          parent_id: dbPage.number_parent_id,
+          published: dbPage.checkbox_published,
           checkbox_home_page: dbPage.checkbox_home_page,
-          text_titre: dbPage.text_titre, //  Changé de text_titre
-          text_description: dbPage.text_description ?? "", //  Changé de text_titre
-          slug: dbPage.text_slug, //  Changé de slug
-          number_page_position: dbPage.number_page_position, //  Changé de number_page_position
-          langue: dbPage.text_langue, //  Changé de langue
-          text_createdAt: dbPage.text_createdAt, //  Changé de text_createdAt
-          text_updatedAt: dbPage.text_updatedAt, //  Changé de text_updatedAt
+          text_titre: dbPage.text_titre,
+          text_description: dbPage.text_description ?? "",
+          slug: dbPage.text_slug,
+          number_page_position: dbPage.number_page_position,
+          langue: dbPage.text_langue,
+          text_createdAt: dbPage.text_createdAt,
+          text_updatedAt: dbPage.text_updatedAt,
           blocs,
         });
       });
@@ -66,6 +66,7 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  await requireAuth(request);
   return ApiResponse.handle(
     async () => {
       const user = await requireAuth(request);
