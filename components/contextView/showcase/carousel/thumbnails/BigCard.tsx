@@ -8,11 +8,12 @@ export default function Card({
   updateCard,
   index,
   gap,
-  isLeft,
+  isSm,
 }: any) {
   if (transitionFinished) {
     return (
       <div
+        className={isSm ? `max-w-[360px]` : ""}
         style={{
           backgroundImage: `url(${color})`,
           backgroundSize: "cover",
@@ -34,6 +35,7 @@ export default function Card({
   } else {
     return (
       <div
+        className={isSm ? `max-w-[360px]` : ""}
         onClick={updateCard}
         ref={cardRef}
         data-value={index}

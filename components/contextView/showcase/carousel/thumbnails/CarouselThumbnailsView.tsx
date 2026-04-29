@@ -24,8 +24,8 @@ export default function CarouselThumbnailsView({
   const [cardValue, setCardValue] = useState(0);
   const isSm = useIsSmScreen();
   const cardNumber = bloc.image_medias.length;
-  const width = bloc.number_width ?? 150;
-  const height = bloc.number_height ?? 150;
+  const width = isSm ? 100 : (bloc.number_width ?? 150);
+  const height = isSm ? 100 : (bloc.number_height ?? 150);
   const gap = bloc.number_gap ?? 30;
 
   function updateCardEnd() {

@@ -5,7 +5,7 @@ export function useIsSmScreen() {
 
   useEffect(() => {
     function checkSize() {
-      setIsSm(window.innerWidth >= 640);
+      setIsSm(window.innerWidth <= 640);
     }
 
     checkSize();
