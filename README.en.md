@@ -1,7 +1,7 @@
 # Simple Config Showcase
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/bbfd73c1bff54a40a323b074a284092f)](https://app.codacy.com/gh/Aline86/simple_config_cms/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
-![License](https://img.shields.io/badge/license-CC%20BY--NC%204.0-blue)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Next.js](https://img.shields.io/badge/Next.js-15+-black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-84.6%25-blue)
 
