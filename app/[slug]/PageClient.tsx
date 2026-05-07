@@ -22,10 +22,10 @@ export default function PageClient({
   const footerData = new FooterObject(footer, "view");
 
   return (
-    <body className="mt-[-1px]">
+    <body>
       <HeaderView bloc={headerData} />
       <ThemeToggle />
-      <main className="mt-24 ">
+      <main>
         {page.blocs.map((bloc, index) => {
           return <ComponentBloc key={index} bloc={bloc} />;
         })}
