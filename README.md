@@ -36,9 +36,13 @@ Il permet à des utilisateurs non techniques de créer et modifier facilement de
 
 <a href="https://simple-config-cms.vercel.app" target="_blank">Voir le site de démo en ligne en cliquant sur ce lien : click-me.</a>
 
-## Vidéo de présentation du fonctionnement du BO / FO
+## Vidéos de présentation du fonctionnement du BO / FO
 
 [<img src="docs/edition_bloc.gif" >](Gif_presentation)
+
+Exemple de création / édition d'un bloc :
+
+[<img src="docs/BO.gif" >](Gif_BO)
 
 ### Historique
 
