@@ -122,10 +122,10 @@ export default function HeaderView({ bloc }: ViewProps) {
           className={
             bloc.mode === "edition"
               ? `shadow ${isSticky ? "sticky" : "relative"} top-24 left-0 right-0 z-20`
-              : " shadow fixed  top-0 left-0 right-0 z-20"
+              : " shadow fixed   left-0 right-0 z-20"
           }
         >
-          <div className="mx-auto px-4">
+          <div className="mx-auto top-[-2px] px-4">
             <div className="flex items-center justify-between">
               <a
                 title="Retour à l'accueil"
