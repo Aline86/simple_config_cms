@@ -224,7 +224,7 @@ export default function HeaderView({ bloc }: ViewProps) {
               : "fixed w-fit h-fit mt-5 right-[15px] z-15 "
           }
         >
-          <div className="social-media absolute mb-2 right-[-160px] ">
+          <div className="social-media absolute mb-2  mt-24 right-[-160px] ">
             {bloc.reseaux.map((network, index) => {
               return <SocialTab key={index} network={network} />;
             })}

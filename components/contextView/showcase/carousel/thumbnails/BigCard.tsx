@@ -25,7 +25,6 @@ export default function Card({
           marginRight: `${gap}px`,
           transition: "transform 0.4s ease-in-out",
           transform: `translateX(${transX}px)`,
-
           borderRadius: "8px",
           boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
         }}
@@ -48,7 +47,7 @@ export default function Card({
           height: `${height * 2}px`,
           marginRight: `${gap}px`,
           flexShrink: 0,
-          cursor: "pointer",
+
           borderRadius: "8px",
           boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
         }}

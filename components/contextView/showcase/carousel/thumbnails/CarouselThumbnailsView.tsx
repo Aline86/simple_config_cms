@@ -58,7 +58,7 @@ export default function CarouselThumbnailsView({
     ]);
   }, [cardNumber, bloc]);
   return (
-    <section className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 mb-8">
       <h2 className="text-2xl text-center font-bold text-slate-800 mb-6">
         {bloc.text_titre}
       </h2>

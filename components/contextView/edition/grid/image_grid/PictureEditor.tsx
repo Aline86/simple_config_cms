@@ -25,7 +25,7 @@ export function PictureEditor<T>({ ...props }: MediaEditorProps<T>) {
   return (
     <section
       className={
-        "border rounded-lg overflow-hidden cursor-grab active:cursor-grabbing " +
+        "border rounded-lg overflow-hidden cursor-grab active:cursor-grabbing mb-8" +
         isOpen
           ? ""
           : "h-[10vh]"

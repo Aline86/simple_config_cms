@@ -134,7 +134,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ bloc }) => {
   }
 
   return (
-    <section className="w-full max-w-4xl mx-auto">
+    <section className="w-full max-w-4xl mx-auto mb-8">
       {bloc.text_titre && (
         <div className="mb-4">
           <h2 className=" text-2xl font-semibold text-slate-800">

@@ -7,7 +7,7 @@ import { getgridClasses } from "../../../../../lib/helpers/tiptapFunctions";
 
 export default function PicturesLinkView({ bloc }: { bloc: BlocObject }) {
   return (
-    <section className="max-w-[1650px] w-full mx-auto text-center p-8">
+    <section className="max-w-[1650px] w-full mx-auto text-center p-8 mb-8">
       <h2 className="text-2xl font-bold text-slate-800 mb-6">
         {bloc.text_titre}
       </h2>

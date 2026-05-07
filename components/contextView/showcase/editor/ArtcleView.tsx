@@ -32,7 +32,7 @@ function ArticleView({ bloc }: BlocParams) {
   }, [bloc]);
 
   return (
-    <section className="w-full">
+    <section className="w-full mb-8">
       {html.map((out, index) => (
         <div
           key={index}

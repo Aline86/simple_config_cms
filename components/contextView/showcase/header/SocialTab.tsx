@@ -10,7 +10,7 @@ export default function SocialTab({ network }: { network: MediaObject }) {
     : network.image_url;
   return (
     <div
-      className="absolue  mb-2 flex flex-col gap-2"
+      className="absolue mb-2 flex flex-col gap-2"
       onMouseEnter={() => {
         setIsHovered(true);
       }}

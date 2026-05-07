@@ -97,7 +97,7 @@ export default function CarouselContainer({
   }, [trigger]);
 
   return (
-    <section>
+    <section className="mb-8">
       <div
         style={{
           display: "flex",

@@ -13,9 +13,5 @@ export default function ComponentBloc({ bloc }: PageCrudProps) {
 
   if (!Renderer) return null; // fallback si type inconnu
 
-  return (
-    <div className="flex flex-col m-auto mb-8">
-      <Renderer bloc={bloc} />
-    </div>
-  );
+  return <Renderer bloc={bloc} />;
 }

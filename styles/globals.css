@@ -25,7 +25,11 @@ body {
     background-color 0.3s,
     color 0.3s;
 }
-
+main {
+  display: block;
+  /* Height of the footer, will not change */
+  min-height: calc(100vh - 310px);
+}
 :root {
   color-scheme: light;
   --dark: #171717;

@@ -7,7 +7,7 @@ import { useAppContext } from "../../../../context/DomDataProvider";
 export default function ScreenView({ bloc }: { bloc: BlocObject }) {
   const { hasH1InPage } = useAppContext();
   return bloc.bloc_position === 0 && bloc.mode === "edition" ? (
-    <section className="z-0 mt-[-95px] relative w-full h-screen ">
+    <section className="z-0 mt-[-95px] relative w-full h-screen mb-8">
       <div className="relative z-10 w-screen h-screen  p-24  title text-white flex flex-col justify-end pb-24">
         {hasH1InPage ? (
           <h2 style={{ color: "white", fontSize: "65px" }}>

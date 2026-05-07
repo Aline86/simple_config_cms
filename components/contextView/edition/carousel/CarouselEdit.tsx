@@ -29,7 +29,7 @@ export default function CarouselEdit<T>({
   const isLink = bloc.text_nom_bloc !== "miniatures";
   const showWidth = bloc.text_nom_bloc !== "auto";
   return (
-    <section className="mx-auto w-full min-w-[43vw] space-y-6 p-6">
+    <section className="mx-auto w-full min-w-[43vw] space-y-6 p-6 mb-8">
       <div className="space-y-2">
         <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
           Configuration du composant "Groupe d'images"

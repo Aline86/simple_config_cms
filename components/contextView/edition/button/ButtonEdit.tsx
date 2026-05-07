@@ -26,7 +26,7 @@ export default function ButtonEdit<T>({
   show_debug = false,
 }: ButtonEditorProps<T>) {
   return (
-    <section className="mx-auto max-w-2xl space-y-6 p-6">
+    <section className="mx-auto max-w-2xl space-y-6 p-6 mb-8">
       <div className="space-y-2">
         <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
           Configuration du composant "Bouton"
