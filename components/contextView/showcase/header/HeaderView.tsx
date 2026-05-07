@@ -221,10 +221,10 @@ export default function HeaderView({ bloc }: ViewProps) {
           className={
             bloc.mode === "edition"
               ? ` ${isSticky ? "fixed w-fit h-fit mt-5 right-[30px] z-0" : "absolute w-fit h-fit mt-20 right-[30px] z-0"}`
-              : "fixed w-fit h-fit mt-5 right-[15px] z-15 "
+              : "fixed w-fit h-fit mt-5 right-[15px] z-15 top-24"
           }
         >
-          <div className="social-media absolute mb-2  mt-24 right-[-160px] ">
+          <div className="social-media absolute mb-2   right-[-160px] ">
             {bloc.reseaux.map((network, index) => {
               return <SocialTab key={index} network={network} />;
             })}
