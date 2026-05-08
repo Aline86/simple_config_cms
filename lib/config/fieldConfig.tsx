@@ -81,8 +81,8 @@ const FIELD_CONFIGS: Record<string, FieldParameter> = {
     trim: true,
     type: "hidden",
     errorMessages: {
-      maxLength: "Le text_titre ne peut pas dépasser 255 caractères",
-      required: "Le text_titre est obligatoire",
+      maxLength: "Le titre ne peut pas dépasser 255 caractères",
+      required: "Le titre est obligatoire",
     },
   }),
   // à faire
@@ -92,38 +92,38 @@ const FIELD_CONFIGS: Record<string, FieldParameter> = {
     trim: true,
     type: "hidden",
     errorMessages: {
-      maxLength: "Le text_titre ne peut pas dépasser 255 caractères",
-      required: "Le text_titre est obligatoire",
+      maxLength: "Le titre ne peut pas dépasser 255 caractères",
+      required: "Le titre est obligatoire",
     },
   }),
   text_nom_site_adresse: new TextParameter({
     maxLength: 40,
     required: true,
     trim: true,
-    placeholder: "Entrez le text_titre",
+    placeholder: "Entrez le titre",
     errorMessages: {
-      maxLength: "Le text_titre ne peut pas dépasser 255 caractères",
-      required: "Le text_titre est obligatoire",
+      maxLength: "Le titre ne peut pas dépasser 255 caractères",
+      required: "Le titre est obligatoire",
     },
   }),
   text_adresse_footer: new TextParameter({
     maxLength: 255,
     required: true,
     trim: true,
-    placeholder: "Entrez le text_titre",
+    placeholder: "Entrez le titre",
     errorMessages: {
-      maxLength: "Le text_titre ne peut pas dépasser 255 caractères",
-      required: "Le text_titre est obligatoire",
+      maxLength: "Le titre ne peut pas dépasser 255 caractères",
+      required: "Le titre est obligatoire",
     },
   }),
   text_code_postal: new TextParameter({
     maxLength: 50,
     required: true,
     trim: true,
-    placeholder: "Entrez le text_titre",
+    placeholder: "Entrez le titre",
     errorMessages: {
-      maxLength: "Le text_titre ne peut pas dépasser 255 caractères",
-      required: "Le text_titre est obligatoire",
+      maxLength: "Le titre ne peut pas dépasser 255 caractères",
+      required: "Le titre est obligatoire",
     },
   }),
   text_image_lien: new TextParameter({
@@ -157,10 +157,10 @@ const FIELD_CONFIGS: Record<string, FieldParameter> = {
     maxLength: 255,
     required: true,
     trim: true,
-    placeholder: "Entrez le text_titre",
+    placeholder: "Entrez le titre",
     errorMessages: {
-      maxLength: "Le text_titre ne peut pas dépasser 255 caractères",
-      required: "Le text_titre est obligatoire",
+      maxLength: "Le titre ne peut pas dépasser 255 caractères",
+      required: "Le titre est obligatoire",
     },
   }),
   color_background_color: new TextParameter({
@@ -175,8 +175,8 @@ const FIELD_CONFIGS: Record<string, FieldParameter> = {
     trim: true,
     placeholder: "Entrez le nom du site",
     errorMessages: {
-      maxLength: "Le text_titre ne peut pas dépasser 255 caractères",
-      required: "Le text_titre est obligatoire",
+      maxLength: "Le titre ne peut pas dépasser 255 caractères",
+      required: "Le titre est obligatoire",
     },
   }),
 
