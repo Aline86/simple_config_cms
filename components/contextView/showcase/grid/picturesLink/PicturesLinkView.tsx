@@ -1,11 +1,15 @@
-// PicturesLinkView.tsx
-
 import clsx from "clsx";
 import { BlocObject } from "../../../../../database/model/Bloc";
 import PicturesLinkItemView from "./PictureLinkItemView";
 import { getgridClasses } from "../../../../../lib/helpers/tiptapFunctions";
 
-export default function PicturesLinkView({ bloc }: { bloc: BlocObject }) {
+export default function PicturesLinkView({
+  bloc,
+  editing = false,
+}: {
+  bloc: BlocObject;
+  editing: boolean;
+}) {
   return (
     <section className="max-w-[1650px] w-full mx-auto text-center p-8 mb-8">
       <h2 className="text-2xl font-bold text-slate-800 mb-6">
@@ -17,12 +21,14 @@ export default function PicturesLinkView({ bloc }: { bloc: BlocObject }) {
           getgridClasses(bloc.number_columns),
         )}
       >
-        {bloc.image_medias.map((media) => {
+        {bloc.image_medias.map((media, idx) => {
           return (
             <PicturesLinkItemView
               key={media.id}
               mediaObject={media}
               isLink={true}
+              editing={editing}
+              cardNumber={idx}
             />
           );
         })}
