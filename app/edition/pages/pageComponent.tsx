@@ -14,6 +14,7 @@ import { PageObject } from "../../../database/model/Page";
 import { FieldRenderer } from "../../../lib/validators/renderer/TextRenderer";
 import { Accordion } from "../../../components/ui/Accordeon";
 import { useEffect } from "react";
+import { convertToFrenchDate } from "../../../lib/helpers/dateConverter.utils";
 
 interface PageCrudProps {
   page_data: PageObject;
@@ -68,7 +69,7 @@ export default function PageCrud({
               <CardHeader>
                 <CardTitle>{page_data.text_titre}</CardTitle>
                 <Cardtext_description>
-                  Créé le {page_data.text_createdAt?.toString()}
+                  Créé le {convertToFrenchDate(page_data.text_createdAt)}
                 </Cardtext_description>
               </CardHeader>
               <CardContent>
@@ -137,7 +138,7 @@ export default function PageCrud({
               </CardFooter>
             </Card>
           }
-          header={" Page n° : " + num}
+          header={" Page n° : " + num + " " + page_data.text_titre}
         />
       </div>
       {show_debug ? (

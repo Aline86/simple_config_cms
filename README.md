@@ -398,11 +398,6 @@ Les tests sont situés dans le dossier `__tests__/` et gérés avec **Jest**.
 
 ---
 
-## Licence
-
-Ce projet est distribué sous licence **[Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)](./License.md)**.  
-Usage commercial interdit sans autorisation explicite.
-
 ## Visuel possible
 
 [<img src="docs/Démo-du-site-vitrine.png" >](visuel_rapide)

@@ -69,7 +69,7 @@ export async function POST(request: NextRequest) {
   await requireAuth(request);
   return ApiResponse.handle(
     async () => {
-      const user = await requireAuth(request);
+      await requireAuth(request);
       const body = await request.json();
       const pagesPayload = Array.isArray(body) ? body : body.data;
 
@@ -115,7 +115,7 @@ export async function POST(request: NextRequest) {
                 text_updatedAt: new Date(),
               },
             });
-          } else {
+          } else if (page.text_titre.trim() !== "") {
             return prisma.page.create({
               data: {
                 number_parent_id:
@@ -132,6 +132,11 @@ export async function POST(request: NextRequest) {
                 text_updatedAt: new Date(),
               },
             });
+          } else {
+            return NextResponse.json(
+              { error: "Validation failed", page: p },
+              { status: 400 },
+            );
           }
         }),
       );
