@@ -13,9 +13,13 @@ import {
 
 interface CustomCarouselInfo {
   bloc: BlocObject;
+  editing: boolean;
 }
 
-export default function CarouselSimple({ bloc }: CustomCarouselInfo) {
+export default function CarouselSimple({
+  bloc,
+  editing = false,
+}: CustomCarouselInfo) {
   if (!bloc.image_medias.length) return null;
   return (
     <section className="p-8 relative max-w-[1650px] w-full mx-auto flex-col justify-center align-center m-auto overflow-hidden">

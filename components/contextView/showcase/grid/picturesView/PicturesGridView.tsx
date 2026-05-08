@@ -1,10 +1,14 @@
-// PicturesgridView.tsx
 import { useState } from "react";
-
 import Image from "next/image";
 import { BlocObject } from "../../../../../database/model/Bloc";
 
-export default function PicturesgridView({ bloc }: { bloc: BlocObject }) {
+export default function PicturesgridView({
+  bloc,
+  editing = false,
+}: {
+  bloc: BlocObject;
+  editing: boolean;
+}) {
   const [activeImage, setActiveImage] = useState<string | null>(null);
 
   return (
@@ -13,7 +17,6 @@ export default function PicturesgridView({ bloc }: { bloc: BlocObject }) {
         {bloc.text_titre}
       </h2>
 
-      {/* Masonry */}
       <div
         className="masonry-container"
         style={{
@@ -33,11 +36,18 @@ export default function PicturesgridView({ bloc }: { bloc: BlocObject }) {
               display: "inline-block",
             }}
           >
+            {editing ? (
+              <div className="absolute mt-4 ml-4 text-gray-100 text-2xl border border-gray-300 rounded-full w-9 h-9">
+                {idx + 1}
+              </div>
+            ) : (
+              <></>
+            )}
             {img.image_url !== "" ? (
               <Image
                 src={img.image_url}
                 alt={img.text_titre || `img-${idx}`}
-                className="rounded w-full cursor-pointer"
+                className="rounded  w-full cursor-pointer z-20"
                 width={100}
                 height={100}
                 sizes="
@@ -47,7 +57,11 @@ export default function PicturesgridView({ bloc }: { bloc: BlocObject }) {
   "
               />
             ) : (
-              <></>
+              <>
+                <div className="absolute top-2 right-5 text-white text-2xl border border-gray-300 rounded-full w-9 h-9">
+                  {editing ? idx + 1 : ""}
+                </div>
+              </>
             )}
           </button>
         ))}

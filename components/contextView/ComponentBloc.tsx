@@ -65,7 +65,7 @@ export default function ComponentBloc({
               isLink={true}
             />
           }
-          ViewComponent={<ComponentFrontend bloc={bloc} />}
+          ViewComponent={<ComponentFrontend bloc={bloc} editing={true} />}
         />
       ) : (
         <ComponentBackend
