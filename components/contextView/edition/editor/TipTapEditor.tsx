@@ -39,7 +39,7 @@ export const Tiptap = ({ bloc, updateComponent, blocNumber }: TiptapProps) => {
       <EditorToolbar editor={editor} onSetLink={setLink} />
       <EditorContent
         editor={editor}
-        className="border border-gray-700 p-2 rounded-md"
+        className="border border-gray-700 p-2 rounded-md cursor-auto"
       />
     </div>
   );
