@@ -6,7 +6,7 @@ import Image from "next/image";
 export default function PicturesLinkItemView({
   mediaObject,
   isLink,
-  editing,
+  editing = false,
   cardNumber,
 }: {
   mediaObject: MediaObject;

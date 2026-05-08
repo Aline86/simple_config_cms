@@ -31,8 +31,13 @@ export default function TextView({ bloc, editing = false }: BlocParams) {
           : "grid-cols-1",
       )}
     >
-      {article.images.map((media: MediaObject) => (
-        <PicturesLinkItemView key={media.id} mediaObject={media} />
+      {article.images.map((media: MediaObject, idx: number) => (
+        <PicturesLinkItemView
+          key={media.id}
+          mediaObject={media}
+          editing={editing}
+          cardNumber={idx}
+        />
       ))}
     </div>
   ) : null;
