@@ -11,7 +11,7 @@ import ContentLayout from "./ContentLayout";
 
 interface BlocParams {
   bloc: BlocObject;
-  editing: boolean;
+  editing?: boolean;
 }
 type ImagePosition = "top" | "left" | "right";
 
