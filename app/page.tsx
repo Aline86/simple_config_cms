@@ -9,9 +9,7 @@ type Props = {
   params: Promise<{ slug: string }>;
   searchParams: Promise<PageObject>;
 };
-/* ===========================
-   METADATA HOME
-=========================== */
+
 export async function generateMetadata(): Promise<Metadata> {
   const [page, header] = await Promise.all([getHomePage(), getPageHeader()]);
 
@@ -31,9 +29,6 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-/* ===========================
-   PAGE HOME
-=========================== */
 export default async function Page({ params }: Props) {
   return <PageContainer params={params} />;
 }
