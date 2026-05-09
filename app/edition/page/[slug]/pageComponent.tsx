@@ -10,7 +10,7 @@ interface PageCrudProps {
   page_data: PageObject;
   onDelete: (page: BlocObject) => void;
   updateBloc: (fieldName: string, value: unknown) => void;
-  onAdd?: () => void; 
+  onAdd?: () => void;
   onDragStart: (page: BlocObject) => void;
   onDrop: (page: BlocObject) => void;
   draggableEnabled: boolean;
@@ -27,11 +27,16 @@ export default function PageBlocs({
   show_debug = false,
 }: PageCrudProps) {
   useEffect(() => {}, [draggableEnabled]);
+
   return (
     <div className="p-6  space-y-6 ">
       {page_data.blocs.length > 0 &&
         page_data.blocs.map((bloc, index) => {
           const num = Number(index) + 1;
+          const sub_title =
+            bloc.type !== bloc.text_nom_bloc.toUpperCase()
+              ? bloc.text_nom_bloc.toUpperCase()
+              : "";
           return (
             <div
               key={bloc.id}
@@ -55,7 +60,7 @@ export default function PageBlocs({
                     onChange={updateBloc}
                   />
                 }
-                header={" Bloc n° : " + num + " " + bloc.type}
+                header={" Bloc n° : " + num + " " + bloc.type + " " + sub_title}
               />
             </div>
           );

@@ -20,7 +20,6 @@ import VideoView from "../../components/contextView/showcase/video/VideoView";
 import { BlocObject } from "../../database/model/Bloc";
 import { FooterObject } from "../../database/model/bloc/Footer";
 import { HeaderObject } from "../../database/model/bloc/Header";
-import { MediaObject } from "../../database/model/bloc/MediaObject";
 
 // props blocs traditionnels
 type BlocEditionProps = {
@@ -30,6 +29,7 @@ type BlocEditionProps = {
 
 type BlocFrontProps = {
   bloc: BlocObject | HeaderObject | FooterObject;
+  editing?: boolean;
 };
 
 type BlocComponent = React.FC<BlocEditionProps>;

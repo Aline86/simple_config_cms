@@ -45,7 +45,7 @@ export default function ComponentBloc({
   });
 
   return (
-    <main className="flex flex-col ">
+    <section className="flex flex-col ">
       {bloc instanceof BlocObject && (
         <div className="flex justify-end w-[45%]">
           <DeleteButton bloc={bloc} onDelete={onDelete} />
@@ -65,7 +65,7 @@ export default function ComponentBloc({
               isLink={true}
             />
           }
-          ViewComponent={<ComponentFrontend bloc={bloc} />}
+          ViewComponent={<ComponentFrontend bloc={bloc} editing={true} />}
         />
       ) : (
         <ComponentBackend
@@ -78,6 +78,6 @@ export default function ComponentBloc({
           isLink={true}
         />
       )}
-    </main>
+    </section>
   );
 }

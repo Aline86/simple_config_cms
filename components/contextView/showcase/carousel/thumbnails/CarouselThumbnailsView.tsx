@@ -7,9 +7,11 @@ import CarouselContainer from "./CarouselContainer";
 export default function CarouselThumbnailsView({
   bloc,
   show_debug = false,
+  editing = false,
 }: {
   bloc: BlocObject;
   show_debug?: boolean;
+  editing: boolean;
 }) {
   const [medias, setMedias] = useState<MediaObject[]>([
     ...bloc.image_medias,

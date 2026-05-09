@@ -1,36 +1,26 @@
-// PicturesLinkItemView.tsx
-
 import { ArrowRight, Heart } from "lucide-react";
-import FIELD_CONFIGS from "../../../../../lib/config/fieldConfig";
 import { MediaObject } from "../../../../../database/model/bloc/MediaObject";
-import CloudinaryValidator, {
-  CloudinaryParameter,
-} from "../../../../../lib/validators/MediaValidator";
+
 import Image from "next/image";
 
 export default function PicturesLinkItemView({
   mediaObject,
   isLink,
+  editing = false,
+  cardNumber,
 }: {
   mediaObject: MediaObject;
   isLink?: boolean;
+  editing: boolean;
+  cardNumber: number;
 }) {
-  const isValid = new CloudinaryValidator(
-    mediaObject.image_url,
-    FIELD_CONFIGS["image_url"] instanceof CloudinaryParameter
-      ? FIELD_CONFIGS["image_url"]
-      : new CloudinaryParameter(),
-  ).validate();
-
   return (
     <div className="w-full">
       <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border border-slate-200 overflow-hidden group h-full flex flex-col">
-        {/* Image */}
         <div className="relative h-48 bg-gradient-to-br from-slate-300 to-slate-400 overflow-hidden">
           {mediaObject.image_url !== undefined &&
           mediaObject.image_url !== null &&
-          mediaObject.text_titre !== null /*&&
-          isValid.valid*/ ? (
+          mediaObject.text_titre !== null ? (
             <Image
               className="object-cover group-hover:scale-105 transition-transform duration-300"
               src={mediaObject.image_url}
@@ -52,6 +42,13 @@ export default function PicturesLinkItemView({
           {isLink && (
             <>
               <div className="relative z-10 p-6 flex h-full flex-col items-center justify-end gap-[30px]">
+                {editing ? (
+                  <div className="absolute top-2 right-5 text-white text-2xl border border-gray-300 rounded-full w-9 h-9">
+                    cardNumber + 1
+                  </div>
+                ) : (
+                  <></>
+                )}
                 <div className="card-bg">
                   <h3 className="text-lg font-semibold text-slate-100 text-center">
                     {mediaObject.text_titre}
@@ -70,12 +67,11 @@ export default function PicturesLinkItemView({
                   <ArrowRight className="w-4 h-4" />
                 </a>
               </div>
-              <span className="absolute inset-0 bg-black/30 z-0"></span>
+
+              <span className="absolute inset-0 bg-black/30 z-0 flex justify align-items"></span>
             </>
           )}
         </div>
-
-        {/* Contenu */}
       </div>
     </div>
   );

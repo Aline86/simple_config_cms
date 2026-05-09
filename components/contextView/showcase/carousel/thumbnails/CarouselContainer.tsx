@@ -21,6 +21,7 @@ export default function CarouselContainer({
   cardValue,
   cardNumber,
   isSm,
+  editing = false,
 }: any) {
   const [trigger, setTrigger] = useState(0);
   const [move, setMove] = useState(0);

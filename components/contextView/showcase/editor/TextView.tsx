@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import { JSONContent } from "@tiptap/core";
@@ -13,11 +11,11 @@ import ContentLayout from "./ContentLayout";
 
 interface BlocParams {
   bloc: BlocObject;
+  editing?: boolean;
 }
 type ImagePosition = "top" | "left" | "right";
 
-// Version refactorisée du composant
-export default function TextView({ bloc }: BlocParams) {
+export default function TextView({ bloc, editing = false }: BlocParams) {
   const article = bloc.articles[0];
   const hasImages = article.images.length > 0;
   const hasText = article.text_article !== null;
@@ -33,8 +31,13 @@ export default function TextView({ bloc }: BlocParams) {
           : "grid-cols-1",
       )}
     >
-      {article.images.map((media: MediaObject) => (
-        <PicturesLinkItemView key={media.id} mediaObject={media} />
+      {article.images.map((media: MediaObject, idx: number) => (
+        <PicturesLinkItemView
+          key={media.id}
+          mediaObject={media}
+          editing={editing}
+          cardNumber={idx}
+        />
       ))}
     </div>
   ) : null;
