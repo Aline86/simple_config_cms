@@ -1,5 +1,5 @@
 export const dynamic = "force-dynamic";
-export const revalidate = false;
+
 import { HeaderObject } from "../../database/model/bloc/Header";
 import { PageObject } from "../../database/model/Page";
 
