@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
       const slug = RequestHelper.getRequiredSearchParam(request, "slug");
 
       const dbPage = await prisma.page.findFirst({
-        where: { text_slug: slug }, 
+        where: { text_slug: slug },
       });
 
       if (!dbPage) {
