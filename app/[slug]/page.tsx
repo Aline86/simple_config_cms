@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+export const revalidate = false;
 import { HeaderObject } from "../../database/model/bloc/Header";
 import { PageObject } from "../../database/model/Page";
 
@@ -41,6 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: "Ceci est une page",
   };
 }
+
 export default async function Page({ params }: Props) {
   return <PageContainer params={params} />;
 }
