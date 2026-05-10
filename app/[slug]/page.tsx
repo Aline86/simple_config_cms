@@ -17,8 +17,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const slug = (await params).slug;
 
   const [page, header] = await Promise.all([
-    await getPageBySlug(slug),
-    await getPageHeader(),
+    getPageBySlug(slug),
+    getPageHeader(),
   ]);
 
   if (
