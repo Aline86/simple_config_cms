@@ -44,7 +44,7 @@ export default function PicturesLinkItemView({
               <div className="relative z-10 p-6 flex h-full flex-col items-center justify-end gap-[30px]">
                 {editing ? (
                   <div className="absolute top-2 right-5 text-white text-2xl border border-gray-300 rounded-full w-9 h-9">
-                    cardNumber + 1
+                    {cardNumber + 1}
                   </div>
                 ) : (
                   <></>

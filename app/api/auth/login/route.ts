@@ -4,7 +4,6 @@ import { verifyUser } from "../../../../database/user/user";
 
 export async function POST(req: NextRequest) {
   try {
-    //  AJOUT : Vérifier que JWT_SECRET existe au démarrage
     const jwtSecret = process.env.JWT_SECRET;
     if (!jwtSecret) {
       console.error(
