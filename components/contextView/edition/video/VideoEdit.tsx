@@ -19,7 +19,6 @@ interface VideoEditorProps<T> {
 export default function VideoEdit<T>({
   bloc,
   onChange,
-
   removeElement,
   onDragStart,
   onDrop,

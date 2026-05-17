@@ -7,7 +7,6 @@ import {
 import { BlocObject } from "../../database/model/Bloc";
 import useUpdateUI from "../../hooks/updateByPath/useUpdateUI";
 import EditionDoubleView from "../ui/EditionDoubleView";
-import ScreenView from "./showcase/screen/ScreenView";
 import { MediaObject } from "../../database/model/bloc/MediaObject";
 import { DeleteButton } from "../ui/DeleteButton";
 import { HeaderObject } from "../../database/model/bloc/Header";
