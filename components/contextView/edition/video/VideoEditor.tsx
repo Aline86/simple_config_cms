@@ -91,7 +91,7 @@ export function VideoEditor<T>({ ...props }: VideoEditorProps<T>) {
                 {props.isLink && (
                   <>
                     <FieldRenderer
-                      label="text_titre de la vidéo"
+                      label="Titre de la vidéo"
                       fieldName={
                         `blocs.` +
                         props.blocNumber +

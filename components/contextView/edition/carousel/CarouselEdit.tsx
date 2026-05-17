@@ -57,7 +57,7 @@ export default function CarouselEdit<T>({
           </svg>
         </button>
         <FieldRenderer
-          label="text_titre du bloc carousel d'images"
+          label="Titre du bloc carousel d'images"
           fieldName={`blocs.` + bloc.bloc_position + `.text_titre`}
           model={bloc as BlocObject}
           setField={onChange}

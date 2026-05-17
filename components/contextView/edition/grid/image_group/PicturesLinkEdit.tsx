@@ -55,7 +55,7 @@ export default function PicturesLinkEdit({
           </svg>
         </button>
         <FieldRenderer
-          label="text_titre du bloc d'images avec lien de redirection"
+          label="Titre du bloc d'images avec lien de redirection"
           fieldName={`blocs.${bloc.bloc_position}.text_titre`}
           model={bloc}
           setField={onChange}

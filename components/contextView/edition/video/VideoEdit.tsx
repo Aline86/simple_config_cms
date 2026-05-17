@@ -39,7 +39,7 @@ export default function VideoEdit<T>({
 
       <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-200 dark:bg-slate-950">
         <FieldRenderer
-          label="text_titre de la carte de redirection"
+          label="Titre de la carte de redirection"
           fieldName={`blocs.` + bloc.bloc_position + `.` + `text_titre`}
           model={bloc as BlocObject}
           setField={onChange}

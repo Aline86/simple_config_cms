@@ -44,7 +44,7 @@ export default function ButtonEdit<T>({
           label={"Couleur de fond de la carte de redirection"}
         />
         <FieldRenderer
-          label="text_titre de la carte de redirection"
+          label="Titre de la carte de redirection"
           fieldName={`blocs.${bloc.bloc_position}.text_titre`}
           model={bloc as BlocObject}
           setField={onChange}
