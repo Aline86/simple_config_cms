@@ -99,7 +99,7 @@ export default function CalendarEdit({ bloc, onChange }: CalendarEditorProps) {
   function handleDelete() {
     const next = events.filter((ev) => ev.id !== modal.id);
     setEvents(next);
-    onChange?.(`blocs.${bloc.bloc_position}.calendar.events`, next);
+    onChange(`blocs.${bloc.bloc_position}.calendar.events`, next);
     setModal((m) => ({ ...m, open: false }));
   }
 
