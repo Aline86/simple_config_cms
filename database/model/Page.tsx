@@ -88,9 +88,9 @@ export class PageObject extends BaseValidatable {
     if (typeof data.blocs === "string") {
       const blocs = JSON.parse(data.blocs);
       blocs.length > 0 && Array.isArray(blocs)
-        ? blocs.forEach((b: BlocObject) =>
-            this.addBloc(new BlocObject(b, mode)),
-          )
+        ? blocs.forEach((b: BlocObject) => {
+            this.addBloc(new BlocObject(b, mode));
+          })
         : [];
     } else if (Array.isArray(data.blocs)) {
       data.blocs.forEach((b: BlocObject) => {
@@ -110,8 +110,8 @@ export class PageObject extends BaseValidatable {
   }
 
   setField<K extends keyof PageObject>(field: K, value: PageObject[K]) {
-    (this as unknown)[field] = value;
     if (field === "text_titre") {
+      (this as unknown)[field] = value;
       this.text_slug = slugify(value as unknown as string, {
         lower: true,
         strict: true,
