@@ -496,7 +496,10 @@ iframe {
     background-attachment: scroll;
   }
 }
-
+/* Calendar*/
+.fc-event {
+  cursor: pointer !important;
+}
 /* Pour les écrans de plus de 768px */
 @media (max-width: 768px) {
   .logo {

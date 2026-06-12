@@ -5,6 +5,8 @@ import { BlocObject } from "../../database/model/Bloc";
 import { ArticleObject } from "../../database/model/bloc/Article";
 import { MediaObject } from "../../database/model/bloc/MediaObject";
 import { TypeBloc } from "../../database/model/Page";
+import { Calendar } from "@fullcalendar/core/index.js";
+import { CalendarObject } from "../../database/model/bloc/Calendar";
 
 /**
  * Options pour créer un nouveau bloc
@@ -28,6 +30,7 @@ export interface CreateBlocOptions {
   number_height?: number;
   number_gap?: number;
   number_columns?: number;
+  calendar?: true | undefined;
 }
 
 export function createNewBloc(options: CreateBlocOptions): BlocObject {
@@ -49,6 +52,7 @@ export function createNewBloc(options: CreateBlocOptions): BlocObject {
     number_height = 100,
     number_gap = 30,
     number_columns = 4,
+    calendar = null,
   } = options;
 
   // Créer les médias niveau 1 (attachés directement au bloc)
@@ -83,6 +87,7 @@ export function createNewBloc(options: CreateBlocOptions): BlocObject {
       text_updatedAt: new Date(),
       image_medias: image_medias,
       articles: articles,
+      calendar: calendar !== undefined ? createEmptyCalendar(id) : null,
     },
     "edition",
   );
@@ -136,5 +141,14 @@ function createEmptyArticle(
     number_height: 100,
     number_text_margins: 30,
     images: images,
+  });
+}
+
+function createEmptyCalendar(text_bloc_id: string): CalendarObject {
+  return new CalendarObject({
+    id: nanoid(),
+    text_bloc_id: text_bloc_id,
+
+    events: [],
   });
 }

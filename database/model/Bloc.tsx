@@ -3,6 +3,7 @@ import { MediaObject } from "./bloc/MediaObject";
 import { TypeBloc } from "./Page";
 import { ArticleObject } from "./bloc/Article";
 import { BaseValidatable } from "./BaseValidator";
+import { CalendarObject } from "./bloc/Calendar";
 
 export class BlocObject extends BaseValidatable {
   [immerable] = true;
@@ -26,6 +27,7 @@ export class BlocObject extends BaseValidatable {
   public text_updatedAt: Date | null;
   public image_medias: MediaObject[];
   public articles: ArticleObject[];
+  public calendar: CalendarObject;
   public mode: string;
 
   constructor(
@@ -48,6 +50,7 @@ export class BlocObject extends BaseValidatable {
       text_updatedAt?: Date | null;
       image_medias?: MediaObject[] | unknown[];
       articles?: ArticleObject[];
+      calendar?: CalendarObject | undefined;
     } = {},
     mode: string = "edition",
   ) {
@@ -83,7 +86,8 @@ export class BlocObject extends BaseValidatable {
       if (a instanceof ArticleObject) return a;
       return new ArticleObject(a);
     });
-
+    this.calendar =
+      data.calendar !== undefined ? new CalendarObject(data.calendar) : null;
     this.mode = mode;
   }
 
@@ -107,6 +111,7 @@ export class BlocObject extends BaseValidatable {
       text_updatedAt: this.text_updatedAt,
       image_medias: this.image_medias.map((m) => m.toJSON()),
       articles: this.articles.map((a) => a.toJSON()),
+      calendar: this.calendar,
     };
   }
 }

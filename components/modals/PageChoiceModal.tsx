@@ -74,7 +74,12 @@ export default function BlocChoiceModal({
     articleCount: 1,
     mediaPerArticle: 4,
   };
-
+  const options_calendar: CreateBlocOptions = {
+    ...baseOptions,
+    text_nom_bloc: "calendar",
+    type: TypeBloc.CALENDAR,
+    calendar: true,
+  };
   return (
     <div className="space-y-6">
       <div className="">
@@ -186,6 +191,15 @@ export default function BlocChoiceModal({
               }}
             >
               Texte
+            </button>
+            <button
+              aria-label="Créer un bloc Texte avec images optionnelles"
+              className="px-4 py-4 rounded bg-slate-600 text-white text-lg hover:bg-slate-700 transition"
+              onClick={() => {
+                addBlocToPage(options_calendar);
+              }}
+            >
+              Calendrier
             </button>
           </div>
         </Modal>
