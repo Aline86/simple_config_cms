@@ -86,8 +86,7 @@ export class BlocObject extends BaseValidatable {
       if (a instanceof ArticleObject) return a;
       return new ArticleObject(a);
     });
-    this.calendar =
-      data.calendar !== null ? new CalendarObject(data.calendar) : null;
+    this.calendar = new CalendarObject(data.calendar);
     this.mode = mode;
   }
 
