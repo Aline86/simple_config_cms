@@ -60,6 +60,10 @@ export default function CalendarEdit({ bloc, onChange }: CalendarEditorProps) {
       end,
     });
   }
+  function saveEvents(next: CalendarEvent[]) {
+    setEvents(next);
+    onChange(`blocs.${bloc.bloc_position}.calendar.events`, next);
+  }
 
   function handleEventClick(info: EventClickArg) {
     setModal({
@@ -90,35 +94,28 @@ export default function CalendarEdit({ bloc, onChange }: CalendarEditorProps) {
           ? { ...ev, title: modal.title, start: modal.start, end: modal.end }
           : ev,
       );
-      setEvents(next);
-      onChange(`blocs.${bloc.bloc_position}.calendar.events`, next);
+      saveEvents(next);
     }
     setModal((m) => ({ ...m, open: false }));
   }
 
   function handleDelete() {
     const next = events.filter((ev) => ev.id !== modal.id);
-    setEvents(next);
-    onChange(`blocs.${bloc.bloc_position}.calendar.events`, next);
+    saveEvents(next);
     setModal((m) => ({ ...m, open: false }));
   }
 
   return (
-    <section className="mx-auto max-w-2xl space-y-6 p-6 mb-8">
-      <div className="space-y-2">
-        <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
-          Configuration du composant "Calendrier"
-        </h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400">
-          Configurez le contenu de votre composant
-        </p>
+    <section className="mx-auto max-w-2xl space-y-6 p-6 mb-12">
+      <div className="space-y-2 mb-8 mt-2">
+        <FieldRenderer
+          label="Titre du bloc d'images avec lien de redirection"
+          fieldName={`blocs.` + bloc.bloc_position + ".text_titre"}
+          model={bloc as BlocObject}
+          setField={onChange}
+        />
       </div>
-      <FieldRenderer
-        label="Titre du bloc d'images avec lien de redirection"
-        fieldName={`blocs.` + bloc.bloc_position + ".text_titre"}
-        model={bloc as BlocObject}
-        setField={onChange}
-      />
+
       <FullCalendar
         locale={frLocale}
         ref={calendarRef}
@@ -135,20 +132,20 @@ export default function CalendarEdit({ bloc, onChange }: CalendarEditorProps) {
         select={handleSelect}
         eventClick={handleEventClick}
         eventDrop={(info) => {
-          const next = events.map((ev) =>
-            ev.id === info.event.id
-              ? { ...ev, start: info.event.startStr, end: info.event.endStr }
-              : ev,
+          saveEvents(
+            events.map((ev) =>
+              ev.id === info.event.id
+                ? { ...ev, start: info.event.startStr, end: info.event.endStr }
+                : ev,
+            ),
           );
-          setEvents(next);
-          onChange(`blocs.${bloc.bloc_position}.calendar.events`, next);
         }}
         eventResize={(info) => {
-          const next = events.map((ev) =>
-            ev.id === info.event.id ? { ...ev, end: info.event.endStr } : ev,
+          saveEvents(
+            events.map((ev) =>
+              ev.id === info.event.id ? { ...ev, end: info.event.endStr } : ev,
+            ),
           );
-          setEvents(next);
-          onChange(`blocs.${bloc.bloc_position}.calendar.events`, next);
         }}
       />
 
