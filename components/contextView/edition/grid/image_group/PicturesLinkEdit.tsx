@@ -2,19 +2,9 @@
 
 import { BlocObject } from "../../../../../database/model/Bloc";
 import { MediaObject } from "../../../../../database/model/bloc/MediaObject";
+import { EditorProps } from "../../../../../lib/helpers/globabProps";
 import { FieldRenderer } from "../../../../../lib/validators/renderer/TextRenderer";
 import { PictureEditor } from "../image_grid/PictureEditor";
-
-interface PicturesLinkEditorProps {
-  bloc: BlocObject;
-  onChange: (fieldName: string, newValue: unknown) => void;
-  addElement: () => void;
-  removeElement: (bloc: MediaObject) => void;
-  onDragStart: (page: MediaObject) => void;
-  onDrop: (page: MediaObject) => void;
-  isLink?: boolean;
-  show_debug?: boolean;
-}
 
 export default function PicturesLinkEdit({
   bloc,
@@ -25,7 +15,7 @@ export default function PicturesLinkEdit({
   onDrop,
   isLink,
   show_debug = false,
-}: PicturesLinkEditorProps) {
+}: EditorProps) {
   return (
     <section className="mx-auto max-w-2xl space-y-6 p-6 mb-8">
       <div className="space-y-2">

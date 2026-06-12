@@ -1,7 +1,6 @@
 "use client";
 
 import { BlocObject } from "../../../../database/model/Bloc";
-import { MediaObject } from "../../../../database/model/bloc/MediaObject";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
 import interactionPlugin from "@fullcalendar/interaction"; // needed for dayClick
@@ -10,17 +9,10 @@ import { useState, useRef } from "react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import { EventInput, DateSelectArg, EventClickArg } from "@fullcalendar/core";
 import { FieldRenderer } from "../../../../lib/validators/renderer/TextRenderer";
+import { EditorProps } from "../../../../lib/helpers/globabProps";
 export type CalendarEvent = EventInput & { id: string };
 
-interface CalendarEditorProps {
-  bloc: BlocObject;
-  onChange: (fieldName: string, newValue: unknown) => void;
-  addElement: () => void;
-  onDrop: (page: MediaObject) => void;
-  isLink: boolean;
-  show_debug?: boolean;
-}
-export default function CalendarEdit({ bloc, onChange }: CalendarEditorProps) {
+export default function CalendarEdit({ bloc, onChange }: EditorProps) {
   const calendarRef = useRef(null);
   const [events, setEvents] = useState<CalendarEvent[]>(
     bloc.calendar.events ?? [],

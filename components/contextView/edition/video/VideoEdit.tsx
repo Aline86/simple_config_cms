@@ -5,7 +5,7 @@ import { MediaObject } from "../../../../database/model/bloc/MediaObject";
 import { FieldRenderer } from "../../../../lib/validators/renderer/TextRenderer";
 import { VideoEditor } from "./VideoEditor";
 
-interface VideoEditorProps<T> {
+interface EditorProps {
   bloc: BlocObject;
   onChange: (fieldName: string, newValue: unknown) => void;
   addElement: () => void;
@@ -24,7 +24,7 @@ export default function VideoEdit<T>({
   onDrop,
   isLink,
   show_debug = false,
-}: VideoEditorProps<T>) {
+}: EditorProps) {
   return (
     <section className="mx-auto min-w-2xl max-w-2xl space-y-6 p-6 mb-8">
       <div className="space-y-2">

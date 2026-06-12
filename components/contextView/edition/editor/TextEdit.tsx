@@ -7,18 +7,7 @@ import { PictureEditor } from "../grid/image_grid/PictureEditor";
 import { MediaObject } from "../../../../database/model/bloc/MediaObject";
 import { BlocObject } from "../../../../database/model/Bloc";
 import { FieldRenderer } from "../../../../lib/validators/renderer/TextRenderer";
-import { DeleteButton } from "../../../ui/DeleteButton";
-
-interface TextEditorProps {
-  bloc: BlocObject;
-  onChange: (fieldName: string, newValue: unknown) => void;
-  addElement: () => void;
-  removeElement: (media: MediaObject) => void;
-  onDragStart: (page: MediaObject) => void;
-  onDrop: (page: MediaObject) => void;
-  debug?: boolean;
-  onDelete?: (bloc: BlocObject) => void;
-}
+import { EditorProps } from "../../../../lib/helpers/globabProps";
 
 export default function TextEditor({
   bloc,
@@ -27,8 +16,8 @@ export default function TextEditor({
   removeElement,
   onDragStart,
   onDrop,
-  debug = false,
-}: TextEditorProps) {
+  show_debug,
+}: EditorProps) {
   const hasArticles = bloc.articles[0];
   const images = hasArticles.images;
   const [selectedValidatorKey, setSelectedValidatorKey] = useState<string>(
@@ -167,7 +156,7 @@ export default function TextEditor({
       </section>
 
       {/* Debug Panel */}
-      {debug && (
+      {show_debug && (
         <aside className="rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-800 dark:bg-amber-950">
           <h3 className="mb-2 flex items-center gap-2 text-sm font-semibold text-amber-900 dark:text-amber-100">
             <span className="text-lg">🐛</span>

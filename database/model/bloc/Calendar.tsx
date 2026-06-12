@@ -5,7 +5,6 @@ import { CalendarEvent } from "../../../components/contextView/edition/calendar/
 export class CalendarObject extends BaseValidatable {
   [immerable] = true;
 
-  // Structure des articles (stockés en JSON dans les blocs)
   public id: string | null;
   public text_bloc_id: string | null;
   public events: CalendarEvent[] | null;

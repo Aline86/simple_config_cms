@@ -2,19 +2,9 @@
 
 import { BlocObject } from "../../../../database/model/Bloc";
 import { MediaObject } from "../../../../database/model/bloc/MediaObject";
+import { EditorProps } from "../../../../lib/helpers/globabProps";
 import { FieldRenderer } from "../../../../lib/validators/renderer/TextRenderer";
 import { PictureEditor } from "../grid/image_grid/PictureEditor";
-
-interface CarouselThumbnailsProps<T> {
-  bloc: BlocObject;
-  onChange: (fieldName: string, newValue: unknown) => void;
-  addElement: () => void;
-  removeElement: (bloc: MediaObject) => void;
-  onDragStart: (page: MediaObject) => void;
-  onDrop: (page: MediaObject) => void;
-
-  debug?: boolean;
-}
 
 export default function CarouselEdit<T>({
   bloc,
@@ -24,8 +14,8 @@ export default function CarouselEdit<T>({
   onDragStart,
   onDrop,
 
-  debug = false,
-}: CarouselThumbnailsProps<T>) {
+  show_debug = false,
+}: EditorProps) {
   const isLink = bloc.text_nom_bloc !== "miniatures";
   const showWidth = bloc.text_nom_bloc !== "auto";
   return (
@@ -95,7 +85,7 @@ export default function CarouselEdit<T>({
       </div>
 
       {/* Debug panel */}
-      {debug ? (
+      {show_debug ? (
         <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-200 dark:bg-slate-900">
           <h3 className="text-sm font-semibold mb-2">
             Props reçues (HeaderEdit)

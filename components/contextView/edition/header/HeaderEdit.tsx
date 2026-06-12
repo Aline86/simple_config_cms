@@ -12,7 +12,7 @@ interface EditorProps {
   onChange: (fieldName: string, newValue: unknown) => void;
   addElement: () => void;
   removeElement: (socialMedia: MediaObject) => void;
-  show_debug?;
+  show_debug?: boolean;
 }
 
 export default function HeaderEdit<T>({
