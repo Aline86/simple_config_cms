@@ -141,14 +141,14 @@ export default function CalendarEdit({ bloc, onChange }: CalendarEditorProps) {
               : ev,
           );
           setEvents(next);
-          onChange?.(`blocs.${bloc.bloc_position}.calendar.events`, next);
+          onChange(`blocs.${bloc.bloc_position}.calendar.events`, next);
         }}
         eventResize={(info) => {
           const next = events.map((ev) =>
             ev.id === info.event.id ? { ...ev, end: info.event.endStr } : ev,
           );
           setEvents(next);
-          onChange?.(`blocs.${bloc.bloc_position}.calendar.events`, next);
+          onChange(`blocs.${bloc.bloc_position}.calendar.events`, next);
         }}
       />
 
