@@ -55,7 +55,7 @@ export default function Calendar({ bloc, editing = false }: BlocParams) {
       <FullCalendar
         locale={frLocale}
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-        events={bloc.calendar?.events ?? []}
+        events={bloc.calendar.events ?? []}
         headerToolbar={{
           left: "prev,next today",
           center: "title",
@@ -100,7 +100,9 @@ export default function Calendar({ bloc, editing = false }: BlocParams) {
 
             <div className="flex justify-end pt-1">
               <button
-                onClick={() => setModal((m) => ({ ...m, open: false }))}
+                onClick={() => {
+                  setModal((m) => ({ ...m, open: false }));
+                }}
                 className="rounded-lg border border-slate-200 dark:border-slate-700 px-3 py-1.5 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
               >
                 Fermer

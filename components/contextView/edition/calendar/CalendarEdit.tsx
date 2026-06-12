@@ -16,8 +16,6 @@ interface CalendarEditorProps {
   bloc: BlocObject;
   onChange: (fieldName: string, newValue: unknown) => void;
   addElement: () => void;
-  removeElement: (button: MediaObject) => void;
-  onDragStart: (page: MediaObject) => void;
   onDrop: (page: MediaObject) => void;
   isLink: boolean;
   show_debug?: boolean;
@@ -25,7 +23,7 @@ interface CalendarEditorProps {
 export default function CalendarEdit({ bloc, onChange }: CalendarEditorProps) {
   const calendarRef = useRef(null);
   const [events, setEvents] = useState<CalendarEvent[]>(
-    bloc.calendar?.events ?? [],
+    bloc.calendar.events ?? [],
   );
   const [modal, setModal] = useState<{
     open: boolean;
@@ -85,7 +83,7 @@ export default function CalendarEdit({ bloc, onChange }: CalendarEditorProps) {
       };
       const next = [...events, ev];
       setEvents(next);
-      onChange?.(`blocs.${bloc.bloc_position}.calendar.events`, next);
+      onChange(`blocs.${bloc.bloc_position}.calendar.events`, next);
     } else {
       const next = events.map((ev) =>
         ev.id === modal.id
@@ -175,9 +173,9 @@ export default function CalendarEdit({ bloc, onChange }: CalendarEditorProps) {
                 className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-sm text-slate-900 dark:text-slate-50 outline-none focus:ring-2 focus:ring-blue-500"
                 value={modal.title}
                 placeholder="Nom de l'événement"
-                onChange={(e) =>
-                  setModal((m) => ({ ...m, title: e.target.value }))
-                }
+                onChange={(e) => {
+                  setModal((m) => ({ ...m, title: e.target.value }));
+                }}
               />
             </div>
 
@@ -189,9 +187,9 @@ export default function CalendarEdit({ bloc, onChange }: CalendarEditorProps) {
                 type="datetime-local"
                 className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-sm text-slate-900 dark:text-slate-50 outline-none focus:ring-2 focus:ring-blue-500"
                 value={modal.start}
-                onChange={(e) =>
-                  setModal((m) => ({ ...m, start: e.target.value }))
-                }
+                onChange={(e) => {
+                  setModal((m) => ({ ...m, start: e.target.value }));
+                }}
               />
             </div>
 
@@ -203,9 +201,9 @@ export default function CalendarEdit({ bloc, onChange }: CalendarEditorProps) {
                 type="datetime-local"
                 className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-sm text-slate-900 dark:text-slate-50 outline-none focus:ring-2 focus:ring-blue-500"
                 value={modal.end}
-                onChange={(e) =>
-                  setModal((m) => ({ ...m, end: e.target.value }))
-                }
+                onChange={(e) => {
+                  setModal((m) => ({ ...m, end: e.target.value }));
+                }}
               />
             </div>
 
@@ -219,7 +217,9 @@ export default function CalendarEdit({ bloc, onChange }: CalendarEditorProps) {
                 </button>
               )}
               <button
-                onClick={() => setModal((m) => ({ ...m, open: false }))}
+                onClick={() => {
+                  setModal((m) => ({ ...m, open: false }));
+                }}
                 className="rounded-lg border border-slate-200 dark:border-slate-700 px-3 py-1.5 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
               >
                 Annuler
