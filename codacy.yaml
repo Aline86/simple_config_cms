@@ -12,5 +12,5 @@ exclude_paths:
   - "dist/**"
   - "build/**"
   - "coverage/**"
-  - "**/*.min.js"
+  - "**/*.js"
   - "**/*.d.ts"
