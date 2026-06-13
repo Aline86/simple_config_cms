@@ -6,11 +6,9 @@ import { HeaderObject } from "../../../database/model/bloc/Header";
 
 export const isValidColor = (value?: string): boolean => {
   if (!value) return false;
-  return (
-    /^#[0-9A-Fa-f]{3}(?:[0-9A-Fa-f]{3})?$/.test(value) ||
-    value.startsWith("rgb(") ||
-    value.startsWith("rgba(")
-  );
+  const isHex =
+    /^#[0-9A-Fa-f]{3}$/.test(value) || /^#[0-9A-Fa-f]{6}$/.test(value);
+  return isHex || value.startsWith("rgb(") || value.startsWith("rgba(");
 };
 
 const isValidImageUrl = (value?: string): boolean => {
@@ -31,12 +29,17 @@ const getBackgroundType = (url?: string): "color" | "image" | "empty" => {
 export function useHeader(bloc: HeaderObject) {
   const navRef = useRef<HTMLElement>(null);
   const scrollRef = useRef<HTMLElement>(null);
+
   const [isSticky, setIsSticky] = useState(true);
   const [isBurger, setIsBurger] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [stateBG, setStateBG] = useState<"color" | "image" | "empty">("empty");
   const [pages, setPages] = useState<PageObject[]>();
   const { setHasH1InPage } = useAppContext();
+  const fetchPages = async () => {
+    const result = await getPages();
+    setPages(result.pages ?? []);
+  };
 
   const checkOverflow = () => {
     if (!scrollRef.current || !navRef.current) return;
@@ -52,10 +55,6 @@ export function useHeader(bloc: HeaderObject) {
   };
 
   useEffect(() => {
-    const fetchPages = async () => {
-      const result = await getPages();
-      setPages(result.pages ?? []);
-    };
     fetchPages();
   }, []);
 
