@@ -1,0 +1,34 @@
+---
+engines:
+  duplication:
+    exclude_paths:
+      - "node_modules/**"
+      - "prisma/generated/**"
+      - ".next/**"
+      - "dist/**"
+      - "build/**"
+      - "coverage/**"
+      - "**/*.js"
+      - "**/*.d.ts"
+  metric:
+    exclude_paths:
+      - "node_modules/**"
+      - "prisma/generated/**"
+      - ".next/**"
+      - "dist/**"
+      - "build/**"
+      - "coverage/**"
+      - "**/*.js"
+      - "**/*.d.ts"
+    config:
+      languages:
+        - "typescript"
+exclude_paths:
+  - "node_modules/**"
+  - "prisma/**"
+  - ".next/**"
+  - "dist/**"
+  - "build/**"
+  - "coverage/**"
+  - "**/*.js"
+  - "**/*.d.ts"

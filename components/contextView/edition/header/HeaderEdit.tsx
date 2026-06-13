@@ -2,17 +2,17 @@
 
 import { HeaderObject } from "../../../../database/model/bloc/Header";
 import { MediaObject } from "../../../../database/model/bloc/MediaObject";
+import { isValidColor } from "../../../../hooks/components/header/HeaderHook";
 import { DynamicValidatorDropDown } from "../../../../lib/validators/DynamicValidatorDropDown";
 import { FieldRenderer } from "../../../../lib/validators/renderer/TextRenderer";
 import { SocialMediaModal } from "../../../modals/SocialMediaModal";
-import { isValidColor } from "../../showcase/header/HeaderView";
 
 interface EditorProps {
   bloc: HeaderObject;
   onChange: (fieldName: string, newValue: unknown) => void;
   addElement: () => void;
   removeElement: (socialMedia: MediaObject) => void;
-  show_debug?;
+  show_debug: boolean;
 }
 
 export default function HeaderEdit<T>({

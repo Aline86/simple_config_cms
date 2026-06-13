@@ -7,7 +7,10 @@ type AppContextType = {
   setHasH1InPage: (user: boolean) => void;
 };
 
-const DomDataContext = createContext<AppContextType | undefined>(undefined);
+const DomDataContext = createContext<AppContextType>({
+  hasH1InPage: false,
+  setHasH1InPage: () => {},
+});
 
 export function DomDataProvider({ children }: { children: ReactNode }) {
   const [hasH1InPage, setHasH1InPage] = useState<boolean>(false);
@@ -20,11 +23,5 @@ export function DomDataProvider({ children }: { children: ReactNode }) {
 }
 
 export function useAppContext() {
-  const context = useContext(DomDataContext);
-
-  if (!context) {
-    throw new Error("useAppContext must be used inside DomDataProvider");
-  }
-
-  return context;
+  return useContext(DomDataContext);
 }

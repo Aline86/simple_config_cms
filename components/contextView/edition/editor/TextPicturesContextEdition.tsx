@@ -54,8 +54,6 @@ const TextPicturesContextEdition: React.FC<TextPicturesContextEditionProps> = ({
 
       onChange("blocs." + bloc.bloc_position, updatedBloc);
       return updatedBloc;
-
-      setDragged(null);
     },
     [dragged, onChange],
   );

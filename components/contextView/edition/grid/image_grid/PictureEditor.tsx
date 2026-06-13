@@ -5,7 +5,7 @@ import { MediaObject } from "../../../../../database/model/bloc/MediaObject";
 import { FieldRenderer } from "../../../../../lib/validators/renderer/TextRenderer";
 import { DynamicValidatorDropDown } from "../../../../../lib/validators/DynamicValidatorDropDown";
 
-interface MediaEditorProps<T> {
+interface MediaEditorProps {
   media: MediaObject;
   blocNumber: number;
   onChange: (fieldName: string, newValue: unknown) => void;
@@ -16,7 +16,7 @@ interface MediaEditorProps<T> {
   isLink?: boolean;
   show_debug?: boolean;
 }
-export function PictureEditor<T>({ ...props }: MediaEditorProps<T>) {
+export function PictureEditor({ ...props }: MediaEditorProps) {
   const [isOpen, setIsOpen] = useState(false);
   const context_medias =
     props.context === "article"

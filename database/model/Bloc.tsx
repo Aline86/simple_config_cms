@@ -3,6 +3,7 @@ import { MediaObject } from "./bloc/MediaObject";
 import { TypeBloc } from "./Page";
 import { ArticleObject } from "./bloc/Article";
 import { BaseValidatable } from "./BaseValidator";
+import { CalendarObject } from "./bloc/Calendar";
 
 export class BlocObject extends BaseValidatable {
   [immerable] = true;
@@ -26,6 +27,7 @@ export class BlocObject extends BaseValidatable {
   public text_updatedAt: Date | null;
   public image_medias: MediaObject[];
   public articles: ArticleObject[];
+  public calendar: CalendarObject;
   public mode: string;
 
   constructor(
@@ -48,11 +50,12 @@ export class BlocObject extends BaseValidatable {
       text_updatedAt?: Date | null;
       image_medias?: MediaObject[] | unknown[];
       articles?: ArticleObject[];
+      calendar?: CalendarObject | undefined;
     } = {},
     mode: string = "edition",
   ) {
     super();
-    this.id = data.id ?? null;
+    this.id = data.id;
     this.text_nom_bloc = data.text_nom_bloc ?? "";
     this.number_page_id = data.number_page_id ?? null;
     this.text_titre = data.text_titre ?? "";
@@ -73,17 +76,17 @@ export class BlocObject extends BaseValidatable {
       ? new Date(data.text_updatedAt)
       : new Date();
     // Réhydrater les MediaObject
-    this.image_medias = (data.image_medias ?? []).map((m: MediaObject) => {
+    this.image_medias = data.image_medias.map((m: MediaObject) => {
       if (m instanceof MediaObject) return m;
       return new MediaObject(m);
     });
 
     // Réhydrater les ArticleObject
-    this.articles = (data.articles ?? []).map((a: ArticleObject) => {
+    this.articles = data.articles.map((a: ArticleObject) => {
       if (a instanceof ArticleObject) return a;
       return new ArticleObject(a);
     });
-
+    this.calendar = new CalendarObject(data.calendar);
     this.mode = mode;
   }
 
@@ -107,6 +110,7 @@ export class BlocObject extends BaseValidatable {
       text_updatedAt: this.text_updatedAt,
       image_medias: this.image_medias.map((m) => m.toJSON()),
       articles: this.articles.map((a) => a.toJSON()),
+      calendar: this.calendar,
     };
   }
 }

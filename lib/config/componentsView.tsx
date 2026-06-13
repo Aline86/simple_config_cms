@@ -1,4 +1,5 @@
 import ButtonEdit from "../../components/contextView/edition/button/ButtonEdit";
+import CalendarEdit from "../../components/contextView/edition/calendar/CalendarEdit";
 import CarouselEdit from "../../components/contextView/edition/carousel/CarouselEdit";
 import TextPicturesContextEdition from "../../components/contextView/edition/editor/TextPicturesContextEdition";
 import FooterEdit from "../../components/contextView/edition/footer/FooterEdit";
@@ -7,6 +8,7 @@ import HeaderEdit from "../../components/contextView/edition/header/HeaderEdit";
 import ScreenEdit from "../../components/contextView/edition/screen/ScreenEdit";
 import VideoEdit from "../../components/contextView/edition/video/VideoEdit";
 import ButtonView from "../../components/contextView/showcase/button/ButtonView";
+import CalendarView from "../../components/contextView/showcase/calendar/CalendarView";
 import CarouselAutoView from "../../components/contextView/showcase/carousel/automatic/CarouselAutoView";
 import CarouselSimple from "../../components/contextView/showcase/carousel/simple/Carousel";
 import CarouselThumbnailsView from "../../components/contextView/showcase/carousel/thumbnails/CarouselThumbnailsView";
@@ -62,6 +64,7 @@ export const blocksToRender: SubGroupRenderType = {
   VIDEO: { is_custom: false, video: VideoEdit },
   HEADER: { is_custom: false, header: HeaderEdit },
   FOOTER: { is_custom: false, footer: FooterEdit },
+  CALENDAR: { is_custom: false, calendar: CalendarEdit },
 };
 
 export const blocksFrontToRender: FrontRenderType = {
@@ -77,4 +80,5 @@ export const blocksFrontToRender: FrontRenderType = {
   BOUTON: { bouton: ButtonView },
   SCREEN: { screen: ScreenView },
   VIDEO: { video: VideoView },
+  CALENDAR: { calendar: CalendarView },
 };
