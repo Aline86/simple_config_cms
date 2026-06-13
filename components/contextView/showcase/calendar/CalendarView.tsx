@@ -40,8 +40,8 @@ export default function Calendar({ bloc }: Readonly<BlocParams>) {
               setModal((m) => ({ ...m, open: false }));
           }}
         >
-          <div className="w-80 rounded-xl bg-white dark:bg-slate-900 p-6 shadow-xl space-y-4">
-            <h3 className="text-base font-semibold text-slate-900 dark:text-slate-50">
+          <div className="w-80 rounded-xl bg-white  p-6 shadow-xl space-y-4">
+            <h3 className="text-base font-semibold text-slate-600">
               {modal.title}
             </h3>
 
