@@ -5,6 +5,109 @@ import { CreateBlocOptions } from "../../lib/factories/Bloc.factory";
 import { PageObject, TypeBloc } from "../../database/model/Page";
 import { Modal } from "./Modal";
 
+type BlocChoice = {
+  label: string;
+  options: CreateBlocOptions;
+};
+
+function getBlocChoices(
+  baseOptions: Omit<CreateBlocOptions, "text_nom_bloc" | "type">,
+): BlocChoice[] {
+  return [
+    {
+      label: "Carousel d'images avec miniatures",
+      options: {
+        ...baseOptions,
+        text_nom_bloc: "miniatures",
+        type: TypeBloc.CAROUSEL,
+        mediaCount: 5,
+      },
+    },
+    {
+      label: "Carousel d'images classique",
+      options: {
+        ...baseOptions,
+        text_nom_bloc: "classique",
+        type: TypeBloc.CAROUSEL,
+        mediaCount: 5,
+      },
+    },
+    {
+      label: "Carousel d'images automatique",
+      options: {
+        ...baseOptions,
+        text_nom_bloc: "automatique",
+        type: TypeBloc.CAROUSEL,
+        mediaCount: 2,
+      },
+    },
+    {
+      label: "Groupe d'images avec redirections",
+      options: {
+        ...baseOptions,
+        text_nom_bloc: "image_group",
+        type: TypeBloc.IMAGE_GROUPE,
+        mediaCount: 4,
+      },
+    },
+    {
+      label: "Groupe d'images à afficher (photographie)",
+      options: {
+        ...baseOptions,
+        text_nom_bloc: "grid",
+        type: TypeBloc.IMAGE_GROUPE,
+        mediaCount: 4,
+      },
+    },
+    {
+      label: "Ecran (image pleine page)",
+      options: {
+        ...baseOptions,
+        text_nom_bloc: "screen",
+        type: TypeBloc.SCREEN,
+        mediaCount: 1,
+      },
+    },
+    {
+      label: "Vidéo",
+      options: {
+        ...baseOptions,
+        text_nom_bloc: "video",
+        type: TypeBloc.VIDEO,
+        mediaCount: 1,
+      },
+    },
+    {
+      label: "Bouton",
+      options: {
+        ...baseOptions,
+        text_nom_bloc: "bouton",
+        type: TypeBloc.BUTTON,
+        mediaCount: 1,
+      },
+    },
+    {
+      label: "Texte",
+      options: {
+        ...baseOptions,
+        text_nom_bloc: "texte",
+        type: TypeBloc.TEXTE,
+        articleCount: 1,
+        mediaPerArticle: 4,
+      },
+    },
+    {
+      label: "Calendrier",
+      options: {
+        ...baseOptions,
+        text_nom_bloc: "calendar",
+        type: TypeBloc.CALENDAR,
+        calendar: true,
+      },
+    },
+  ];
+}
+
 export default function BlocChoiceModal({
   page,
   addBlocToPage,
@@ -19,191 +122,41 @@ export default function BlocChoiceModal({
     bloc_position: page.blocs.length ?? 0,
   };
 
-  const options_carousel_miniature: CreateBlocOptions = {
-    ...baseOptions,
-    text_nom_bloc: "miniatures",
-    type: TypeBloc.CAROUSEL,
-    mediaCount: 5,
-  };
-  const options_carousel_classique: CreateBlocOptions = {
-    ...baseOptions,
-    text_nom_bloc: "classique",
-    type: TypeBloc.CAROUSEL,
-    mediaCount: 5,
-  };
-  const options_carousel_automatique: CreateBlocOptions = {
-    ...baseOptions,
-    text_nom_bloc: "automatique",
-    type: TypeBloc.CAROUSEL,
-    mediaCount: 2,
-  };
-  const options_image_grid: CreateBlocOptions = {
-    ...baseOptions,
-    text_nom_bloc: "grid",
-    type: TypeBloc.IMAGE_GROUPE,
-    mediaCount: 4,
-  };
-  const options_image_group: CreateBlocOptions = {
-    ...baseOptions,
-    text_nom_bloc: "image_group",
-    type: TypeBloc.IMAGE_GROUPE,
-    mediaCount: 4,
-  };
-  const options_screen: CreateBlocOptions = {
-    ...baseOptions,
-    text_nom_bloc: "screen",
-    type: TypeBloc.SCREEN,
-    mediaCount: 1,
-  };
-  const options_video: CreateBlocOptions = {
-    ...baseOptions,
-    text_nom_bloc: "video",
-    type: TypeBloc.VIDEO,
-    mediaCount: 1,
-  };
-  const options_button: CreateBlocOptions = {
-    ...baseOptions,
-    text_nom_bloc: "bouton",
-    type: TypeBloc.BUTTON,
-    mediaCount: 1,
-  };
-  const options_texte: CreateBlocOptions = {
-    ...baseOptions,
-    text_nom_bloc: "texte",
-    type: TypeBloc.TEXTE,
-    articleCount: 1,
-    mediaPerArticle: 4,
-  };
-  const options_calendar: CreateBlocOptions = {
-    ...baseOptions,
-    text_nom_bloc: "calendar",
-    type: TypeBloc.CALENDAR,
-    calendar: true,
-  };
+  const blocChoices = getBlocChoices(baseOptions);
+
   return (
     <div className="space-y-6">
-      <div className="">
-        <button
-          aria-label="Créer un bloc"
-          onClick={() => {
-            setOpen(true);
-          }}
-          className="rounded bg-slate-600 px-2 py-2 text-white text-lg hover:bg-slate-700 transition"
-        >
-          Créer un bloc
-        </button>
+      <button
+        aria-label="Créer un bloc"
+        onClick={() => setOpen(true)}
+        className="rounded bg-slate-600 px-2 py-2 text-white text-lg hover:bg-slate-700 transition"
+      >
+        Créer un bloc
+      </button>
 
-        <Modal
-          title="Créer un bloc"
-          open={open}
-          onOpenChange={setOpen}
-          primaryAction={{
-            label: "Confirmer",
-            onClick: () => {
-              setOpen(false);
-            },
-          }}
-          secondaryAction={{
-            label: "Annuler",
-            onClick: () => {
-              setOpen(false);
-            },
-          }}
-        >
-          <div className="flex flex-col space-y-2 w-115">
+      <Modal
+        title="Créer un bloc"
+        open={open}
+        onOpenChange={setOpen}
+        primaryAction={{ label: "Confirmer", onClick: () => setOpen(false) }}
+        secondaryAction={{ label: "Annuler", onClick: () => setOpen(false) }}
+      >
+        <div className="flex flex-col space-y-2 w-115">
+          {blocChoices.map(({ label, options }) => (
             <button
-              aria-label="Créer un bloc Carousel d'images avec miniatures"
+              key={options.text_nom_bloc}
+              aria-label={`Créer un bloc ${label}`}
               className="px-4 py-4 rounded bg-slate-600 text-white text-lg hover:bg-slate-700 transition"
               onClick={() => {
-                addBlocToPage(options_carousel_miniature);
+                addBlocToPage(options);
+                setOpen(false);
               }}
             >
-              Carousel d'images avec miniatures
+              {label}
             </button>
-            <button
-              aria-label="Créer un bloc Carousel d'images classique"
-              className="px-4 py-4 rounded bg-slate-600 text-white text-lg hover:bg-slate-700 transition"
-              onClick={() => {
-                addBlocToPage(options_carousel_classique);
-              }}
-            >
-              Carousel d'images classique
-            </button>
-            <button
-              aria-label="Créer un bloc Carousel d'images automatique"
-              className="px-4 py-4 rounded bg-slate-600 text-white text-lg hover:bg-slate-700 transition"
-              onClick={() => {
-                addBlocToPage(options_carousel_automatique);
-              }}
-            >
-              Carousel d'images automatique
-            </button>
-            <button
-              aria-label="Créer un bloc Carousel d'images avec redirections"
-              className="px-4 py-4 rounded bg-slate-600 text-white text-lg hover:bg-slate-700 transition"
-              onClick={() => {
-                addBlocToPage(options_image_group);
-              }}
-            >
-              Groupe d'images avec redirections
-            </button>
-            <button
-              aria-label="Créer un bloc Groupe d'images à afficher (photographie)"
-              className="px-4 py-4 rounded bg-slate-600 text-white text-lg hover:bg-slate-700 transition"
-              onClick={() => {
-                addBlocToPage(options_image_grid);
-              }}
-            >
-              Groupe d'images à afficher (photographie)
-            </button>
-            <button
-              aria-label="Créer un Ecran bloc (image pleine page)"
-              className="px-4 py-4 rounded bg-slate-600 text-white text-lg hover:bg-slate-700 transition"
-              onClick={() => {
-                addBlocToPage(options_screen);
-              }}
-            >
-              Ecran (image pleine page)
-            </button>
-            <button
-              aria-label="Créer un bloc Vidéo"
-              className="px-4 py-4 rounded bg-slate-600 text-white text-lg hover:bg-slate-700 transition"
-              onClick={() => {
-                addBlocToPage(options_video);
-              }}
-            >
-              Vidéo
-            </button>
-            <button
-              aria-label="Créer un bloc Bouton"
-              className="px-4 py-4 rounded bg-slate-600 text-white text-lg hover:bg-slate-700 transition"
-              onClick={() => {
-                addBlocToPage(options_button);
-              }}
-            >
-              Bouton
-            </button>
-            <button
-              aria-label="Créer un bloc Texte avec images optionnelles"
-              className="px-4 py-4 rounded bg-slate-600 text-white text-lg hover:bg-slate-700 transition"
-              onClick={() => {
-                addBlocToPage(options_texte);
-              }}
-            >
-              Texte
-            </button>
-            <button
-              aria-label="Créer un bloc Texte avec images optionnelles"
-              className="px-4 py-4 rounded bg-slate-600 text-white text-lg hover:bg-slate-700 transition"
-              onClick={() => {
-                addBlocToPage(options_calendar);
-              }}
-            >
-              Calendrier
-            </button>
-          </div>
-        </Modal>
-      </div>
+          ))}
+        </div>
+      </Modal>
     </div>
   );
 }
