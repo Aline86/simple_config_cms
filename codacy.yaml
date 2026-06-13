@@ -3,6 +3,7 @@ engines:
   metric:
     exclude_paths:
       - "node_modules/**"
+      - "prisma/generated/**"
       - ".next/**"
       - "dist/**"
       - "build/**"
