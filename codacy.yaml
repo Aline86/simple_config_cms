@@ -1,16 +1,14 @@
+---
 engines:
-  eslint:
-    enabled: true
-  prettier:
-    enabled: true
-  stylelint:
-    enabled: true
-
-exclude_paths:
-  - "node_modules/**"
-  - ".next/**"
-  - "dist/**"
-  - "build/**"
-  - "coverage/**"
-  - "**/*.js"
-  - "**/*.d.ts"
+  metric:
+    exclude_paths:
+      - "node_modules/**"
+      - ".next/**"
+      - "dist/**"
+      - "build/**"
+      - "coverage/**"
+      - "**/*.js"
+      - "**/*.d.ts"
+    config:
+      languages:
+        - "typescript"
