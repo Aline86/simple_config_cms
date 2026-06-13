@@ -4,6 +4,7 @@ import { useState } from "react";
 import { MediaObject } from "../../../../../database/model/bloc/MediaObject";
 import { FieldRenderer } from "../../../../../lib/validators/renderer/TextRenderer";
 import { DynamicValidatorDropDown } from "../../../../../lib/validators/DynamicValidatorDropDown";
+import DebugView from "../../_commons/DebugView";
 
 interface MediaEditorProps {
   media: MediaObject;
@@ -150,15 +151,10 @@ export function PictureEditor({ ...props }: MediaEditorProps) {
             </div>
 
             {/* Debug panel */}
-            {props.show_debug && (
-              <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-200 dark:bg-slate-900">
-                <h3 className="text-sm font-semibold mb-2">
-                  Props reçues (MediaEditor)
-                </h3>
-                <pre className="text-xs overflow-auto">
-                  {JSON.stringify(props.media, null, 2)}
-                </pre>
-              </div>
+            {props.show_debug && props.show_debug ? (
+              <DebugView data={props.media} />
+            ) : (
+              <></>
             )}
           </div>
         </div>

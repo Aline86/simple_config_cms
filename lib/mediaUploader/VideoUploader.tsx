@@ -1,5 +1,6 @@
 "use client";
 import { useRef, useState } from "react";
+import { extractYouTubeid } from "../helpers/mediaExtractUrlHelper";
 
 interface YouTubeVideo {
   url: string;
@@ -23,21 +24,6 @@ export default function VideoUploader<T>({
   const [showYoutubeInput, setShowYoutubeInput] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const MAX_FILES = 1;
-
-  // Fonction pour extraire l'id de la vidéo YouTube
-  const extractYouTubeid = (url: string): string | null => {
-    const patterns = [
-      /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/,
-      /^([a-zA-Z0-9_-]{11})$/,
-    ];
-
-    for (const pattern of patterns) {
-      const match = url.match(pattern);
-      if (match) return match[1];
-    }
-    return null;
-  };
 
   // Fonction pour valider et ajouter une vidéo YouTube
   const addYouTubeVideo = () => {

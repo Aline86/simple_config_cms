@@ -4,6 +4,7 @@ import { BlocObject } from "../../../../database/model/Bloc";
 import { MediaObject } from "../../../../database/model/bloc/MediaObject";
 import { EditorProps } from "../../../../lib/helpers/globabProps";
 import { FieldRenderer } from "../../../../lib/validators/renderer/TextRenderer";
+import DebugView from "../_commons/DebugView";
 import { PictureEditor } from "../grid/image_grid/PictureEditor";
 
 export default function CarouselEdit<T>({
@@ -85,18 +86,7 @@ export default function CarouselEdit<T>({
       </div>
 
       {/* Debug panel */}
-      {show_debug ? (
-        <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-200 dark:bg-slate-900">
-          <h3 className="text-sm font-semibold mb-2">
-            Props reçues (HeaderEdit)
-          </h3>
-          <pre className="text-xs overflow-auto">
-            {JSON.stringify(bloc, null, 2)}
-          </pre>
-        </div>
-      ) : (
-        <></>
-      )}
+      {show_debug ? <DebugView data={bloc} /> : <></>}
     </section>
   );
 }

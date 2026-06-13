@@ -2,6 +2,8 @@
 
 import { MediaObject } from "../../../../database/model/bloc/MediaObject";
 import { FieldRenderer } from "../../../../lib/validators/renderer/TextRenderer";
+import DebugView from "../_commons/DebugView";
+import HeadingMediaComponent from "../_commons/HeadingMediaComponent";
 
 interface MediaEditorProps {
   socialMedia: MediaObject;
@@ -13,14 +15,7 @@ interface MediaEditorProps {
 export function MediaEditor({ ...props }: MediaEditorProps) {
   return (
     <section className="mx-auto max-w-2xl space-y-6 p-6">
-      <div className="space-y-2">
-        <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
-          Configuration du Média
-        </h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400">
-          Configurez les différents champs de votre objet média
-        </p>
-      </div>
+      <HeadingMediaComponent />
 
       <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-200 dark:bg-slate-950">
         <div
@@ -66,16 +61,7 @@ export function MediaEditor({ ...props }: MediaEditorProps) {
       </div>
 
       {/* Debug panel */}
-      {props.show_debug && (
-        <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-200 dark:bg-slate-900">
-          <h3 className="text-sm font-semibold mb-2">
-            Props reçues (MediaEditor)
-          </h3>
-          <pre className="text-xs overflow-auto">
-            {JSON.stringify(props.socialMedia, null, 2)}
-          </pre>
-        </div>
-      )}
+      {props.show_debug ? <DebugView data={props.socialMedia} /> : <></>}
     </section>
   );
 }

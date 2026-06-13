@@ -13,7 +13,7 @@ interface YouTubeVideo {
 
 type MediaItem = YouTubeVideo;
 
-export default function VideoUploaderView<T>({
+export default function VideoUploaderView({
   value,
   previewMedia = true,
   label = "Télécharger des médias",
