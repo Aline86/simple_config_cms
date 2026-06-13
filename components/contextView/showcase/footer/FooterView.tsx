@@ -25,7 +25,9 @@ export default function FooterView({ bloc }: ViewProps) {
     return (
       <footer className="bg-white shadow">
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-          <span className="text-xl font-bold text-indigo-600">MonSite</span>
+          <span className="text-xl font-bold">
+            {bloc?.text_nom_site_adresse}
+          </span>
           <div className="w-6 h-6" />
         </div>
       </footer>
