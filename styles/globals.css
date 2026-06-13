@@ -500,6 +500,18 @@ iframe {
 .fc-event {
   cursor: pointer !important;
 }
+
+.fc .fc-button {
+  padding: 0.25rem 0.5rem !important;
+  font-size: 0.75rem !important;
+}
+
+@media (min-width: 640px) {
+  .fc .fc-button {
+    padding: 0.4rem 0.75rem !important;
+    font-size: 0.875rem !important;
+  }
+}
 /* Pour les écrans de plus de 768px */
 @media (max-width: 768px) {
   .logo {
