@@ -89,7 +89,9 @@ export default function NavBarView(bloc: HeaderObject) {
         {isBurger && (
           <button
             aria-label="Ouvrir le menu burger"
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={() => {
+              setIsOpen(!isOpen);
+            }}
             className={
               isOpen
                 ? "burger open-nav sticky z-50  cursor-pointer right-5 "

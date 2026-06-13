@@ -7,9 +7,9 @@ import { HeaderObject } from "../../../database/model/bloc/Header";
 export const isValidColor = (value?: string): boolean => {
   if (!value) return false;
   return (
-    /^#([0-9A-F]{3}){1,2}$/i.test(value) ||
-    /^rgb\(/.test(value) ||
-    /^rgba\(/.test(value)
+    /^#[0-9A-Fa-f]{3}(?:[0-9A-Fa-f]{3})?$/.test(value) ||
+    value.startsWith("rgb(") ||
+    value.startsWith("rgba(")
   );
 };
 
@@ -52,7 +52,11 @@ export function useHeader(bloc: HeaderObject) {
   };
 
   useEffect(() => {
-    getPages().then((result) => setPages(result.pages ?? []));
+    const fetchPages = async () => {
+      const result = await getPages();
+      setPages(result.pages ?? []);
+    };
+    fetchPages();
   }, []);
 
   useEffect(() => {
