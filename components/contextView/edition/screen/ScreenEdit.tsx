@@ -14,7 +14,7 @@ export default function ScreenEdit({
   onDrop,
 
   show_debug = false,
-}: EditorProps) {
+}: Readonly<EditorProps>) {
   return (
     <section className="mx-auto w-full min-w-[44vw] space-y-6 p-6 mb-8">
       <HeadingComponent bloc={bloc} onChange={onChange} name={"Ecran"} />

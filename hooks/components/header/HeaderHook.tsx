@@ -82,7 +82,7 @@ export function useHeader(bloc: HeaderObject) {
   }, [pages]);
 
   useEffect(() => {
-    setStateBG(getBackgroundType(bloc.text_background_url as string));
+    setStateBG(getBackgroundType(bloc.text_background_url));
   }, [bloc.text_background_url]);
 
   return {

@@ -15,7 +15,6 @@ export type CalendarEvent = EventInput & { id: string };
 
 export default function CalendarEdit({ bloc, onChange }: EditorProps) {
   const {
-    calendarRef,
     events,
     modal,
     setModal,
@@ -39,12 +38,11 @@ export default function CalendarEdit({ bloc, onChange }: EditorProps) {
 
       <FullCalendar
         locale={frLocale}
-        ref={calendarRef}
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         headerToolbar={{
           left: "prev,next today",
           center: "title",
-          right: "dayGridMonth,timeGridWeek",
+          right: "dayGridMonth",
         }}
         editable
         selectable
@@ -84,10 +82,14 @@ export default function CalendarEdit({ bloc, onChange }: EditorProps) {
             </h3>
 
             <div className="space-y-1">
-              <label className="text-xs font-medium text-slate-500 dark:text-slate-400">
+              <label
+                htmlFor="event-title"
+                className="text-xs font-medium text-slate-500 dark:text-slate-400"
+              >
                 Titre
               </label>
               <input
+                id="event-title"
                 className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-sm text-slate-900 dark:text-slate-50 outline-none focus:ring-2 focus:ring-blue-500"
                 value={modal.title}
                 placeholder="Nom de l'événement"
@@ -98,10 +100,14 @@ export default function CalendarEdit({ bloc, onChange }: EditorProps) {
             </div>
 
             <div className="space-y-1">
-              <label className="text-xs font-medium text-slate-500 dark:text-slate-400">
+              <label
+                htmlFor="event-start"
+                className="text-xs font-medium text-slate-500 dark:text-slate-400"
+              >
                 Début
               </label>
               <input
+                id="event-start"
                 type="datetime-local"
                 className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-sm text-slate-900 dark:text-slate-50 outline-none focus:ring-2 focus:ring-blue-500"
                 value={modal.start}
@@ -112,10 +118,14 @@ export default function CalendarEdit({ bloc, onChange }: EditorProps) {
             </div>
 
             <div className="space-y-1">
-              <label className="text-xs font-medium text-slate-500 dark:text-slate-400">
+              <label
+                htmlFor="event-end"
+                className="text-xs font-medium text-slate-500 dark:text-slate-400"
+              >
                 Fin
               </label>
               <input
+                id="event-end"
                 type="datetime-local"
                 className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-sm text-slate-900 dark:text-slate-50 outline-none focus:ring-2 focus:ring-blue-500"
                 value={modal.end}
@@ -128,6 +138,7 @@ export default function CalendarEdit({ bloc, onChange }: EditorProps) {
             <div className="flex items-center gap-2 pt-1">
               {!modal.isNew && (
                 <button
+                  type="button"
                   onClick={handleDelete}
                   className="mr-auto text-sm text-red-500 hover:text-red-700 dark:hover:text-red-400 transition-colors"
                 >
@@ -135,6 +146,7 @@ export default function CalendarEdit({ bloc, onChange }: EditorProps) {
                 </button>
               )}
               <button
+                type="button"
                 onClick={() => {
                   setModal((m) => ({ ...m, open: false }));
                 }}
@@ -143,6 +155,7 @@ export default function CalendarEdit({ bloc, onChange }: EditorProps) {
                 Annuler
               </button>
               <button
+                type="button"
                 onClick={handleSave}
                 className="rounded-lg bg-blue-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-blue-700 transition-colors"
               >

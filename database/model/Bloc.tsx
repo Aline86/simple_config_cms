@@ -55,7 +55,7 @@ export class BlocObject extends BaseValidatable {
     mode: string = "edition",
   ) {
     super();
-    this.id = data.id ?? null;
+    this.id = data.id;
     this.text_nom_bloc = data.text_nom_bloc ?? "";
     this.number_page_id = data.number_page_id ?? null;
     this.text_titre = data.text_titre ?? "";
@@ -76,13 +76,13 @@ export class BlocObject extends BaseValidatable {
       ? new Date(data.text_updatedAt)
       : new Date();
     // Réhydrater les MediaObject
-    this.image_medias = (data.image_medias ?? []).map((m: MediaObject) => {
+    this.image_medias = data.image_medias.map((m: MediaObject) => {
       if (m instanceof MediaObject) return m;
       return new MediaObject(m);
     });
 
     // Réhydrater les ArticleObject
-    this.articles = (data.articles ?? []).map((a: ArticleObject) => {
+    this.articles = data.articles.map((a: ArticleObject) => {
       if (a instanceof ArticleObject) return a;
       return new ArticleObject(a);
     });

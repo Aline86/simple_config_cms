@@ -5,7 +5,6 @@ import { BlocObject } from "../../database/model/Bloc";
 import { ArticleObject } from "../../database/model/bloc/Article";
 import { MediaObject } from "../../database/model/bloc/MediaObject";
 import { TypeBloc } from "../../database/model/Page";
-import { Calendar } from "@fullcalendar/core/index.js";
 import { CalendarObject } from "../../database/model/bloc/Calendar";
 
 /**

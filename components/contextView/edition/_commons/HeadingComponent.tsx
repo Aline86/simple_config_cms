@@ -27,13 +27,13 @@ export default function HeadingComponent({
         <FieldRenderer
           label="Titre de la carte de redirection"
           fieldName={`blocs.` + bloc.bloc_position + `.` + `text_titre`}
-          model={bloc as BlocObject}
+          model={bloc}
           setField={onChange}
         />
         <FieldRenderer
           label="text_description courte (texte court - 500 caractères)"
           fieldName={`blocs.` + bloc.bloc_position + `.` + `text_description`}
-          model={bloc as BlocObject}
+          model={bloc}
           setField={onChange}
         />
       </div>

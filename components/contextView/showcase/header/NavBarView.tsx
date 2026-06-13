@@ -5,7 +5,7 @@ import {
 } from "../../../../hooks/components/header/HeaderHook";
 import Image from "next/image";
 
-export default function NavBarView({ bloc }: { bloc: HeaderObject }) {
+export default function NavBarView({ bloc }: { bloc: Readonly<HeaderObject> }) {
   const {
     navRef,
     scrollRef,
@@ -16,6 +16,11 @@ export default function NavBarView({ bloc }: { bloc: HeaderObject }) {
     stateBG,
     pages,
   } = useHeader(bloc);
+  const sticky = isSticky ? "sticky" : "relative";
+  const isEdition =
+    bloc.mode === "edition"
+      ? `shadow ${sticky} top-24 left-0 right-0 z-20`
+      : " shadow fixed  top-0  left-0 right-0 z-20";
   return (
     <header
       ref={scrollRef}
@@ -34,11 +39,7 @@ export default function NavBarView({ bloc }: { bloc: HeaderObject }) {
         backgroundPosition: "center",
         color: stateBG === "image" || stateBG === "color" ? "white" : "black",
       }}
-      className={
-        bloc.mode === "edition"
-          ? `shadow ${isSticky ? "sticky" : "relative"} top-24 left-0 right-0 z-20`
-          : " shadow fixed  top-0  left-0 right-0 z-20"
-      }
+      className={isEdition}
     >
       <div className="mx-auto px-4">
         <div className="flex items-center justify-between">

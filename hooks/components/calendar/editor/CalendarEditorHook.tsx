@@ -4,7 +4,12 @@ import { EventInput, DateSelectArg, EventClickArg } from "@fullcalendar/core";
 
 export type CalendarEvent = EventInput & { id: string };
 export type CalendarEditorProps = Pick<EditorProps, "bloc" | "onChange">;
-
+function toLocalInput(d: Date | null | undefined) {
+  if (!d) return "";
+  return new Date(d.getTime() - d.getTimezoneOffset() * 60000)
+    .toISOString()
+    .slice(0, 16);
+}
 export function useCalendarEditor({ bloc, onChange }: CalendarEditorProps) {
   const calendarRef = useRef(null);
   const [events, setEvents] = useState<CalendarEvent[]>(
@@ -18,13 +23,6 @@ export function useCalendarEditor({ bloc, onChange }: CalendarEditorProps) {
     start: string;
     end: string;
   }>({ open: false, isNew: true, title: "", start: "", end: "" });
-
-  function toLocalInput(d: Date | null | undefined) {
-    if (!d) return "";
-    return new Date(d.getTime() - d.getTimezoneOffset() * 60000)
-      .toISOString()
-      .slice(0, 16);
-  }
 
   function handleSelect(info: DateSelectArg) {
     const start =

@@ -1,7 +1,5 @@
 "use client";
 
-import { BlocObject } from "../../../../../database/model/Bloc";
-import { MediaObject } from "../../../../../database/model/bloc/MediaObject";
 import { EditorProps } from "../../../../../lib/helpers/globabProps";
 import { FieldRenderer } from "../../../../../lib/validators/renderer/TextRenderer";
 import { PictureEditor } from "../image_grid/PictureEditor";

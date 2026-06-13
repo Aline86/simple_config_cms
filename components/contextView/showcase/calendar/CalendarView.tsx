@@ -11,7 +11,7 @@ interface BlocParams {
   editing?: boolean;
 }
 
-export default function Calendar({ bloc, editing = false }: BlocParams) {
+export default function Calendar({ bloc }: Readonly<BlocParams>) {
   const { handleEventClick, modal, setModal, formatDate } = useCalendarModal();
   return (
     <section className="mx-auto max-w-4xl space-y-6 p-6 mb-8">
@@ -25,7 +25,7 @@ export default function Calendar({ bloc, editing = false }: BlocParams) {
         headerToolbar={{
           left: "prev,next today",
           center: "title",
-          right: "dayGridMonth,timeGridWeek",
+          right: "dayGridMonth",
         }}
         eventClick={handleEventClick}
         selectable
@@ -66,6 +66,7 @@ export default function Calendar({ bloc, editing = false }: BlocParams) {
 
             <div className="flex justify-end pt-1">
               <button
+                type="button"
                 onClick={() => {
                   setModal((m) => ({ ...m, open: false }));
                 }}
