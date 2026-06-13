@@ -55,7 +55,7 @@ export function useHeader(bloc: HeaderObject) {
   };
 
   useEffect(() => {
-    fetchPages();
+    void fetchPages();
   }, []);
 
   useEffect(() => {
