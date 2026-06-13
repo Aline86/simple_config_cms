@@ -5,15 +5,16 @@ import BlocChoiceModal from "../modals/PageChoiceModal";
 import { PageObject } from "../../database/model/Page";
 import { CreateBlocOptions } from "../../lib/factories/Bloc.factory";
 import { usePathname } from "next/navigation";
+import { HeaderObject } from "../../database/model/bloc/Header";
 
-interface NavBarEditionProps<T> {
+interface NavBarEditionProps {
   logout: () => void;
   labelAdd: string;
   handleAdd: (options?: CreateBlocOptions) => void; // optionnel, si tu veux un bouton "Ajouter une page"
   setDraggableEnabled: (value: boolean) => void;
   handleSavePages: () => void;
   draggableEnabled: boolean;
-  model?: T;
+  model?: PageObject;
 }
 
 export default function NavBarEdition<T>({
@@ -24,7 +25,7 @@ export default function NavBarEdition<T>({
   draggableEnabled,
   labelAdd,
   model,
-}: NavBarEditionProps<T>) {
+}: NavBarEditionProps) {
   const pathname = usePathname();
   return (
     <div className="flex justify-end items-center gap-4 fixed top-0 left-0 right-0 z-70 nav-edition p-4 shadow-lg">
