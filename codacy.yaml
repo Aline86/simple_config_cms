@@ -1,5 +1,15 @@
 ---
 engines:
+  duplication:
+    exclude_paths:
+      - "node_modules/**"
+      - "prisma/generated/**"
+      - ".next/**"
+      - "dist/**"
+      - "build/**"
+      - "coverage/**"
+      - "**/*.js"
+      - "**/*.d.ts"
   metric:
     exclude_paths:
       - "node_modules/**"
@@ -13,3 +23,12 @@ engines:
     config:
       languages:
         - "typescript"
+exclude_paths:
+  - "node_modules/**"
+  - "prisma/generated/**"
+  - ".next/**"
+  - "dist/**"
+  - "build/**"
+  - "coverage/**"
+  - "**/*.js"
+  - "**/*.d.ts"
