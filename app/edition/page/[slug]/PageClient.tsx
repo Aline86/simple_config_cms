@@ -194,7 +194,7 @@ export default function PageClient({
         setDraggableEnabled={setDraggableEnabled}
         handleSavePages={handleSavePage}
         draggableEnabled={draggableEnabled}
-        model={page as unknown}
+        model={page}
       />
       {showErrorMessage && (
         <ErrorMessage
