@@ -25,7 +25,7 @@ engines:
         - "typescript"
 exclude_paths:
   - "node_modules/**"
-  - "prisma/generated/**"
+  - "prisma/**"
   - ".next/**"
   - "dist/**"
   - "build/**"
