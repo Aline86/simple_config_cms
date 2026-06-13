@@ -3,11 +3,13 @@
 import { useState } from "react";
 import { MediaObject } from "../../../../database/model/bloc/MediaObject";
 import { FieldRenderer } from "../../../../lib/validators/renderer/TextRenderer";
+import DebugView from "../_commons/DebugView";
+import HeadingMediaComponent from "../_commons/HeadingMediaComponent";
 
-interface VideoEditorProps<T> {
+interface VideoEditorProps {
   media: MediaObject;
   onChange: (fieldName: string, newValue: unknown) => void;
-  removeElement: (media: T) => void;
+  removeElement: (media: MediaObject) => void;
   onDragStart: (page: MediaObject) => void;
   onDrop: (page: MediaObject) => void;
   context?: string;
@@ -15,10 +17,11 @@ interface VideoEditorProps<T> {
   show_debug?: boolean;
   blocNumber: number;
 }
-export function VideoEditor<T>({ ...props }: VideoEditorProps<T>) {
+export function VideoEditor({ ...props }: VideoEditorProps) {
   const [isOpen, setIsOpen] = useState(false);
   const context_medias =
     props.context === "article" ? `articles.0.images.` : `image_medias.`;
+
   return (
     <div
       className={
@@ -69,14 +72,7 @@ export function VideoEditor<T>({ ...props }: VideoEditorProps<T>) {
         <div className="p-4 border-t">
           {" "}
           <div className="mx-auto max-w-2xl space-y-6 p-6 cursor-grab active:cursor-grabbing">
-            <div className="space-y-2">
-              <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
-                Configuration du Média
-              </h2>
-              <p className="text-sm text-slate-500 dark:text-slate-400">
-                Configurez les différents champs de votre objet média
-              </p>
-            </div>
+            <HeadingMediaComponent />
 
             <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-200 dark:bg-slate-950">
               <div className="w-full flex justify-end items-center">
@@ -109,15 +105,16 @@ export function VideoEditor<T>({ ...props }: VideoEditorProps<T>) {
                         props.blocNumber +
                         `.` +
                         context_medias +
-                        `${(props.media as MediaObject).number_position_image}.text_image_lien`
+                        `${(props.media as MediaObject).number_position_image}.image_url`
                       }
                       model={props.media as MediaObject}
                       setField={props.onChange}
+                      isText={true}
                     />
                   </>
                 )}
                 <FieldRenderer
-                  label="Image associée à la vidéo"
+                  label="Changer le lien de la vidéo"
                   fieldName={
                     `blocs.` +
                     props.blocNumber +
@@ -133,16 +130,7 @@ export function VideoEditor<T>({ ...props }: VideoEditorProps<T>) {
             </div>
 
             {/* Debug panel */}
-            {props.show_debug && (
-              <div className="rounded-lg border border-slate-200 bg-slate-50 p-4 dark:border-slate-200 dark:bg-slate-900">
-                <h3 className="text-sm font-semibold mb-2">
-                  Props reçues (MediaEditor)
-                </h3>
-                <pre className="text-xs overflow-auto">
-                  {JSON.stringify(props.media, null, 2)}
-                </pre>
-              </div>
-            )}
+            {props.show_debug ? <DebugView data={props.media} /> : <></>}
           </div>
         </div>
       </div>

@@ -14,23 +14,25 @@ import { createValidator, extractPrefix } from "../../helpers/validators.utils";
 import { NumberValidator } from "../NumberValidator";
 import { TextValidator } from "../TextValidator";
 
-type FieldRendererProps<T> = {
+type FieldRendererProps = {
   label: string;
   fieldName: string;
   model: unknown;
   setField: (fieldName: string, value: unknown) => void;
   isVideo?: boolean;
+  isText?: boolean;
   pages?: PageObject[];
 };
 
-export function FieldRenderer<T>({
+export function FieldRenderer({
   label,
   fieldName,
   model,
   setField,
   isVideo,
   pages,
-}: FieldRendererProps<T>) {
+  isText,
+}: FieldRendererProps) {
   const fieldNameToInvestigate =
     fieldName.split(".")[fieldName.split(".").length - 1];
 
@@ -79,7 +81,16 @@ export function FieldRenderer<T>({
         );
 
       case "image":
-        return !isVideo ? (
+        return isText ? (
+          <TextInput
+            label={label}
+            value={currentValue}
+            validator={validator as TextValidator}
+            model={model}
+            field={fieldName}
+            onChangeValue={setField}
+          />
+        ) : !isVideo ? (
           <ImageUploaderView
             label={label}
             value={currentValue as string}

@@ -1,5 +1,6 @@
 import { BlocObject } from "../../../../database/model/Bloc";
 import { FieldRenderer } from "../../../../lib/validators/renderer/TextRenderer";
+import HeadingMediaComponent from "./HeadingMediaComponent";
 
 export interface EditorProps {
   bloc: BlocObject;
@@ -14,14 +15,7 @@ export default function HeadingComponent({
 }: EditorProps) {
   return (
     <>
-      <div className="space-y-2">
-        <h2 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
-          Configuration du composant "Ecran"
-        </h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400">
-          Configurez le contenu de votre composant {name}
-        </p>
-      </div>
+      <HeadingMediaComponent />
 
       <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-200 dark:bg-slate-950">
         <FieldRenderer

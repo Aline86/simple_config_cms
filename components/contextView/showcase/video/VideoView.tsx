@@ -9,6 +9,7 @@ import {
   SkipForward,
 } from "lucide-react";
 import { BlocObject } from "../../../../database/model/Bloc";
+import { extractYouTubeid } from "../../../../lib/helpers/mediaExtractUrlHelper";
 
 interface VideoPlayerProps {
   bloc: BlocObject;
@@ -86,17 +87,6 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ bloc }) => {
   const isYouTube =
     bloc.image_medias[0]?.image_url?.includes("youtube") ||
     bloc.image_medias[0]?.image_url?.includes("youtu.be");
-
-  const extractYouTubeid = (url: string): string | null => {
-    const patterns = [
-      /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/,
-    ];
-    for (const pattern of patterns) {
-      const match = url.match(pattern);
-      if (match) return match[1];
-    }
-    return null;
-  };
 
   if (isYouTube && bloc.image_medias[0].image_url) {
     const videoid = extractYouTubeid(bloc.image_medias[0].image_url);

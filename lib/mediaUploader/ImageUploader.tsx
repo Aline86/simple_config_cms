@@ -7,7 +7,7 @@ interface UploadedImage {
   id: string;
 }
 
-export default function ImageUploader<T>({
+export default function ImageUploader({
   field,
   onChange,
 }: {
