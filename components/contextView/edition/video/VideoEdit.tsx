@@ -1,23 +1,11 @@
 "use client";
 
-import { BlocObject } from "../../../../database/model/Bloc";
 import { MediaObject } from "../../../../database/model/bloc/MediaObject";
-import { FieldRenderer } from "../../../../lib/validators/renderer/TextRenderer";
+import { EditorProps } from "../../../../lib/helpers/globabProps";
 import HeadingComponent from "../_commons/HeadingComponent";
 import { VideoEditor } from "./VideoEditor";
 
-interface EditorProps {
-  bloc: BlocObject;
-  onChange: (fieldName: string, newValue: unknown) => void;
-  addElement: () => void;
-  removeElement: (button: MediaObject) => void;
-  onDragStart: (page: MediaObject) => void;
-  onDrop: (page: MediaObject) => void;
-  isLink: boolean;
-  show_debug?: boolean;
-}
-
-export default function VideoEdit<T>({
+export default function VideoEdit({
   bloc,
   onChange,
   removeElement,

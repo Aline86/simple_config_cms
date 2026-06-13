@@ -3,9 +3,8 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import { BlocObject } from "../../../../database/model/Bloc";
 import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
-import { useState } from "react";
-import { EventClickArg } from "@fullcalendar/core";
 import frLocale from "@fullcalendar/core/locales/fr";
+import { useCalendarModal } from "../../../../hooks/components/calendar/view/CalendarViewHook";
 
 interface BlocParams {
   bloc: BlocObject;
@@ -13,40 +12,7 @@ interface BlocParams {
 }
 
 export default function Calendar({ bloc, editing = false }: BlocParams) {
-  const [modal, setModal] = useState<{
-    open: boolean;
-    title: string;
-    start: string;
-    end: string;
-  }>({ open: false, title: "", start: "", end: "" });
-
-  function toLocalInput(d: Date | null | undefined) {
-    if (!d) return "";
-    return new Date(d.getTime() - d.getTimezoneOffset() * 60000)
-      .toISOString()
-      .slice(0, 16);
-  }
-
-  function formatDate(s: string) {
-    if (!s) return "—";
-    return new Date(s).toLocaleString("fr-FR", {
-      day: "2-digit",
-      month: "long",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  }
-
-  function handleEventClick(info: EventClickArg) {
-    setModal({
-      open: true,
-      title: info.event.title,
-      start: toLocalInput(info.event.start),
-      end: toLocalInput(info.event.end ?? info.event.start),
-    });
-  }
-
+  const { handleEventClick, modal, setModal, formatDate } = useCalendarModal();
   return (
     <section className="mx-auto max-w-4xl space-y-6 p-6 mb-8">
       <h2 className="mt-8 text-2xl font-bold text-slate-800 mb-6 text-center">
