@@ -43,6 +43,7 @@ export async function GET(request: NextRequest) {
    POST – créer le footer
 ===================================================== */
 export async function POST(request: NextRequest) {
+  await requireAuth(request);
   return ApiResponse.handle(
     async () => {
       const body = await request.json();
@@ -100,6 +101,7 @@ export async function POST(request: NextRequest) {
    PUT – mettre à jour le footer
 ===================================================== */
 export async function PUT(request: NextRequest) {
+  await requireAuth(request);
   return ApiResponse.handle(
     async () => {
       const body = await request.json();
