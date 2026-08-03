@@ -12,9 +12,10 @@ export default function PicturesLinkEdit({
   removeElement,
   onDragStart,
   onDrop,
-  isLink,
+
   show_debug = false,
 }: EditorProps) {
+  const isLink = bloc.text_nom_bloc === "grid" ? false : true;
   return (
     <section className="mx-auto max-w-2xl space-y-6 p-6 mb-8">
       <div className="space-y-2">

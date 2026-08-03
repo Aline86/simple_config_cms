@@ -37,6 +37,7 @@ export default function ScreenEdit({
               onDrop={onDrop}
               isLink={false}
               blocNumber={bloc.bloc_position}
+              remove={false}
             />
           );
         })}

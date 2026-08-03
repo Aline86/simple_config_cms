@@ -1,27 +1,38 @@
 "use client";
 
-import { createContext, useContext, useState, ReactNode } from "react";
+import { createContext, useContext, useState, useMemo, ReactNode } from "react";
+import usePage from "../hooks/dropdown/usePage";
+import { PageObject } from "../database/model/Page";
+import usePages from "../hooks/dropdown/usePages";
 
 type AppContextType = {
   hasH1InPage: boolean;
-  setHasH1InPage: (user: boolean) => void;
+  setHasH1InPage: (value: boolean) => void;
+  pages: PageObject[] | null;
 };
 
-const DomDataContext = createContext<AppContextType>({
-  hasH1InPage: false,
-  setHasH1InPage: () => {},
-});
+const DomDataContext = createContext<AppContextType | undefined>(undefined);
 
 export function DomDataProvider({ children }: { children: ReactNode }) {
-  const [hasH1InPage, setHasH1InPage] = useState<boolean>(false);
+  const { parentId } = usePage();
+  console.log("parentId", parentId);
+  const { pages } = usePages(parentId);
+  const [hasH1InPage, setHasH1InPage] = useState(false);
+
+  const value = useMemo(
+    () => ({ hasH1InPage, setHasH1InPage, pages }),
+    [hasH1InPage, pages],
+  );
 
   return (
-    <DomDataContext.Provider value={{ hasH1InPage, setHasH1InPage }}>
-      {children}
-    </DomDataContext.Provider>
+    <DomDataContext.Provider value={value}>{children}</DomDataContext.Provider>
   );
 }
 
 export function useAppContext() {
-  return useContext(DomDataContext);
+  const ctx = useContext(DomDataContext);
+  if (!ctx) {
+    throw new Error("useAppContext doit être utilisé dans DomDataProvider");
+  }
+  return ctx;
 }

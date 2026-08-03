@@ -54,9 +54,15 @@ export const blocksToRender: SubGroupRenderType = {
     automatique: CarouselEdit,
   },
   TEXTE: { is_custom: true, texte: TextPicturesContextEdition },
+  // retrocompatibility line meant to be rethdrawn in the future (to delete , grid: PicturesGridView)
   IMAGE_GROUPE: {
     is_custom: false,
     image_group: PicturesLinkEdit,
+
+    grid: PicturesLinkEdit,
+  },
+  IMAGE_GRILLE: {
+    is_custom: false,
     grid: PicturesLinkEdit,
   },
   BOUTON: { is_custom: false, bouton: ButtonEdit },
@@ -76,7 +82,9 @@ export const blocksFrontToRender: FrontRenderType = {
   TEXTE: { texte: TextView },
   HEADER: { header: HeaderView },
   FOOTER: { footer: FooterView },
+  // retrocompatibility line meant to be rethdrawn in the future (to delete , grid: PicturesGridView)
   IMAGE_GROUPE: { image_group: PicturesLinkView, grid: PicturesGridView },
+  IMAGE_GRILLE: { grid: PicturesGridView },
   BOUTON: { bouton: ButtonView },
   SCREEN: { screen: ScreenView },
   VIDEO: { video: VideoView },

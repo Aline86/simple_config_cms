@@ -8,6 +8,6 @@ export interface EditorProps {
   removeElement: (button: MediaObject) => void;
   onDragStart: (page: MediaObject) => void;
   onDrop: (page: MediaObject) => void;
-  isLink: boolean;
+  isLink?: boolean;
   show_debug?: boolean;
 }

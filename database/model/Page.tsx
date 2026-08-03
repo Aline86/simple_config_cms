@@ -7,6 +7,7 @@ import slugify from "slugify";
 export enum TypeBloc {
   CAROUSEL = "CAROUSEL",
   IMAGE_GROUPE = "IMAGE_GROUPE",
+  IMAGE_GRILLE = "IMAGE_GRILLE",
   TEXTE = "TEXTE",
   CALENDAR = "CALENDAR",
   BUTTON = "BOUTON",
@@ -65,7 +66,8 @@ export class PageObject extends BaseValidatable {
       data.checkbox_published ?? data.published ?? false;
     this.checkbox_home_page =
       data.checkbox_home_page ?? data.checkbox_home_page ?? false;
-    this.text_titre = data.text_titre ?? data.text_titre ?? null;
+
+    this.text_titre = data.text_titre ?? null;
     this.text_slug = data.text_slug ?? data.slug ?? null;
     this.number_page_position =
       data.number_page_position ?? data.page_position ?? 0;

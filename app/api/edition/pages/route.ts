@@ -10,12 +10,13 @@ export async function GET(request: NextRequest) {
   return ApiResponse.handle(
     async () => {
       const { searchParams } = new URL(request.url);
-      const with_homepage = searchParams.get("with_homepage");
+      const parent_id = searchParams.get("parent_id");
+      console.log("inside", parent_id);
       let dbPages = [];
-      if (with_homepage === "without_homepage") {
-        dbPages = await prisma.page.findMany({
+      if (parent_id !== null) {
+        dbPages = dbPages = await prisma.page.findMany({
           where: {
-            checkbox_home_page: false,
+            number_parent_id: Number(parent_id),
           },
           orderBy: {
             number_page_position: "asc",
@@ -23,6 +24,9 @@ export async function GET(request: NextRequest) {
         });
       } else {
         dbPages = await prisma.page.findMany({
+          where: {
+            number_parent_id: null,
+          },
           orderBy: {
             number_page_position: "asc",
           },

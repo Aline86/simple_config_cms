@@ -44,6 +44,7 @@ export default function ButtonEdit({
               onDragStart={onDragStart}
               onDrop={onDrop}
               isLink={isLink}
+              remove={false}
             />
           );
         })}

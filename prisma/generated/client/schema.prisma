@@ -62,6 +62,17 @@ model Footer {
   @@map("footers")
 }
 
+model Configuration {
+  number_id        Int      @id @default(autoincrement())
+  text_taille      String   @db.VarChar(50)
+  color_main_color String   @db.VarChar(25)
+  text_police      String   @db.VarChar(100)
+  text_createdAt   DateTime @default(now())
+  text_updatedAt   DateTime @updatedAt
+
+  @@map("configurations")
+}
+
 model Media {
   number_id                Int     @id @default(autoincrement())
   text_titre               String? @db.VarChar(255)

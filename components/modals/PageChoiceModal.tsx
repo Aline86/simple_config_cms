@@ -55,7 +55,7 @@ function getBlocChoices(
       options: {
         ...baseOptions,
         text_nom_bloc: "grid",
-        type: TypeBloc.IMAGE_GROUPE,
+        type: TypeBloc.IMAGE_GRILLE,
         mediaCount: 4,
       },
     },

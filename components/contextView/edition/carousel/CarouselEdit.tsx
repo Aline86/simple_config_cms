@@ -7,17 +7,16 @@ import { FieldRenderer } from "../../../../lib/validators/renderer/TextRenderer"
 import DebugView from "../_commons/DebugView";
 import { PictureEditor } from "../grid/image_grid/PictureEditor";
 
-export default function CarouselEdit<T>({
+export default function CarouselEdit({
   bloc,
   onChange,
   addElement,
   removeElement,
   onDragStart,
   onDrop,
-
+  isLink,
   show_debug = false,
 }: EditorProps) {
-  const isLink = bloc.text_nom_bloc !== "miniatures";
   const showWidth = bloc.text_nom_bloc !== "auto";
   return (
     <section className="mx-auto w-full min-w-[43vw] space-y-6 p-6 mb-8">

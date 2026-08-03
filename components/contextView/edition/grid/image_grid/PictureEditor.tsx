@@ -16,6 +16,8 @@ interface MediaEditorProps {
   context?: string;
   isLink?: boolean;
   show_debug?: boolean;
+  id_parent?: string | null;
+  remove?: boolean;
 }
 export function PictureEditor({ ...props }: MediaEditorProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -82,36 +84,40 @@ export function PictureEditor({ ...props }: MediaEditorProps) {
             </div>
 
             <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-200 dark:bg-slate-950">
-              <div
-                className="w-full flex justify-end items-center"
-                onClick={() => {
-                  props.removeElement(props.media);
-                }}
-              >
-                <div className="mb-4 flex-1">
-                  <p className="text-lg font-semibold text-slate-800 mb-2">
-                    Carte n° {Number(props.media.number_position_image) + 1}
-                  </p>
-                </div>
-
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-4 h-4 text-red-600 hover:text-red-800 cursor-pointer"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
+              {props.remove === undefined ? (
+                <div
+                  className="w-full flex justify-end items-center"
+                  onClick={() => {
+                    props.removeElement(props.media);
+                  }}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </div>
+                  <div className="mb-4 flex-1">
+                    <p className="text-lg font-semibold text-slate-800 mb-2">
+                      Carte n° {Number(props.media.number_position_image) + 1}
+                    </p>
+                  </div>
+
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-4 h-4 text-red-600 hover:text-red-800 cursor-pointer"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </div>
+              ) : (
+                <></>
+              )}
 
               <div className="space-y-6">
-                {props.isLink && (
+                {props.isLink !== false && (
                   <>
                     <FieldRenderer
                       label="Titre de la carte"
@@ -125,6 +131,7 @@ export function PictureEditor({ ...props }: MediaEditorProps) {
                     <DynamicValidatorDropDown
                       label="Lien de la carte"
                       availableValidators={[
+                        "text_page_url_interne",
                         "text_url_interne",
                         "text_url",
                         "text_mailto",

@@ -30,6 +30,7 @@ interface PageCrudProps {
   pages: PageObject[];
   show_debug?: boolean;
   handleSavePages: () => void;
+  parent_id?: number;
 }
 
 export default function PageCrud({
@@ -42,7 +43,12 @@ export default function PageCrud({
   pages,
   show_debug = false,
   handleSavePages,
+  parent_id,
 }: PageCrudProps) {
+  if (parent_id !== undefined) {
+    page_data.number_parent_id = parent_id;
+  }
+
   const handleEdit = (fieldName: string, newValue: unknown) => {
     onEdit(page_data, fieldName as keyof PageObject, newValue);
   };
@@ -105,7 +111,7 @@ export default function PageCrud({
                 <div className="flex gap-2 mr-2">
                   {" "}
                   <button
-                    aria-label="Supprimer"
+                    aria-label="Enregistrer"
                     onClick={() => {
                       handleSavePages();
                     }}
@@ -125,6 +131,14 @@ export default function PageCrud({
                     <Trash size={14} /> Supprimer
                   </button>
                 </div>
+                {parent_id === undefined && (
+                  <>
+                    <RedirectButton
+                      slug={"../pages/" + page_data.number_id}
+                      label={"Pages associées"}
+                    />
+                  </>
+                )}
                 {page_data.number_id !== null && (
                   <>
                     <div className="flex gap-2">

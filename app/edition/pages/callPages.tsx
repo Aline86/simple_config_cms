@@ -1,16 +1,22 @@
 "use server";
-
-export default async function getPages(with_homepage: string = "all_pages") {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/edition/pages?with_homepage=` +
-      String(with_homepage),
-    {
-      cache: "no-store", // important pour SSR dynamique
-    },
-  );
+async function return_pages_url(url: string) {
+  const res = await fetch(`${url}`, {
+    cache: "no-store",
+  });
   if (!res.ok) {
     return false;
   }
 
   return res.json();
+}
+export default async function getPages(id?: null | string) {
+  if (id !== null && id !== undefined) {
+    return return_pages_url(
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/edition/pages?parent_id=` + id,
+    );
+  } else {
+    return return_pages_url(
+      `${process.env.NEXT_PUBLIC_APP_URL}/api/edition/pages`,
+    );
+  }
 }

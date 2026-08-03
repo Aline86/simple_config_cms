@@ -10,6 +10,8 @@ import FIELD_CONFIGS from "../../config/fieldConfig";
 import { MediaObject } from "../../../database/model/bloc/MediaObject";
 import InternUrlInput from "../../../components/ui/Text/InternUrlInput";
 import { ColorInput } from "../../../components/ui/Text/ColorInput";
+import InternPageUrlInput from "../../../components/ui/Text/InternPageUrlInput";
+import { PageObject } from "../../../database/model/Page";
 
 // Types
 export type FieldPrefix = "text" | "image" | "video" | "number" | "color";
@@ -24,6 +26,7 @@ export type FieldRendererProps<T extends Record<string, unknown>> = {
   selectedValidatorKey: string;
   model: T | MediaObject;
   setField: (fieldName: string, value: any) => void;
+  pages?: PageObject[];
 };
 
 // --------------------
@@ -92,6 +95,7 @@ export function FieldRenderer<T extends Record<string, any>>({
   selectedValidatorKey,
   model,
   setField,
+  pages,
 }: FieldRendererProps<T>) {
   const field = fieldName.split(".")[fieldName.split(".").length - 1];
   const [currentValue, setCurrentValue] = useState<string>(
@@ -116,13 +120,29 @@ export function FieldRenderer<T extends Record<string, any>>({
     switch (prefix) {
       case "text":
         return selectedValidatorKey.includes("url_interne") ? (
-          <InternUrlInput
-            model={model}
-            value={model[field]}
-            field={fieldName as string}
-            onChangeValue={setField}
-            label="Lien vers une page"
-          />
+          <>
+            {!selectedValidatorKey.includes("page") ? (
+              <InternUrlInput
+                model={model}
+                value={model[field]}
+                field={fieldName as string}
+                onChangeValue={setField}
+                label="Lien vers une page du menu"
+              />
+            ) : (
+              pages !== undefined &&
+              pages.length > 0 && (
+                <InternPageUrlInput
+                  model={model}
+                  value={model[field]}
+                  field={fieldName as string}
+                  onChangeValue={setField}
+                  label="Lien vers une page interne"
+                  pages={pages}
+                />
+              )
+            )}
+          </>
         ) : (
           <TextInput
             value={model[field]}

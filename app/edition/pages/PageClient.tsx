@@ -1,19 +1,19 @@
 "use client";
 
-import { Plus, Save } from "lucide-react";
 import { useState, useEffect, useCallback } from "react";
 import { reorderArray } from "../../../lib/helpers/changeComponentPosition";
 import { BlocObject } from "../../../database/model/Bloc";
 import { PageObject } from "../../../database/model/Page";
 import PageCrud from "./pageComponent";
-import LogoutButton from "../../../components/ui/LogoutButton";
 import NavBarEdition from "../../../components/ui/NavBarEdition";
 import ErrorMessage from "../../../components/ui/ErrorMessage";
 
 export default function PageClient({
   initialPages,
+  parent_id,
 }: {
   initialPages: PageObject[];
+  parent_id?: number;
 }) {
   const [pages, setPages] = useState(initialPages);
   const [draggableEnabled, setDraggableEnabled] = useState(false);
@@ -130,13 +130,12 @@ export default function PageClient({
     (page: PageObject, fieldName: keyof PageObject, newValue: unknown) => {
       setPages((prev) =>
         prev.map((p) => {
-          if (
-            (p.text_slug === page.text_slug && page.text_slug !== "") ||
-            p.number_page_position === page.number_page_position
-          ) {
-            p.setField(fieldName, newValue as string);
+          if (p !== page) return p;
+          const next = new PageObject({ ...p, [fieldName]: newValue });
+          if (fieldName === "text_titre") {
+            next.setField(fieldName, newValue as string);
           }
-          return p;
+          return next;
         }),
       );
     },
@@ -234,6 +233,7 @@ export default function PageClient({
               handleSavePages={handleSavePages}
               draggableEnabled={draggableEnabled}
               pages={pages}
+              parent_id={parent_id}
             />
           ))}
       </div>
