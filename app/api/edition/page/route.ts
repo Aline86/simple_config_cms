@@ -10,7 +10,7 @@ import { RequestHelper } from "../../../../lib/helpers/RequestHelper";
 export async function GET(request: NextRequest) {
   return ApiResponse.handle(
     async () => {
-      const user = await requireAuth(request);
+      await requireAuth(request);
       const slug = RequestHelper.getRequiredSearchParam(request, "slug");
 
       const dbPage = await prisma.page.findFirst({

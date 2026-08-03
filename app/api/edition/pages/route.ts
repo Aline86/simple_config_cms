@@ -7,6 +7,7 @@ import { requireAuth } from "../requireAuth";
 export const runtime = "nodejs";
 
 export async function GET(request: NextRequest) {
+
   return ApiResponse.handle(
     async () => {
       const { searchParams } = new URL(request.url);
