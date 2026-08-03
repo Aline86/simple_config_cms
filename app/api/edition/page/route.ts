@@ -5,6 +5,7 @@ import { prisma } from "../../../../prisma/prisma";
 import { ApiResponse } from "../../../../lib/helpers/ApiResponse";
 import { requireAuth } from "../requireAuth";
 import { RequestHelper } from "../../../../lib/helpers/RequestHelper";
+import { toPageData } from "../../../../lib/helpers/api/page.data";
 
 // ========== GET PAGE BY SLUG ==========
 export async function GET(request: NextRequest) {
@@ -76,30 +77,32 @@ export async function PUT(request: NextRequest) {
     async () => {
       await requireAuth(request);
       const body = await RequestHelper.getBody(request);
-      const rawPage = body.data;
 
-      // Validation
-      const page = new PageObject(rawPage);
+      const page = new PageObject(body.data);
+
+      if (!page.number_id || page.number_id <= 0) {
+        throw new Error("id missing");
+      }
+
       if (!page.validateAll()) {
         throw new Error("Validation failed");
       }
-      // Sérialisation des blocs
-      rawPage.blocs = JSON.stringify(rawPage.blocs);
-      // Mise à jour
-      await prisma.page.update({
-        where: { number_id: Number(rawPage.number_id) },
-        data: rawPage,
+
+      const updated = await prisma.page.update({
+        where: { number_id: page.number_id },
+        data: toPageData(page),
       });
 
       return {
-        message: "Page got",
-        page: {
-          ...rawPage,
-        },
+        message: "Page updated",
+        page: { ...updated, blocs: page.blocs.map((b) => b.toJSON()) },
       };
     },
     {
       errorHandler: (err: Record<string, unknown>) => {
+        if (err.message === "id missing") {
+          return ApiResponse.missingParameter("id");
+        }
         if (err.message === "Validation failed") {
           return ApiResponse.validationError("Validation failed");
         }

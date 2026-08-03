@@ -18,9 +18,11 @@ export default function NavBarView({ bloc }: { bloc: Readonly<HeaderObject> }) {
   } = useHeader(bloc);
   const sticky = isSticky ? "sticky" : "relative";
   const isEdition =
+    bloc.mode === "edition" ? `` : " shadow fixed  top-0  left-0 right-0 z-20";
+  const mode_nav =
     bloc.mode === "edition"
-      ? `shadow ${sticky} top-24 left-0 right-0 z-20`
-      : " shadow fixed  top-0  left-0 right-0 z-20";
+      ? "mx-auto px-4 w-[45vw] top-[40vh]"
+      : "mx-auto px-4";
   return (
     <header
       ref={scrollRef}
@@ -41,7 +43,7 @@ export default function NavBarView({ bloc }: { bloc: Readonly<HeaderObject> }) {
       }}
       className={isEdition}
     >
-      <div className="mx-auto px-4">
+      <div className={mode_nav}>
         <div className="flex items-center justify-between">
           <a
             title="Retour à l'accueil"
