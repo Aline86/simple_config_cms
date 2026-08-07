@@ -21,7 +21,6 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
             style={{
               fontSize: "65px",
               textTransform: "uppercase",
-              color: "white",
             }}
           >
             {bloc.text_titre}
