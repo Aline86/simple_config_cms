@@ -9,23 +9,14 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
   return bloc.bloc_position === 0 && bloc.mode === "edition" ? (
     <section className="z-0 mt-[-95px] relative w-full h-screen mb-8">
       <div className="relative z-10 w-screen h-screen  p-24  title text-white flex flex-col justify-end pb-24">
-        {hasH1InPage ? (
-          <h2
-            style={{ fontSize: "65px", color: "white" }}
-            className="text-white"
-          >
-            {bloc.text_titre}
-          </h2>
-        ) : (
-          <h1
-            style={{
-              fontSize: "65px",
-              textTransform: "uppercase",
-            }}
-          >
-            {bloc.text_titre}
-          </h1>
-        )}
+        <h2
+          style={{
+            fontSize: "65px",
+            textTransform: "uppercase",
+          }}
+        >
+          {bloc.text_titre}
+        </h2>
 
         <h2 style={{ color: "white" }}>{bloc.text_description}</h2>
       </div>
