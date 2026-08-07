@@ -121,7 +121,7 @@ export default function PageCrud({
                   </button>
                 </div>
 
-                <div className="flex gap-2">
+                <div className="flex gap-2   z-90">
                   {/* Bouton Delete */}
                   <button
                     aria-label="Supprimer"

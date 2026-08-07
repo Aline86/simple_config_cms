@@ -109,7 +109,7 @@ export function DynamicValidatorDropDown<T extends Record<keyof T, unknown>>({
 
       <div className="rounded-lg border border-slate-200 bg-slate-50/50 p-4 dark:border-slate-200 dark:bg-slate-900/50">
         <FieldRenderer
-          selectedValidatorKey={selectedValidatorKey}
+          selectedValidatorKey={selectedValidatorKey ?? defaultValidator}
           fieldName={fieldKey as string}
           model={model}
           setField={onChange}

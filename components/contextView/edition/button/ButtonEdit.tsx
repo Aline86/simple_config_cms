@@ -3,6 +3,7 @@
 import { BlocObject } from "../../../../database/model/Bloc";
 import { MediaObject } from "../../../../database/model/bloc/MediaObject";
 import { EditorProps } from "../../../../lib/helpers/globabProps";
+import { DynamicValidatorDropDown } from "../../../../lib/validators/DynamicValidatorDropDown";
 import { FieldRenderer } from "../../../../lib/validators/renderer/TextRenderer";
 import DebugView from "../_commons/DebugView";
 import HeadingComponent from "../_commons/HeadingComponent";
@@ -20,11 +21,13 @@ export default function ButtonEdit({
   return (
     <section className="mx-auto max-w-2xl space-y-6 p-6 mb-8">
       <HeadingComponent bloc={bloc} onChange={onChange} name={"Bouton"} />
-      <FieldRenderer
-        fieldName={`blocs.${bloc.bloc_position}.color_background_color`}
+      <DynamicValidatorDropDown
+        label="Couleur"
+        fieldKey={`blocs.${bloc.bloc_position}.color_background_color`}
+        availableValidators={["color_background_color"]}
         model={bloc as BlocObject}
-        setField={onChange}
-        label={"Couleur de fond de la carte de redirection"}
+        onChange={onChange}
+        defaultValidator={"color_background_color"}
       />
       <section
         className={

@@ -58,17 +58,29 @@ export function ColorInput<T>({
       )}
 
       <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-        <ColorSelect
-          name={name}
+        {selectedValidatorKey?.includes("tailwind") ? (
+          <ColorSelect
+            name={name}
 
-          value={currentValue}
-          onChange={handleTailwindChange}
-          disabled={disabled}
-          className={`color-input ${showError ? "error" : ""}`}
+            value={currentValue}
+            onChange={handleTailwindChange}
+            disabled={disabled}
+            className={`color-input ${showError ? "error" : ""}`}
 
-          field={field}
-        />
-
+            field={field}
+          />
+        ) : (
+          <input
+            id={name}
+            name={name}
+            type="color"
+            value={currentValue}
+            onChange={handleChange}
+            disabled={disabled}
+            className={`color-input ${showError ? "error" : ""}`}
+            required={params.required}
+          />
+        )}
         <input
           type="text"
           defaultValue={currentValue}

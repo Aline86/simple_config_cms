@@ -11,13 +11,19 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
       <div className="relative z-10 w-screen h-screen  p-24  title text-white flex flex-col justify-end pb-24">
         {hasH1InPage ? (
           <h2
-            style={{ fontSize: "65px", color: "white!important" }}
+            style={{ fontSize: "65px", color: "white" }}
             className="text-white"
           >
             {bloc.text_titre}
           </h2>
         ) : (
-          <h1 style={{ fontSize: "65px", textTransform: "uppercase" }}>
+          <h1
+            style={{
+              fontSize: "65px",
+              textTransform: "uppercase",
+              color: "white",
+            }}
+          >
             {bloc.text_titre}
           </h1>
         )}
@@ -54,7 +60,12 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
       {/* Contenu texte */}
       <div className="relative z-10 h-full flex flex-col justify-end p-24 text-white">
         <h2
-          style={{ fontSize: "65px", opacity: 1, textTransform: "uppercase" }}
+          style={{
+            fontSize: "65px",
+            opacity: 1,
+            textTransform: "uppercase",
+            color: "white",
+          }}
           className="text-transform-uppercase"
         >
           {bloc.text_titre}

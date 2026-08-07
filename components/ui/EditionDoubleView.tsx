@@ -23,7 +23,7 @@ const EditionDoubleView: React.FC<EditionDoubleViewProps> = ({
   return (
     <div className="flex flex-col lg:flex-row gap-6">
       <div className="flex-1 rounded-lg p-4 shadow-sm">
-        <h2 className="text-lg font-semibold mb-4">{editTitle}</h2>
+        <h2 className="text-lg font-semibold mb-4 z-10 inline">{editTitle}</h2>
         {EditComponent}
       </div>
 
