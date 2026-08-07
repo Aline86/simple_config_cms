@@ -19,16 +19,15 @@ export default function ConfigurationEdit({
   onChange,
   show_debug = false,
 }: EditorProps) {
-  const defaultValidator = "color_main_color"
- 
+  const defaultValidator = "color_tailwind";
 
   return (
     <section className="mx-auto max-w-2xl space-y-6 p-6 mb-8">
       <div className="space-y-2">
         <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-slate-50">
-          Configurer les éléments généraux du site (taille, couleur et police des sous titres)
+          Configurer les éléments généraux du site (taille, couleur et police
+          des sous titres)
         </h2>
-      
       </div>
 
       <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-200 dark:bg-slate-950">
