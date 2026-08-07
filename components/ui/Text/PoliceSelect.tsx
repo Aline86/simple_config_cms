@@ -112,9 +112,8 @@ export default function FontSelect({
   disabled = false,
   className = "",
 
-
 }) {
-  console.log("value", value)
+  console.log("value", value);
   const listId = useId();
   const labelId = useId();
   const [open, setOpen] = useState(false);
@@ -125,21 +124,26 @@ export default function FontSelect({
   const [selected, setSelected] = useState(
     FONT_STACKS[value] || resolveFont(DEFAULT_FONT_ID),
   );
-  
+
   const selectedIndex =
     FONT_STACKS[value] || FONT_STACKS.indexOf(resolveFont(DEFAULT_FONT_ID));
-  console.log("selected", selected);
+
   const close = useCallback(({ refocus = true } = {}) => {
     setOpen(false);
     if (refocus) buttonRef.current?.focus();
   }, []);
 
   const pick = useCallback(
-    (selected: { id: string, label: string, category: string, stack: string }) => {
+    (selected: {
+      id: string;
+      label: string;
+      category: string;
+      stack: string;
+    }) => {
       setActiveIndex(FONT_STACKS.indexOf(selected));
       setSelected(selected);
       console.log("field", FONT_STACKS.indexOf(selected));
-      onChange(String(activeIndex));
+      onChange(String(FONT_STACKS.indexOf(selected)));
       close();
     },
     [onChange, close, selected],
@@ -157,8 +161,8 @@ export default function FontSelect({
   useEffect(() => {
     if (!open) return;
     setActiveIndex(selectedIndex < 0 ? 0 : selectedIndex);
-      listRef.current?.focus();
-      console.log("selectedIndex", selectedIndex);
+    listRef.current?.focus();
+    console.log("selectedIndex", selectedIndex);
   }, [open, selectedIndex]);
 
   useEffect(() => {
@@ -189,7 +193,7 @@ export default function FontSelect({
       case "Enter":
       case " ":
         event.preventDefault();
-        
+
         break;
       case "Escape":
         event.preventDefault();
@@ -274,7 +278,9 @@ export default function FontSelect({
                 data-index={index}
                 role="option"
                 aria-selected={isSelected}
-                onClick={() => { pick(font) }}
+                onClick={() => {
+                  pick(font);
+                }}
                 onMouseEnter={() => setActiveIndex(index)}
                 className={`cursor-pointer px-3 py-2 ${isActive ? "bg-slate-100" : ""}`}
               >
