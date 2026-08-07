@@ -12,14 +12,13 @@ import InternUrlInput from "../../../components/ui/Text/InternUrlInput";
 import { ColorInput } from "../../../components/ui/Text/ColorInput";
 import InternPageUrlInput from "../../../components/ui/Text/InternPageUrlInput";
 import { PageObject } from "../../../database/model/Page";
+import PoliceSelect from "../../../components/ui/Text/PoliceSelect";
 
 // Types
 export type FieldPrefix = "text" | "image" | "video" | "number" | "color";
 
 export type ValidatorInstance =
-  | TextValidator
-  | CloudinaryValidator
-  | NumberValidator;
+  TextValidator | CloudinaryValidator | NumberValidator;
 
 export type FieldRendererProps<T extends Record<string, unknown>> = {
   fieldName: string;
@@ -98,6 +97,7 @@ export function FieldRenderer<T extends Record<string, any>>({
   pages,
 }: FieldRendererProps<T>) {
   const field = fieldName.split(".")[fieldName.split(".").length - 1];
+  console.log("selectedValidatorKey", selectedValidatorKey);
   const [currentValue, setCurrentValue] = useState<string>(
     (model[field] as string) || "",
   );
@@ -153,6 +153,7 @@ export function FieldRenderer<T extends Record<string, any>>({
             validator={validator as TextValidator}
           />
         );
+
       case "image":
       case "video":
         return (
@@ -174,6 +175,7 @@ export function FieldRenderer<T extends Record<string, any>>({
             field={fieldName as string}
             onChange={setField}
             name=""
+            selectedValidatorKey={selectedValidatorKey}
           />
         );
       default:

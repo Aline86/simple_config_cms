@@ -2,8 +2,8 @@
 
 import React, { JSX, useEffect, useState } from "react";
 
-import { ColorInput } from "./ColorInput";
 import { TextValidator } from "../../../lib/validators/TextValidator";
+import FontSelect from "./PoliceSelect";
 
 interface BaseInputProps<T> {
   label?: string;
@@ -33,7 +33,6 @@ export default function TextInput<T>({
   field,
   onChangeValue,
 }: ValidatedTextInputProps<T>) {
-  const [touched, setTouched] = useState(false);
   const [localValue, setLocalValue] = useState(value);
   const params = validator.getParams();
 
@@ -41,7 +40,6 @@ export default function TextInput<T>({
   useEffect(() => {
     setLocalValue(value ?? "");
     validator.value = String(value ?? "");
-    setTouched(false);
   }, [value, field]);
 
   // Validation
@@ -52,12 +50,18 @@ export default function TextInput<T>({
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const newValue = e.currentTarget.value;
+    updateValue(newValue);
+  };
+  const handleSelectChange = (e: string) => {
+    updateValue(e);
+  };
+
+  const updateValue = (newValue: string) => {
     setLocalValue(newValue);
     validator.value = newValue; // met à jour le validator
 
     onChangeValue(field as string, newValue); // remonte l'état au parent
   };
-
   const commonProps: React.InputHTMLAttributes<HTMLInputElement> &
     React.TextareaHTMLAttributes<HTMLTextAreaElement> = {
     value: localValue as string | number,
@@ -75,23 +79,20 @@ export default function TextInput<T>({
   let InputComponent: JSX.Element;
 
   switch (true) {
+    case field.includes("police"):
+      InputComponent = (
+        <FontSelect
+          value={model[field]}
+
+          label=""
+
+          onChange={handleSelectChange}
+        />
+      );
+      break;
     case params.multiline !== undefined:
       // Texte multiligne
       InputComponent = <textarea {...commonProps} rows={rows} />;
-      break;
-
-    case params.type === "color":
-      // ColorInput
-      InputComponent = (
-        <ColorInput
-          model={model}
-          validator={validator}
-          value={validator.value as string}
-          field={field}
-          onChange={onChangeValue}
-          name={""}
-        />
-      );
       break;
 
     default:

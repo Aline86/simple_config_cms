@@ -16,7 +16,7 @@ export default function Page() {
 
     // Call your API route to authenticate
     const res = await callLogin(text_email, text_password);
-    console.log("res", res);
+
     if (res) {
       // Redirect to protected page
       router.push("/edition/pages");

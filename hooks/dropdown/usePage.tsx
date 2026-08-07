@@ -10,13 +10,11 @@ export default function usePage() {
   const [parentId, setParentId] = useState<string | null>(null);
 
   useEffect(() => {
-    console.log("[usePage] params =", params);
+
     if (params !== undefined && params !== null) {
       const slug = params.slug;
 
       if (!slug) {
-        console.log("[usePage] pas de slug, sortie");
-
         setParentId(null);
         return;
       }

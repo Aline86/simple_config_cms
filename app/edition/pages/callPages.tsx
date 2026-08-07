@@ -1,5 +1,5 @@
 "use server";
-async function return_pages_url(url: string) {
+export async function return_data_url(url: string) {
   const res = await fetch(`${url}`, {
     cache: "no-store",
   });
@@ -11,11 +11,11 @@ async function return_pages_url(url: string) {
 }
 export default async function getPages(id?: null | string) {
   if (id !== null && id !== undefined) {
-    return return_pages_url(
+    return return_data_url(
       `${process.env.NEXT_PUBLIC_APP_URL}/api/edition/pages?parent_id=` + id,
     );
   } else {
-    return return_pages_url(
+    return return_data_url(
       `${process.env.NEXT_PUBLIC_APP_URL}/api/edition/pages`,
     );
   }

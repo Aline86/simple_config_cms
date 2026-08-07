@@ -2,10 +2,17 @@ import { BlocObject } from "../../../../database/model/Bloc";
 import { FooterObject } from "../../../../database/model/bloc/Footer";
 import { HeaderObject } from "../../../../database/model/bloc/Header";
 import { MediaObject } from "../../../../database/model/bloc/MediaObject";
+import { ConfigurationObject } from "../../../../database/model/Configuration";
 import { PageObject } from "../../../../database/model/Page";
 
 export type Props = {
-  data: BlocObject | PageObject | HeaderObject | FooterObject | MediaObject;
+  data:
+    | BlocObject
+    | PageObject
+    | HeaderObject
+    | FooterObject
+    | MediaObject
+    | ConfigurationObject;
 };
 
 export default function DebugView({ data }: Props) {

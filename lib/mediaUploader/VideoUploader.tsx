@@ -49,7 +49,7 @@ export default function VideoUploader<T>({
     setMedia(newYouTubeVideo);
     onChange(field, newYouTubeVideo.url);
     setYoutubeUrl(newYouTubeVideo.url);
-    console.log(field, newYouTubeVideo);
+
     setShowYoutubeInput(false);
     setErrors([]);
   };

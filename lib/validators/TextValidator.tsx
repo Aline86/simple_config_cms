@@ -137,7 +137,7 @@ export class TextValidator {
     if (value !== undefined) this._value = value;
 
     const result = this.schema.safeParse(this._value);
-    console.log("result", result);
+
     this.errors = [];
 
     if (!result.success) {

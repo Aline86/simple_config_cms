@@ -30,10 +30,10 @@ export default function NumberInput<T>({
   showValue = true,
   validator,
 }: NumberInputProps<T>) {
-  const [localValue, setLocalValue] = useState<number>(value ?? 1);
-
   const params = validator.getParams();
-
+  const [localValue, setLocalValue] = useState<number>(
+    value ?? params.defaultValue,
+  );
   // Validation
   const validation = validator.validate();
 
@@ -76,6 +76,7 @@ export default function NumberInput<T>({
         {...commonProps}
         type={params.type || "number"}
         onChange={handleChange}
+
         className="
       w-full
       rounded-md

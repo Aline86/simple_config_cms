@@ -10,18 +10,17 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
     <section className="z-0 mt-[-95px] relative w-full h-screen mb-8">
       <div className="relative z-10 w-screen h-screen  p-24  title text-white flex flex-col justify-end pb-24">
         {hasH1InPage ? (
-          <h2 style={{ color: "white", fontSize: "65px" }}>
+          <h2
+            style={{ fontSize: "65px", color: "white!important" }}
+            className="text-white"
+          >
             {bloc.text_titre}
           </h2>
         ) : (
-          <h1 style={{ color: "white", fontSize: "65px" }}>
-            {bloc.text_titre}
-          </h1>
+          <h1 style={{ fontSize: "65px" }}>{bloc.text_titre}</h1>
         )}
 
-        <h2 style={{ color: "white" }} className="text-white">
-          {bloc.text_description}
-        </h2>
+        <h2 style={{ color: "white" }}>{bloc.text_description}</h2>
       </div>
 
       <Image
@@ -53,15 +52,13 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
       {/* Contenu texte */}
       <div className="relative z-10 h-full flex flex-col justify-end p-24 text-white">
         {hasH1InPage ? (
-          <h2 style={{ color: "white", fontSize: "65px" }}>
+          <h2 style={{ color: "white" }} className="text-white">
             {bloc.text_titre}
           </h2>
         ) : (
-          <h1 style={{ color: "white", fontSize: "65px" }}>
-            {bloc.text_titre}
-          </h1>
+          <h1 style={{ fontSize: "65px" }}>{bloc.text_titre}</h1>
         )}
-        <h2 style={{ color: "white" }} className="text-2xl mt-4">
+        <h2 style={{ color: "white" }} className="text-2xl mt-4 text-white">
           {bloc.text_description}
         </h2>
       </div>

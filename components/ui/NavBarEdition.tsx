@@ -67,6 +67,13 @@ export default function NavBarEdition<T>({
           </a>
         </>
       )}
+      <a
+        href={`/edition/configuration`}
+        title="Paramètres généraux"
+        className="cursor-pointer flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-600 transition"
+      >
+        Paramètres généraux
+      </a>
       <Draggable
         draggableEnabled={draggableEnabled}
         setDraggableEnabled={setDraggableEnabled}

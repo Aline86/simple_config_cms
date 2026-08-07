@@ -63,7 +63,7 @@ model Footer {
 }
 model Configuration {
   number_id         Int      @id @default(autoincrement())
-  text_taille       String   @db.VarChar(50)
+  number_taille     Int?     
   color_main_color  String   @db.VarChar(25)
   text_police       String   @db.VarChar(100)
   text_createdAt    DateTime @default(now())

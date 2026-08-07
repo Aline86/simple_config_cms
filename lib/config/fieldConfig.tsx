@@ -144,6 +144,19 @@ const FIELD_CONFIGS: Record<string, FieldParameter> = {
       maxLength: "La text_description ne peut pas dépasser 500 caractères",
     },
   }),
+  number_taille: new Parameter({
+    type: "number",
+    min: 22,
+    max: 45,
+
+    defaultValue: 18,
+    integer: true,
+    positive: true,
+    errorMessages: {
+      min: "La largeur minimale est 75px",
+      max: "La largeur maximale est 250px",
+    },
+  }),
   number_position_image: new Parameter({
     integer: true,
     nonnegative: true,
@@ -165,6 +178,11 @@ const FIELD_CONFIGS: Record<string, FieldParameter> = {
   }),
   color_background_color: new TextParameter({
     maxLength: 7,
+    required: true,
+    trim: true,
+  }),
+  color_main_color: new TextParameter({
+    maxLength: 15,
     required: true,
     trim: true,
   }),

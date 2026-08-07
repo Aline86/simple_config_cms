@@ -190,18 +190,31 @@ main {
 
   --sidebar-border: oklch(0.129 0.042 264.695 / 10%);
   --sidebar-ring: oklch(0.488 0.243 264.376);
+  
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    
   }
   body {
     @apply bg-background text-foreground;
     overflow-x: hidden;
+    
   }
 }
+h1 {
+   font-family: var(--police) !important;
+   color: var(--title-color);
+}
+h2 {
+  font-size: var(--font-size);
+  font-family: var(--police);
+  color: var(--title-color);
+  opacity: 0.6;
 
+}
 .tiptap {
   margin-bottom: 20px;
 }
@@ -533,7 +546,7 @@ iframe {
     word-wrap: break-word;
   }
   h2 {
-    font-size: 16px !important;
+    font-size: 24px !important;
     word-wrap: break-word;
   }
   nav {

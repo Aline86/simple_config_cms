@@ -7,15 +7,14 @@ import { requireAuth } from "../requireAuth";
 export const runtime = "nodejs";
 
 export async function GET(request: NextRequest) {
-
   return ApiResponse.handle(
     async () => {
       const { searchParams } = new URL(request.url);
       const parent_id = searchParams.get("parent_id");
-      console.log("inside", parent_id);
+
       let dbPages = [];
       if (parent_id !== null) {
-        dbPages = dbPages = await prisma.page.findMany({
+        dbPages = await prisma.page.findMany({
           where: {
             number_parent_id: Number(parent_id),
           },
@@ -74,7 +73,6 @@ export async function POST(request: NextRequest) {
   await requireAuth(request);
   return ApiResponse.handle(
     async () => {
-      await requireAuth(request);
       const body = await request.json();
       const pagesPayload = Array.isArray(body) ? body : body.data;
 

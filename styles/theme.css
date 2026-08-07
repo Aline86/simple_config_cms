@@ -17,19 +17,16 @@ body > .light {
 .dark h2,
 .dark select,
 .dark option {
-  color: white !important;
+
   word-break: break-word;
 }
 .light h2,
 .light select,
 .light option {
-  color: rgb(20, 20, 20);
+
   word-break: break-word;
 }
-.dark section.button div h2,
-.dark section.button div p {
-  color: black !important;
-}
+
 header h1 {
   word-break: break-word;
 

@@ -5,7 +5,9 @@ import { useAppContext } from "../../context/DomDataProvider";
 const LABEL_HEADER = {
   image_url: "URL de l'image",
   text_empty: "Fond vide",
+  text_police: "Police de caractères",
   color_background_color: "Choisir une couleur de fond",
+  color_tailwind: "Choisir une couleur pour les titres",
 };
 
 const LABEL_LINKS = {

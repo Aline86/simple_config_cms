@@ -154,7 +154,6 @@ export default function TextEditor({
         )}
 
         {/* Rich Text Editor */}
-
         <div className="border-t border-slate-200 pt-6 dark:border-slate-700">
           <h3 className="mb-3 text-sm font-semibold text-slate-700 dark:text-slate-300">
             Contenu de l'article

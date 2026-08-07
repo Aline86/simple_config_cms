@@ -4,7 +4,7 @@ import { PageObject } from "../../database/model/Page";
 export default function usePages(id?: string | null | undefined) {
   const [pages, setPages] = useState<PageObject[]>([]);
   const [loading, setLoading] = useState(true);
-  console.log("iddd", id);
+
   useEffect(() => {
     const controller = new AbortController();
     setLoading(true);

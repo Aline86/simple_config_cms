@@ -2,6 +2,8 @@ import { useState } from "react";
 import { TextValidator } from "../../../lib/validators/TextValidator";
 import CloudinaryValidator from "../../../lib/validators/MediaValidator";
 import { NumberValidator } from "../../../lib/validators/NumberValidator";
+import ColorSelect from "./ColorSelect";
+import { PALETTE } from "./TailwindPalette";
 
 type ValidatorInstance = TextValidator | CloudinaryValidator | NumberValidator;
 
@@ -18,6 +20,7 @@ interface ColorInputProps<T> extends BaseInputProps {
   value: string;
   field: string;
   onChange: (fieldName: string, value: unknown) => void;
+  selectedValidatorKey?: string;
 }
 
 export function ColorInput<T>({
@@ -29,11 +32,17 @@ export function ColorInput<T>({
   validator,
   className = "",
   disabled = false,
+  selectedValidatorKey,
 }: ColorInputProps<T>) {
+  console.log("valuje", value);
   const params = validator.getParams();
   const [currentValue, setCurrentValue] = useState(value);
   const validation = validator.validate(value);
   const showError = !validation.valid;
+  const handleTailwindChange = (e: string) => {
+    setCurrentValue(e);
+    onChange(field, e);
+  };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentValue(e.target.value);
     onChange(field, e.target.value);
@@ -49,19 +58,20 @@ export function ColorInput<T>({
       )}
 
       <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-        <input
-          id={name}
+        <ColorSelect
           name={name}
-          type="color"
+
           value={currentValue}
-          onChange={handleChange}
+          onChange={handleTailwindChange}
           disabled={disabled}
           className={`color-input ${showError ? "error" : ""}`}
-          required={params.required}
+
+          field={field}
         />
+
         <input
           type="text"
-          value={currentValue}
+          defaultValue={currentValue}
           onChange={handleChange}
           disabled={disabled}
           className={`input color-text-input ${showError ? "error" : ""}`}
