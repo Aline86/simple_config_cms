@@ -17,7 +17,9 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
             {bloc.text_titre}
           </h2>
         ) : (
-          <h1 style={{ fontSize: "65px" }}>{bloc.text_titre}</h1>
+          <h1 style={{ fontSize: "65px", textTransform: "uppercase" }}>
+            {bloc.text_titre}
+          </h1>
         )}
 
         <h2 style={{ color: "white" }}>{bloc.text_description}</h2>
@@ -51,7 +53,12 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
 
       {/* Contenu texte */}
       <div className="relative z-10 h-full flex flex-col justify-end p-24 text-white">
-        <h2 style={{ fontSize: "65px" }}>{bloc.text_titre}</h2>
+        <h2
+          style={{ fontSize: "65px", opacity: 1, textTransform: "uppercase" }}
+          className="text-transform-uppercase"
+        >
+          {bloc.text_titre}
+        </h2>
 
         <h2 style={{ color: "white" }} className="text-2xl mt-4 text-white">
           {bloc.text_description}
