@@ -4,7 +4,6 @@ import { HeaderObject } from "../model/bloc/Header";
 import { FooterObject } from "../model/bloc/Footer";
 import { MediaObject } from "../model/bloc/MediaObject";
 
-
 type Row = Record<string, unknown>;
 
 function toMedia(row: Row | null | undefined): MediaObject | undefined {
