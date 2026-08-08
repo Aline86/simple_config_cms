@@ -2,7 +2,7 @@ import { NextRequest } from "next/server";
 import { getPageBySlug } from "../../../lib/cache/page.slug";
 import { ApiResponse } from "../../../lib/helpers/ApiResponse";
 import { RequestHelper } from "../../../lib/helpers/RequestHelper";
-import { revalidateTag } from "next/cache";
+
 
 export async function GET(request: NextRequest) {
   return ApiResponse.handle(

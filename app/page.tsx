@@ -1,21 +1,15 @@
-import { HeaderObject } from "../database/model/bloc/Header";
 import { PageObject } from "../database/model/Page";
-
 import type { Metadata } from "next";
 import PageContainer from "./PageContainer";
 import { getHomePage } from "../lib/cache/page.homepage";
 import { getPageHeader } from "../lib/cache/page.header";
-import { getPageBySlug } from "../lib/cache/page.slug";
+
 type Props = {
   params: Promise<{ slug: string }>;
 };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
-  const [page, header] = await Promise.all([
-    getPageBySlug(slug),
-    getPageHeader(),
-  ]);
+export async function generateMetadata(): Promise<Metadata> {
+  const [page, header] = await Promise.all([getHomePage(), getPageHeader()]);
 
   if (!page || !header) {
     return { title: "CMS", description: "Ceci est une page" };
