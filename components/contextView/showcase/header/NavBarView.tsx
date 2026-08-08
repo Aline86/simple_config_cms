@@ -67,7 +67,7 @@ export default function NavBarView({ bloc }: { bloc: Readonly<HeaderObject> }) {
             )}
           </a>
 
-          <h1 className="flex-shrink-0  min-w-0 hidden sm:block truncate text-white!">
+          <h1 className="flex-shrink-0  min-w-0 hidden sm:block truncate ">
             {bloc.text_nom_site}
           </h1>
 

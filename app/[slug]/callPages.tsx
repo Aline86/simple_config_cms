@@ -2,9 +2,6 @@
 export async function getPageBySlug(slug: string) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_APP_URL}/api/page?slug=${encodeURIComponent(slug)}`,
-    {
-      cache: "no-store",
-    },
   );
   if (!res.ok) {
     return false;
@@ -15,12 +12,7 @@ export async function getPageBySlug(slug: string) {
 }
 
 export async function getPageHeader() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/page/header`,
-    {
-      cache: "no-store",
-    },
-  );
+  const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/page/header`);
 
   if (!res.ok) {
     throw new Error("Erreur chargement page");
@@ -32,12 +24,7 @@ export async function getPageHeader() {
 }
 
 export async function getPageFooter() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_APP_URL}/api/page/footer`,
-    {
-      cache: "no-store",
-    },
-  );
+  const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/page/footer`);
 
   if (!res.ok) {
     throw new Error("Erreur chargement footer");
@@ -49,9 +36,6 @@ export async function getPageFooter() {
 export default async function getHomePage() {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_APP_URL}/api/page/homepage`,
-    {
-      cache: "no-store", // important pour SSR dynamique
-    },
   );
   if (!res.ok) {
     return false;
