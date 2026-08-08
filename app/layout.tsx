@@ -6,7 +6,7 @@ export const metadata: Metadata = {
 
 import "../styles/globals.css";
 import "../styles/theme.css";
-import { ReactNode } from "react";
+import { ReactNode, Suspense } from "react";
 import { DomDataProvider } from "../context/DomDataProvider";
 
 interface RootLayoutProps {
@@ -20,7 +20,9 @@ export default function RootLayout({
 }: RootLayoutProps) {
   return (
     <html lang="fr" className={theme}>
-      <DomDataProvider>{children}</DomDataProvider>
+      <Suspense fallback={null}>
+        <DomDataProvider>{children}</DomDataProvider>
+      </Suspense>
     </html>
   );
 }

@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { BlocObject } from "../../../../database/model/Bloc";
 import { PageObject } from "../../../../database/model/Page";
 import { prisma } from "../../../../prisma/prisma";
 import { ApiResponse } from "../../../../lib/helpers/ApiResponse";
 import { requireAuth } from "../requireAuth";
-export const runtime = "nodejs";
+import { BlocObject } from "../../../../database/model/Bloc";
 
 export async function GET(request: NextRequest) {
   return ApiResponse.handle(
@@ -68,7 +67,6 @@ export async function GET(request: NextRequest) {
     },
   );
 }
-
 export async function POST(request: NextRequest) {
   await requireAuth(request);
   return ApiResponse.handle(

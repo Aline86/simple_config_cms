@@ -1,32 +1,34 @@
-export const dynamic = "force-dynamic";
 import { HeaderObject } from "../database/model/bloc/Header";
 import { PageObject } from "../database/model/Page";
 
 import type { Metadata } from "next";
 import PageContainer from "./PageContainer";
-import getHomePage, { getPageHeader } from "./[slug]/callPages";
-
+import { getHomePage } from "../lib/cache/page.homepage";
+import { getPageHeader } from "../lib/cache/page.header";
+import { getPageBySlug } from "../lib/cache/page.slug";
 type Props = {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<PageObject>;
 };
 
-export async function generateMetadata(): Promise<Metadata> {
-  const [page, header] = await Promise.all([getHomePage(), getPageHeader()]);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const [page, header] = await Promise.all([
+    getPageBySlug(slug),
+    getPageHeader(),
+  ]);
 
   if (!page || !header) {
-    return {
-      title: "CMS",
-      description: "Ceci est une page",
-    };
+    return { title: "CMS", description: "Ceci est une page" };
   }
 
   const pageData = new PageObject(page);
-  const headerData = new HeaderObject(header.header, "view");
+
   return {
     title: pageData.text_titre,
     description: pageData.text_description,
-    icons: headerData.favicon.image_url ?? undefined,
+    icons: header.favicon?.image_url
+      ? { icon: header.favicon.image_url }
+      : undefined,
   };
 }
 

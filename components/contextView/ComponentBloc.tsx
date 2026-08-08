@@ -37,7 +37,7 @@ export default function ComponentBloc({
   const ComponentBackend = blocksToRender[bloc.type][
     bloc.text_nom_bloc
   ] as React.FC<EditorProps>;
-console.log("bloc", bloc);
+
   const ComponentFrontend = blocksFrontToRender[bloc.type][bloc.text_nom_bloc];
   const { handleRemove, handleAdd, onDrop, onDragStart } = useUpdateUI({
     bloc,

@@ -1,12 +1,11 @@
-export const dynamic = "force-dynamic";
-
 import { HeaderObject } from "../../database/model/bloc/Header";
 import { PageObject } from "../../database/model/Page";
+import { getPageHeader } from "../../lib/cache/page.header";
+import { getPageBySlug } from "../../lib/cache/page.slug";
 
 import PageContainer from "../PageContainer";
 
 import type { Metadata } from "next";
-import { getPageBySlug, getPageHeader } from "./callPages";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -27,14 +26,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     header !== undefined &&
     header !== null
   ) {
-    const pageData = new PageObject(page.page);
-    const haederData = new HeaderObject(header.header, "view");
+    const pageData = new PageObject(page);
 
     return {
       title: pageData.text_titre,
       description: pageData.text_description,
       icons: {
-        icon: haederData.favicon.image_url,
+        icon: header.favicon.image_url,
       },
     };
   }

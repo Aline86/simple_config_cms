@@ -97,7 +97,7 @@ export function FieldRenderer<T extends Record<string, any>>({
   pages,
 }: FieldRendererProps<T>) {
   const field = fieldName.split(".")[fieldName.split(".").length - 1];
-  console.log("selectedValidatorKey", selectedValidatorKey);
+
   const [currentValue, setCurrentValue] = useState<string>(
     (model[field] as string) || "",
   );

@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-export const runtime = "nodejs";
+
 import { prisma } from "../../../../../prisma/prisma";
 import { ApiResponse } from "../../../../../lib/helpers/ApiResponse";
 import { MediaObject } from "../../../../../database/model/bloc/MediaObject";
 import { requireAuth } from "../../requireAuth";
+import { revalidateTag } from "next/cache";
 
 export async function GET(request: NextRequest) {
   return ApiResponse.handle(
@@ -95,6 +96,9 @@ export async function POST(request: NextRequest) {
           reseaux: true,
         },
       });
+
+      revalidateTag("header", { expire: 0 });
+
       return {
         message: "header got",
         header: {
@@ -217,6 +221,9 @@ export async function PUT(request: NextRequest) {
           reseaux: true,
         },
       });
+
+      revalidateTag("header", { expire: 0 });
+
       return {
         message: "header got",
         header: {

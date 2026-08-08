@@ -2,6 +2,7 @@
 import { v2 as cloudinary } from "cloudinary";
 import { NextRequest } from "next/server";
 import { ApiResponse } from "../../../lib/helpers/ApiResponse";
+import { requireAuth } from "../edition/requireAuth";
 
 // ========== CONFIGURATION ==========
 const CLOUDINARY_CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
@@ -123,6 +124,7 @@ async function uploadToCloudinary(
 
 // ========== ROUTE HANDLER ==========
 export async function POST(request: NextRequest) {
+  await requireAuth(request);
   return ApiResponse.handle(
     async () => {
       // Validation Content-Type

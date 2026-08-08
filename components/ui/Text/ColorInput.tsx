@@ -34,7 +34,6 @@ export function ColorInput<T>({
   disabled = false,
   selectedValidatorKey,
 }: ColorInputProps<T>) {
-  console.log("valuje", value);
   const params = validator.getParams();
   const [currentValue, setCurrentValue] = useState(value);
   const validation = validator.validate(value);

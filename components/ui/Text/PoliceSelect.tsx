@@ -85,7 +85,6 @@ export const DEFAULT_FONT_ID = "system-sans";
 
 export function resolveFont(value) {
   if (!value) return null;
-  console.log("FONT_STACKS.values[value]", FONT_STACKS[value]);
   return (
     FONT_STACKS.find((f) => f.id === value) ||
     FONT_STACKS.find((f) => f.stack === value) ||
@@ -111,9 +110,7 @@ export default function FontSelect({
   sampleText = "Titre / TITRE",
   disabled = false,
   className = "",
-
 }) {
-  console.log("value", value);
   const listId = useId();
   const labelId = useId();
   const [open, setOpen] = useState(false);
@@ -142,7 +139,7 @@ export default function FontSelect({
     }) => {
       setActiveIndex(FONT_STACKS.indexOf(selected));
       setSelected(selected);
-      console.log("field", FONT_STACKS.indexOf(selected));
+
       onChange(String(FONT_STACKS.indexOf(selected)));
       close();
     },
@@ -162,7 +159,6 @@ export default function FontSelect({
     if (!open) return;
     setActiveIndex(selectedIndex < 0 ? 0 : selectedIndex);
     listRef.current?.focus();
-    console.log("selectedIndex", selectedIndex);
   }, [open, selectedIndex]);
 
   useEffect(() => {

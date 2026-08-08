@@ -60,6 +60,8 @@ header h1 {
 .dark footer {
   color: black !important;
 }
+
+
 @media (max-width: 768px) {
   .text-view::before,
   .text-view::after {

@@ -3,10 +3,12 @@ const isDev = process.env.NODE_ENV === "development";
 
 /** @type {import('next').NextConfig} */
 const nextConfig: NextConfig = {
+  cacheComponents: true,
   async headers() {
     return [
       {
         source: "/(.*)",
+
         headers: [
           {
             key: "X-Content-Type-Options",
@@ -96,7 +98,6 @@ const nextConfig: NextConfig = {
     ],
   },
   reactStrictMode: false,
-
 };
 
 export default nextConfig;

@@ -1,9 +1,10 @@
+import { HeaderObject } from "../database/model/bloc/Header";
 import { PageObject } from "../database/model/Page";
-import getHomePage, {
-  getPageBySlug,
-  getPageFooter,
-  getPageHeader,
-} from "./[slug]/callPages";
+import { getPageFooter } from "../lib/cache/page.footer";
+import { getPageHeader } from "../lib/cache/page.header";
+import { getHomePage } from "../lib/cache/page.homepage";
+import { getPageBySlug } from "../lib/cache/page.slug";
+
 import PageClient from "./[slug]/PageClient";
 
 type Props = {
@@ -17,7 +18,7 @@ export default async function Page({ params }: Props) {
 
   if (slug !== undefined) {
     page = await getPageBySlug(slug);
-    page = page.page;
+    page = page;
   } else {
     page = await getHomePage();
   }
@@ -41,11 +42,5 @@ export default async function Page({ params }: Props) {
     );
   }
 
-  return (
-    <PageClient
-      initialpage={page}
-      header={header.header}
-      footer={footer.footer}
-    />
-  );
+  return <PageClient initialpage={page} header={header} footer={footer} />;
 }

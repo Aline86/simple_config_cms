@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-export const runtime = "nodejs";
 import { prisma } from "../../../../../prisma/prisma";
 import { ApiResponse } from "../../../../../lib/helpers/ApiResponse";
 import { MediaObject } from "../../../../../database/model/bloc/MediaObject";
 import { requireAuth } from "../../requireAuth";
+import { revalidateTag } from "next/cache";
 
 export async function GET(request: NextRequest) {
   return ApiResponse.handle(
@@ -39,9 +39,7 @@ export async function GET(request: NextRequest) {
     },
   );
 }
-/* =====================================================
-   POST – créer le footer
-===================================================== */
+
 export async function POST(request: NextRequest) {
   await requireAuth(request);
   return ApiResponse.handle(
@@ -80,6 +78,8 @@ export async function POST(request: NextRequest) {
         },
       });
 
+      revalidateTag("footer", { expire: 0 });
+
       return {
         message: "footer created",
         footer: {
@@ -97,9 +97,6 @@ export async function POST(request: NextRequest) {
   );
 }
 
-/* =====================================================
-   PUT – mettre à jour le footer
-===================================================== */
 export async function PUT(request: NextRequest) {
   await requireAuth(request);
   return ApiResponse.handle(
@@ -163,6 +160,9 @@ export async function PUT(request: NextRequest) {
           reseaux: true,
         },
       });
+
+      revalidateTag("footer", { expire: 0 });
+
       return {
         message: "footer upadated",
         footer: {
