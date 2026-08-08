@@ -4,17 +4,17 @@ import LogoutButton from "./LogoutButton";
 import BlocChoiceModal from "../modals/PageChoiceModal";
 import { PageObject } from "../../database/model/Page";
 import { CreateBlocOptions } from "../../lib/factories/Bloc.factory";
-import { usePathname } from "next/navigation";
-import { HeaderObject } from "../../database/model/bloc/Header";
+import { usePathname, useRouter } from "next/navigation";
 
 interface NavBarEditionProps {
   logout: () => void;
   labelAdd: string;
   handleAdd: (options?: CreateBlocOptions) => void; // optionnel, si tu veux un bouton "Ajouter une page"
-  setDraggableEnabled: (value: boolean) => void;
+  setDraggableEnabled?: (value: boolean) => void;
   handleSavePages: () => void;
-  draggableEnabled: boolean;
+  draggableEnabled?: boolean;
   model?: PageObject;
+  returnButton?: boolean;
 }
 
 export default function NavBarEdition<T>({
@@ -25,22 +25,26 @@ export default function NavBarEdition<T>({
   draggableEnabled,
   labelAdd,
   model,
+  returnButton,
 }: NavBarEditionProps) {
   const pathname = usePathname();
+  const router = useRouter();
   return (
     <div className="flex justify-end items-center gap-4 fixed top-0 left-0 right-0 z-70 nav-edition p-4 shadow-lg">
       {handleAdd !== undefined && model !== undefined ? (
         <BlocChoiceModal page={model as PageObject} addBlocToPage={handleAdd} />
       ) : (
-        <button
-          aria-label={labelAdd}
-          onClick={() => {
-            handleAdd();
-          }}
-          className="cursor-pointer flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-600 text-white hover:bg-slate-700 transition"
-        >
-          <Plus size={16} /> {labelAdd}
-        </button>
+        handleAdd !== undefined && (
+          <button
+            aria-label={labelAdd}
+            onClick={() => {
+              handleAdd();
+            }}
+            className="cursor-pointer flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-600 text-white hover:bg-slate-700 transition"
+          >
+            <Plus size={16} /> {labelAdd}
+          </button>
+        )
       )}
       {model !== undefined && (
         <>
@@ -67,6 +71,15 @@ export default function NavBarEdition<T>({
           </a>
         </>
       )}
+      {returnButton !== undefined && (
+        <button
+          className="cursor-pointer flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-600 transition"
+          type="button"
+          onClick={() => router.back()}
+        >
+          Retour
+        </button>
+      )}
       <a
         href={`/edition/configuration`}
         title="Paramètres généraux"
@@ -74,10 +87,13 @@ export default function NavBarEdition<T>({
       >
         Paramètres généraux
       </a>
-      <Draggable
-        draggableEnabled={draggableEnabled}
-        setDraggableEnabled={setDraggableEnabled}
-      />
+
+      {draggableEnabled !== undefined && (
+        <Draggable
+          draggableEnabled={draggableEnabled}
+          setDraggableEnabled={setDraggableEnabled}
+        />
+      )}
       <button
         onClick={handleSavePages}
         className="cursor-pointer flex items-center gap-2 px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-600 transition"

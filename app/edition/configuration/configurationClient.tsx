@@ -5,8 +5,7 @@ import ConfigurationEdit from "../../../components/contextView/edition/configura
 import { ConfigurationObject } from "../../../database/model/Configuration";
 import ErrorMessage from "../../../components/ui/ErrorMessage";
 import { useRouter } from "next/navigation";
-
-
+import NavBarEdition from "../../../components/ui/NavBarEdition";
 
 export default function ConfigurationClient({
   initialConfiguration,
@@ -20,8 +19,7 @@ export default function ConfigurationClient({
   const [message, setMessage] = useState("");
   const [showErrorMessage, setShowErrorMessage] = useState(false);
   const [hasSucceeded, setHasSucceeded] = useState(false);
-  const router = useRouter();
-  
+
   useEffect(() => {
     setConfiguration(new ConfigurationObject(initialConfiguration ?? {}));
   }, [initialConfiguration]);
@@ -31,7 +29,14 @@ export default function ConfigurationClient({
       (prev) => new ConfigurationObject({ ...prev, [fieldName]: newValue }),
     );
   }, []);
+  const logout = async () => {
+    await fetch("/api/auth/logout", {
+      method: "POST",
+      credentials: "include",
+    });
 
+    window.location.href = "/login";
+  };
   const handleSave = async () => {
     if (isSaving) return;
     setIsSaving(true);
@@ -72,9 +77,6 @@ export default function ConfigurationClient({
   return (
     <body className="space-y-6 ">
       <main className="space-y-6 p-24">
-        <button type="button" onClick={() => router.back()}>
-          Retour
-        </button>
         <h2 className="text-2xl font-bold">Configuration</h2>
 
         {showErrorMessage && (
@@ -85,21 +87,19 @@ export default function ConfigurationClient({
             hasSucceeded={hasSucceeded}
           />
         )}
-
+        <NavBarEdition
+          labelAdd="Ajouter un bloc"
+          returnButton={true}
+          logout={logout}
+          handleAdd={undefined}
+          setDraggableEnabled={undefined}
+          handleSavePages={handleSave}
+        />
         <ConfigurationEdit
           onChange={handleEdit}
           bloc={configuration}
           show_debug={false}
         />
-
-        <button
-          type="button"
-          onClick={handleSave}
-          disabled={isSaving}
-          className="rounded bg-blue-600 px-4 py-2 text-white disabled:opacity-50"
-        >
-          {isSaving ? "Enregistrement…" : "Enregistrer"}
-        </button>
       </main>
     </body>
   );
