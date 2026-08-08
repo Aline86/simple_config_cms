@@ -23,7 +23,12 @@ export default function usePage() {
         try {
           const raw = await getPageBySlug(slug);
 
-          if (raw !== null && raw !== undefined) {
+          if (
+            raw !== null &&
+            raw !== undefined &&
+            raw.page !== null &&
+            raw.page !== undefined
+          ) {
             setParentId(
               raw.page.number_parent_id != null
                 ? String(raw.page.number_parent_id)
