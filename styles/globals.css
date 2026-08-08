@@ -290,7 +290,7 @@ h2 {
 
 .validated-input-wrapper textarea {
   resize: vertical;
-  font-family: inherit;
+
 }
 
 .error-messages {
