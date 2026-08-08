@@ -1,5 +1,5 @@
 import { HeaderObject } from "../database/model/bloc/Header";
-import { PageObject } from "../database/model/Page";
+
 import { getPageFooter } from "../lib/cache/page.footer";
 import { getPageHeader } from "../lib/cache/page.header";
 import { getHomePage } from "../lib/cache/page.homepage";

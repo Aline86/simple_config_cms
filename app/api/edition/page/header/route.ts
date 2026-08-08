@@ -222,7 +222,8 @@ export async function PUT(request: NextRequest) {
         },
       });
 
-      revalidateTag("header", { expire: 0 });
+     revalidateTag("header", { expire: 0 });
+
 
       return {
         message: "header got",
