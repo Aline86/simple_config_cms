@@ -2,17 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../prisma/prisma";
 import { ApiResponse } from "../../../../lib/helpers/ApiResponse";
 import { requireAuth } from "../requireAuth";
-import { ApiError } from "next/dist/server/api-utils";
+
 import { ConfigurationObject } from "../../../../database/model/Configuration";
 
-export const runtime = "nodejs";
 
-const errorHandler = (err: Record<string, unknown>) => {
-  if (err instanceof ApiError) {
-    return NextResponse.json({ error: err.message }, { status: err.statusCode });
-  }
-  return ApiResponse.handlePrismaError(err);
-};
+
 const CONFIGURATION_ID = 1;
 
 
