@@ -15,11 +15,14 @@
 
 .dark {
   --bg-color: #121212;
-
+  --text-color: black;
 }
-.dark p {
-  --text-color: white;
-
+.dark .tiptap p {
+  color: white;
+ 
+}
+.dark h2 {
+  color: white!important;
 }
 body {
   background-color: var(--bg-color);
