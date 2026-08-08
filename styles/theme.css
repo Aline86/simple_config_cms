@@ -17,7 +17,7 @@ body > .light {
 .dark h2,
 .dark select,
 .dark option {
-
+  color: var(--title-color);
   word-break: break-word;
 }
 .light h2,
