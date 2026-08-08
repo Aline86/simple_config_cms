@@ -4,6 +4,7 @@
 
 .dark {
   background-color: rgb(34, 34, 34);
+  
 }
 .dark body {
   background-color: rgb(34, 34, 34);
@@ -33,9 +34,7 @@ header h1 {
   font-size: 40px;
   text-transform: uppercase;
 }
-h2 {
-  font-size: 35px;
-}
+
 .text-view {
   position: relative;
 }
