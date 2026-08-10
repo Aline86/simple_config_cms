@@ -7,7 +7,7 @@ import { useAppContext } from "../../../../context/DomDataProvider";
 export default function ScreenView({ bloc }: { bloc: BlocObject }) {
   const { hasH1InPage } = useAppContext();
   return bloc.bloc_position === 0 && bloc.mode === "edition" ? (
-    <section className="z-0 mt-[-95px]  w-screen h-screen mb-8">
+    <section className="z-0 mt-[-95px]  h-screen mb-8">
       <div className="relative z-10 w-[70%] h-screen title text-white flex flex-col justify-end pb-24">
         {hasH1InPage ? (
           <h2
@@ -46,8 +46,8 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
       <span className="absolute inset-0 bg-black/20"></span>
     </section>
   ) : (
-    <section className="w-screen z-0 h-[300px] z-0  mt-6">
-      <div className="absolute z-10  h-[300px] w-full left-0 flex-col justify-end title text-white flex">
+    <section className="z-0 h-[300px] z-0  mt-6">
+      <div className="absolute z-10 w-screen  h-[300px]  left-0 flex-col justify-end title text-white flex">
         {/* Background parallaxe */}
         {bloc.image_medias[0].image_url !== "" && (
           <Image
