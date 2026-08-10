@@ -20,9 +20,7 @@ body {
   margin-inline: auto;
   padding-inline: var(--gutter);
 }
-.w-full {
-  max-width: 100%!important;
-}
+
 section { margin-bottom: 45px;}
 
 

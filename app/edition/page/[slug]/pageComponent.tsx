@@ -32,7 +32,6 @@ export default function PageBlocs({
     <div className="p-6  space-y-6 ">
       {page_data.blocs.length > 0 &&
         page_data.blocs.map((bloc, index) => {
-          bloc = bloc.set_mode("edition");
           const num = Number(index) + 1;
           const sub_title =
             bloc.type !== bloc.text_nom_bloc.toUpperCase()

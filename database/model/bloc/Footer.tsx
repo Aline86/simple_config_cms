@@ -44,6 +44,9 @@ export class FooterObject extends BaseValidatable {
     );
     this.mode = mode;
   }
+  set_mode(mode: string): FooterObject {
+    return new FooterObject(this, mode);
+  }
 
   addReseau(media: MediaObject): void {
     this.reseaux.push(media);

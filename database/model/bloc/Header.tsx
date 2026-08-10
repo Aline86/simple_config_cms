@@ -64,7 +64,9 @@ export class HeaderObject extends BaseValidatable {
       (r: MediaObject) => new MediaObject(r),
     );
   }
-
+  set_mode(mode: string): HeaderObject {
+    return new HeaderObject(this, mode);
+  }
   addReseau(media: MediaObject): void {
     this.reseaux.push(media);
   }
