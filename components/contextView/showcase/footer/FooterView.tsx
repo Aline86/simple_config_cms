@@ -37,10 +37,10 @@ export default function FooterView({ bloc }: ViewProps) {
   return (
     <>
       <footer
-        className="p-8  border-gray-800"
+        className="absolute left-0 p-8 w-screen border-gray-800"
         style={{ backgroundColor: bloc.color_background_color ?? "#fff" }}
       >
-        <div className="max-w-7xl mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4 ">
           <div className="space-y-4 font-bold text-lg">
             {bloc.text_nom_site_adresse}
           </div>
