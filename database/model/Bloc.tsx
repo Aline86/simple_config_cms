@@ -89,7 +89,9 @@ export class BlocObject extends BaseValidatable {
     this.calendar = new CalendarObject(data.calendar);
     this.mode = mode;
   }
-
+  set_mode(mode: string): BlocObject {
+    return new BlocObject(this, mode);
+  }
   toJSON() {
     return {
       id: this.id,

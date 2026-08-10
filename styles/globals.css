@@ -11,12 +11,12 @@
 :root {
   --bg-color: white;
   --text-color: black;
-  --measure: 1000px; --gutter: 24px; 
+
 }
 
 
 body {
-  max-width: var(--measure)!important;
+
   margin-inline: auto;
   padding-inline: var(--gutter);
 }

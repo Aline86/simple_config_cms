@@ -26,11 +26,13 @@ export default function PageClient({ initialpage, header, footer }: Props) {
   const footerData = useMemo(() => mapFooter(footer), [footer]);
 
   return (
-    <body>
+    <body style={{ maxWidth: "1000px" }}>
       <HeaderView bloc={headerData} />
       <ThemeToggle />
       <main>
         {page.blocs.map((bloc, index) => {
+          bloc = bloc.set_mode("view");
+          console.log("blo", bloc.mode);
           return <ComponentBloc key={index} bloc={bloc} />;
         })}
       </main>
