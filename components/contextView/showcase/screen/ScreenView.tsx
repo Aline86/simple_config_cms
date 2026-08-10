@@ -8,7 +8,7 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
   const { hasH1InPage } = useAppContext();
   return bloc.bloc_position === 0 && bloc.mode === "edition" ? (
     <section className="z-0 mt-[-95px]  w-screen h-screen mb-8">
-      <div className="relative z-10 w-screen h-screen title text-white flex flex-col justify-end pb-24">
+      <div className="relative z-10 w-[75%] h-screen title text-white flex flex-col justify-end pb-24">
         {hasH1InPage ? (
           <h2
             style={{
