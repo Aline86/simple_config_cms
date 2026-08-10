@@ -200,7 +200,6 @@ export async function PUT(request: NextRequest) {
             },
           }),
 
-          // ===== RÉSEAUX (1–N) =====
           ...(reseaux && {
             reseaux: {
               deleteMany: {}, // supprime tous les réseaux liés au header
