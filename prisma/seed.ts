@@ -1,5 +1,4 @@
-// prisma/seed.ts
-import { PrismaClient } from "../prisma/generated/client"; // ton client custom
+import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs"; // on prend bcryptjs pour être sûr que ça matche partout
 
 const prisma = new PrismaClient();
