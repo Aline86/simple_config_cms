@@ -37,14 +37,22 @@ export function deleteItemAndReorder(
   idKey: string,
 ): MediaObject[] {
   const filtered = prev.filter((p) => p[idKey] !== itemToDelete[idKey]);
+  if (filtered.length > 0) {
+    const reordered = filtered
+      .sort((a, b) => a[idKey] - b[idKey])
+      .map((item, index) => {
+        const media = new MediaObject(item);
+        media[idKey] = index;
+        return media;
+      });
+    return reordered;
+  }
 
-  const reordered = filtered
-    .sort((a, b) => a[idKey] - b[idKey])
-    .map((item, index) => {
-      const media = new MediaObject(item);
-      media[idKey] = index;
-      return media;
-    });
-
+  const reordered = filtered.map((item, index) => {
+    const media = new MediaObject(item);
+    media[idKey] = index;
+    return media;
+  });
   return reordered;
+  
 }

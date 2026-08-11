@@ -4,7 +4,10 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { cloneArticleWithImages } from "../../../../lib/helpers/article.helper";
 import { updateArticleImages } from "../../../../lib/helpers/article.media.helper";
 import { cloneBlocWithArticles } from "../../../../lib/helpers/bloc.helper";
-import { reorderArray } from "../../../../lib/helpers/changeComponentPosition";
+import {
+  deleteItemAndReorder,
+  reorderArray,
+} from "../../../../lib/helpers/changeComponentPosition";
 import {
   cloneMediaWithPosition,
   createMedia,
@@ -75,9 +78,12 @@ const TextPicturesContextEdition: React.FC<TextPicturesContextEditionProps> = ({
       const article = bloc.articles[0];
       if (!article) return bloc;
 
-      const cleanImages = bloc.articles[0].images
-        .filter((img) => img.id !== media.id)
-        .map(cloneMediaWithPosition);
+      const cleanImages = deleteItemAndReorder(
+        article.images,
+        media,
+        "number_position_image",
+      );
+      console.log("cleanImages", cleanImages);
       const updatedArticles = [cloneArticleWithImages(article, cleanImages)];
       const updatedBloc = cloneBlocWithArticles(bloc, updatedArticles);
 

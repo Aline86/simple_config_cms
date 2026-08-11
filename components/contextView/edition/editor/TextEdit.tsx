@@ -133,7 +133,7 @@ export default function TextEditor({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             {images.map((media) => (
               <PictureEditor
-                key={(media as MediaObject).id}
+                key={(media as MediaObject).number_position_image}
                 media={media as MediaObject}
                 onChange={onChange}
                 removeElement={removeElement}

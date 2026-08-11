@@ -66,7 +66,7 @@ export default function PicturesLinkEdit({
           {bloc.image_medias.map((media) => {
             return (
               <PictureEditor
-                key={media.id}
+                key={media.number_position_image}
                 media={media}
                 onChange={onChange}
                 removeElement={removeElement}
