@@ -1,5 +1,5 @@
 import { useId, useState, useRef, useCallback, useEffect } from "react";
-import { DEFAULT_FONT_ID, FONT_STACKS, resolveFont } from "../fonts/fonts";
+import { DEFAULT_FONT_ID, FONT_STACKS } from "../fonts/fonts";
 
 export default function FontSelect({
   value = DEFAULT_FONT_ID,
@@ -19,11 +19,10 @@ export default function FontSelect({
   const buttonRef = useRef(null);
   const listRef = useRef(null);
   const [selected, setSelected] = useState(
-    FONT_STACKS[value] || resolveFont(DEFAULT_FONT_ID),
+    FONT_STACKS[value] ?? FONT_STACKS[0],
   );
 
-  const selectedIndex =
-    FONT_STACKS[value] || FONT_STACKS.indexOf(resolveFont(DEFAULT_FONT_ID));
+  const selectedIndex = FONT_STACKS[value] ?? FONT_STACKS[0];
 
   const close = useCallback(({ refocus = true } = {}) => {
     setOpen(false);

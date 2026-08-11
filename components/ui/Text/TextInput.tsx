@@ -5,6 +5,7 @@ import React, { JSX, useEffect, useState } from "react";
 import { TextValidator } from "../../../lib/validators/TextValidator";
 import FontSelect from "./PoliceSelect";
 
+
 interface BaseInputProps<T> {
   label?: string;
   className?: string;
