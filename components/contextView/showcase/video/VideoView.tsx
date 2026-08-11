@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { BlocObject } from "../../../../database/model/Bloc";
 import { extractYouTubeid } from "../../../../lib/helpers/mediaExtractUrlHelper";
+import AnimatedTitle from "../../../ui/animations/AnimatedTitle";
 
 interface VideoPlayerProps {
   bloc: BlocObject;
@@ -96,9 +97,14 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ bloc }) => {
         {/* text_titre */}
         {bloc.text_titre && (
           <div className="mb-4">
-            <h2 className="text-2xl font-semibold text-slate-800">
-              {bloc.text_titre}
-            </h2>
+            <AnimatedTitle
+              children={
+                <h2 className="text-2xl font-semibold text-slate-800">
+                  {bloc.text_titre}
+                </h2>
+              }
+            ></AnimatedTitle>
+
             {bloc.text_description && (
               <p className="text-slate-600 mt-1">{bloc.text_description}</p>
             )}
@@ -127,9 +133,14 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ bloc }) => {
     <section className="w-full max-w-4xl mx-auto mb-8">
       {bloc.text_titre && (
         <div className="mb-4">
-          <h2 className=" text-2xl font-semibold text-slate-800">
-            {bloc.text_titre}
-          </h2>
+          <AnimatedTitle
+            children={
+              <h2 className=" text-2xl font-semibold text-slate-800">
+                {bloc.text_titre}
+              </h2>
+            }
+          ></AnimatedTitle>
+
           {bloc.text_description && (
             <p className="text-slate-600 mt-1">{bloc.text_description}</p>
           )}

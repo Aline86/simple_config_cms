@@ -5,6 +5,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import frLocale from "@fullcalendar/core/locales/fr";
 import { useCalendarModal } from "../../../../hooks/components/calendar/view/CalendarViewHook";
+import AnimatedTitle from "../../../ui/animations/AnimatedTitle";
 
 interface BlocParams {
   bloc: BlocObject;
@@ -15,9 +16,13 @@ export default function Calendar({ bloc }: Readonly<BlocParams>) {
   const { handleEventClick, modal, setModal, formatDate } = useCalendarModal();
   return (
     <section className="mx-auto max-w-4xl space-y-6 p-6 mb-8">
-      <h2 className="mt-8 text-2xl font-bold text-slate-800 mb-6 text-center">
-        {bloc.text_titre}
-      </h2>
+      <AnimatedTitle
+        children={
+          <h2 className="mt-8 text-2xl font-bold text-slate-800 mb-6 text-center">
+            {bloc.text_titre}
+          </h2>
+        }
+      ></AnimatedTitle>
       <FullCalendar
         locale={frLocale}
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}

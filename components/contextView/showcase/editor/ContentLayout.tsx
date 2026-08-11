@@ -1,3 +1,5 @@
+import AnimatedTitle from "../../../ui/animations/AnimatedTitle";
+
 type ImagePosition = "top" | "left" | "right";
 
 interface LayoutProps {
@@ -43,9 +45,13 @@ export default function ContentLayout({
 
   return (
     <section className=" text-view max-w-[950px] w-full mx-auto p-10">
-      <h2 className="mt-8 text-2xl font-bold text-slate-800 mb-6 text-center">
-        {title}
-      </h2>
+      <AnimatedTitle
+        children={
+          <h2 className="mt-8 text-2xl font-bold text-slate-800 mb-6 text-center">
+            {title}
+          </h2>
+        }
+      ></AnimatedTitle>
       {layouts[position] !== undefined && layouts[position]}
     </section>
   );

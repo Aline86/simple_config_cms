@@ -542,12 +542,58 @@ iframe {
   padding: 0.25rem 0.5rem !important;
   font-size: 0.75rem !important;
 }
+/* Grid animation */
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.masonry-container > button {
+  opacity: 0;
+  animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .masonry-container > button { animation: none; opacity: 1; }
+}
 
 @media (min-width: 640px) {
   .fc .fc-button {
     padding: 0.4rem 0.75rem !important;
     font-size: 0.875rem !important;
   }
+}
+
+/* Animation images editor */
+@keyframes blocDropIn {
+  from { opacity: 0; transform: translateY(-32px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.anim-item {
+  opacity: 0;
+  animation: blocDropIn 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes blocDropIn {
+  from { opacity: 0; transform: translateY(-32px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.anim-item {
+  animation: blocDropIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 40%;
+}
+
+/* fallback navigateurs sans scroll-driven animations */
+@supports not (animation-timeline: view()) {
+  .anim-item { opacity: 1; animation: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-item { animation: none; opacity: 1; }
 }
 /* Pour les écrans de plus de 768px */
 @media (max-width: 768px) {

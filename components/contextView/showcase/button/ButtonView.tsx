@@ -8,6 +8,7 @@ import {
   getOriginalPdfUrl,
   isPdfUrl,
 } from "../../../../lib/helpers/isPdf";
+import AnimatedTitle from "../../../ui/animations/AnimatedTitle";
 
 export default function ButtonView({ bloc }: { bloc: BlocObject }) {
   const picture = bloc.image_medias[0];
@@ -21,9 +22,14 @@ export default function ButtonView({ bloc }: { bloc: BlocObject }) {
   return (
     <section className="button m-auto max-w-[950px] group perspective w-full p-8 mb-8">
       <div className="pt-6 relative bg-gradient-to-br from-slate-50 via-white to-slate-50 rounded-2xl overflow-hidden border border-slate-200/50 backdrop-blur-sm transform transition-transform duration-500 hover:scale-[1.02] hover:shadow-2xl h-full flex flex-col">
-        <h2 className="text-2xl text-center font-bold mb-4">
-          {bloc.text_titre}
-        </h2>
+        <AnimatedTitle
+          children={
+            <h2 className="text-2xl text-center font-bold mb-4">
+              {bloc.text_titre}
+            </h2>
+          }
+        ></AnimatedTitle>
+
         <p className="p-4 mb-8">{bloc.text_description}</p>
         <div className="relative h-56 mx-6 mb-4 rounded-xl overflow-hidden will-change-transform flex-shrink-0">
           <Image

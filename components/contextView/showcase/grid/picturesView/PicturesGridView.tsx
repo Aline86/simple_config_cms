@@ -1,6 +1,9 @@
+"use client";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import Image from "next/image";
 import { BlocObject } from "../../../../../database/model/Bloc";
+import AnimatedTitle from "../../../../ui/animations/AnimatedTitle";
 
 export default function PicturesgridView({
   bloc,
@@ -9,14 +12,18 @@ export default function PicturesgridView({
   bloc: BlocObject;
   editing: boolean;
 }) {
-  const [activeImage, setActiveImage] = useState<string | null>(null);
+  const [active, setActive] = useState<number | null>(null);
 
   return (
     <section className="max-w-[1650px] w-full mx-auto text-center p-8 mb-8">
-      <h2 className="text-2xl font-bold text-slate-800 mb-6">
-        {bloc.text_titre}
-      </h2>
-
+      <AnimatedTitle
+        children={
+          <h2 className="text-2xl font-bold text-slate-800 mb-6">
+            {bloc.text_titre}
+          </h2>
+        }
+        className="mb-12"
+      ></AnimatedTitle>
       <div
         className="masonry-container"
         style={{
@@ -25,70 +32,68 @@ export default function PicturesgridView({
         }}
       >
         {bloc.image_medias.map((img, idx) => (
-          <button
-            aria-label="Agrandir l'image"
+          <motion.button
             key={idx}
-            onClick={() => setActiveImage(img.image_url)}
-            className="w-full mb-4 overflow-hidden rounded focus:outline-none"
-            style={{
-              breakInside: "avoid",
-              pageBreakInside: "avoid",
-              display: "inline-block",
-            }}
+            layoutId={`photo-${idx}`}
+            aria-label="Agrandir l'image"
+            onClick={() => img.image_url !== "" && setActive(idx)}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.35, delay: Math.min(idx, 6) * 0.04 }}
+            className="group relative w-full mb-4 overflow-hidden rounded focus:outline-none"
+            style={{ breakInside: "avoid", display: "inline-block" }}
           >
-            {editing ? (
-              <div className="absolute mt-4 ml-4 text-gray-100 text-2xl border border-gray-300 rounded-full w-9 h-9">
+            {editing && (
+              <div className="absolute top-4 left-4 z-10 flex items-center justify-center text-gray-100 text-2xl border border-gray-300 rounded-full w-9 h-9">
                 {idx + 1}
               </div>
-            ) : (
-              <></>
             )}
+
             {img.image_url !== "" ? (
               <Image
                 src={img.image_url}
                 alt={img.text_titre || `img-${idx}`}
-                className="rounded  w-full cursor-pointer z-20"
-                width={100}
-                height={100}
-                sizes="
-    (max-width: 640px) 100vw,
-    (max-width: 1024px) 80vw,
-    1440px
-  "
+                width={800}
+                height={800}
+                className="w-full h-auto rounded cursor-pointer"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                priority={idx < 3}
               />
             ) : (
-              <>
-                <div className="absolute top-2 right-5 text-white text-2xl border border-gray-300 rounded-full w-9 h-9">
-                  {editing ? idx + 1 : ""}
-                </div>
-              </>
+              <div className="w-full aspect-square rounded bg-slate-200" />
             )}
-          </button>
+          </motion.button>
         ))}
       </div>
 
-      {/* Lightbox */}
-      {activeImage && (
-        <div
-          className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4 cursor-pointer"
-          onClick={() => setActiveImage(null)}
-        >
-          <div className="relative w-full max-w-6xl h-[90vh]">
-            <Image
-              src={activeImage}
-              alt="Image agrandie"
-              fill
-              className="object-contain rounded"
-              sizes="
-    (max-width: 640px) 100vw,
-    (max-width: 1024px) 80vw,
-    1440px
-  "
-              priority
-            />
-          </div>
-        </div>
-      )}
+      <AnimatePresence>
+        {active !== null && (
+          <motion.div
+            className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4 cursor-pointer"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setActive(null)}
+          >
+            <motion.div
+              layoutId={`photo-${active}`}
+              onClick={(e) => e.stopPropagation()}
+              className="relative cursor-default"
+            >
+              <Image
+                src={bloc.image_medias[active].image_url}
+                alt={bloc.image_medias[active].text_titre || "Image agrandie"}
+                width={1920}
+                height={1080}
+                className="max-h-[90vh] w-auto max-w-[90vw] rounded object-contain"
+                sizes="90vw"
+                priority
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

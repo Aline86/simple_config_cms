@@ -8,6 +8,7 @@ import { MediaObject } from "../../../../database/model/bloc/MediaObject";
 import PicturesLinkItemView from "../grid/picturesLink/PictureLinkItemView";
 import ArticleView from "./ArtcleView";
 import ContentLayout from "./ContentLayout";
+import { motion } from "framer-motion";
 
 interface BlocParams {
   bloc: BlocObject;
@@ -32,12 +33,19 @@ export default function TextView({ bloc, editing = false }: BlocParams) {
       )}
     >
       {article.images.map((media: MediaObject, idx: number) => (
-        <PicturesLinkItemView
+        <motion.div
           key={media.id}
-          mediaObject={media}
-          editing={editing}
-          cardNumber={idx}
-        />
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, margin: "-40px" }}
+          transition={{ duration: 0.4, delay: Math.min(idx, 8) * 0.05 }}
+        >
+          <PicturesLinkItemView
+            mediaObject={media}
+            editing={editing}
+            cardNumber={idx}
+          />
+        </motion.div>
       ))}
     </div>
   ) : null;

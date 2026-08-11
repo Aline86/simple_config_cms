@@ -1,16 +1,11 @@
 "use client";
 
 import { JSONContent } from "@tiptap/core";
+import AnimatedTitle from "../../components/ui/animations/AnimatedTitle";
 
 type Mark = {
   type:
-    | "bold"
-    | "link"
-    | "code"
-    | "italic"
-    | "underline"
-    | "strike"
-    | "textStyle";
+    "bold" | "link" | "code" | "italic" | "underline" | "strike" | "textStyle";
   attrs?: {
     fontSize?: string;
     href?: string;
@@ -75,8 +70,11 @@ function processTextNode(node: JSONContent): string {
 function convertHeading(node: JSONContent): string {
   const textAlign = node.attrs.textAlign || "left";
   const text = node.content.map((n) => n.text || "").join(" ") || "";
-
-  return `<h2 style="text-align: ${textAlign}; font-size: 65px">${text}</h2>`;
+  return `<AnimatedTitle
+     children={
+       <h2 style="text-align: ${textAlign}; font-size: 65px">${text}</h2>
+     }
+   ></AnimatedTitle>`;
 }
 
 function convertParagraph(node: JSONContent): string {

@@ -10,6 +10,7 @@ import {
   CarouselPrevious,
   CarouselNext,
 } from "../../../../ui/carousel";
+import AnimatedTitle from "../../../../ui/animations/AnimatedTitle";
 
 interface CustomCarouselInfo {
   bloc: BlocObject;
@@ -23,9 +24,13 @@ export default function CarouselSimple({
   if (!bloc.image_medias.length) return null;
   return (
     <section className="p-8 relative max-w-[1650px] w-full mx-auto flex-col justify-center align-center m-auto overflow-hidden">
-      <h2 className="text-2xl text-center font-bold text-slate-800 mb-6">
-        {bloc.text_titre}
-      </h2>
+      <AnimatedTitle
+        children={
+          <h2 className="text-2xl text-center font-bold text-slate-800 mb-6">
+            {bloc.text_titre}
+          </h2>
+        }
+      ></AnimatedTitle>
       <Carousel opts={{ align: "start" }} className="w-full ">
         <CarouselContent>
           {bloc.image_medias.map((media: MediaObject, index) => (

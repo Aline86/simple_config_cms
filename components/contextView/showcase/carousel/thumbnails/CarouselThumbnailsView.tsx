@@ -3,6 +3,7 @@ import { useIsSmScreen } from "../../../../../hooks/screenSize/useIsSmScreen";
 import { BlocObject } from "../../../../../database/model/Bloc";
 import { MediaObject } from "../../../../../database/model/bloc/MediaObject";
 import CarouselContainer from "./CarouselContainer";
+import AnimatedTitle from "../../../../ui/animations/AnimatedTitle";
 
 export default function CarouselThumbnailsView({
   bloc,
@@ -61,10 +62,14 @@ export default function CarouselThumbnailsView({
   }, [cardNumber, bloc]);
   return (
     <section className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 mb-8">
-      <h2 className="text-2xl text-center font-bold text-slate-800 mb-6">
-        {bloc.text_titre}
-      </h2>
-
+      <AnimatedTitle
+        children={
+          <h2 className="text-2xl text-center font-bold text-slate-800 mb-6">
+            {bloc.text_titre}
+          </h2>
+        }
+        className="mb-12"
+      ></AnimatedTitle>
       <CarouselContainer
         width={width}
         height={height}

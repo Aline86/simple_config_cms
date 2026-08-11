@@ -15,8 +15,11 @@ export default function PicturesLinkItemView({
   cardNumber: number;
 }) {
   return (
-    <div className="w-full">
-      <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border border-slate-200 overflow-hidden group h-full flex flex-col">
+    <div className="w-full ">
+      <a
+        href={mediaObject.text_image_lien ? mediaObject.text_image_lien : "#"}
+        className="bg-white rounded-lg shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-slate-200 overflow-hidden group h-full flex flex-col"
+      >
         <div className="relative h-48 bg-gradient-to-br from-slate-300 to-slate-400 overflow-hidden">
           {mediaObject.image_url !== undefined &&
           mediaObject.image_url !== null &&
@@ -26,11 +29,7 @@ export default function PicturesLinkItemView({
               src={mediaObject.image_url}
               fill
               alt={mediaObject.text_titre}
-              sizes="
-    (max-width: 640px) 100vw,
-    (max-width: 1024px) 80vw,
-    1440px
-  "
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             />
           ) : (
             <img
@@ -41,7 +40,7 @@ export default function PicturesLinkItemView({
           )}
           {isLink && (
             <>
-              <div className="relative z-10 p-6 flex h-full flex-col items-center justify-end gap-[30px]">
+              <div className="relative z-10 p-6 flex h-full flex-col items-center justify-end gap-[30px] duration-300">
                 {editing ? (
                   <div className="absolute top-2 right-5 text-white text-2xl border border-gray-300 rounded-full w-9 h-9">
                     {cardNumber + 1}
@@ -55,24 +54,16 @@ export default function PicturesLinkItemView({
                   </h3>
                 </div>
 
-                <a
-                  href={
-                    mediaObject.text_image_lien
-                      ? mediaObject.text_image_lien
-                      : "#"
-                  }
-                  className="w-full flex items-center justify-center gap-2 px-4 py-2.5 hover:border border-white-100 text-white rounded-md transition-colors duration-200 font-medium"
-                >
-                  <span>Voir</span>
-                  <ArrowRight className="w-4 h-4" />
-                </a>
+                <span className="inline text-white">
+                  Voir
+                  <ArrowRight className="ml-2 w-4 h-4 inline " />
+                </span>
               </div>
-
-              <span className="absolute inset-0 bg-black/30 z-0 flex justify align-items"></span>
+              <span className="absolute inset-0 bg-black/20 group-hover:bg-black/50 transition-colors duration-300 z-0" />
             </>
           )}
         </div>
-      </div>
+      </a>
     </div>
   );
 }

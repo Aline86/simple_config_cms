@@ -1,3 +1,6 @@
+"use client";
+import { motion } from "framer-motion";
+
 import clsx from "clsx";
 import { BlocObject } from "../../../../../database/model/Bloc";
 import PicturesLinkItemView from "./PictureLinkItemView";
@@ -21,17 +24,27 @@ export default function PicturesLinkView({
           getgridClasses(bloc.number_columns),
         )}
       >
-        {bloc.image_medias.map((media, idx) => {
-          return (
+        {bloc.image_medias.map((media, idx) => (
+          <motion.div
+            key={media.id}
+            className="h-full"
+            initial={{ opacity: 0, y: -32 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, margin: "-60px" }}
+            transition={{
+              duration: 0.5,
+              delay: Math.min(idx, 8) * 0.06,
+              ease: [0.34, 1.56, 0.64, 1],
+            }}
+          >
             <PicturesLinkItemView
-              key={media.id}
               mediaObject={media}
               isLink={true}
               editing={editing}
               cardNumber={idx}
             />
-          );
-        })}
+          </motion.div>
+        ))}
       </div>
     </section>
   );
