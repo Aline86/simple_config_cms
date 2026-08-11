@@ -1,31 +1,6 @@
 import type { NextConfig } from "next";
 const isDev = process.env.NODE_ENV === "development";
-const cspHeader =
-  [
-    "default-src 'self'",
-    // Images : ajout de tous les domaines nécessaires
-    "img-src 'self' https://res.cloudinary.com https://picsum.photos https://i.ytimg.com https://img.youtube.com data: blob:",
-    // Scripts : ajout de YouTube et autres
-    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://upload-widget.cloudinary.com https://www.google-analytics.com https://play.google.com https://vercel.live https://www.youtube.com https://s.ytimg.com",
-    // Styles
-    "style-src 'self' 'unsafe-inline'",
-    "style-src-elem 'self' 'unsafe-inline'",
-    "style-src-attr 'self' 'unsafe-inline'",
-    // Connect : API calls
-    "connect-src 'self' https://welcomepoitiers.fr https://*.welcomepoitiers.fr https://upload-widget.cloudinary.com https://api.cloudinary.com https://res.cloudinary.com https://www.google-analytics.com https://play.google.com https://www.youtube.com https://vercel.live",
-    // Media : CRITIQUE pour les vidéos
-    "media-src 'self' https://res.cloudinary.com https://www.youtube.com https://www.youtube-nocookie.com blob: data: https: http:",
-    // Frames : iframes YouTube, Vimeo, Cloudinary
-    `frame-src 'self' https://upload-widget.cloudinary.com https://www.youtube.com https://www.youtube-nocookie.com https://player.vimeo.com https://www.dailymotion.com ${isDev ? "http://localhost:3000" : "https://simple-config-cms.vercel.app"}`,
-    // Fonts
-    "font-src 'self' data: https://fonts.gstatic.com",
-    // Sécurité
-    "object-src 'none'",
-    "base-uri 'self'",
-    "form-action 'self'",
-  ]
-    .filter(Boolean)
-    .join("; ") + ";";
+
 /** @type {import('next').NextConfig} */
 const nextConfig: NextConfig = {
   cacheComponents: true,
@@ -40,10 +15,6 @@ const nextConfig: NextConfig = {
         source: "/(.*)",
 
         headers: [
-          {
-            key: "Content-Security-Policy",
-            value: cspHeader.replace(/\n/g, ""),
-          },
           {
             key: "X-Content-Type-Options",
             value: "nosniff",
@@ -88,7 +59,32 @@ const nextConfig: NextConfig = {
           },
           {
             key: "Content-Security-Policy",
-            value: cspHeader, // ← Important : ajout du ";" final
+            value:
+              [
+                "default-src 'self'",
+                // Images : ajout de tous les domaines nécessaires
+                "img-src 'self' https://res.cloudinary.com https://picsum.photos https://i.ytimg.com https://img.youtube.com data: blob:",
+                // Scripts : ajout de YouTube et autres
+                "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://upload-widget.cloudinary.com https://www.google-analytics.com https://play.google.com https://vercel.live https://www.youtube.com https://s.ytimg.com",
+                // Styles
+                "style-src 'self' 'unsafe-inline'",
+                "style-src-elem 'self' 'unsafe-inline'",
+                "style-src-attr 'self' 'unsafe-inline'",
+                // Connect : API calls
+                "connect-src 'self' https://welcomepoitiers.fr https://*.welcomepoitiers.fr https://upload-widget.cloudinary.com https://api.cloudinary.com https://res.cloudinary.com https://www.google-analytics.com https://play.google.com https://www.youtube.com https://vercel.live",
+                // Media : CRITIQUE pour les vidéos
+                "media-src 'self' https://res.cloudinary.com https://www.youtube.com https://www.youtube-nocookie.com blob: data: https: http:",
+                // Frames : iframes YouTube, Vimeo, Cloudinary
+                `frame-src 'self' https://upload-widget.cloudinary.com https://www.youtube.com https://www.youtube-nocookie.com https://player.vimeo.com https://www.dailymotion.com ${isDev ? "http://localhost:3000" : "https://simple-config-cms.vercel.app"}`,
+                // Fonts
+                "font-src 'self' data: https://fonts.gstatic.com",
+                // Sécurité
+                "object-src 'none'",
+                "base-uri 'self'",
+                "form-action 'self'",
+              ]
+                .filter(Boolean)
+                .join("; ") + ";", // ← Important : ajout du ";" final
           },
         ],
       },
