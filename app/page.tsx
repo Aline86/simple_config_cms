@@ -27,5 +27,5 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Page({ params }: Props) {
-  return <PageContainer params={params} />;
+  return <PageContainer />;
 }

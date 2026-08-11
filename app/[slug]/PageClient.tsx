@@ -32,7 +32,7 @@ export default function PageClient({ initialpage, header, footer }: Props) {
       <main>
         {page.blocs.map((bloc, index) => {
           bloc = bloc.set_mode("view");
-          console.log("blo", bloc.mode);
+
           return <ComponentBloc key={index} bloc={bloc} />;
         })}
       </main>

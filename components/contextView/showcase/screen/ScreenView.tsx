@@ -7,7 +7,7 @@ import { useAppContext } from "../../../../context/DomDataProvider";
 import AnimatedTitle from "../../../ui/animations/AnimatedTitle";
 export default function ScreenView({ bloc }: { bloc: BlocObject }) {
   const { hasH1InPage } = useAppContext();
-  console.log("bloc", bloc.mode);
+
   return bloc.bloc_position === 0 ? (
     <section
       className={
