@@ -1,8 +1,9 @@
 import { PageObject } from "../database/model/Page";
 import type { Metadata } from "next";
-import PageContainer from "./PageContainer";
+
 import { getHomePage } from "../lib/cache/page.homepage";
 import { getPageHeader } from "../lib/cache/page.header";
+import { PageContainer } from "./PageContainer";
 
 type Props = {
   params: Promise<{ slug: string }>;

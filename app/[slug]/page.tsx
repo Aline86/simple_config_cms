@@ -3,9 +3,8 @@ import { PageObject } from "../../database/model/Page";
 import { getPageHeader } from "../../lib/cache/page.header";
 import { getPageBySlug } from "../../lib/cache/page.slug";
 
-import PageContainer from "../PageContainer";
-
 import type { Metadata } from "next";
+import { PageContainer } from "../PageContainer";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -42,6 +41,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function Page({ params }: Props) {
-  return <PageContainer params={params} />;
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  return <PageContainer slug={slug} />;
 }

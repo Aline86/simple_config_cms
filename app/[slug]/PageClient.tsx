@@ -19,14 +19,25 @@ type Props = {
   initialpage: NonNullable<Awaited<ReturnType<typeof getHomePage>>>;
   header: NonNullable<Awaited<ReturnType<typeof getPageHeader>>>;
   footer: NonNullable<Awaited<ReturnType<typeof getPageFooter>>>;
+  cssVars: string;
 };
-export default function PageClient({ initialpage, header, footer }: Props) {
+export default function PageClient({
+  initialpage,
+  header,
+  footer,
+  cssVars,
+}: Props) {
   const page = useMemo(() => mapPage(initialpage), [initialpage]);
   const headerData = useMemo(() => mapHeader(header), [header]);
   const footerData = useMemo(() => mapFooter(footer), [footer]);
 
   return (
     <body style={{ maxWidth: "1000px" }}>
+      <style
+        href="dom-data-config-vars"
+        precedence="default"
+        dangerouslySetInnerHTML={{ __html: cssVars }}
+      />
       <HeaderView bloc={headerData} />
       <ThemeToggle />
       <main>

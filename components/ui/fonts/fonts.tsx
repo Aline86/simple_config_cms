@@ -81,16 +81,3 @@ export const FONT_STACKS: FontStack[] = [
 
 export const DEFAULT_FONT_ID = "system-sans";
 
-export function resolveFont(value: unknown): FontStack | null {
-  if (value == null || value === "") return null;
-  const s = String(value);
-  return (
-    FONT_STACKS.find((f) => f.id === s) ??
-    FONT_STACKS.find((f) => f.stack === s) ??
-    (/^\d+$/.test(s) ? (FONT_STACKS[Number(s)] ?? null) : null)
-  );
-}
-
-export function fontStackFor(value: unknown): string {
-  return (resolveFont(value) ?? FONT_STACKS[0]).stack;
-}
