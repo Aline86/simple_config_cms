@@ -27,8 +27,8 @@ export default function PageClient({
   cssVars,
 }: Props) {
   const page = useMemo(() => mapPage(initialPage), [initialPage]);
-  const headerData = useMemo(() => mapHeader(header), [header]);
-  const footerData = useMemo(() => mapFooter(footer), [footer]);
+  const headerData = useMemo(() => mapHeader(header, "view"), [header]);
+  const footerData = useMemo(() => mapFooter(footer, "view"), [footer]);
 
   return (
     <body style={{ maxWidth: "1000px" }}>

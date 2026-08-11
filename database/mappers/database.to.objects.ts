@@ -8,27 +8,25 @@ type Row = Record<string, unknown>;
 
 function toMedia(row: Row | null | undefined): MediaObject | undefined {
   if (!row) return undefined;
-  return new MediaObject(row as never);
+  return new MediaObject(row);
 }
 
-export function mapHeader(row: Row, mode: "view" | "edit" = "view") {
+export function mapHeader(row: Row, mode: "view" | "edition") {
   return new HeaderObject(
     {
       ...row,
       logo: toMedia(row.logo as Row),
       favicon: toMedia(row.favicon as Row),
-      reseaux: ((row.reseaux as Row[]) ?? []).map(
-        (r) => new MediaObject(r as never),
-      ),
+      reseaux: ((row.reseaux as Row[]) ?? []).map((r) => new MediaObject(r)),
     } as never,
     mode,
   );
 }
 
-export function mapFooter(row: Row, mode: "view" | "edit" = "view") {
-  return new FooterObject({ ...row } as never, mode);
+export function mapFooter(row: Row, mode: "view" | "edition") {
+  return new FooterObject({ ...row }, mode);
 }
 
 export function mapPage(row: Row) {
-  return new PageObject(row as never);
+  return new PageObject(row);
 }

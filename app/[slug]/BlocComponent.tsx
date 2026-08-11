@@ -11,7 +11,7 @@ export default function ComponentBloc({ bloc }: PageCrudProps) {
   const Renderer =
     blocksFrontToRender[bloc.type as string][bloc.text_nom_bloc as string];
 
-  if (!Renderer) return null; // fallback si type inconnu
+  if (!Renderer) return null; 
 
   return <Renderer bloc={bloc} />;
 }
