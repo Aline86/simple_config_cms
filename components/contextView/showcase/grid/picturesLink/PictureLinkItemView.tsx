@@ -59,7 +59,7 @@ export default function PicturesLinkItemView({
                   <ArrowRight className="ml-2 w-4 h-4 inline " />
                 </span>
               </div>
-              <span className="absolute inset-0 bg-black/20 group-hover:bg-black/50 transition-colors duration-300 z-0" />
+              <span className="absolute inset-0 z-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />{" "}
             </>
           )}
         </div>
