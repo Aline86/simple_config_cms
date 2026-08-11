@@ -1,11 +1,10 @@
-import getPages from "./callPages";
+"use client";
+
+import usePages from "../../../hooks/dropdown/usePages";
 import PageClient from "./PageClient";
-export const instant = false;
 
-export default async function Page() {
-  "use cache";
-
-  const pages = await getPages();
+export default function Page() {
+  const pages = usePages();
   if (pages !== undefined) {
     return <PageClient initialPages={pages.pages} />;
   } else {

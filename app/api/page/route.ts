@@ -1,13 +1,16 @@
 import { NextRequest } from "next/server";
 import { getPageBySlug } from "../../../lib/cache/page.slug";
 import { ApiResponse } from "../../../lib/helpers/ApiResponse";
-import { RequestHelper } from "../../../lib/helpers/RequestHelper";
-
 
 export async function GET(request: NextRequest) {
+  const slug = request.nextUrl.searchParams.get("slug");
+
+  if (!slug) {
+    return ApiResponse.missingParameter("slug");
+  }
+
   return ApiResponse.handle(
     async () => {
-      const slug = RequestHelper.getRequiredSearchParam(request, "slug");
       const dbPage = await getPageBySlug(slug);
 
       if (!dbPage) {
@@ -18,9 +21,6 @@ export async function GET(request: NextRequest) {
     },
     {
       errorHandler: (err: Record<string, unknown>) => {
-        if (err.message === "slug missing") {
-          return ApiResponse.missingParameter("Slug");
-        }
         if (err.message === "Page not found") {
           return ApiResponse.notFound("Page not found");
         }

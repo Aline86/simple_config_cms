@@ -1,9 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
-
-import { getPageBySlug } from "../../app/edition/page/[slug]/callPages";
 import { ConfigurationObject } from "../../database/model/Configuration";
 import getConfiguration from "../../app/edition/configuration/callConfiguration";
 

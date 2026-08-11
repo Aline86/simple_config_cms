@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import getPages from "../../../app/edition/pages/callPages";
+
 import { useAppContext } from "../../../context/DomDataProvider";
 import { PageObject } from "../../../database/model/Page";
 import { HeaderObject } from "../../../database/model/bloc/Header";
+import usePages from "../../dropdown/usePages";
 
 export const isValidColor = (value?: string): boolean => {
   if (!value) return false;
@@ -34,12 +35,8 @@ export function useHeader(bloc: HeaderObject) {
   const [isBurger, setIsBurger] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
   const [stateBG, setStateBG] = useState<"color" | "image" | "empty">("empty");
-  const [pages, setPages] = useState<PageObject[]>();
+  const { pages } = usePages();
   const { setHasH1InPage } = useAppContext();
-  const fetchPages = async () => {
-    const result = await getPages();
-    setPages(result.pages ?? []);
-  };
 
   const checkOverflow = () => {
     if (!scrollRef.current || !navRef.current) return;
@@ -53,10 +50,6 @@ export function useHeader(bloc: HeaderObject) {
     const scrollY = window.scrollY;
     setIsSticky(scrollY < window.innerHeight * 2);
   };
-
-  useEffect(() => {
-    void fetchPages();
-  }, []);
 
   useEffect(() => {
     setHasH1InPage(bloc.text_nom_site.trim().length > 0);

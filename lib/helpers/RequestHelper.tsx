@@ -5,14 +5,13 @@ import { NextRequest } from "next/server";
  */
 export class RequestHelper {
   /**
-   * Extrait un paramètre de recherche de l'URL
+   * Extrait un paramètre de recherche de l'URL via l'API native nextUrl
    */
   static getSearchParam(
     request: NextRequest,
     paramName: string,
   ): string | null {
-    const { searchParams } = new URL(request.url);
-    return searchParams.get(paramName);
+    return request.nextUrl.searchParams.get(paramName);
   }
 
   /**
