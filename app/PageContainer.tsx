@@ -12,7 +12,7 @@ import { getConfiguration } from "../lib/cache/configuration";
 import { PALETTE } from "../components/ui/Text/TailwindPalette";
 
 interface PageProps {
-  params: Promise<{ slug?: string }>;
+  params?: Promise<{ slug?: string }>;
 }
 
 export default async function Page({ params }: PageProps) {
@@ -26,12 +26,10 @@ export default async function Page({ params }: PageProps) {
     getConfiguration(),
   ]);
 
-  // 2. Trigger Next.js 404 page if a slug was provided but no page was found
   if (slug && !page) {
     notFound();
   }
 
-  // 3. Fallback check for missing critical site setup data
   if (!header || !footer || !page || !configuration) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -45,9 +43,7 @@ export default async function Page({ params }: PageProps) {
     );
   }
 
-  // 4. Resolve styles and CSS variables
-  const titleColor =
-    PALETTE[configuration.color_main_color]?.[600] ?? "#1e40af";
+  const titleColor = PALETTE[configuration.color_main_color][600] ?? "#1e40af";
 
   const cssVars = `:root{--police:${FONT_STACKS[Number(configuration.text_police)].stack};--font-size:${configuration.number_taille}px;--title-color:${titleColor};}`;
 

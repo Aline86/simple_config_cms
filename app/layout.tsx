@@ -8,21 +8,21 @@ import "../styles/globals.css";
 import "../styles/theme.css";
 import { ReactNode, Suspense } from "react";
 import { DomDataProvider } from "../context/DomDataProvider";
+import { PageSkeleton } from "../components/ui/suspense/PageSkeleton";
 
 interface RootLayoutProps {
   children: ReactNode;
-  theme?: "light" | "dark";
 }
 
-export default function RootLayout({
-  children,
-  theme = "light",
-}: RootLayoutProps) {
+export default function RootLayout({ children }: RootLayoutProps) {
+  const theme = "light";
   return (
-    <html lang="fr" className={theme}>
-      <Suspense fallback={null}>
-        <DomDataProvider>{children}</DomDataProvider>
-      </Suspense>
+    <html lang="fr">
+      <body className={theme}>
+        <Suspense fallback={<PageSkeleton />}>
+          <DomDataProvider>{children}</DomDataProvider>
+        </Suspense>
+      </body>
     </html>
   );
 }

@@ -10,6 +10,7 @@ type AppContextType = {
   hasH1InPage: boolean;
   setHasH1InPage: (value: boolean) => void;
   pages: PageObject[] | null;
+
 };
 
 const DomDataContext = createContext<AppContextType | undefined>(undefined);
@@ -26,7 +27,9 @@ export function DomDataProvider({ children }: { children: ReactNode }) {
   );
 
   return (
-    <DomDataContext.Provider value={value}>{children}</DomDataContext.Provider>
+    <DomDataContext.Provider value={value}>
+      <>{children}</>
+    </DomDataContext.Provider>
   );
 }
 

@@ -6,11 +6,8 @@ import { getConfiguration } from "../../../../lib/cache/configuration";
 import PageClient from "./PageClient";
 import { FONT_STACKS } from "../../../../components/ui/fonts/fonts";
 import { PALETTE } from "../../../../components/ui/Text/TailwindPalette";
-import {
-  mapFooter,
-  mapHeader,
-  mapPage,
-} from "../../../../database/mappers/database.to.objects";
+import { useAppContext } from "../../../../context/DomDataProvider";
+
 export const instant = false;
 
 interface PageProps {
@@ -18,14 +15,12 @@ interface PageProps {
 }
 
 export default async function Page({ params }: PageProps) {
-
   const resolvedParams = await Promise.resolve(params).catch(() => null);
   const slug = resolvedParams?.slug;
 
   if (!slug) {
     notFound();
   }
-
 
   let page, header, footer, configuration;
 
@@ -55,8 +50,6 @@ export default async function Page({ params }: PageProps) {
     );
   }
 
-
-
   // 4. Styles et variables CSS
   const mainColorKey = configuration?.color_main_color ?? "";
   const titleColor = PALETTE[mainColorKey]?.[600] ?? "#1e40af";
@@ -68,13 +61,13 @@ export default async function Page({ params }: PageProps) {
   const cssVars = `:root{--police:${fontStack};--font-size:${fontSize}px;--title-color:${titleColor};}`;
 
   return (
-    <body className="space-y-6 ">
+    <div className="space-y-6 ">
       <PageClient
         initialPage={page}
         header={header}
         footer={footer}
         cssVars={cssVars}
       />
-    </body>
+    </div>
   );
 }

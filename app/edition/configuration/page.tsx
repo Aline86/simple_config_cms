@@ -9,6 +9,6 @@ export default async function Page() {
       <ConfigurationClient initialConfiguration={configuration.configuration} />
     );
   } else {
-    return <body>Pages non trouvée</body>;
+    return <div>Pages non trouvée</div>;
   }
 }

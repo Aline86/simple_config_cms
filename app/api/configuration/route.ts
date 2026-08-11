@@ -1,17 +1,11 @@
-import { NextRequest } from "next/server";
-import { getPageBySlug } from "../../../lib/cache/page.slug";
 import { ApiResponse } from "../../../lib/helpers/ApiResponse";
-import { RequestHelper } from "../../../lib/helpers/RequestHelper";
-import { prisma } from "../../../prisma/prisma";
+
 import getConfiguration from "../../edition/configuration/callConfiguration";
 
-
-
-export async function GET(request: NextRequest) {
+export async function GET() {
   return ApiResponse.handle(
     async () => {
-    
-     const dbConfiguration = await getConfiguration()
+      const dbConfiguration = await getConfiguration();
 
       if (!dbConfiguration) {
         throw new Error("Configuration not found");
@@ -21,7 +15,6 @@ export async function GET(request: NextRequest) {
     },
     {
       errorHandler: (err: Record<string, unknown>) => {
-       
         if (err.message === "Configuration not found") {
           return ApiResponse.notFound("Configuration not found");
         }
