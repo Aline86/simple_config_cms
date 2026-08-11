@@ -1,4 +1,4 @@
-"use client";
+"use server";
 
 import { ConfigurationObject } from "../../../database/model/Configuration";
 import { getConfiguration } from "../../../lib/cache/configuration";
