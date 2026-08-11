@@ -89,6 +89,7 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
              opacity: 1,
              textTransform: "uppercase",
              color: "white",
+             display: "block",
            }}
            className="text-transform-uppercase relative"
          >
