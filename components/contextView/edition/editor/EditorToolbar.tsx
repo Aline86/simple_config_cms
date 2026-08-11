@@ -19,7 +19,7 @@ import {
   UndoIcon,
   UnlinkIcon,
 } from "lucide-react";
-import { BulletListIcon, H2Icon } from "../../../../icons/EditorIcons";
+import { BulletListIcon } from "../../../../icons/EditorIcons";
 
 interface EditorToolbarProps {
   editor: Editor;
@@ -78,13 +78,6 @@ export const EditorToolbar = ({ editor, onSetLink }: EditorToolbarProps) => (
       />
 
       <div className="w-px bg-gray-300 mx-1" />
-
-      <ToolbarButton
-        onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-        isActive={editor.isActive("heading", { level: 2 })}
-        icon={<H2Icon />}
-        alt="Titre H2"
-      />
 
       <ToolbarButton
         onClick={() => editor.chain().focus().toggleBulletList().run()}

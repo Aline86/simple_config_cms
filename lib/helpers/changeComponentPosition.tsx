@@ -34,7 +34,7 @@ export function reorderArray<T>(
 export function deleteItemAndReorder(
   prev: MediaObject[],
   itemToDelete: MediaObject,
-  idKey: "number_position_image",
+  idKey: string,
 ): MediaObject[] {
   const filtered = prev.filter((p) => p[idKey] !== itemToDelete[idKey]);
 
@@ -42,7 +42,7 @@ export function deleteItemAndReorder(
     .sort((a, b) => a[idKey] - b[idKey])
     .map((item, index) => {
       const media = new MediaObject(item);
-      media[idKey] = index + 1;
+      media[idKey] = index;
       return media;
     });
 

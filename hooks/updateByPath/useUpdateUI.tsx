@@ -1,6 +1,9 @@
 import { useState, useCallback } from "react";
 import { cloneBlocWithMedias } from "../../lib/helpers/bloc.helper";
-import { reorderArray } from "../../lib/helpers/changeComponentPosition";
+import {
+  deleteItemAndReorder,
+  reorderArray,
+} from "../../lib/helpers/changeComponentPosition";
 import {
   cloneMediaWithPosition,
   createMedia,
@@ -83,9 +86,11 @@ const useUpdateUI = ({ bloc, onChange }: ContextEditionProps) => {
   const handleRemove = useCallback(
     (media: MediaObject) => {
       const { medias, propertyName } = getMediaConfig();
-      const updatedMedias = medias
-        .filter((img) => img.id !== media.id)
-        .map(cloneMediaWithPosition);
+      const updatedMedias = deleteItemAndReorder(
+        medias,
+        media,
+        "number_position_image",
+      );
       const updatedBloc = cloneBlocWithNewMedias(updatedMedias);
 
       onChange(propertyName, updatedBloc);
