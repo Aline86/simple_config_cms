@@ -1,9 +1,7 @@
-"use server";
 import { notFound } from "next/navigation";
 import { FONT_STACKS } from "../../../../components/ui/fonts/fonts";
 import { PALETTE } from "../../../../components/ui/Text/TailwindPalette";
 import { getHomePage } from "../../../../lib/cache/page.homepage";
-
 import { getPageBySlug, getPageFooter, getPageHeader } from "./callPages";
 import PageClient from "./PageClient";
 import { getConfiguration } from "../../../../lib/cache/configuration";
@@ -12,7 +10,9 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-export async function PageContainer({ slug }: { slug?: PageProps }) {
+export default async function Page({ params }: PageProps) {
+  const { slug } = await params;
+
   const [page, header, footer, configuration] = await Promise.all([
     slug !== undefined && typeof slug === "string"
       ? getPageBySlug(slug)

@@ -1,4 +1,3 @@
-"use server";
 export async function return_data_url(url: string) {
   const res = await fetch(`${url}`, {
     cache: "no-store",
