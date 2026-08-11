@@ -12,12 +12,8 @@ export async function return_data_url(url: string) {
 }
 export default async function getPages(id?: null | string) {
   if (id !== null && id !== undefined) {
-    return return_data_url(
-      `${process.env.NEXT_PUBLIC_APP_URL}/api/edition/pages?parent_id=` + id,
-    );
+    return return_data_url(`/api/edition/pages?parent_id=` + id);
   } else {
-    return return_data_url(
-      `${process.env.NEXT_PUBLIC_APP_URL}/api/edition/pages`,
-    );
+    return return_data_url(`/api/edition/pages`);
   }
 }
