@@ -6,7 +6,6 @@ import { getConfiguration } from "../../../../lib/cache/configuration";
 import PageClient from "./PageClient";
 import { FONT_STACKS } from "../../../../components/ui/fonts/fonts";
 import { PALETTE } from "../../../../components/ui/Text/TailwindPalette";
-import { useAppContext } from "../../../../context/DomDataProvider";
 
 export const instant = false;
 

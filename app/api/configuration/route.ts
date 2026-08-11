@@ -1,6 +1,5 @@
+import { getConfiguration } from "../../../lib/cache/configuration";
 import { ApiResponse } from "../../../lib/helpers/ApiResponse";
-
-import getConfiguration from "../../edition/configuration/callConfiguration";
 
 export async function GET() {
   return ApiResponse.handle(
