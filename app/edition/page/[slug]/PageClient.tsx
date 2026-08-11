@@ -24,10 +24,12 @@ export default function PageClient({
   initialpage,
   header,
   footer,
+  cssVars,
 }: {
   initialpage: PageObject;
   header: HeaderObject;
   footer: FooterObject;
+  cssVars: string;
 }) {
   const [page, setPage] = useState(new PageObject(initialpage));
   const [headerData, setHeader] = useState(new HeaderObject(header, "edition"));
@@ -187,6 +189,11 @@ export default function PageClient({
 
   return (
     <body className="space-y-6 ">
+      <style
+        href="dom-data-config-vars"
+        precedence="default"
+        dangerouslySetInnerHTML={{ __html: cssVars }}
+      />
       <NavBarEdition
         labelAdd="Ajouter un bloc"
         handleAdd={addBlocToPage}

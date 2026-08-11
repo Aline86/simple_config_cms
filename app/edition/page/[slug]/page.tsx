@@ -1,33 +1,49 @@
+import { notFound } from "next/navigation";
+import { FONT_STACKS } from "../../../../components/ui/fonts/fonts";
+import { PALETTE } from "../../../../components/ui/Text/TailwindPalette";
+import { getHomePage } from "../../../../lib/cache/page.homepage";
+
 import { getPageBySlug, getPageFooter, getPageHeader } from "./callPages";
 import PageClient from "./PageClient";
+import { getConfiguration } from "../../../../lib/cache/configuration";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-export default async function Page({ params }: PageProps) {
-  const { slug } = await params;
+export async function PageContainer({ slug }: { slug?: string }) {
+  const [page, header, footer, configuration] = await Promise.all([
+    slug ? getPageBySlug(slug) : getHomePage(),
+    getPageHeader(),
+    getPageFooter(),
+    getConfiguration(),
+  ]);
 
-  const page = await getPageBySlug(slug);
+  if (slug && !page) notFound();
 
-  if (!page) {
-    return <body>Page non trouvée</body>;
+  if (!header || !footer || !page || !configuration) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="bg-blue-500 p-6 text-white">
+          <h1 className="text-2xl text-center">
+            Veuillez créer une page. N&apos;oubliez pas de sélectionner une page
+            d&apos;accueil.
+          </h1>
+        </div>
+      </div>
+    );
   }
-  const header = await getPageHeader();
 
-  if (!header) {
-    return <body>PB lors du chargement du header</body>;
-  }
-  const footer = await getPageFooter();
+  const titleColor = PALETTE[configuration.color_main_color][600] ?? "#1e40af";
 
-  if (!footer) {
-    return <body>PB lors du chargement du header</body>;
-  }
+  const cssVars = `:root{--police:${FONT_STACKS[Number(configuration.text_police)].stack};--font-size:${configuration.number_taille}px;--title-color:${titleColor};}`;
+
   return (
     <PageClient
       initialpage={page.page}
       header={header.header}
       footer={footer.footer}
+      cssVars={cssVars}
     />
   );
 }
