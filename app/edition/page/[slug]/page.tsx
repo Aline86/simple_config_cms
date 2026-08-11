@@ -11,39 +11,42 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-export async function PageContainer({ slug }: { slug?: string }) {
-  const [page, header, footer, configuration] = await Promise.all([
-    slug ? getPageBySlug(slug) : getHomePage(),
-    getPageHeader(),
-    getPageFooter(),
-    getConfiguration(),
-  ]);
 
-  if (slug && !page) notFound();
+  export default async function Page({ params }: PageProps) {
+    const { slug } = await params;
+    const [page, header, footer, configuration] = await Promise.all([
+      slug ? getPageBySlug(slug) : getHomePage(),
+      getPageHeader(),
+      getPageFooter(),
+      getConfiguration(),
+    ]);
 
-  if (!header || !footer || !page || !configuration) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="bg-blue-500 p-6 text-white">
-          <h1 className="text-2xl text-center">
-            Veuillez créer une page. N&apos;oubliez pas de sélectionner une page
-            d&apos;accueil.
-          </h1>
+    if (slug && !page) notFound();
+
+    if (!header || !footer || !page || !configuration) {
+      return (
+        <div className="flex justify-center items-center h-screen">
+          <div className="bg-blue-500 p-6 text-white">
+            <h1 className="text-2xl text-center">
+              Veuillez créer une page. N&apos;oubliez pas de sélectionner une
+              page d&apos;accueil.
+            </h1>
+          </div>
         </div>
-      </div>
+      );
+    }
+
+    const titleColor =
+      PALETTE[configuration.color_main_color][600] ?? "#1e40af";
+
+    const cssVars = `:root{--police:${FONT_STACKS[Number(configuration.text_police)].stack};--font-size:${configuration.number_taille}px;--title-color:${titleColor};}`;
+
+    return (
+      <PageClient
+        initialpage={page.page}
+        header={header.header}
+        footer={footer.footer}
+        cssVars={cssVars}
+      />
     );
   }
-
-  const titleColor = PALETTE[configuration.color_main_color][600] ?? "#1e40af";
-
-  const cssVars = `:root{--police:${FONT_STACKS[Number(configuration.text_police)].stack};--font-size:${configuration.number_taille}px;--title-color:${titleColor};}`;
-
-  return (
-    <PageClient
-      initialpage={page.page}
-      header={header.header}
-      footer={footer.footer}
-      cssVars={cssVars}
-    />
-  );
-}
