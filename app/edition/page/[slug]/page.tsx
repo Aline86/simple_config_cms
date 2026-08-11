@@ -49,9 +49,11 @@ export default async function Page({ params }: PageProps) {
     );
   }
 
-  // 4. Styles et variables CSS
+ 
   const mainColorKey = configuration?.color_main_color ?? "";
-  const titleColor = PALETTE[mainColorKey]?.[600] ?? "#1e40af";
+  const titleColor =
+    (PALETTE[mainColorKey] !== undefined && PALETTE[mainColorKey][600]) ??
+    "#080808";
 
   const fontIndex = Number(configuration?.text_police ?? 0);
   const fontStack = FONT_STACKS[fontIndex]?.stack ?? "sans-serif";
