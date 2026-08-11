@@ -4,8 +4,11 @@ const isDev = process.env.NODE_ENV === "development";
 /** @type {import('next').NextConfig} */
 const nextConfig: NextConfig = {
   cacheComponents: true,
-  serverExternalPackages: ["isomorphic-dompurify"],
 
+  serverExternalPackages: ["@prisma/client", "isomorphic-dompurify"],
+  outputFileTracingIncludes: {
+    "/**": ["./prisma/generated/client/**/*"],
+  },
   async headers() {
     return [
       {

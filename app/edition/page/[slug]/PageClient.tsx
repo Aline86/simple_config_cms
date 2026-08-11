@@ -188,7 +188,7 @@ export default function PageClient({
   };
 
   return (
-    <body className="space-y-6 ">
+    <>
       <style
         href="dom-data-config-vars"
         precedence="default"
@@ -234,6 +234,6 @@ export default function PageClient({
         children={<ComponentBloc bloc={footerData} onChange={updateFooter} />}
         header={"Pied de page"}
       />
-    </body>
+    </>
   );
 }

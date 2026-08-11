@@ -18,7 +18,7 @@ interface PageProps {
 }
 
 export default async function Page({ params }: PageProps) {
-  // 1. Traitement de la Promise params
+
   const resolvedParams = await Promise.resolve(params).catch(() => null);
   const slug = resolvedParams?.slug;
 
@@ -26,7 +26,7 @@ export default async function Page({ params }: PageProps) {
     notFound();
   }
 
-  // 2. Récupération sécurisée des ressources
+
   let page, header, footer, configuration;
 
   try {
@@ -55,9 +55,7 @@ export default async function Page({ params }: PageProps) {
     );
   }
 
-  const pageMapped = mapPage(page);
-  const headerMapped = mapHeader(header, "edition");
-  const footerMapped = mapFooter(footer, "edition");
+
 
   // 4. Styles et variables CSS
   const mainColorKey = configuration?.color_main_color ?? "";
@@ -70,11 +68,13 @@ export default async function Page({ params }: PageProps) {
   const cssVars = `:root{--police:${fontStack};--font-size:${fontSize}px;--title-color:${titleColor};}`;
 
   return (
-    <PageClient
-      initialPage={page}
-      header={header}
-      footer={footer}
-      cssVars={cssVars}
-    />
+    <body className="space-y-6 ">
+      <PageClient
+        initialPage={page}
+        header={header}
+        footer={footer}
+        cssVars={cssVars}
+      />
+    </body>
   );
 }
