@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import ConfigurationEdit from "../../../components/contextView/edition/configuration/ConfigurationEdit";
 import { ConfigurationObject } from "../../../database/model/Configuration";
 import ErrorMessage from "../../../components/ui/ErrorMessage";
-import { useRouter } from "next/navigation";
+
 import NavBarEdition from "../../../components/ui/NavBarEdition";
 
 export default function ConfigurationClient({
