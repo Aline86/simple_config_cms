@@ -5,7 +5,7 @@ const CONFIGURATION_ID = 1;
 
 export async function getConfiguration() {
   "use cache";
-  cacheTag("page:home");
+  cacheTag("configuration");
   cacheLife("max");
 
   return await prisma.configuration.findUnique({

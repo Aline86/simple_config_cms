@@ -33,7 +33,11 @@ export async function PageContainer({ slug }: { slug?: string }) {
   }
 
   const titleColor = PALETTE[configuration.color_main_color][600] ?? "#1e40af";
-  console.log("titleColor", titleColor);
+  console.log(
+    "FONT_STACKS[Number(configuration.text_police)].stack",
+    FONT_STACKS[configuration.text_police].stack,
+    configuration.text_police,
+  );
   const cssVars = `:root{--police:${FONT_STACKS[Number(configuration.text_police)].stack};--font-size:${configuration.number_taille}px;--title-color:${titleColor};}`;
 
   return (

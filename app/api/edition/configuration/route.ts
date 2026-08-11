@@ -4,11 +4,9 @@ import { ApiResponse } from "../../../../lib/helpers/ApiResponse";
 import { requireAuth } from "../requireAuth";
 
 import { ConfigurationObject } from "../../../../database/model/Configuration";
-
-
+import { revalidateTag } from "next/cache";
 
 const CONFIGURATION_ID = 1;
-
 
 async function readPayload(request: NextRequest): Promise<unknown> {
   let body: unknown;
@@ -42,8 +40,6 @@ function toConfiguration(payload: unknown): ConfigurationObject {
 export async function GET(request: NextRequest) {
   return ApiResponse.handle(
     async () => {
-     
-
       const dbConfiguration = await prisma.configuration.findUnique({
         where: { number_id: CONFIGURATION_ID },
       });
@@ -71,7 +67,6 @@ export async function GET(request: NextRequest) {
   );
 }
 
-
 async function upsertConfiguration(request: NextRequest) {
   return ApiResponse.handle(
     async () => {
@@ -90,6 +85,8 @@ async function upsertConfiguration(request: NextRequest) {
         create: { number_id: CONFIGURATION_ID, ...fields },
         update: fields,
       });
+
+      revalidateTag("configuration", { expire: 0 });
 
       return {
         message: "Configuration saved",

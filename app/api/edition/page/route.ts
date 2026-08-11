@@ -7,7 +7,6 @@ import { RequestHelper } from "../../../../lib/helpers/RequestHelper";
 import { toPageData } from "../../../../lib/helpers/api/page.data";
 import { revalidateTag } from "next/cache";
 
-// ========== GET PAGE BY SLUG ==========
 export async function GET(request: NextRequest) {
   return ApiResponse.handle(
     async () => {

@@ -178,7 +178,6 @@ export async function PUT(request: NextRequest) {
             },
           }),
 
-          // ===== LOGO (1–1) =====
           ...(logo && {
             logo: {
               upsert: {
