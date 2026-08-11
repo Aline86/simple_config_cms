@@ -43,7 +43,8 @@ export default async function Page({ params }: PageProps) {
     );
   }
 
-  const titleColor = PALETTE[configuration.color_main_color][600] ?? "#1e40af";
+  const titleColor =
+    PALETTE[configuration.color_main_color]?.[600] ?? "#1e40af";
 
   const cssVars = `:root{--police:${FONT_STACKS[Number(configuration.text_police)].stack};--font-size:${configuration.number_taille}px;--title-color:${titleColor};}`;
 
