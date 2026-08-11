@@ -26,10 +26,7 @@ export function DomDataProvider({ children }: { children: ReactNode }) {
   );
 
   return (
-    <DomDataContext.Provider value={value}>
-     
-      {children}
-    </DomDataContext.Provider>
+    <DomDataContext.Provider value={value}>{children}</DomDataContext.Provider>
   );
 }
 

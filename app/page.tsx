@@ -3,12 +3,11 @@ import type { Metadata } from "next";
 
 import { getHomePage } from "../lib/cache/page.homepage";
 import { getPageHeader } from "../lib/cache/page.header";
-import { PageContainer } from "./PageContainer";
+import { Suspense } from "react";
+import { PageSkeleton } from "../components/ui/suspense/PageSkeleton";
+import PageContainer from "./PageContainer";
 
-type Props = {
-  params: Promise<{ slug: string }>;
-};
-
+export const instant = false;
 export async function generateMetadata(): Promise<Metadata> {
   const [page, header] = await Promise.all([getHomePage(), getPageHeader()]);
 
@@ -27,6 +26,10 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function Page({ params }: Props) {
-  return <PageContainer />;
+export default function Page() {
+  return (
+    <Suspense fallback={<PageSkeleton />}>
+      <PageContainer params={undefined} />
+    </Suspense>
+  );
 }

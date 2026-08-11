@@ -1,7 +1,6 @@
 "use client";
 
 import { JSONContent } from "@tiptap/core";
-import AnimatedTitle from "../../components/ui/animations/AnimatedTitle";
 
 type Mark = {
   type:
@@ -14,11 +13,16 @@ type Mark = {
   };
 };
 
-const FONT_SIZE_MAP: Record<number, string> = {
-  16: "16px",
-  18: "18px",
-  20: "20px",
-  24: "24px",
+export type OutputBlock = {
+  type: string;
+  html: string;
+};
+
+const FONT_SIZE_MAP: Record<string, string> = {
+  "16": "16px",
+  "18": "18px",
+  "20": "20px",
+  "24": "24px",
 };
 
 const VALID_MARK_TYPES = [
@@ -36,15 +40,16 @@ const MARK_HANDLERS: Record<string, (html: string, attrs?: any) => string> = {
   code: (html) => `<code>${html}</code>`,
   italic: (html) => `<em>${html}</em>`,
   underline: (html) => `<u>${html}</u>`,
-  strike: (html) => `<strike>${html}</strike>`,
-  link: (html, attrs) => {
+  strike: (html) => `<s>${html}</s>`,
+  link: (html, attrs = {}) => {
     const href = attrs.href || "#";
     const target = attrs.target || "_blank";
     const rel = attrs.rel || "noopener noreferrer";
-    return `<a title="${target}" href="${href}" target="${target}" rel="${rel}">${html}</a>`;
+    return `<a href="${href}" target="${target}" rel="${rel}">${html}</a>`;
   },
-  textStyle: (html, attrs) => {
-    const size = FONT_SIZE_MAP[attrs.fontSize || ""];
+  textStyle: (html, attrs = {}) => {
+    const raw = String(attrs.fontSize ?? "").replace("px", "");
+    const size = FONT_SIZE_MAP[raw];
     return size ? `<span style="font-size: ${size};">${html}</span>` : html;
   },
 };
@@ -68,24 +73,20 @@ function processTextNode(node: JSONContent): string {
 }
 
 function convertHeading(node: JSONContent): string {
-  const textAlign = node.attrs.textAlign || "left";
-  const text = node.content.map((n) => n.text || "").join(" ") || "";
-  return `<AnimatedTitle
-     children={
-       <h2 style="text-align: ${textAlign}; font-size: 65px">${text}</h2>
-     }
-   ></AnimatedTitle>`;
+  const textAlign = node.attrs?.textAlign || "left";
+  const text = node.content?.map((n) => n.text || "").join(" ") || "";
+  return `<h2 style="text-align: ${textAlign}; font-size: 65px">${text}</h2>`;
 }
 
 function convertParagraph(node: JSONContent): string {
   if (!node.content) return "";
 
-  const textAlign = node.attrs.textAlign || "left";
+  const textAlign = node.attrs?.textAlign || "left";
   const content = node.content.map(processTextNode).join("");
 
   return `<p style="text-align: ${textAlign}">${content}</p>`;
 }
-// 1. Extraction des validations
+
 function isValidListItem(item: JSONContent): boolean {
   return item.type === "listItem" && !!item.content;
 }
@@ -98,13 +99,12 @@ function hasContent(items: string[]): boolean {
   return items.length > 0;
 }
 
-// 2. Extraction des transformations
 function extractParagraphText(paragraph: JSONContent): string {
-  return paragraph.content.map(processTextNode).join("") || "";
+  return paragraph.content?.map(processTextNode).join("") || "";
 }
 
 function extractListItemText(item: JSONContent): string {
-  const paragraphs = item.content.filter(isValidParagraph) || [];
+  const paragraphs = item.content?.filter(isValidParagraph) || [];
   return paragraphs.map(extractParagraphText).join("");
 }
 
@@ -116,7 +116,6 @@ function wrapInBulletList(itemsHtml: string): string {
   return `<div class="ml-6"><ul class="flex flex-col">${itemsHtml}</ul></div>`;
 }
 
-// 3. Fonctions simplifiées (1-2 conditions max)
 function processListItem(item: JSONContent): string {
   if (!isValidListItem(item)) return "";
   return extractListItemText(item);
@@ -132,6 +131,7 @@ function convertBulletList(node: JSONContent): string {
   const itemsHtml = items.map(wrapInListItem).join("");
   return wrapInBulletList(itemsHtml);
 }
+
 function convertTiptapToHTML(node: JSONContent): string {
   if (!node) return "";
 
@@ -149,10 +149,13 @@ function convertTiptapToHTML(node: JSONContent): string {
 
 export const output = (
   text_article: Record<string, any>,
-): string[] | undefined => {
-  if (!text_article.content.length) return undefined;
+): OutputBlock[] | undefined => {
+  if (!text_article?.content?.length) return undefined;
 
-  return text_article.content.map(convertTiptapToHTML);
+  return text_article.content.map((node: JSONContent) => ({
+    type: node.type ?? "unknown",
+    html: convertTiptapToHTML(node),
+  }));
 };
 
 export const getgridClasses = (columns: number | null): string => {

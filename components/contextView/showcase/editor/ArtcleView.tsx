@@ -1,23 +1,14 @@
-/* eslint-disable jsx-a11y/alt-text */
 "use client";
+
 import { useMemo } from "react";
 import { JSONContent } from "@tiptap/core";
 import { output } from "../../../../lib/helpers/tiptapFunctions";
+import AnimatedTitle from "../../../ui/animations/AnimatedTitle";
+import DOMPurify from "isomorphic-dompurify";
 
-interface DOMPurifyI {
-  sanitize: (
-    source: string,
-    config?: {
-      ALLOWED_TAGS?: string[];
-      ALLOWED_ATTR?: string[];
-      ALLOW_DATA_ATTR?: boolean;
-    },
-  ) => string;
-}
-
-let DOMPurify: DOMPurifyI | undefined;
-if (typeof window !== "undefined") {
-  DOMPurify = require("dompurify");
+function clean(html: string): string {
+  if (!DOMPurify) return "";
+  return DOMPurify.sanitize(html);
 }
 
 interface BlocParams {
@@ -26,20 +17,27 @@ interface BlocParams {
 }
 
 function ArticleView({ bloc }: BlocParams) {
-  const html = useMemo(() => {
+  const blocks = useMemo(() => {
     if (!bloc) return [];
     return output(bloc) ?? [];
   }, [bloc]);
 
   return (
     <section className="w-full mb-8">
-      {html.map((out, index) => (
-        <div
-          key={index}
-          className="tiptap none"
-          dangerouslySetInnerHTML={{ __html: out }}
-        />
-      ))}
+      {blocks.map((block, index) => {
+        const content = (
+          <div
+            className="tiptap none"
+            dangerouslySetInnerHTML={{ __html: clean(block.html) }}
+          />
+        );
+
+        if (block.type === "heading") {
+          return <AnimatedTitle key={index}>{content}</AnimatedTitle>;
+        }
+
+        return <div key={index}>{content}</div>;
+      })}
     </section>
   );
 }

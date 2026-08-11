@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+export const dynamicParams = true;
 import { notFound } from "next/navigation";
 import { FONT_STACKS } from "../components/ui/fonts/fonts";
 
@@ -9,7 +11,14 @@ import PageClient from "./[slug]/PageClient";
 import { getConfiguration } from "../lib/cache/configuration";
 import { PALETTE } from "../components/ui/Text/TailwindPalette";
 
-export async function PageContainer({ slug }: { slug?: string }) {
+interface PageProps {
+  params: Promise<{ slug?: string }>;
+}
+
+export default async function Page({ params }: PageProps) {
+  const resolvedParams = await params;
+  const slug = resolvedParams?.slug;
+
   const [page, header, footer, configuration] = await Promise.all([
     slug ? getPageBySlug(slug) : getHomePage(),
     getPageHeader(),
@@ -17,8 +26,12 @@ export async function PageContainer({ slug }: { slug?: string }) {
     getConfiguration(),
   ]);
 
-  if (slug && !page) notFound();
+  // 2. Trigger Next.js 404 page if a slug was provided but no page was found
+  if (slug && !page) {
+    notFound();
+  }
 
+  // 3. Fallback check for missing critical site setup data
   if (!header || !footer || !page || !configuration) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -32,13 +45,15 @@ export async function PageContainer({ slug }: { slug?: string }) {
     );
   }
 
-  const titleColor = PALETTE[configuration.color_main_color][600] ?? "#1e40af";
+  // 4. Resolve styles and CSS variables
+  const titleColor =
+    PALETTE[configuration.color_main_color]?.[600] ?? "#1e40af";
 
   const cssVars = `:root{--police:${FONT_STACKS[Number(configuration.text_police)].stack};--font-size:${configuration.number_taille}px;--title-color:${titleColor};}`;
 
   return (
     <PageClient
-      initialpage={page}
+      initialPage={page}
       header={header}
       footer={footer}
       cssVars={cssVars}

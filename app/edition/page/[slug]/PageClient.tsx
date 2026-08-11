@@ -21,17 +21,17 @@ import { updateObjectByPath } from "../../../../lib/helpers/updateByPath";
 import ComponentBloc from "../../../../components/contextView/ComponentBloc";
 
 export default function PageClient({
-  initialpage,
+  initialPage,
   header,
   footer,
   cssVars,
 }: {
-  initialpage: PageObject;
+  initialPage: PageObject;
   header: HeaderObject;
   footer: FooterObject;
   cssVars: string;
 }) {
-  const [page, setPage] = useState(new PageObject(initialpage));
+  const [page, setPage] = useState(new PageObject(initialPage));
   const [headerData, setHeader] = useState(new HeaderObject(header, "edition"));
   const [footerData, setFooter] = useState(new FooterObject(footer, "edition"));
   const [dragged, setDragged] = useState<BlocObject | null>(null);
