@@ -8,6 +8,7 @@ import { FONT_STACKS } from "../../../../components/ui/fonts/fonts";
 import { PALETTE } from "../../../../components/ui/Text/TailwindPalette";
 import { PageSkeleton } from "../../../../components/ui/suspense/PageSkeleton";
 import { Suspense } from "react";
+import { PagesProvider } from "../../../../context/PagesProvider";
 
 export const instant = false;
 
@@ -65,12 +66,14 @@ export default async function Page({ params }: PageProps) {
   return (
     <Suspense fallback={<PageSkeleton />}>
       <div className="space-y-6 ">
-        <PageClient
-          initialPage={page}
-          header={header}
-          footer={footer}
-          cssVars={cssVars}
-        />
+        <PagesProvider slug={slug}>
+          <PageClient
+            initialPage={page}
+            header={header}
+            footer={footer}
+            cssVars={cssVars}
+          />
+        </PagesProvider>
       </div>
     </Suspense>
   );

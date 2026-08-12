@@ -10,12 +10,11 @@ export default function usePages(id?: string | null | undefined) {
   useEffect(() => {
     const controller = new AbortController();
     setLoading(true);
-
+    console.log("id", id);
     const url =
       id != null && id !== undefined
-        ? `${process.env.NEXT_PUBLIC_APP_URL}/api/edition/pages?parent_id=` +
-          encodeURIComponent(String(id))
-        : `${process.env.NEXT_PUBLIC_APP_URL}/api/edition/pages`;
+        ? `/api/edition/pages?parent_id=` + encodeURIComponent(String(id))
+        : `/api/edition/pages`;
 
     (async () => {
       try {

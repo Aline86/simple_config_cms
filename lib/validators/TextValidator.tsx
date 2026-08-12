@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { output } from "../helpers/tiptapFunctions";
 
 export class TextParameter {
   minLength?: number;
@@ -83,12 +84,6 @@ export class TextValidator {
           value instanceof Date ? value : new Date(value),
         );
     }
-
-    /*if (this._params.url) {
-      schema = schema.url(
-        this._params.errorMessages?.url ?? "Doit être une URL valide",
-      );
-    }*/
 
     if (this._params.minLength !== undefined) {
       schema = schema.min(this._params.minLength, {

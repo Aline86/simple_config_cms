@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FieldRenderer } from "./renderer/ValidatorRenderer";
-import { useAppContext } from "../../context/DomDataProvider";
+import { usePagesContext } from "../../context/PagesProvider";
 
 const LABEL_HEADER = {
   image_url: "URL de l'image",
@@ -38,7 +38,7 @@ export function DynamicValidatorDropDown<T extends Record<keyof T, unknown>>({
   const [selectedValidatorKey, setSelectedValidatorKey] = useState<string>(
     defaultValidator !== undefined ? defaultValidator : availableValidators[0],
   );
-  const { pages } = useAppContext();
+  const pages = usePagesContext() ?? [];
 
   const handleValidatorChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newValidatorKey = e.target.value;

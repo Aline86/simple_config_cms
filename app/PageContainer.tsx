@@ -8,6 +8,7 @@ import { getPageBySlug } from "../lib/cache/page.slug";
 import PageClient from "./[slug]/PageClient";
 import { getConfiguration } from "../lib/cache/configuration";
 import { PALETTE } from "../components/ui/Text/TailwindPalette";
+import { PagesProvider } from "../context/PagesProvider";
 
 interface PageProps {
   params?: Promise<{ slug?: string }>;
