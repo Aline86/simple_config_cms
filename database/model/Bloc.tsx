@@ -75,17 +75,14 @@ export class BlocObject extends BaseValidatable {
     this.text_updatedAt = data.text_updatedAt
       ? new Date(data.text_updatedAt)
       : new Date();
-    // Réhydrater les MediaObject
-    this.image_medias = data.image_medias.map((m: MediaObject) => {
-      if (m instanceof MediaObject) return m;
-      return new MediaObject(m);
-    });
 
-    // Réhydrater les ArticleObject
-    this.articles = data.articles.map((a: ArticleObject) => {
-      if (a instanceof ArticleObject) return a;
-      return new ArticleObject(a);
-    });
+    this.id = data.id ?? null;
+    this.image_medias = (data.image_medias ?? []).map((m) =>
+      m instanceof MediaObject ? m : new MediaObject(m),
+    );
+    this.articles = (data.articles ?? []).map((a) =>
+      a instanceof ArticleObject ? a : new ArticleObject(a),
+    );
     this.calendar = new CalendarObject(data.calendar);
     this.mode = mode;
   }

@@ -15,18 +15,14 @@ export function reorderArray<T>(
 
   const newArray = [...array];
 
-  // Retirer l'élément dragué
   newArray.splice(draggedIndex, 1);
 
-  // Calculer le nouvel index
   const insertIndex = draggedIndex < targetIndex ? targetIndex : targetIndex;
 
-  // Insérer à la nouvelle position
   newArray.splice(insertIndex, 0, dragged);
 
-  //  Mettre à jour les positions
   return newArray.map((item, index) => ({
-    ...item, //  Spread pour copier toutes les propriétés
+    ...item,
     [positionKey]: index,
   }));
 }

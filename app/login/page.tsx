@@ -25,7 +25,7 @@ export default function Page() {
   };
 
   return (
-    <body className="min-h-screen flex items-center justify-center ">
+    <div className="min-h-screen flex items-center justify-center ">
       <form
         onSubmit={handleSubmit}
         className="p-8  rounded shadow-md w-full max-w-md"
@@ -64,6 +64,6 @@ export default function Page() {
           Se connecter
         </button>
       </form>
-    </body>
+    </div>
   );
 }

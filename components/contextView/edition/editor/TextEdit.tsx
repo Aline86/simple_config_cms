@@ -140,7 +140,7 @@ export default function TextEditor({
                 onDragStart={onDragStart}
                 onDrop={onDrop}
                 context="article"
-                isLink={true}
+                isLink={false}
                 blocNumber={bloc.bloc_position}
               />
             ))}

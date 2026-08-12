@@ -5,7 +5,7 @@ export async function getPages(parent_id?: string) {
   "use cache";
 
   let dbPages = [];
-  if (parent_id !== null) {
+  if (parent_id !== undefined && parent_id !== null) {
     cacheTag(`pages:${parent_id}`);
     cacheLife("max");
     dbPages = await prisma.page.findMany({

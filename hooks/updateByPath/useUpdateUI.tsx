@@ -1,5 +1,9 @@
-import { useState, useCallback } from "react";
-import { cloneBlocWithMedias } from "../../lib/helpers/bloc.helper";
+import { useState, useCallback, useMemo } from "react";
+import {
+  cloneBlocWithMedias,
+  cloneBlocWithArticles,
+} from "../../lib/helpers/bloc.helper";
+import { cloneArticleWithImages } from "../../lib/helpers/article.helper";
 import {
   deleteItemAndReorder,
   reorderArray,
@@ -14,96 +18,123 @@ import { HeaderObject } from "../../database/model/bloc/Header";
 import { FooterObject } from "../../database/model/bloc/Footer";
 import { cloneHeaderWithReseaux } from "../../lib/helpers/header.helper";
 import { cloneFooterWithReseaux } from "../../lib/helpers/footer.helper";
+import { collectionForBlocType } from "../../lib/config/blocMediaSource";
 
-interface ContextEditionProps {
-  bloc: BlocObject | HeaderObject | FooterObject;
+type Container = BlocObject | HeaderObject | FooterObject;
+
+interface UseUpdateUIProps {
+  bloc: Container;
   onChange: (fieldName: string, newValue: unknown) => void;
 }
 
-const useUpdateUI = ({ bloc, onChange }: ContextEditionProps) => {
-  const [dragged, setDragged] = useState<MediaObject | null>(null);
-  // Helper pour obtenir la liste de médias et la propriété appropriée
-  const getMediaConfig = useCallback(() => {
-    if (bloc instanceof BlocObject) {
+interface ResolvedCollection {
+  medias: MediaObject[];
+  propertyName: string;
+  parentId: string | number | null;
+  apply: (medias: MediaObject[]) => unknown;
+}
+
+const POSITION_KEY = "number_position_image" as const;
+
+function resolveCollection(bloc: Container): ResolvedCollection {
+  if (bloc instanceof BlocObject) {
+    const propertyName = `blocs.${bloc.bloc_position}`;
+    const collection = collectionForBlocType(bloc.type as string);
+
+    if (collection.kind === "articleImages") {
+      const { index } = collection;
+      const article = bloc.articles[index];
+
       return {
-        medias: bloc.image_medias,
-        propertyName: `blocs.${bloc.bloc_position}`,
-        positionKey: "number_position_image" as const,
+        medias: article?.images ?? [],
+        propertyName,
         parentId: bloc.id,
+        apply: (medias) => {
+          if (!article) return bloc;
+          const updatedArticles = bloc.articles.map((a, i) =>
+            i === index ? cloneArticleWithImages(a, medias) : a,
+          );
+          return cloneBlocWithArticles(bloc, updatedArticles);
+        },
       };
     }
-    return {
-      medias: bloc.reseaux,
-      propertyName: "reseaux",
-      positionKey: "number_position_image" as const,
-      parentId: bloc.number_id,
-    };
-  }, [bloc]);
 
-  // Helper pour cloner le bloc avec les nouveaux médias
-  const cloneBlocWithNewMedias = useCallback(
-    (newMedias: MediaObject[]) => {
-      if (bloc instanceof BlocObject) {
-        return cloneBlocWithMedias(bloc, newMedias);
-      }
-      if (bloc instanceof HeaderObject) {
-        return cloneHeaderWithReseaux(bloc, newMedias).reseaux;
-      }
-      return cloneFooterWithReseaux(bloc, newMedias).reseaux;
+    return {
+      medias: bloc.image_medias,
+      propertyName,
+      parentId: bloc.id,
+      apply: (medias) => cloneBlocWithMedias(bloc, medias),
+    };
+  }
+
+  return {
+    medias: bloc.reseaux,
+    propertyName: "reseaux",
+    parentId: bloc.number_id,
+    apply: (medias) =>
+      bloc instanceof HeaderObject
+        ? cloneHeaderWithReseaux(bloc, medias).reseaux
+        : cloneFooterWithReseaux(bloc, medias).reseaux,
+  };
+}
+
+const useUpdateUI = ({ bloc, onChange }: UseUpdateUIProps) => {
+  const [dragged, setDragged] = useState<MediaObject | null>(null);
+
+  const target = useMemo(() => resolveCollection(bloc), [bloc]);
+
+  const commit = useCallback(
+    (updatedMedias: MediaObject[]) => {
+      onChange(target.propertyName, target.apply(updatedMedias));
     },
-    [bloc],
+    [target, onChange],
   );
 
   const onDragStart = useCallback((media: MediaObject) => {
     setDragged(media);
   }, []);
 
+  const onDragEnd = useCallback(() => {
+    setDragged(null);
+  }, []);
+
   const onDrop = useCallback(
-    (target: MediaObject) => {
+    (dropTarget: MediaObject) => {
       if (!dragged) return;
 
-      const { medias, propertyName, positionKey } = getMediaConfig();
+      const reordered = reorderArray(
+        target.medias,
+        dragged,
+        dropTarget,
+        POSITION_KEY,
+      );
 
-      const reordered = reorderArray(medias, dragged, target, positionKey);
-      const updatedMedias = reordered.map(cloneMediaWithPosition);
-      const updatedBloc = cloneBlocWithNewMedias(updatedMedias);
-
-      onChange(propertyName, updatedBloc);
+      commit(reordered.map((m, i) => cloneMediaWithPosition(m, i)));
       setDragged(null);
     },
-    [dragged, getMediaConfig, cloneBlocWithNewMedias, onChange],
+    [dragged, target, commit],
   );
 
   const handleAdd = useCallback(() => {
-    const { medias, propertyName, parentId } = getMediaConfig();
-    const newMedia = createMedia(medias.length, parentId);
-    const updatedMedias = [...medias, newMedia];
-    const updatedBloc = cloneBlocWithNewMedias(updatedMedias);
-
-    onChange(propertyName, updatedBloc);
-  }, [getMediaConfig, cloneBlocWithNewMedias, onChange]);
+    const newMedia = createMedia(target.medias.length, target.parentId);
+    commit([...target.medias, newMedia]);
+  }, [target, commit]);
 
   const handleRemove = useCallback(
     (media: MediaObject) => {
-      const { medias, propertyName } = getMediaConfig();
-      const updatedMedias = deleteItemAndReorder(
-        medias,
-        media,
-        "number_position_image",
-      );
-      const updatedBloc = cloneBlocWithNewMedias(updatedMedias);
-
-      onChange(propertyName, updatedBloc);
+      commit(deleteItemAndReorder(target.medias, media, POSITION_KEY));
     },
-    [getMediaConfig, cloneBlocWithNewMedias, onChange],
+    [target, commit],
   );
 
   return {
     dragged,
+    medias: target.medias,
     handleAdd,
     handleRemove,
     onDrop,
     onDragStart,
+    onDragEnd,
   };
 };
 

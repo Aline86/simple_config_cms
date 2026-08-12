@@ -10,7 +10,7 @@ interface MediaEditorProps {
   media: MediaObject;
   blocNumber: number;
   onChange: (fieldName: string, newValue: unknown) => void;
-  removeElement: (media: MediaObject) => void;
+  removeElement: (media: MediaObject, context?: string) => void;
   onDragStart: (page: MediaObject) => void;
   onDrop: (page: MediaObject) => void;
   context?: string;
@@ -88,7 +88,7 @@ export function PictureEditor({ ...props }: MediaEditorProps) {
                 <div
                   className="w-full flex justify-end items-center"
                   onClick={() => {
-                    props.removeElement(props.media);
+                    props.removeElement(props.media, props.context);
                   }}
                 >
                   <div className="mb-4 flex-1">

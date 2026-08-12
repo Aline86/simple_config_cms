@@ -21,88 +21,33 @@ import EditionDoubleView from "../../../ui/EditionDoubleView";
 interface TextPicturesContextEditionProps {
   bloc: BlocObject;
   onChange: (fieldName: string, newValue: unknown) => void;
+  addElement: () => void;
+  removeElement: (media: MediaObject) => void;
+  onDragStart: (page: MediaObject) => void;
+  onDrop: (page: MediaObject) => void;
+  debug?: boolean;
   onDelete?: (bloc: BlocObject) => void;
 }
 
 const TextPicturesContextEdition: React.FC<TextPicturesContextEditionProps> = ({
   bloc,
   onChange,
-  onDelete,
+  addElement,
+  removeElement,
+  onDragStart,
+  onDrop,
+  debug = false,
 }: TextPicturesContextEditionProps) => {
-  const [dragged, setDragged] = useState<MediaObject | null>(null);
-
-  const onDragStart = (media: MediaObject) => {
-    setDragged(media);
-  };
-
-  const onDrop = useCallback(
-    (target: MediaObject) => {
-      if (!dragged) return;
-
-      const article = bloc.articles[0];
-
-      const reordered = reorderArray(
-        article.images,
-        dragged,
-        target,
-        "number_position_image",
-      );
-      const cleanImages = reordered.map(cloneMediaWithPosition);
-      const updatedArticles = updateArticleImages(
-        bloc.articles,
-        0,
-        cleanImages,
-      );
-      const updatedBloc = cloneBlocWithArticles(bloc, updatedArticles);
-
-      onChange("blocs." + bloc.bloc_position, updatedBloc);
-      return updatedBloc;
-    },
-    [dragged, onChange],
-  );
-
-  const handleAdd = useCallback(() => {
-    const article = bloc.articles[0];
-
-    const newMedia = createMedia(article.images.length, bloc.id);
-    const updatedArticles = [
-      cloneArticleWithImages(article, [...article.images, newMedia]),
-    ];
-    const updatedBloc = cloneBlocWithArticles(bloc, updatedArticles);
-
-    onChange("blocs." + bloc.bloc_position, updatedBloc);
-  }, [onChange]);
-
-  const handleRemove = useCallback(
-    (media: MediaObject) => {
-      const article = bloc.articles[0];
-      if (!article) return bloc;
-
-      const cleanImages = deleteItemAndReorder(
-        article.images,
-        media,
-        "number_position_image",
-      );
-      console.log("cleanImages", cleanImages);
-      const updatedArticles = [cloneArticleWithImages(article, cleanImages)];
-      const updatedBloc = cloneBlocWithArticles(bloc, updatedArticles);
-
-      onChange(`blocs.${bloc.bloc_position}`, updatedBloc);
-    },
-    [onChange],
-  );
-
   return (
     <EditionDoubleView
       EditComponent={
         <TextEditor
           bloc={bloc}
           onChange={onChange}
-          addElement={handleAdd}
-          removeElement={handleRemove}
+          addElement={addElement}
+          removeElement={removeElement}
           onDrop={onDrop}
           onDragStart={onDragStart}
-          onDelete={onDelete}
         />
       }
       ViewComponent={<TextView bloc={bloc} />}
