@@ -6,7 +6,10 @@
 .bg-slate-50 {
   background-color: #f3f4f6;
 }
-
+html {
+  margin: 0;
+  padding: 0;
+}
 /* app/globals.css */
 :root {
   --bg-color: white;
@@ -529,11 +532,11 @@ iframe {
 
 .rotate_footer_first {
   position: relative;
-  left: -100px;
+  left: -200px;
   overflow: hidden;
    
-  top: -10px;
-  height:70px;
+  top: -50px;
+  height:120px;
   transform: rotate(7deg);
 }
 /* screen */
