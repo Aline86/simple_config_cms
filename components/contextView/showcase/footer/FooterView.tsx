@@ -60,7 +60,7 @@ export default function FooterView({ bloc }: ViewProps) {
           <div className="space-y-4 mb-4">{bloc.text_code_postal}</div>
           <div className="pt-8 ">
             <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-              <div className="flex flex-row justify-center md:justify-start space-x-4">
+              <div className="flex flex-row justify-start md:justify-start space-x-4">
                 {bloc.reseaux.map((social) => {
                   const preview = isPdfUrl(social.image_url)
                     ? convertToFirstPage(social.image_url)
@@ -84,7 +84,7 @@ export default function FooterView({ bloc }: ViewProps) {
                           ? "sm:scale-100 text-xl text-blue-500"
                           : !isPdfUrl(social.image_url)
                             ? "scale-[0.6] sm:scale-100 w-30 h-30 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors"
-                            : "scale-[0.6] sm:scale-100 text-xl text-blue-500"
+                            : "scale-[0.6] sm:scale-100 text-2xl text-blue-500"
                       }
                       target="_blank"
                     >
