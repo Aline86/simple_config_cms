@@ -526,6 +526,18 @@ iframe {
   background-color: #2563eb;
   border-color: #2563eb;
 }
+
+/* Footer */
+
+.rotate_footer_first {
+  position: relative;
+  left: -100px;
+  overflow: hidden;
+   
+  top: -10px;
+  height:70px;
+  transform: rotate(7deg);
+}
 /* screen */
 @supports (-webkit-touch-callout: none) {
   /* CSS special safari */

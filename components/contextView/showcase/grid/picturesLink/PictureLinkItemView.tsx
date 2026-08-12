@@ -15,7 +15,7 @@ export default function PicturesLinkItemView({
   cardNumber: number;
 }) {
   return (
-    <div className="w-full ">
+    <div className="w-full">
       <a
         href={mediaObject.text_image_lien ? mediaObject.text_image_lien : "#"}
         className="bg-white rounded-lg shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-slate-200 overflow-hidden group h-full flex flex-col"
