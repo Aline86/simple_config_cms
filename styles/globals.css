@@ -6,10 +6,7 @@
 .bg-slate-50 {
   background-color: #f3f4f6;
 }
-html {
-  margin: 0;
-  padding: 0;
-}
+
 /* app/globals.css */
 :root {
   --bg-color: white;
