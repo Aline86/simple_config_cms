@@ -5,6 +5,8 @@ import { getHomePage } from "../lib/cache/page.homepage";
 import { getPageHeader } from "../lib/cache/page.header";
 
 import PageContainer from "./PageContainer";
+import { Suspense } from "react";
+import { PageSkeleton } from "../components/ui/suspense/PageSkeleton";
 
 export async function generateMetadata(): Promise<Metadata> {
   const [page, header] = await Promise.all([getHomePage(), getPageHeader()]);
@@ -25,5 +27,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function Page() {
-  return <PageContainer />;
+  return (
+    <Suspense fallback={<PageSkeleton />}>
+      <PageContainer />
+    </Suspense>
+  );
 }

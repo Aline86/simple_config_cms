@@ -1,3 +1,5 @@
+export const instant = false;
+
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
@@ -7,7 +9,7 @@ export default async function Page({ params }: PageProps) {
 
   const basePath = `/edition/page/${slug}`;
   return (
-    <body className="flex flex-col items-end m-4">
+    <div className="flex flex-col items-end m-4">
       <a
         title="Retour"
         href={basePath}
@@ -26,6 +28,6 @@ export default async function Page({ params }: PageProps) {
           height: "500px",
         }}
       />
-    </body>
+    </div>
   );
 }

@@ -1,3 +1,5 @@
+export const instant = false;
+
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
