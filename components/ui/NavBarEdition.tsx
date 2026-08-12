@@ -1,3 +1,6 @@
+"use client";
+
+export const dynamic = "force-dynamic";
 import { Plus, Save } from "lucide-react";
 import Draggable from "./Draggable";
 import LogoutButton from "./LogoutButton";
@@ -17,7 +20,7 @@ interface NavBarEditionProps {
   returnButton?: boolean;
 }
 
-export default function NavBarEdition<T>({
+export default function NavBarEdition({
   logout,
   handleSavePages,
   setDraggableEnabled,

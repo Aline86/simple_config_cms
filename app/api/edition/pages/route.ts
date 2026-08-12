@@ -4,33 +4,16 @@ import { prisma } from "../../../../prisma/prisma";
 import { ApiResponse } from "../../../../lib/helpers/ApiResponse";
 import { requireAuth } from "../requireAuth";
 import { BlocObject } from "../../../../database/model/Bloc";
+import { revalidateTag } from "next/cache";
+import { getPages } from "../../../../lib/cache/pages";
 
 export async function GET(request: NextRequest) {
   return ApiResponse.handle(
     async () => {
       const { searchParams } = new URL(request.url);
       const parent_id = searchParams.get("parent_id");
+      const dbPages = await getPages(parent_id);
 
-      let dbPages = [];
-      if (parent_id !== null) {
-        dbPages = await prisma.page.findMany({
-          where: {
-            number_parent_id: Number(parent_id),
-          },
-          orderBy: {
-            number_page_position: "asc",
-          },
-        });
-      } else {
-        dbPages = await prisma.page.findMany({
-          where: {
-            number_parent_id: null,
-          },
-          orderBy: {
-            number_page_position: "asc",
-          },
-        });
-      }
       const pages = dbPages.map((dbPage) => {
         const blocs =
           typeof dbPage.blocs === "string"
@@ -141,6 +124,9 @@ export async function POST(request: NextRequest) {
           }
         }),
       );
+
+      revalidateTag(`pages:${pagesPayload}`, { expire: 0 });
+
       return {
         message: "Pages got",
         pages: {

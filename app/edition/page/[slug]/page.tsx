@@ -6,6 +6,8 @@ import { getConfiguration } from "../../../../lib/cache/configuration";
 import PageClient from "./PageClient";
 import { FONT_STACKS } from "../../../../components/ui/fonts/fonts";
 import { PALETTE } from "../../../../components/ui/Text/TailwindPalette";
+import { PageSkeleton } from "../../../../components/ui/suspense/PageSkeleton";
+import { Suspense } from "react";
 
 export const instant = false;
 
@@ -49,7 +51,6 @@ export default async function Page({ params }: PageProps) {
     );
   }
 
- 
   const mainColorKey = configuration?.color_main_color ?? "";
   const titleColor =
     (PALETTE[mainColorKey] !== undefined && PALETTE[mainColorKey][600]) ??
@@ -62,13 +63,15 @@ export default async function Page({ params }: PageProps) {
   const cssVars = `:root{--police:${fontStack};--font-size:${fontSize}px;--title-color:${titleColor};}`;
 
   return (
-    <div className="space-y-6 ">
-      <PageClient
-        initialPage={page}
-        header={header}
-        footer={footer}
-        cssVars={cssVars}
-      />
-    </div>
+    <Suspense fallback={<PageSkeleton />}>
+      <div className="space-y-6 ">
+        <PageClient
+          initialPage={page}
+          header={header}
+          footer={footer}
+          cssVars={cssVars}
+        />
+      </div>
+    </Suspense>
   );
 }
