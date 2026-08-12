@@ -16,7 +16,7 @@ interface EditorProps {
   show_debug: boolean;
 }
 
-export default function HeaderEdit<T>({
+export default function HeaderEdit({
   bloc,
   onChange,
   addElement,

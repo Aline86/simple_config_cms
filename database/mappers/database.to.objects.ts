@@ -27,6 +27,6 @@ export function mapFooter(row: Row, mode: "view" | "edition") {
   return new FooterObject({ ...row }, mode);
 }
 
-export function mapPage(row: Row) {
-  return new PageObject(row);
+export function mapPage(row: Row, mode: "view" | "edition") {
+  return new PageObject(row, mode);
 }

@@ -1,5 +1,3 @@
-export const dynamic = "force-dynamic";
-export const dynamicParams = true;
 import { notFound } from "next/navigation";
 import { FONT_STACKS } from "../components/ui/fonts/fonts";
 
@@ -43,10 +41,10 @@ export default async function Page({ params }: PageProps) {
     );
   }
 
-   const mainColorKey = configuration?.color_main_color ?? "";
-   const titleColor =
-     (PALETTE[mainColorKey] !== undefined && PALETTE[mainColorKey][600]) ??
-     "#080808";
+  const mainColorKey = configuration?.color_main_color ?? "";
+  const titleColor =
+    (PALETTE[mainColorKey] !== undefined && PALETTE[mainColorKey][600]) ??
+    "#080808";
 
   const cssVars = `:root{--police:${FONT_STACKS[Number(configuration.text_police)].stack};--font-size:${configuration.number_taille}px;--title-color:${titleColor};}`;
 

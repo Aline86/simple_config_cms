@@ -26,7 +26,7 @@ export default function PageClient({
   footer,
   cssVars,
 }: Props) {
-  const page = useMemo(() => mapPage(initialPage), [initialPage]);
+  const page = useMemo(() => mapPage(initialPage, "view"), [initialPage]);
   const headerData = useMemo(() => mapHeader(header, "view"), [header]);
   const footerData = useMemo(() => mapFooter(footer, "view"), [footer]);
 
@@ -41,8 +41,6 @@ export default function PageClient({
       <ThemeToggle />
       <main>
         {page.blocs.map((bloc, index) => {
-          bloc = bloc.set_mode("view");
-
           return <ComponentBloc key={index} bloc={bloc} />;
         })}
       </main>

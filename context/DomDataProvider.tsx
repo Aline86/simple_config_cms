@@ -9,22 +9,14 @@ import usePages from "../hooks/dropdown/usePages";
 type AppContextType = {
   hasH1InPage: boolean;
   setHasH1InPage: (value: boolean) => void;
-  pages: PageObject[] | null;
-
 };
 
 const DomDataContext = createContext<AppContextType | undefined>(undefined);
 
 export function DomDataProvider({ children }: { children: ReactNode }) {
-  const { parentId } = usePage();
-
-  const { pages } = usePages(parentId);
   const [hasH1InPage, setHasH1InPage] = useState(false);
 
-  const value = useMemo(
-    () => ({ hasH1InPage, setHasH1InPage, pages }),
-    [hasH1InPage, pages],
-  );
+  const value = useMemo(() => ({ hasH1InPage, setHasH1InPage }), [hasH1InPage]);
 
   return (
     <DomDataContext.Provider value={value}>

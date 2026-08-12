@@ -2,6 +2,7 @@ import { immerable } from "immer";
 import { MediaObject } from "./MediaObject";
 import { JSONContent } from "tiptap";
 import { BaseValidatable } from "../BaseValidator";
+import { output } from "../../../lib/helpers/tiptapFunctions";
 
 export class ArticleObject extends BaseValidatable {
   [immerable] = true;
@@ -54,7 +55,7 @@ export class ArticleObject extends BaseValidatable {
     return {
       id: this.id,
       text_bloc_id: this.text_bloc_id,
-      text_article: this.text_article,
+      text_article: output(this.text_article),
       text_images_position: this.text_images_position,
       text_width: this.number_text_width,
       number_height: this.number_height,
