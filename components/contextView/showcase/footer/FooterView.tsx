@@ -58,9 +58,9 @@ export default function FooterView({ bloc }: ViewProps) {
 
           <div className="space-y-4">{bloc.text_adresse_footer}</div>
           <div className="space-y-4 mb-4">{bloc.text_code_postal}</div>
-          <div className="p-4">
+          <div className="pt-8 ">
             <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-              <div className="flex flex-row justify-start gap-4">
+              <div className="flex flex-row justify-between">
                 {bloc.reseaux.map((social) => {
                   const preview = isPdfUrl(social.image_url)
                     ? convertToFirstPage(social.image_url)
