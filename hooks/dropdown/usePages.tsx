@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useState } from "react";
 import { PageObject } from "../../database/model/Page";
 
@@ -13,8 +11,8 @@ export default function usePages(id?: string | null | undefined) {
 
     const url =
       id != null && id !== undefined
-        ? `/api/edition/pages?parent_id=` + encodeURIComponent(String(id))
-        : `/api/edition/pages`;
+        ? `/api/pages?parent_id=` + encodeURIComponent(String(id))
+        : `/api/pages`;
 
     (async () => {
       try {

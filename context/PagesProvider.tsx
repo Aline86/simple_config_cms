@@ -14,11 +14,11 @@ export function PagesProvider({
   slug?: string;
   children: ReactNode;
 }) {
-  console.log("slug", slug);
+
   const { parentId } = usePage(slug);
   console.log("parentId", parentId);
   const { pages } = usePages(parentId);
-  console.log("pages", pages);
+
   return (
     <PagesContext.Provider value={pages}>{children}</PagesContext.Provider>
   );
