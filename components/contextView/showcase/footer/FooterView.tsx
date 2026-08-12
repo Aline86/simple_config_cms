@@ -84,7 +84,7 @@ export default function FooterView({ bloc }: ViewProps) {
                           ? "sm:scale-100 text-xl text-blue-500"
                           : !isPdfUrl(social.image_url)
                             ? "scale-[0.6] sm:scale-100 w-30 h-30 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors"
-                            : "scale-[0.6] sm:scale-100 text-2xl text-blue-500"
+                            : "scale-[0.6] sm:scale-100 text-2xl text-blue-500 ml-4"
                       }
                       target="_blank"
                     >
