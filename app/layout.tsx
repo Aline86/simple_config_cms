@@ -14,10 +14,10 @@ interface RootLayoutProps {
 }
 
 export default function RootLayout({ children }: RootLayoutProps) {
-  const theme = "light";
+  
   return (
     <html lang="fr">
-      <body className={theme}>
+      <body>
         <DomDataProvider>{children}</DomDataProvider>
       </body>
     </html>

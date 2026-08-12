@@ -6,15 +6,16 @@
 .bg-slate-50 {
   background-color: #f3f4f6;
 }
-
+html {
+  margin: 0;
+  padding: 0;
+}
 /* app/globals.css */
 :root {
   --bg-color: white;
   --text-color: black;
 
 }
-
-
 body {
 
   margin-inline: auto;
@@ -609,6 +610,9 @@ iframe {
 }
 /* Pour les écrans de plus de 768px */
 @media (max-width: 768px) {
+  .rotate_footer_first {
+    display: none;
+  }
   .logo {
     transform: scale(0.8);
     left: -15px;

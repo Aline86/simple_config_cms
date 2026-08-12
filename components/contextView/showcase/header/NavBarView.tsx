@@ -16,7 +16,7 @@ export default function NavBarView({ bloc }: { bloc: Readonly<HeaderObject> }) {
     stateBG,
     pages,
   } = useHeader(bloc);
-  const sticky = isSticky ? "sticky" : "relative";
+
   const isEdition =
     bloc.mode === "edition" ? `` : " shadow fixed  top-0  left-0 right-0 z-20";
   const mode_nav =

@@ -41,7 +41,7 @@ export default function FooterView({ bloc }: ViewProps) {
         className={
           bloc.mode === "edition"
             ? "relative left-0 p-8 w-full border-gray-800 overflow-hidden"
-            : "mt-24 absolute left-0 p-8 w-screen border-gray-800 "
+            : "mt-24 absolute left-0 w-screen border-gray-800 "
         }
         style={{ backgroundColor: bloc.color_background_color ?? "#fff" }}
       >
@@ -58,9 +58,9 @@ export default function FooterView({ bloc }: ViewProps) {
 
           <div className="space-y-4">{bloc.text_adresse_footer}</div>
           <div className="space-y-4 mb-4">{bloc.text_code_postal}</div>
-          <div className="pt-8 ">
+          <div className="p-4">
             <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-              <div className="flex flex-row justify-start md:justify-start space-x-4">
+              <div className="flex flex-row justify-start gap-4">
                 {bloc.reseaux.map((social) => {
                   const preview = isPdfUrl(social.image_url)
                     ? convertToFirstPage(social.image_url)
