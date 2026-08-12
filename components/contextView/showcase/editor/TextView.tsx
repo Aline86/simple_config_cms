@@ -37,7 +37,7 @@ export default function TextView({ bloc, editing = false }: BlocParams) {
           key={media.id}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, margin: "-40px" }}
+          viewport={{ once: false, margin: "-60px" }}
           transition={{ duration: 0.4, delay: Math.min(idx, 8) * 0.05 }}
         >
           <PicturesLinkItemView

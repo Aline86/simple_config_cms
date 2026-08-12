@@ -1,3 +1,5 @@
+"use client";
+
 import { JSONContent } from "@tiptap/core";
 
 type Mark = {

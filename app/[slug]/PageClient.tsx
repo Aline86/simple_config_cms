@@ -40,8 +40,8 @@ export default function PageClient({
       <HeaderView bloc={headerData} />
       <ThemeToggle />
       <main>
-        {page.blocs.map((bloc, index) => {
-          return <ComponentBloc key={index} bloc={bloc} />;
+        {page.blocs.map((bloc) => {
+          return <ComponentBloc key={bloc.bloc_position} bloc={bloc} />;
         })}
       </main>
       <FooterView bloc={footerData} />

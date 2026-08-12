@@ -5,6 +5,7 @@ import { JSONContent } from "@tiptap/core";
 import { output } from "../../../../lib/helpers/tiptapFunctions";
 import AnimatedTitle from "../../../ui/animations/AnimatedTitle";
 
+
 interface BlocParams {
   index: number;
   bloc: JSONContent;
@@ -13,6 +14,7 @@ interface BlocParams {
 function ArticleView({ bloc }: BlocParams) {
   const blocks = useMemo(() => {
     if (!bloc) return [];
+
     return output(bloc) ?? [];
   }, [bloc]);
 

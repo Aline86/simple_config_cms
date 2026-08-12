@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { output } from "../helpers/tiptapFunctions";
 
 export class TextParameter {
   minLength?: number;

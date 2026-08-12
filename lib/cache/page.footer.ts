@@ -1,17 +1,21 @@
-import { cacheTag, cacheLife } from "next/cache";
 import { prisma } from "../../prisma/prisma";
 
-export async function getPageFooter() {
-  "use cache";
-  cacheTag("footer");
-  cacheLife("max");
+const include = { reseaux: true };
 
-  return await prisma.footer.findFirst({
-    orderBy: {
-      number_id: "asc",
+export async function getPageFooter() {
+  const existing = await prisma.footer.findFirst({
+    orderBy: { number_id: "asc" },
+    include,
+  });
+  if (existing) return existing;
+
+  return await prisma.footer.create({
+    data: {
+      color_background_color: "",
+      text_nom_site_adresse: "",
+      text_adresse_footer: "",
+      text_code_postal: "",
     },
-    include: {
-      reseaux: true,
-    },
+    include,
   });
 }
