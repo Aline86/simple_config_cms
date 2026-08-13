@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-.w-screen { width: 100%}
+.w-screen {
+  width: 100%;
+}
 .bg-white {
   background-color: white;
 }
@@ -15,34 +17,33 @@ html {
 :root {
   --bg-color: white;
   --text-color: black;
-
 }
 body {
-
   margin-inline: auto;
   padding-inline: var(--gutter);
 }
 
-section { margin-bottom: 45px;}
-
+section {
+  margin-bottom: 45px;
+}
 
 .dark {
   --bg-color: #121212;
-  --text-color: var(--text-color)!important;
+  --text-color: var(--text-color) !important;
 }
 .dark .tiptap p {
   color: white;
- 
 }
 
 .dark h2 {
   color: #121212;
 }
-.dark  h2 {
-  color: var(--text-color)!important;
+.dark h2 {
+  color: var(--text-color) !important;
 }
-.dark .button div p, .dark .button div h2 {
-  color: #121212!important;
+.dark .button div p,
+.dark .button div h2 {
+  color: #121212 !important;
 }
 body {
   background-color: var(--bg-color);
@@ -216,30 +217,26 @@ main {
 
   --sidebar-border: oklch(0.129 0.042 264.695 / 10%);
   --sidebar-ring: oklch(0.488 0.243 264.376);
-  
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
-    
   }
   body {
     @apply bg-background text-foreground;
     overflow-x: hidden;
-    
   }
 }
 h1 {
-   font-family: var(--police) !important;
-   color: var(--title-color);
+  font-family: var(--police) !important;
+  color: var(--title-color);
 }
 h2 {
   font-size: var(--font-size);
   font-family: var(--police);
   color: var(--title-color);
   opacity: 0.6;
-
 }
 .tiptap {
   margin-bottom: 20px;
@@ -306,7 +303,6 @@ h2 {
 
 .validated-input-wrapper textarea {
   resize: vertical;
-
 }
 
 .error-messages {
@@ -535,7 +531,7 @@ iframe {
   position: relative;
   left: -200px;
   overflow: hidden;
-   
+
   top: -40px;
   height: 80px;
   transform: rotate(7deg);
@@ -559,17 +555,25 @@ iframe {
 /* Grid animation */
 
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: none; }
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .masonry-container > button {
-  
   animation: fadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .masonry-container > button { animation: none; opacity: 1; }
+  .masonry-container > button {
+    animation: none;
+    opacity: 1;
+  }
 }
 
 @media (min-width: 640px) {
@@ -581,8 +585,14 @@ iframe {
 
 /* Animation images editor */
 @keyframes blocDropIn {
-  from { opacity: 0; transform: translateY(-32px); }
-  to   { opacity: 1; transform: none; }
+  from {
+    opacity: 0;
+    transform: translateY(-32px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .anim-item {
@@ -591,8 +601,14 @@ iframe {
 }
 
 @keyframes blocDropIn {
-  from { opacity: 0; transform: translateY(-32px); }
-  to   { opacity: 1; transform: none; }
+  from {
+    opacity: 0;
+    transform: translateY(-32px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .anim-item {
@@ -603,15 +619,23 @@ iframe {
 
 /* fallback navigateurs sans scroll-driven animations */
 @supports not (animation-timeline: view()) {
-  .anim-item { opacity: 1; animation: none; }
+  .anim-item {
+    opacity: 1;
+    animation: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .anim-item { animation: none; opacity: 1; }
+  .anim-item {
+    animation: none;
+    opacity: 1;
+  }
 }
 /* Pour les écrans de plus de 768px */
 @media (max-width: 768px) {
- 
+  .screen-full-section {
+    top: -95px;
+  }
   .rotate_footer_first {
     display: none;
   }
