@@ -65,7 +65,7 @@ const nextConfig: NextConfig = {
                 // Images : ajout de tous les domaines nécessaires
                 "img-src 'self' https://res.cloudinary.com https://picsum.photos https://i.ytimg.com https://img.youtube.com data: blob:",
                 // Scripts : ajout de YouTube et autres
-                "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://eu.i.posthog.com https://cloud.umami.is https://upload-widget.cloudinary.com https://www.google-analytics.com https://play.google.com https://vercel.live https://www.youtube.com https://s.ytimg.com",
+                "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://umami-nine-ruby.vercel.app/script.js https://upload-widget.cloudinary.com https://www.google-analytics.com https://play.google.com https://vercel.live https://www.youtube.com https://s.ytimg.com",
                 // Styles
                 "style-src 'self' 'unsafe-inline'",
                 "style-src-elem 'self' 'unsafe-inline'",

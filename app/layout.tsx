@@ -17,11 +17,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="fr">
       <head>
-        <script
-          defer
-          src="https://umami-nine-ruby.vercel.app/script.js"
-          data-website-id="cc90c567-2eaf-498a-ac92-1e532a1f308d"
-        ></script>
+        {process.env.UMAMI_ENV === "demo" && (
+          <script
+            defer
+            src="https://umami-nine-ruby.vercel.app/script.js"
+            data-website-id="cc90c567-2eaf-498a-ac92-1e532a1f308d"
+          ></script>
+        )}
       </head>
       <body>
         <DomDataProvider>{children}</DomDataProvider>
