@@ -39,7 +39,7 @@ export default function PicturesgridView({
             onClick={() => img.image_url !== "" && setActive(idx)}
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
+            viewport={{ once: false, margin: "-60px" }}
             transition={{ duration: 0.35, delay: Math.min(idx, 6) * 0.04 }}
             className="group relative w-full mb-4 overflow-hidden rounded focus:outline-none"
             style={{ breakInside: "avoid", display: "inline-block" }}
@@ -56,7 +56,7 @@ export default function PicturesgridView({
                 alt={img.text_titre || `img-${idx}`}
                 width={800}
                 height={800}
-                className="w-full h-auto rounded cursor-pointer z-20"
+                className="w-full h-auto rounded cursor-pointer"
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 priority={idx < 3}
               />
