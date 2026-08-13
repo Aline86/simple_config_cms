@@ -59,8 +59,8 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
       </div>
 
       <Image
-        src={bloc.image_medias[0].image_url}
-        alt={bloc.text_titre}
+        src={bloc.image_medias[0].image_url ?? ""}
+        alt={bloc.text_titre ?? ""}
         fill
         className="object-cover"
         priority
@@ -80,7 +80,7 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
         {/* Background parallaxe */}
         {bloc.image_medias[0].image_url !== "" && (
           <Image
-            src={bloc.image_medias[0].image_url}
+            src={bloc.image_medias[0].image_url ?? ""}
             alt=""
             fill
             className="object-cover "
