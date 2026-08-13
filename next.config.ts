@@ -65,13 +65,13 @@ const nextConfig: NextConfig = {
                 // Images : ajout de tous les domaines nécessaires
                 "img-src 'self' https://res.cloudinary.com https://picsum.photos https://i.ytimg.com https://img.youtube.com data: blob:",
                 // Scripts : ajout de YouTube et autres
-                "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://umami-nine-ruby.vercel.app/script.js https://upload-widget.cloudinary.com https://www.google-analytics.com https://play.google.com https://vercel.live https://www.youtube.com https://s.ytimg.com",
+                "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://umami-nine-ruby.vercel.app https://upload-widget.cloudinary.com https://www.google-analytics.com https://play.google.com https://vercel.live https://www.youtube.com https://s.ytimg.com",
                 // Styles
                 "style-src 'self' 'unsafe-inline'",
                 "style-src-elem 'self' 'unsafe-inline'",
                 "style-src-attr 'self' 'unsafe-inline'",
                 // Connect : API calls
-                "connect-src 'self' https://welcomepoitiers.fr https://*.welcomepoitiers.fr https://upload-widget.cloudinary.com https://api.cloudinary.com https://res.cloudinary.com https://www.google-analytics.com https://play.google.com https://www.youtube.com https://vercel.live",
+                "connect-src 'self' https://umami-nine-ruby.vercel.app https://welcomepoitiers.fr https://*.welcomepoitiers.fr https://upload-widget.cloudinary.com https://api.cloudinary.com https://res.cloudinary.com https://www.google-analytics.com https://play.google.com https://www.youtube.com https://vercel.live",
                 // Media : CRITIQUE pour les vidéos
                 "media-src 'self' https://res.cloudinary.com https://www.youtube.com https://www.youtube-nocookie.com blob: data: https: http:",
                 // Frames : iframes YouTube, Vimeo, Cloudinary
