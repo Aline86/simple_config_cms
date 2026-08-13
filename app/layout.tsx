@@ -17,6 +17,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="fr">
       <head>
+        {/** A faire : rendre les éléments configurables et optionnels dans le .env */}
         {process.env.UMAMI_ENV === "demo" ? (
           <script
             defer
