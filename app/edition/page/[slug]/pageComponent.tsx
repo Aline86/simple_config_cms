@@ -39,7 +39,7 @@ export default function PageBlocs({
               : "";
           return (
             <div
-              key={bloc.id}
+              key={bloc.bloc_position}
               draggable={draggableEnabled}
               onDragStart={() => {
                 onDragStart(bloc);

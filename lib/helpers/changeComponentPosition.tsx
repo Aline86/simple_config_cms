@@ -1,5 +1,3 @@
-// helpers/changeComponentPosition.ts (ou similaire)
-
 import { MediaObject } from "../../database/model/bloc/MediaObject";
 
 export function reorderArray<T>(
@@ -17,9 +15,7 @@ export function reorderArray<T>(
 
   newArray.splice(draggedIndex, 1);
 
-  const insertIndex = draggedIndex < targetIndex ? targetIndex : targetIndex;
-
-  newArray.splice(insertIndex, 0, dragged);
+  newArray.splice(targetIndex, 0, dragged);
 
   return newArray.map((item, index) => ({
     ...item,
@@ -50,5 +46,4 @@ export function deleteItemAndReorder(
     return media;
   });
   return reordered;
-  
 }
