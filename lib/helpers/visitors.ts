@@ -7,8 +7,6 @@ export interface UmamiStats {
   bounces: number;
 }
 
-
-
 let cached: { token: string; expiresAt: number } | null = null;
 
 async function getToken(force = false): Promise<string> {
@@ -31,8 +29,6 @@ async function getToken(force = false): Promise<string> {
   return token;
 }
 
-
-
 export async function getVisitors(days: number): Promise<UmamiStats> {
   const endAt = Date.now();
   const startAt = endAt - days * 86_400_000; // millisecondes, pas secondes
@@ -49,16 +45,18 @@ export async function getVisitors(days: number): Promise<UmamiStats> {
 
   let res = await call(await getToken());
 
- 
   if (res.status === 401) res = await call(await getToken(true));
 
   if (!res.ok) throw new Error("Statistiques indisponibles.");
 
+  const num = (v: unknown): number =>
+    typeof v === "number" ? v : ((v as { value?: number })?.value ?? 0);
+
   const d = await res.json();
   return {
-    visitors: d.visitors?.value ?? 0,
-    pageviews: d.pageviews?.value ?? 0,
-    visits: d.visits?.value ?? 0,
-    bounces: d.bounces?.value ?? 0,
+    visitors: num(d.visitors),
+    pageviews: num(d.pageviews),
+    visits: num(d.visits),
+    bounces: num(d.bounces),
   };
 }
