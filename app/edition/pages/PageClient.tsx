@@ -219,7 +219,12 @@ export default function PageClient({
         handleSavePages={handleSavePages}
         draggableEnabled={draggableEnabled}
       />
-      <VisitorCount />
+      {process.env.NEXT_PUBLIC_UMAMI_ENV !== undefined ? (
+        <VisitorCount />
+      ) : (
+        <></>
+      )}
+
       <div className="grid grid-cols-1 gap-6">
         {Array.isArray(pages) &&
           pages.map((_, index) => (
