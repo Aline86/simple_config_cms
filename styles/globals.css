@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-.w-screen { width: 100% }
+.w-screen { width: 100%}
 .bg-white {
   background-color: white;
 }
@@ -611,9 +611,7 @@ iframe {
 }
 /* Pour les écrans de plus de 768px */
 @media (max-width: 768px) {
-  .screen-full {
-    top: -95px;
-  }
+ 
   .rotate_footer_first {
     display: none;
   }

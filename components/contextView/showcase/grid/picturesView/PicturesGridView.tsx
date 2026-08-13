@@ -56,7 +56,7 @@ export default function PicturesgridView({
                 alt={img.text_titre || `img-${idx}`}
                 width={800}
                 height={800}
-                className="w-full h-auto rounded cursor-pointer"
+                className="w-full h-auto rounded cursor-pointer z-20"
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 priority={idx < 3}
               />
