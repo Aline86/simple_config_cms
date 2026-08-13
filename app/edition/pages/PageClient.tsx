@@ -7,6 +7,7 @@ import { PageObject } from "../../../database/model/Page";
 import PageCrud from "./pageComponent";
 import NavBarEdition from "../../../components/ui/NavBarEdition";
 import ErrorMessage from "../../../components/ui/ErrorMessage";
+import VisitorCount from "../../../components/contextView/edition/visitor/VisitorView";
 
 export default function PageClient({
   initialPages,
@@ -218,8 +219,7 @@ export default function PageClient({
         handleSavePages={handleSavePages}
         draggableEnabled={draggableEnabled}
       />
-
-      {/* Grille des pages */}
+      <VisitorCount />
       <div className="grid grid-cols-1 gap-6">
         {Array.isArray(pages) &&
           pages.map((_, index) => (
