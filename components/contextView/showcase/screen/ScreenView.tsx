@@ -13,14 +13,14 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
       className={
         bloc.mode === "edition"
           ? "relative z-0 mt-[-95px] h-screen mb-8"
-          : " mt-[-95px] h-screen mb-8"
+          : "w-screen mt-[-95px] h-screen mb-8"
       }
     >
       <div
         className={
           bloc.mode === "edition"
             ? "absolute z-10 h-screen w-[90%] bottom-0 title text-white flex flex-col justify-end pb-24"
-            : "relative z-10 h-screen w-[70%] title text-white flex flex-col justify-end pb-24 ml-4"
+            : "relative screen-full z-10 h-screen w-[70%] title text-white flex flex-col justify-end pb-24 ml-4"
         }
       >
         {hasH1InPage ? (
