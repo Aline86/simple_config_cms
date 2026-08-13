@@ -1,11 +1,11 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getVisitors } from "../../../../lib/helpers/visitors";
-
+import { requireAuth } from "../requireAuth";
 
 const ALLOWED = [1, 7, 30, 90, 365] as const;
 
-export async function GET(request: Request) {
-
+export async function GET(request: NextRequest) {
+  await requireAuth(request);
   const raw = Number(new URL(request.url).searchParams.get("days"));
   const days = (ALLOWED as readonly number[]).includes(raw) ? raw : 30;
 

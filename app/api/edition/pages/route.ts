@@ -3,9 +3,7 @@ import { PageObject } from "../../../../database/model/Page";
 import { prisma } from "../../../../prisma/prisma";
 import { ApiResponse } from "../../../../lib/helpers/ApiResponse";
 import { requireAuth } from "../requireAuth";
-import { BlocObject } from "../../../../database/model/Bloc";
 import { revalidateTag } from "next/cache";
-import { getPages } from "../../../../lib/cache/pages";
 import { getPagesData } from "../../../../lib/helpers/api/pages.data";
 
 export async function GET(request: NextRequest) {
