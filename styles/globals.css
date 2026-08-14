@@ -631,9 +631,12 @@ iframe {
     opacity: 1;
   }
 }
-@media (min-width: 768px) {
+.screen-full-section {
+  bottom: 70px;
+}
+@media (min-width: 1650px) {
   .screen-full-section {
-    bottom: 50px;
+    bottom: 0px;
   }
 }
 /* Pour les écrans de plus de 768px */
