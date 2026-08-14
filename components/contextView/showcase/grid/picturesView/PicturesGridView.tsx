@@ -85,14 +85,13 @@ export default function PicturesgridView({
             <motion.div
               layoutId={`photo-${bloc.id ?? "grid"}-${active}`}
               onClick={(e) => e.stopPropagation()}
-              className="relative cursor-default"
+              className="relative cursor-default w-[90vw] h-[90vh]"
             >
               <Image
                 src={activeImg.image_url ?? ""}
                 alt={activeImg.text_titre || "Image agrandie"}
-                width={1920}
-                height={1080}
-                className="max-h-[90vh] w-auto max-w-[90vw] rounded object-contain"
+                fill
+                className="object-contain"
                 sizes="90vw"
                 priority
               />
