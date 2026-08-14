@@ -14,6 +14,7 @@ export default function PicturesgridView({
 }) {
   const [active, setActive] = useState<number | null>(null);
   const activeImg = active !== null ? bloc.image_medias[active] : null;
+  const colWidth = Math.round(1650 / (bloc.number_columns || 3));
 
   return (
     <section className="max-w-[1650px] w-full mx-auto text-center mt-24 mb-8">
@@ -58,8 +59,9 @@ export default function PicturesgridView({
                   alt={img.text_titre || `img-${idx}`}
                   width={1920}
                   height={1080}
+                  quality={90}
                   className="w-full h-auto rounded cursor-pointer"
-                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  sizes={`(max-width: 640px) 100vw, (max-width: 1024px) 50vw, ${colWidth}px`}
                   priority={idx < 3}
                 />
               ) : (
