@@ -241,7 +241,8 @@ h2 {
   font-family: var(--police);
   color: var(--title-color);
   opacity: 0.6;
-  margin-bottom: 60px;
+  margin-bottom: 40px;
+  font-weight: 100;
 }
 .tiptap {
   margin-bottom: 20px;
