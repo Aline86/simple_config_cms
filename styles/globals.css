@@ -631,11 +631,16 @@ iframe {
     opacity: 1;
   }
 }
+@media (min-width: 768px) {
+  .screen-full-section {
+    bottom: 50px;
+  }
+}
 /* Pour les écrans de plus de 768px */
 @media (max-width: 768px) {
   .screen-full-section {
     top: -95px;
-    bottom: 50px;
+
   }
   .rotate_footer_first {
     display: none;
