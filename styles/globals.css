@@ -35,6 +35,10 @@ section {
   color: white;
 }
 
+p {
+  font-size: 18px;
+  line-height: 1.5;
+}
 .dark h2 {
   color: #121212;
 }
@@ -237,6 +241,7 @@ h2 {
   font-family: var(--police);
   color: var(--title-color);
   opacity: 0.6;
+  margin-bottom: 60px;
 }
 .tiptap {
   margin-bottom: 20px;
@@ -635,10 +640,10 @@ iframe {
   bottom: 70px;
 }
 
-    .rotate_footer_first {
-      height: 200px;
-      transform: rotate(5deg);
-    }
+.rotate_footer_first {
+  height: 200px;
+  transform: rotate(5deg);
+}
 
 @media (max-width: 1650px) {
   .rotate_footer_first {

@@ -16,7 +16,7 @@ export default function PicturesgridView({
   const activeImg = active !== null ? bloc.image_medias[active] : null;
 
   return (
-    <section className="max-w-[1650px] w-full mx-auto text-center p-8 mb-8">
+    <section className="max-w-[1650px] w-full mx-auto text-center mt-24 mb-8">
       <AnimatedTitle className="mb-12">
         <h2 className="text-2xl font-bold text-slate-800 mb-6">
           {bloc.text_titre}

@@ -26,7 +26,7 @@ export default function TextView({ bloc, editing = false }: BlocParams) {
   const imagesNode = hasImages ? (
     <div
       className={clsx(
-        "grid gap-4 min-w-[150px] p-10",
+        "grid gap-4 min-w-[150px]",
         imagePosition === "top"
           ? getgridClasses(bloc.number_columns || 3)
           : "grid-cols-1",

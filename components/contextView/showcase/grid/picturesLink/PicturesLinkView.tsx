@@ -14,7 +14,7 @@ export default function PicturesLinkView({
   editing: boolean;
 }) {
   return (
-    <section className="max-w-[1650px] w-full mx-auto text-center p-8 mb-8">
+    <section className="max-w-[1650px] w-full mx-auto text-center mb-24">
       <h2 className="text-2xl font-bold text-slate-800 mb-6">
         {bloc.text_titre}
       </h2>

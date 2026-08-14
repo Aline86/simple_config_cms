@@ -69,12 +69,12 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
       <span className="absolute inset-0 bg-black/20"></span>
     </section>
   ) : (
-    <section className="w-screen z-0 h-[300px] z-0  mt-6">
+    <section className="relative w-screen z-0 h-[400px] z-0  mt-20 mb-24">
       <div
         className={
           bloc.mode === "edition"
-            ? "relative z-10  h-[300px]  left-0 flex-col justify-end title text-white flex "
-            : "absolute z-10  h-[300px] w-screen left-0 flex-col justify-end title text-white flex"
+            ? "rounded relative z-10  h-[300px]  left-0 flex-col justify-end title text-white flex "
+            : "rounded relative z-10  h-[400px] w-screen  flex-col justify-end title text-white flex"
         }
       >
         {/* Background parallaxe */}
@@ -83,13 +83,13 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
             src={bloc.image_medias[0].image_url ?? ""}
             alt=""
             fill
-            className="object-cover "
+            className="rounded object-cover "
             priority
           />
         )}
 
         {/* Overlay */}
-        <div className="absolute inset-0 bg-black/30"></div>
+        <div className="rounded absolute inset-0 bg-black/30"></div>
 
         {/* Contenu texte */}
         <div className=" z-10 relative bottom-0 flex  p-24 text-white">

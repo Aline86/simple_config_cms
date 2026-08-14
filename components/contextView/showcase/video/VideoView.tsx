@@ -93,7 +93,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ bloc }) => {
     const videoid = extractYouTubeid(bloc.image_medias[0].image_url);
 
     return (
-      <div className="p-8 max-w-[1650px] w-full mx-auto">
+      <div className="max-w-[1650px] w-full mx-auto">
         {/* text_titre */}
         {bloc.text_titre && (
           <div className="mb-4">
