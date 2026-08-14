@@ -20,7 +20,7 @@ export default function ButtonView({ bloc }: { bloc: BlocObject }) {
     publicId = extractPublicId(preview);
   }
   return (
-    <section className="button m-auto max-w-[950px] group perspective w-full mb-8">
+    <section className="button h-screen m-auto max-w-[950px] group perspective w-full mb-8">
       <div className="pt-6 relative bg-gradient-to-br from-slate-50 via-white to-slate-50 rounded-2xl overflow-hidden border border-slate-200/50 backdrop-blur-sm transform transition-transform duration-500 hover:scale-[1.02] hover:shadow-2xl h-full flex flex-col">
         <AnimatedTitle
           children={
