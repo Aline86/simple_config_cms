@@ -634,7 +634,7 @@ iframe {
 .screen-full-section {
   bottom: 70px;
 }
-@media (min-width: 2450px) {
+@media (min-width: 1950px) {
   .rotate_footer_first {
     position: relative;
     left: -200px;
