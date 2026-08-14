@@ -44,7 +44,7 @@ export default async function Page({ params }: PageProps) {
 
   const mainColorKey = configuration?.color_main_color ?? "";
   const titleColor =
-    (PALETTE[mainColorKey] !== undefined && PALETTE[mainColorKey][600]) ??
+    (PALETTE[mainColorKey] !== undefined && PALETTE[mainColorKey][800]) ??
     "#080808";
 
   const cssVars = `:root{--police:${FONT_STACKS[Number(configuration.text_police)].stack};--font-size:${configuration.number_taille}px;--title-color:${titleColor};}`;
