@@ -634,7 +634,13 @@ iframe {
 .screen-full-section {
   bottom: 70px;
 }
-@media (min-width: 1650px) {
+
+    .rotate_footer_first {
+      height: 200px;
+      transform: rotate(5deg);
+    }
+
+@media (max-width: 1650px) {
   .rotate_footer_first {
     position: relative;
     left: -200px;
@@ -644,9 +650,6 @@ iframe {
     height: 110px;
     transform: rotate(5deg);
   }
-}
-@media (min-width: 1650px) {
-
   .screen-full-section {
     bottom: 0px;
   }
