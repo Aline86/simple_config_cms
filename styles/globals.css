@@ -634,7 +634,19 @@ iframe {
 .screen-full-section {
   bottom: 70px;
 }
+@media (min-width: 2250px) {
+  .rotate_footer_first {
+    position: relative;
+    left: -200px;
+    overflow: hidden;
+
+    top: -40px;
+    height: 110px;
+    transform: rotate(5deg);
+  }
+}
 @media (min-width: 1650px) {
+
   .screen-full-section {
     bottom: 0px;
   }
