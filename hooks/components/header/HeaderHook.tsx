@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { useAppContext } from "../../../context/DomDataProvider";
-import { PageObject } from "../../../database/model/Page";
 import { HeaderObject } from "../../../database/model/bloc/Header";
 import usePages from "../../dropdown/usePages";
+
+const RESERVE = 380;
 
 export const isValidColor = (value?: string): boolean => {
   if (!value) return false;
@@ -28,64 +29,80 @@ const getBackgroundType = (url?: string): "color" | "image" | "empty" => {
 };
 
 export function useHeader(bloc: HeaderObject) {
-  const navRef = useRef<HTMLElement>(null);
-  const scrollRef = useRef<HTMLElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const rowRef = useRef<HTMLDivElement>(null);
 
-  const [isSticky, setIsSticky] = useState(true);
-  const [isBurger, setIsBurger] = useState(true);
+  const ghostRef = useRef<HTMLDivElement>(null);
+  const navRef = useRef<HTMLElement>(null);
+  const logoRef = useRef<HTMLAnchorElement>(null);
+  const titleGhostRef = useRef<HTMLElement>(null);
+  const [measured, setIsMeasured] = useState(false);
+
+  const [isBurger, setIsBurger] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [stateBG, setStateBG] = useState<"color" | "image" | "empty">("empty");
+
   const { pages } = usePages();
   const { setHasH1InPage } = useAppContext();
 
-  const checkOverflow = () => {
-    if (!scrollRef.current || !navRef.current) return;
-    const containerWidth = scrollRef.current.offsetWidth;
-    const navWidth = navRef.current.scrollWidth;
-    setIsBurger(navWidth > containerWidth - containerWidth * 0.7);
-  };
+  const stateBG = getBackgroundType(bloc.text_background_url);
 
-  const handleScroll = () => {
-    if (!scrollRef.current) return;
-    const scrollY = window.scrollY;
-    setIsSticky(scrollY < window.innerHeight * 2);
-  };
+  const checkOverflow = useCallback(() => {
+    const row = rowRef.current;
+    const ghost = ghostRef.current;
+
+    if (!row || !ghost) return;
+
+    const available = row.offsetWidth - (logoRef.current?.offsetWidth ?? 0);
+    const needed = ghost.offsetWidth;
+    console.log("needed", needed, "available", available, available - needed);
+    setIsBurger(available - needed - RESERVE < 0 ? true : false);
+    setIsMeasured(true);
+  }, []);
 
   useEffect(() => {
     setHasH1InPage(bloc.text_nom_site.trim().length > 0);
-  }, [bloc]);
+  }, [bloc.text_nom_site, setHasH1InPage]);
 
   useEffect(() => {
     if (!pages) return;
 
-    const observer = new ResizeObserver(checkOverflow);
-    if (scrollRef.current) observer.observe(scrollRef.current);
+    let frame = 0;
+    const schedule = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(checkOverflow);
+    };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", checkOverflow);
+    const observer = new ResizeObserver(schedule);
+    if (rowRef.current) observer.observe(rowRef.current);
 
-    handleScroll();
-    checkOverflow();
+    schedule();
+    document.fonts?.ready.then(schedule);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", checkOverflow);
+      cancelAnimationFrame(frame);
       observer.disconnect();
     };
-  }, [pages]);
+  }, [pages, checkOverflow]);
 
   useEffect(() => {
-    setStateBG(getBackgroundType(bloc.text_background_url));
-  }, [bloc.text_background_url]);
+    if (!isBurger && isOpen) setIsOpen(false);
+  }, [isBurger, isOpen]);
 
   return {
-    navRef,
     scrollRef,
-    isSticky,
+    rowRef,
+    ghostRef,
+    navRef,
+    logoRef,
+
     isBurger,
     isOpen,
     setIsOpen,
     stateBG,
     pages,
+    measured,
+    titleGhostRef,
   };
 }
+
+export type HeaderState = ReturnType<typeof useHeader>;

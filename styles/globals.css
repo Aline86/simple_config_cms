@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+html { scrollbar-gutter: stable; }
 .w-screen {
   width: 100%;
 }
@@ -56,6 +57,7 @@ body {
     background-color 0.3s,
     color 0.3s;
   margin-top: 95px;
+  overflow-x: hidden;
 }
 main {
   display: block;
