@@ -56,7 +56,6 @@ export function useHeader(bloc: HeaderObject) {
     const needed = ghost.offsetWidth;
     console.log("needed", needed, "available", available, available - needed);
     setIsBurger(available - needed - RESERVE < 0 ? true : false);
-    setIsMeasured(true);
   }, []);
 
   useEffect(() => {
@@ -81,6 +80,7 @@ export function useHeader(bloc: HeaderObject) {
     return () => {
       cancelAnimationFrame(frame);
       observer.disconnect();
+      setIsMeasured(true);
     };
   }, [pages, checkOverflow]);
 

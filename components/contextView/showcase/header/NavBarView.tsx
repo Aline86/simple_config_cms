@@ -27,7 +27,11 @@ export default function NavBarView({
   } = header;
 
   const isEdition =
-    bloc.mode === "edition" ? "" : "shadow fixed top-0 left-0 right-0 z-20";
+    bloc.mode === "edition"
+      ? ""
+      : measured
+        ? "shadow fixed top-0 left-0 right-0 z-20"
+        : "hidden";
   const mode_nav =
     bloc.mode === "edition"
       ? "mx-auto px-4 w-[45vw] top-[40vh]"
@@ -45,7 +49,6 @@ export default function NavBarView({
     <>
       <header
         style={{
-          visibility: measured ? "visible" : "hidden",
           backgroundColor:
             stateBG === "color" && isValidColor(bloc.text_background_url)
               ? `${bloc.text_background_url}40`
@@ -127,35 +130,34 @@ export default function NavBarView({
             </button>
           </div>
         </div>
-      </header>
-
-      <div
-        ref={ghostRef}
-        aria-hidden="true"
-        className="fixed left-0 top-0 invisible pointer-events-none flex space-x-8 whitespace-nowrap"
-      >
-        <a
-          title="Retour à l'accueil"
-          href="/"
-          className="logo text-xl font-bold text-indigo-600 relative flex-shrink-0 z-0"
+        <div
+          ref={ghostRef}
+          aria-hidden="true"
+          className="invisible fixed left-0 top-0 invisible pointer-events-none flex space-x-8 whitespace-nowrap"
         >
-          {bloc.logo?.image_url ? (
-            <Image
-              src={bloc.logo.image_url}
-              alt={bloc.text_nom_site || "Logo"}
-              height={100}
-              width={100}
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 1440px"
-            />
-          ) : (
-            "Mon Site"
-          )}
-        </a>
-        {links}
-        <span className="flex-shrink-0 whitespace-nowrap text-center px-4">
-          {bloc.text_nom_site}
-        </span>
-      </div>
+          <a
+            title="Retour à l'accueil"
+            href="/"
+            className="invisible logo text-xl font-bold text-indigo-600 relative flex-shrink-0 z-0"
+          >
+            {bloc.logo?.image_url ? (
+              <Image
+                src={bloc.logo.image_url}
+                alt={bloc.text_nom_site || "Logo"}
+                height={100}
+                width={100}
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 1440px"
+              />
+            ) : (
+              "Mon Site"
+            )}
+          </a>
+          {links}
+          <span className="invisible flex-shrink-0 whitespace-nowrap text-center px-4">
+            {bloc.text_nom_site}
+          </span>
+        </div>
+      </header>
     </>
   );
 }
