@@ -68,9 +68,7 @@ export default function NavBarView({
               title="Retour à l'accueil"
               href="/"
               className={
-                isBurger
-                  ? "mr-4 logo text-xl font-bold text-indigo-600 relative flex-shrink-0 z-0 ml-4"
-                  : "invisible pointer-events-none logo text-xl font-bold text-indigo-600 relative flex-shrink-0 z-0"
+                "mr-4 logo text-xl font-bold text-indigo-600 relative flex-shrink-0 z-0 ml-4"
               }
             >
               {bloc.logo?.image_url ? (
