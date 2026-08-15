@@ -117,7 +117,7 @@ export default function NavBarView({
               <svg
                 className="w-6 h-6"
                 fill="none"
-                stroke="currentColor"
+                stroke={!isOpen ? "currentColor" : "black"}
                 strokeWidth={2}
                 viewBox="0 0 24 24"
               >
