@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { BlocObject } from "../../../../../database/model/Bloc";
 import AnimatedTitle from "../../../../ui/animations/AnimatedTitle";
+import { X } from "lucide-react";
 
 export default function PicturesgridView({
   bloc,
@@ -82,9 +83,17 @@ export default function PicturesgridView({
             exit={{ opacity: 0 }}
             onClick={() => setActive(null)}
           >
+            <button
+              type="button"
+              onClick={() => setActive(null)}
+              aria-label="Fermer"
+              className="absolute top-4 right-4 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-black/60 text-white text-2xl leading-none cursor-pointer"
+            >
+              <X size={20} />
+            </button>
             <motion.div
               layoutId={`photo-${bloc.id ?? "grid"}-${active}`}
-              onClick={(e) => e.stopPropagation()}
+
               className="relative cursor-default w-[90vw] h-[90vh]"
             >
               <Image
@@ -92,7 +101,7 @@ export default function PicturesgridView({
                 alt={activeImg.text_titre || "Image agrandie"}
                 fill
                 className="object-contain"
-                sizes="90vw"
+                sizes="(max-width: 640px) 95vw, (max-width: 1024px) 90vw, 75vw"
                 priority
               />
             </motion.div>
