@@ -31,7 +31,7 @@ export default function NavBarView({
   const mode_nav =
     bloc.mode === "edition"
       ? "mx-auto px-4 w-[45vw] top-[40vh]"
-      : "mx-auto px-4 md:px-0";
+      : "mx-auto px-4";
 
   const links = pages
     ? Object.entries(pages).map(([, page]) => (
