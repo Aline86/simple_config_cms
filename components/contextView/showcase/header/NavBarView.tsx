@@ -81,7 +81,7 @@ export default function NavBarView({
               )}
             </a>
 
-            <h1 className=" sm:block flex-1 min-w-0 truncate text-center px-4">
+            <h1 className=" hidden md:block flex-1 min-w-0 truncate text-center px-4">
               {bloc.text_nom_site}
             </h1>
 
