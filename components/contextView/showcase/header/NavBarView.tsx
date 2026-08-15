@@ -33,9 +33,7 @@ export default function NavBarView({
         ? "shadow fixed top-0 left-0 right-0 z-20"
         : "hidden";
   const mode_nav =
-    bloc.mode === "edition"
-      ? "mx-auto px-4 w-[45vw] top-[40vh]"
-      : "mx-auto px-4";
+    bloc.mode === "edition" ? "mx-auto px-4 w-[45vw] top-[40vh]" : "mx-auto ";
 
   const links = pages
     ? Object.entries(pages).map(([, page]) => (
@@ -69,7 +67,11 @@ export default function NavBarView({
               ref={logoRef}
               title="Retour à l'accueil"
               href="/"
-              className="logo text-xl font-bold text-indigo-600 relative flex-shrink-0 z-0"
+              className={
+                isBurger
+                  ? "mr-4 logo text-xl font-bold text-indigo-600 relative flex-shrink-0 z-0 ml-4"
+                  : "invisible pointer-events-none logo text-xl font-bold text-indigo-600 relative flex-shrink-0 z-0"
+              }
             >
               {bloc.logo?.image_url ? (
                 <Image
@@ -109,7 +111,7 @@ export default function NavBarView({
               tabIndex={isBurger ? 0 : -1}
               onClick={() => setIsOpen(!isOpen)}
               className={`burger relative z-50 w-6 h-6 flex-shrink-0 cursor-pointer ${
-                isBurger ? "" : "invisible pointer-events-none"
+                isBurger ? "mr-4" : "invisible pointer-events-none"
               }`}
             >
               <svg
