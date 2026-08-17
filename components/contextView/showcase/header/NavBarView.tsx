@@ -30,7 +30,7 @@ export default function NavBarView({
     bloc.mode === "edition"
       ? ""
       : measured
-        ? "shadow fixed top-0 left-0 right-0 z-20"
+        ? "shadow fixed top-0 left-0 right-0 z-20 pr-2"
         : "hidden";
   const mode_nav =
     bloc.mode === "edition" ? "mx-auto px-4 w-[45vw] top-[40vh]" : "mx-auto ";
