@@ -12,15 +12,15 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
     <section
       className={
         bloc.mode === "edition"
-          ? "relative z-0 mt-[-95px] h-screen mb-8"
-          : "w-screen mt-[-95px] h-screen mb-8"
+          ? "relative z-0 mt-[-95px] h-screen mb-8  "
+          : "w-screen  mt-[-95px] h-screen mb-8 "
       }
     >
       <div
         className={
           bloc.mode === "edition"
-            ? "absolute z-10 h-screen w-[90%] bottom-0 title text-white flex flex-col justify-end pb-24"
-            : "relative screen-full-section z-10 h-screen w-[70%] title text-white flex flex-col justify-end pb-24 ml-4"
+            ? "absolute z-10 h-screen w-[90%] bottom-0 title text-white flex flex-col justify-end pb-24 "
+            : "relative screen-full-section z-10 h-screen w-[70%] title text-white flex flex-col justify-end pb-24 ml-4 "
         }
       >
         {hasH1InPage ? (
@@ -32,6 +32,7 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
                   textTransform: "uppercase",
                   opacity: 1,
                 }}
+                className="text-white! opacity: 600!"
               >
                 {bloc.text_titre}
               </h2>
@@ -44,8 +45,6 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
                 style={{
                   fontSize: "65px",
                   textTransform: "uppercase",
-                  color: "white",
-                  opacity: 1,
                 }}
               >
                 {bloc.text_titre}
@@ -54,7 +53,8 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
           ></AnimatedTitle>
         )}
         <AnimatedTitle
-          children={<h2 style={{ color: "white" }}>{bloc.text_description}</h2>}
+          children={<h2>{bloc.text_description}</h2>}
+          className="text-white! "
         ></AnimatedTitle>
       </div>
 
@@ -62,63 +62,32 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
         src={bloc.image_medias[0].image_url ?? ""}
         alt={bloc.text_titre ?? ""}
         fill
-        className="object-cover"
+        className="object-cover 110vw big"
         priority
       />
 
       <span className="absolute inset-0 bg-black/20"></span>
     </section>
   ) : (
-    <section className="relative w-screen z-0 h-[400px] z-0  mt-20 mb-24">
-      <div
-        className={
-          bloc.mode === "edition"
-            ? "rounded relative z-10  h-[300px]  left-0 flex-col justify-end title text-white flex "
-            : "rounded relative z-10  h-[400px] w-screen  flex-col justify-end title text-white flex"
-        }
-      >
-        {/* Background parallaxe */}
-        {bloc.image_medias[0].image_url !== "" && (
-          <Image
-            src={bloc.image_medias[0].image_url ?? ""}
-            alt=""
-            fill
-            className="rounded object-cover "
-            priority
-          />
-        )}
+    <section className="parallaxe relative z-0 w-full h-[400px] mt-20 mb-24 overflow-clip rounded">
+      {bloc.image_medias[0].image_url && (
+        <Image
+          src={bloc.image_medias[0].image_url}
+          alt=""
+          fill
+          className="parallaxe-img object-cover"
+        />
+      )}
 
-        {/* Overlay */}
-        <div className="rounded absolute inset-0 bg-black/30"></div>
+      <div className="absolute inset-0 bg-black/30" />
 
-        {/* Contenu texte */}
-        <div className=" z-10 relative bottom-0 flex  p-24 text-white">
-          <AnimatedTitle
-            children={
-              <h2
-                style={{
-                  fontSize: "65px",
-                  opacity: 1,
-                  textTransform: "uppercase",
-                  color: "white",
-                }}
-                className="text-transform-uppercase relative"
-              >
-                {bloc.text_titre}
-              </h2>
-            }
-          ></AnimatedTitle>
-          <AnimatedTitle
-            children={
-              <h2
-                style={{ color: "white", display: "block" }}
-                className="text-2xl mt-4 text-white relative"
-              >
-                {bloc.text_description}
-              </h2>
-            }
-          ></AnimatedTitle>
-        </div>
+      <div className="relative z-10 h-full flex flex-col justify-end p-8 md:p-16 text-white">
+        <AnimatedTitle>
+          <h2 className="text-5xl uppercase">{bloc.text_titre}</h2>
+        </AnimatedTitle>
+        <AnimatedTitle>
+          <h2 className="text-2xl mt-4">{bloc.text_description}</h2>
+        </AnimatedTitle>
       </div>
     </section>
   );

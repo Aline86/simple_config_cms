@@ -54,7 +54,7 @@ export default async function Page({ params }: PageProps) {
 
   const mainColorKey = configuration?.color_main_color ?? "";
   const titleColor =
-    (PALETTE[mainColorKey] !== undefined && PALETTE[mainColorKey][800]) ??
+    (PALETTE[mainColorKey] !== undefined && PALETTE[mainColorKey][900]) ??
     "#080808";
 
   const fontIndex = Number(configuration?.text_police ?? 0);

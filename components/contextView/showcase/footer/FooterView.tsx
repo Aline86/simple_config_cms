@@ -83,7 +83,7 @@ export default function FooterView({ bloc }: ViewProps) {
                         bloc.mode === "edition"
                           ? "sm:scale-100 text-xl text-blue-500"
                           : !isPdfUrl(social.image_url)
-                            ? "md:mr-4 scale-[0.6] sm:scale-100 w-30 h-30 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors"
+                            ? "md:mr-4 scale-[0.6] sm:scale-100 w-20 h-20 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors"
                             : "mr-4 scale-[0.6] sm:scale-100 text-xl text-blue-500 "
                       }
                       target="_blank"
@@ -92,9 +92,9 @@ export default function FooterView({ bloc }: ViewProps) {
                         <Image
                           src={preview}
                           alt={social.text_titre ?? ""}
-                          width="20"
-                          height="20"
-                          className="object-cover w-20 h-20 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors"
+                          width="10"
+                          height="10"
+                          className="object-cover w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors"
                           sizes="
                 (max-width: 640px) 100vw,
                 (max-width: 1024px) 80vw,
