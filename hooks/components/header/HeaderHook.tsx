@@ -54,7 +54,6 @@ export function useHeader(bloc: HeaderObject) {
 
     const available = row.offsetWidth - (logoRef.current?.offsetWidth ?? 0);
     const needed = ghost.offsetWidth;
-    console.log("needed", needed, "available", available, available - needed);
     setIsBurger(available - needed - RESERVE < 0 ? true : false);
   }, []);
 

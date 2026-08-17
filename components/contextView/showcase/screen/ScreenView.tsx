@@ -3,14 +3,15 @@ import { BlocObject } from "../../../../database/model/Bloc";
 
 import { useAppContext } from "../../../../context/DomDataProvider";
 import AnimatedTitle from "../../../ui/animations/AnimatedTitle";
+import { FontSize } from "@tiptap/extension-text-style";
 
 export default function ScreenView({ bloc }: { bloc: BlocObject }) {
   const { hasH1InPage } = useAppContext();
   const isEdition = bloc.mode === "edition";
 
   const titleStyle = {
+    textTransform: "uppercase",
     fontSize: "65px",
-    textTransform: "uppercase" as const,
   };
 
   return bloc.bloc_position === 0 ? (
@@ -18,7 +19,7 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
       className={
         isEdition
           ? "relative z-0 h-screen mb-8 overflow-hidden"
-          : "relative z-0 w-dvw ml-[calc(50%-50dvw)]  h-dvh overflow-hidden mb-35!"
+          : "screen-section-full relative z-0 w-dvw ml-[calc(50%-50dvw)]  h-dvh overflow-hidden mb-35!"
       }
     >
       <Image
@@ -32,10 +33,10 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
 
       <span className="back-drop absolute inset-0 z-10 bg-black/40 big" />
 
-      <div className="relative z-20 h-full title text-white flex flex-col justify-end px-4 md:px-16 ">
+      <div className="relative z-20 h-full title max-w-[75vw] text-white flex flex-col justify-end px-4 md:px-16 ">
         {hasH1InPage ? (
           <AnimatedTitle>
-            <h2 style={{ ...titleStyle, opacity: 1 }} className="text-white!">
+            <h2 style={{ ...titleStyle, opacity: 1 }} className="text-white! ">
               {bloc.text_titre}
             </h2>
           </AnimatedTitle>
@@ -47,7 +48,7 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
           </AnimatedTitle>
         )}
         <AnimatedTitle>
-          <h2 className="text-white!">{bloc.text_description}</h2>
+          <h2 className="text-white! text-xxl!">{bloc.text_description}</h2>
         </AnimatedTitle>
       </div>
     </section>
