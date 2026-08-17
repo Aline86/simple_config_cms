@@ -710,16 +710,16 @@ iframe {
     padding: 0 15px 0 15px;
 
   }
- 
+  .screen-section-full {
+    margin-top: -95px!important;
+    padding-bottom: 60px; 
+  }
   .front-client {
   
    
     margin-top: 95px;
   }
-  .screen-section-full {
-    margin-top: -95px!important;
-    padding-bottom: 60px; 
-  }
+
 
   .rotate_footer_first {
     display: none;
