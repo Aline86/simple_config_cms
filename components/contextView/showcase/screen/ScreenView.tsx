@@ -13,14 +13,14 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
       className={
         bloc.mode === "edition"
           ? "relative z-0 mt-[-95px] h-screen mb-8  "
-          : "w-screen  mt-[-95px] h-screen mb-8 "
+          : "w-screen h-screen mt-[-95px] h-screen mb-8  overflow-hidden"
       }
     >
       <div
         className={
           bloc.mode === "edition"
             ? "absolute z-10 h-screen w-[90%] bottom-0 title text-white flex flex-col justify-end pb-24 "
-            : "relative screen-full-section z-10 h-screen w-[70%] title text-white flex flex-col justify-end pb-24 ml-4 "
+            : "relative screen-full-section z-10 h-screen w-[70%] title text-white flex flex-col justify-end pb-24 ml-4"
         }
       >
         {hasH1InPage ? (
@@ -57,16 +57,16 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
           className="text-white! "
         ></AnimatedTitle>
       </div>
-
+      <div className="h-[100vh] "></div>
       <Image
         src={bloc.image_medias[0].image_url ?? ""}
         alt={bloc.text_titre ?? ""}
         fill
-        className="object-cover 110vw big"
+        className="object-cover w-[110vw] big "
         priority
       />
 
-      <span className="absolute inset-0 bg-black/20"></span>
+      <span className="back-drop absolute inset-0 bg-black/20 big"></span>
     </section>
   ) : (
     <section className="parallaxe relative z-0 w-full h-[400px] mt-20 mb-24 overflow-clip rounded">
