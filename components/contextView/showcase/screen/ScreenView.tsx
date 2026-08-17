@@ -13,7 +13,7 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
       className={
         bloc.mode === "edition"
           ? "relative z-0 mt-[-95px] h-screen mb-8  "
-          : "w-screen h-screen mt-[-95px] h-screen mb-8  overflow-hidden"
+          : "w-screen max-h-[100vh] mt-[-95px] h-screen mb-40  overflow-hidden"
       }
     >
       <div
