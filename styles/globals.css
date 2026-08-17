@@ -56,7 +56,7 @@ body {
   transition:
     background-color 0.3s,
     color 0.3s;
-  margin-top: 95px;
+
   overflow-x: hidden;
 }
 main {
@@ -654,6 +654,7 @@ iframe {
 }
 .big { animation: bigger 14s ease-out forwards;   z-index: 0;}
 .screen-full-section {
+ 
   max-height: 100vh;
   overflow: hidden!important; 
   z-index: 10;
@@ -708,10 +709,7 @@ iframe {
     padding: 0 15px 0 15px;
 
   }
-  .screen-full-section {
-    top: -95px;
 
-  }
   .rotate_footer_first {
     display: none;
   }

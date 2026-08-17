@@ -1,72 +1,55 @@
-// PicturesLinkItemView.tsx
-
 import Image from "next/image";
 import { BlocObject } from "../../../../database/model/Bloc";
 
 import { useAppContext } from "../../../../context/DomDataProvider";
 import AnimatedTitle from "../../../ui/animations/AnimatedTitle";
+
 export default function ScreenView({ bloc }: { bloc: BlocObject }) {
   const { hasH1InPage } = useAppContext();
+  const isEdition = bloc.mode === "edition";
+
+  const titleStyle = {
+    fontSize: "65px",
+    textTransform: "uppercase" as const,
+  };
 
   return bloc.bloc_position === 0 ? (
     <section
       className={
-        bloc.mode === "edition"
-          ? "relative z-0 mt-[-95px] h-screen mb-8  "
-          : "w-screen h-screen max-h-[100vh]  overflow-hidden"
+        isEdition
+          ? "relative z-0 h-screen mb-8 overflow-hidden"
+          : "relative z-0 w-dvw ml-[calc(50%-50dvw)]  h-dvh overflow-hidden mb-35!"
       }
     >
-      <div
-        className={
-          bloc.mode === "edition"
-            ? "absolute z-10 h-screen w-[90%] bottom-0 title text-white flex flex-col justify-end pb-24 "
-            : "absolute screen-full-section z-10  h-[90vh]  w-[80%] title text-white flex flex-col justify-end pb-24 ml-4 overflow-hidden"
-        }
-      >
-        {hasH1InPage ? (
-          <AnimatedTitle
-            children={
-              <h2
-                style={{
-                  fontSize: "65px",
-                  textTransform: "uppercase",
-                  opacity: 1,
-                }}
-                className="text-white! "
-              >
-                {bloc.text_titre}
-              </h2>
-            }
-          ></AnimatedTitle>
-        ) : (
-          <AnimatedTitle
-            children={
-              <h1
-                style={{
-                  fontSize: "65px",
-                  textTransform: "uppercase",
-                }}
-              >
-                {bloc.text_titre}
-              </h1>
-            }
-          ></AnimatedTitle>
-        )}
-        <AnimatedTitle
-          children={<h2>{bloc.text_description}</h2>}
-          className="text-white! "
-        ></AnimatedTitle>
-      </div>
-      <div className="h-[100vh] "></div>
       <Image
         src={bloc.image_medias[0].image_url ?? ""}
         alt={bloc.text_titre ?? ""}
         fill
-        className="object-cover w-[110vw] big "
+        sizes="100vw"
+        className="object-cover big "
         priority
       />
 
-      <span className="back-drop absolute inset-0 bg-black/20 big"></span>
+      <span className="back-drop absolute inset-0 z-10 bg-black/40 big" />
+
+      <div className="relative z-20 h-full title text-white flex flex-col justify-end px-4 md:px-16 ">
+        {hasH1InPage ? (
+          <AnimatedTitle>
+            <h2 style={{ ...titleStyle, opacity: 1 }} className="text-white!">
+              {bloc.text_titre}
+            </h2>
+          </AnimatedTitle>
+        ) : (
+          <AnimatedTitle>
+            <h1 style={titleStyle} className="text-white!">
+              {bloc.text_titre}
+            </h1>
+          </AnimatedTitle>
+        )}
+        <AnimatedTitle>
+          <h2 className="text-white!">{bloc.text_description}</h2>
+        </AnimatedTitle>
+      </div>
     </section>
   ) : (
     <section className="parallaxe relative z-0 w-full h-[400px] mt-20 mb-24 overflow-clip rounded">
