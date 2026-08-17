@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-html { scrollbar-gutter: stable; }
+html {
+  scrollbar-gutter: stable;
+}
 .w-screen {
   width: 100%;
 }
@@ -231,7 +233,6 @@ main {
   }
   body {
     @apply bg-background text-foreground;
-
   }
 }
 h1 {
@@ -649,20 +650,30 @@ iframe {
 }
 /* screen animation */
 @keyframes bigger {
-  from { transform: scale(1); }
-  to   { transform: scale(1.2); }
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.2);
+  }
 }
-.big { animation: bigger 14s ease-out forwards;   z-index: 0;}
+.big {
+  animation: bigger 14s ease-out forwards;
+  z-index: 0;
+}
 .screen-full-section {
- 
   max-height: 100vh;
-  overflow: hidden!important; 
+  overflow: hidden !important;
   z-index: 10;
 }
 /* parallaxe */
 @keyframes parallax {
-  from { transform: scale(1.25) translateY(-8%); }
-  to   { transform: scale(1.25) translateY(8%); }
+  from {
+    transform: scale(1.25) translateY(-8%);
+  }
+  to {
+    transform: scale(1.25) translateY(8%);
+  }
 }
 @supports (animation-timeline: view()) {
   .parallax {
@@ -672,8 +683,12 @@ iframe {
   }
 }
 @keyframes parallaxe {
-  from { transform: scale(1.25) translateY(-35%); }
-  to   { transform: scale(1.25) translateY(35%); }
+  from {
+    transform: scale(1.25) translateY(-35%);
+  }
+  to {
+    transform: scale(1.25) translateY(35%);
+  }
 }
 
 @supports (animation-timeline: view()) {
@@ -686,7 +701,9 @@ iframe {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .parallaxe-img { animation: none; }
+  .parallaxe-img {
+    animation: none;
+  }
 }
 @media (max-width: 1650px) {
   .rotate_footer_first {
@@ -703,23 +720,29 @@ iframe {
     bottom: 0px;
   }
 }
+.front-client {
+  margin-top: 0;
+  padding-bottom: 0;
+}
 /* Pour les écrans de plus de 768px */
 @media (max-width: 768px) {
- 
-  section{
+  .parallax,
+  .parallaxe-img {
+    animation: none;
+    animation-timeline: auto;
+    will-change: auto;
+    transform: none;
+  }
+  section {
     padding: 0 15px 0 15px;
-
   }
   .screen-section-full {
-    margin-top: -95px!important;
-    padding-bottom: 60px; 
+    margin-top: -95px;
+    padding-bottom: 60px;
   }
   .front-client {
-  
-   
     margin-top: 95px;
   }
-
 
   .rotate_footer_first {
     display: none;
@@ -751,7 +774,7 @@ iframe {
     padding-right: 0 !important;
     border: none;
   }
-    h1 {
+  h1 {
     font-size: 45px !important;
     word-wrap: break-word;
   }
