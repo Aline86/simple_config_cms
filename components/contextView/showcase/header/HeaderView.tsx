@@ -20,7 +20,7 @@ export default function HeaderView({ bloc }: ViewProps) {
       className={
         bloc.mode === "edition"
           ? "absolute w-fit h-fit mt-20 right-[30px] z-0"
-          : "fixed w-fit h-fit mt-5 right-[15px] z-[15] top-24"
+          : "fixed w-fit h-fit mt-5 right-[25px] z-[15] top-24"
       }
     >
       <NavBarView bloc={bloc} header={header} />

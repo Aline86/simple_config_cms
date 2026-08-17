@@ -1,9 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, useMemo, ReactNode } from "react";
-import usePage from "../hooks/dropdown/usePage";
-import { PageObject } from "../database/model/Page";
-import usePages from "../hooks/dropdown/usePages";
+
 
 
 type AppContextType = {

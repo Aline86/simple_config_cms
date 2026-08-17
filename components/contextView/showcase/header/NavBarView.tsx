@@ -30,7 +30,7 @@ export default function NavBarView({
     bloc.mode === "edition"
       ? ""
       : measured
-        ? "shadow fixed top-0 left-0 right-0 z-20"
+        ? "shadow fixed top-0 left-0 right-3 z-20"
         : "hidden";
   const mode_nav =
     bloc.mode === "edition" ? "mx-auto px-4 w-[45vw] top-[40vh]" : "mx-auto ";
@@ -92,7 +92,7 @@ export default function NavBarView({
               ref={navRef}
               className={`open-nav cursor-pointer flex space-x-8 whitespace-nowrap ${
                 isBurger && isOpen
-                  ? "nav-dynamique nav-dynamique--open"
+                  ? "nav-dynamique nav-dynamique--open "
                   : isBurger
                     ? "absolute invisible"
                     : ""

@@ -711,9 +711,13 @@ iframe {
 
   }
  
+  .front-client {
   
+   
+    margin-top: 95px;
+  }
   .screen-section-full {
-    
+    margin-top: -95px!important;
     padding-bottom: 60px; 
   }
 
