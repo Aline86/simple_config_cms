@@ -13,14 +13,14 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
       className={
         bloc.mode === "edition"
           ? "relative z-0 mt-[-95px] h-screen mb-8  "
-          : "w-screen max-h-[100vh] mt-[-95px] h-screen mb-40  overflow-hidden"
+          : "w-screen h-screen max-h-[100vh]  overflow-hidden"
       }
     >
       <div
         className={
           bloc.mode === "edition"
             ? "absolute z-10 h-screen w-[90%] bottom-0 title text-white flex flex-col justify-end pb-24 "
-            : "relative screen-full-section z-10 h-screen w-[70%] title text-white flex flex-col justify-end pb-24 ml-4"
+            : "absolute screen-full-section z-10  h-[90vh]  w-[80%] title text-white flex flex-col justify-end pb-24 ml-4"
         }
       >
         {hasH1InPage ? (
@@ -28,7 +28,6 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
             children={
               <h2
                 style={{
-                  fontSize: "65px",
                   textTransform: "uppercase",
                   opacity: 1,
                 }}
