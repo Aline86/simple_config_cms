@@ -28,6 +28,7 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
             children={
               <h2
                 style={{
+                  fontSize: "65px",
                   textTransform: "uppercase",
                   opacity: 1,
                 }}
