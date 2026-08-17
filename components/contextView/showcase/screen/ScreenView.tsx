@@ -32,7 +32,7 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
                   textTransform: "uppercase",
                   opacity: 1,
                 }}
-                className="text-white! opacity: 600!"
+                className="text-white! "
               >
                 {bloc.text_titre}
               </h2>
