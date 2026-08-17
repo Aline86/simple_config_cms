@@ -20,7 +20,7 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
         className={
           bloc.mode === "edition"
             ? "absolute z-10 h-screen w-[90%] bottom-0 title text-white flex flex-col justify-end pb-24 "
-            : "absolute screen-full-section z-10  h-[90vh]  w-[80%] title text-white flex flex-col justify-end pb-24 ml-4"
+            : "absolute screen-full-section z-10  h-[90vh]  w-[80%] title text-white flex flex-col justify-end pb-24 ml-4 overflow-hidden"
         }
       >
         {hasH1InPage ? (

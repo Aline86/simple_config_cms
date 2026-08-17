@@ -652,8 +652,12 @@ iframe {
   from { transform: scale(1); }
   to   { transform: scale(1.2); }
 }
-.big { animation: bigger 14s ease-out forwards; }
-
+.big { animation: bigger 14s ease-out forwards;   z-index: 0;}
+.screen-full-section {
+  max-height: 100vh;
+  overflow: hidden!important; 
+  z-index: 10;
+}
 /* parallaxe */
 @keyframes parallax {
   from { transform: scale(1.25) translateY(-8%); }
