@@ -19,7 +19,7 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
       className={
         isEdition
           ? "relative z-0 h-screen mb-8 overflow-hidden"
-          : "screen-section-full relative z-0 w-dvw ml-[calc(50%-50dvw)]  h-dvh overflow-hidden mb-35!"
+          : "screen-section-full relative z-0 w-dvw ml-[calc(50%-50dvw)]   h-dvh overflow-hidden mb-35!"
       }
     >
       <Image

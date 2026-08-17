@@ -705,12 +705,15 @@ iframe {
 }
 /* Pour les écrans de plus de 768px */
 @media (max-width: 768px) {
+ 
   section{
     padding: 0 15px 0 15px;
-    margin-top: 95px;
+
   }
+ 
+  
   .screen-section-full {
-    margin-top: 0px!important;
+    
     padding-bottom: 60px; 
   }
 

@@ -39,7 +39,7 @@ export default function PageClient({
       />
       <HeaderView bloc={headerData} />
       <ThemeToggle />
-      <main>
+      <main className="front-client">
         {page.blocs.map((bloc) => {
           return <ComponentBloc key={bloc.bloc_position} bloc={bloc} />;
         })}
