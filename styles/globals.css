@@ -725,7 +725,7 @@ iframe {
 }
 .front-client {
   transform: translateY(95px);
-  padding-bottom: 0;
+  padding-bottom: 95px;
   display: flow-root;
 }
 /* Pour les écrans de plus de 767px */

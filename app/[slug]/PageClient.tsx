@@ -31,7 +31,7 @@ export default function PageClient({
   const footerData = useMemo(() => mapFooter(footer, "view"), [footer]);
 
   return (
-    <div style={{ maxWidth: "950px", margin: "0 auto", marginBottom: "95px" }}>
+    <div style={{ maxWidth: "950px", margin: "0 auto" }}>
       <style
         href="dom-data-config-vars"
         precedence="default"
