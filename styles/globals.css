@@ -730,12 +730,7 @@ iframe {
 }
 /* Pour les écrans de plus de 767px */
 @media (max-width: 767px) {
-  .screen-section-full {
-    transform: translateY(-45px);
-  }
-  .front-client {
-    transform: translateY(45px);
-  }
+
   section {
     padding: 0 15px 0 15px;
   }
