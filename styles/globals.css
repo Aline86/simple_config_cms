@@ -719,11 +719,10 @@ iframe {
     height: 160px;
     transform: rotate(30deg);
   }
-  .screen-full-section {
-    bottom: 0px;
-  }
+ 
 }
 .front-client {
+
   margin-top: 0;
   padding-bottom: 0;
 }
@@ -737,6 +736,7 @@ iframe {
     padding-bottom: 60px;
   }
   .front-client {
+    display: flow-root;
     margin-top: 95px;
   }
 
