@@ -721,8 +721,11 @@ iframe {
   }
  
 }
+.screen-section-full {
+  margin-top: -95px;
+}
 .front-client {
-
+  margin-top: 95px;
   padding-bottom: 0;
 }
 /* Pour les écrans de plus de 767px */
