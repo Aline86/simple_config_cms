@@ -737,7 +737,7 @@ iframe {
   }
   .front-client {
     display: flow-root;
-    margin-top: 95px;
+    padding-top: 95px;
   }
 
   .rotate_footer_first {
