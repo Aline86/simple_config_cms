@@ -1,6 +1,7 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import { BlocObject } from "../../../../../database/model/Bloc";
 import AnimatedTitle from "../../../../ui/animations/AnimatedTitle";
@@ -14,8 +15,45 @@ export default function PicturesgridView({
   editing: boolean;
 }) {
   const [active, setActive] = useState<number | null>(null);
+  const [mounted, setMounted] = useState(false);
   const activeImg = active !== null ? bloc.image_medias[active] : null;
   const colWidth = Math.round(1650 / (bloc.number_columns || 3));
+
+  useEffect(() => setMounted(true), []);
+
+  const lightbox = (
+    <AnimatePresence>
+      {activeImg && (
+        <motion.div
+          key="lightbox"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={() => setActive(null)}
+        >
+          <button
+            type="button"
+            onClick={() => setActive(null)}
+            aria-label="Fermer"
+            className="absolute right-4 top-4 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-black/60 text-white cursor-pointer"
+          >
+            <X size={20} />
+          </button>
+
+          <Image
+            src={activeImg.image_url ?? ""}
+            alt={activeImg.text_titre || "Image agrandie"}
+            width={1920}
+            height={1080}
+            className="max-h-full max-w-full h-auto w-auto object-contain cursor-default"
+            onClick={(e) => e.stopPropagation()}
+            priority
+          />
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
 
   return (
     <section className="max-w-[1650px] w-full mx-auto text-center mt-24 mb-8">
@@ -42,8 +80,8 @@ export default function PicturesgridView({
             className="w-full mb-4"
             style={{ breakInside: "avoid", display: "inline-block" }}
           >
-            <motion.button
-              layoutId={`photo-${bloc.id ?? "grid"}-${idx}`}
+            <button
+              type="button"
               aria-label="Agrandir l'image"
               onClick={() => img.image_url !== "" && setActive(idx)}
               className="group relative w-full overflow-hidden rounded focus:outline-none"
@@ -68,46 +106,12 @@ export default function PicturesgridView({
               ) : (
                 <div className="w-full aspect-square rounded bg-slate-200" />
               )}
-            </motion.button>
+            </button>
           </motion.div>
         ))}
       </div>
 
-      <AnimatePresence>
-        {activeImg && (
-          <motion.div
-            key="lightbox"
-            className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4 cursor-pointer"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setActive(null)}
-          >
-            <button
-              type="button"
-              onClick={() => setActive(null)}
-              aria-label="Fermer"
-              className="absolute top-4 right-4 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-black/60 text-white text-2xl leading-none cursor-pointer"
-            >
-              <X size={20} />
-            </button>
-            <motion.div
-              layoutId={`photo-${bloc.id ?? "grid"}-${active}`}
-
-              className="relative cursor-default w-[90vw] h-[90vh]"
-            >
-              <Image
-                src={activeImg.image_url ?? ""}
-                alt={activeImg.text_titre || "Image agrandie"}
-                fill
-                className="object-contain"
-                sizes="(max-width: 640px) 95vw, (max-width: 1024px) 90vw, 75vw"
-                priority
-              />
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {mounted && createPortal(lightbox, document.body)}
     </section>
   );
 }
