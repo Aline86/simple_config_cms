@@ -49,7 +49,7 @@ export default function NavBarView({
         style={{
           backgroundColor:
             stateBG === "color" && isValidColor(bloc.text_background_url)
-              ? `${bloc.text_background_url}90`
+              ? `${bloc.text_background_url}60`
               : undefined,
           backgroundImage:
             stateBG === "image" && bloc.text_background_url
