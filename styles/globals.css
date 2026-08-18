@@ -719,29 +719,32 @@ iframe {
     height: 160px;
     transform: rotate(30deg);
   }
- 
 }
 .screen-section-full {
- 
-transform: translateY(-95px);
-
+  transform: translateY(-95px);
 }
 .front-client {
-  transform: translateY(95px);  
+  transform: translateY(95px);
   padding-bottom: 0;
-  display: flow-root; 
-  
+  display: flow-root;
 }
 /* Pour les écrans de plus de 767px */
 @media (max-width: 767px) {
+  .screen-section-full {
+    transform: translateY(-45px);
+  }
+  .front-client {
+    transform: translateY(45px);
+    padding-bottom: 0;
+    display: flow-root;
+  }
   section {
     padding: 0 15px 0 15px;
   }
   .screen-section-full {
-
     padding-bottom: 60px;
   }
- 
+
   .screen-full-section img {
     transform: scale(1);
   }
