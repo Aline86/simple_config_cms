@@ -726,7 +726,7 @@ iframe {
   padding-bottom: 0;
 }
 /* Pour les écrans de plus de 768px */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   section {
     padding: 0 15px 0 15px;
   }
@@ -734,10 +734,7 @@ iframe {
 
     padding-bottom: 60px;
   }
-  .front-client {
-    display: flow-root;
-  
-  }
+ 
 
   .rotate_footer_first {
     display: none;
