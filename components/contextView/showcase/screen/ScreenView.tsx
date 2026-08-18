@@ -34,14 +34,14 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
           <AnimatedTitle>
             <h2
               style={{ opacity: 1 }}
-              className="text-white!uppercase text-[36px]! md:text-[65px]!"
+              className="text-white! uppercase! text-[36px]! md:text-[65px]!"
             >
               {bloc.text_titre}
             </h2>
           </AnimatedTitle>
         ) : (
           <AnimatedTitle>
-            <h1 className="text-white! text-white!uppercase text-[36px]! md:text-[65px]!">
+            <h1 className="text-white! text-white! uppercase! text-[36px]! md:text-[65px]!">
               {bloc.text_titre}
             </h1>
           </AnimatedTitle>
