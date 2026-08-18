@@ -30,7 +30,7 @@ export default function NavBarView({
     bloc.mode === "edition"
       ? ""
       : measured
-        ? "shadow fixed top-0 left-0 right-0 z-20 pr-2"
+        ? "shadow fixed top-0 left-0 right-0 z-20 pr-2 shadow-xs"
         : "hidden";
   const mode_nav =
     bloc.mode === "edition" ? "mx-auto px-4 w-[45vw] top-[40vh]" : "mx-auto ";
@@ -49,7 +49,7 @@ export default function NavBarView({
         style={{
           backgroundColor:
             stateBG === "color" && isValidColor(bloc.text_background_url)
-              ? `${bloc.text_background_url}40`
+              ? `${bloc.text_background_url}90`
               : undefined,
           backgroundImage:
             stateBG === "image" && bloc.text_background_url
