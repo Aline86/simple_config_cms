@@ -44,7 +44,7 @@ export default function ContentLayout({
   };
 
   return (
-    <section className=" text-view max-w-[950px] w-full mx-auto mt-24">
+    <section className=" text-view max-w-[950px] w-full mx-auto mt-8">
       <AnimatedTitle
         children={
           <h2 className="mt-8 text-2xl font-bold text-slate-800 text-center ">

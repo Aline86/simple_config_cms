@@ -640,9 +640,6 @@ iframe {
     opacity: 1;
   }
 }
-.screen-full-section {
-  bottom: 70px;
-}
 
 .rotate_footer_first {
   height: 100px;
@@ -660,6 +657,9 @@ iframe {
   }
   .big {
     animation: bigger 14s ease-out forwards;
+    transform-origin: center center;
+    will-change: transform;
+    backface-visibility: hidden;
     z-index: 0;
   }
   .screen-full-section {
@@ -742,9 +742,7 @@ iframe {
   .screen-section-full {
     padding-bottom: 60px;
   }
-  .screen-section-full img {
-    transform: scale(1)
-  }
+
 
   .rotate_footer_first {
     display: none;
