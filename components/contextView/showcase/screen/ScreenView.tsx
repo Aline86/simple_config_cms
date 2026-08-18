@@ -9,7 +9,6 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
   const { hasH1InPage } = useAppContext();
   const isEdition = bloc.mode === "edition";
 
-
   return bloc.bloc_position === 0 ? (
     <section
       className={
@@ -54,12 +53,14 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
   ) : (
     <section className="parallaxe relative z-0 w-full h-[400px] mt-20 mb-24 overflow-clip rounded">
       {bloc.image_medias[0].image_url && (
-        <Image
-          src={bloc.image_medias[0].image_url}
-          alt=""
-          fill
-          className="parallaxe-img object-cover"
-        />
+        <div className="parallaxe-img absolute inset-x-0 -top-[20%] h-[140%] will-change-transform">
+          <Image
+            src={bloc.image_medias[0].image_url}
+            alt=""
+            fill
+            className="object-cover"
+          />
+        </div>
       )}
 
       <div className="absolute inset-0 bg-black/30" />
