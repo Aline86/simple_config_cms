@@ -46,7 +46,7 @@ export default function PicturesgridView({
             alt={activeImg.text_titre || "Image agrandie"}
             width={1920}
             height={1080}
-            className="max-h-full max-w-full h-auto w-auto object-contain cursor-default"
+            className="max-h-full max-w-full h-auto w-auto object-contain cursor-default rounded"
             onClick={(e) => e.stopPropagation()}
             priority
           />
