@@ -9,10 +9,6 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
   const { hasH1InPage } = useAppContext();
   const isEdition = bloc.mode === "edition";
 
-  const titleStyle = {
-    textTransform: "uppercase",
-    fontSize: "65px",
-  };
 
   return bloc.bloc_position === 0 ? (
     <section
@@ -36,13 +32,16 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
       <div className="relative z-20 h-full title max-w-[75vw] text-white flex flex-col justify-end px-4 md:px-16 ">
         {hasH1InPage ? (
           <AnimatedTitle>
-            <h2 style={{ ...titleStyle, opacity: 1 }} className="text-white! ">
+            <h2
+              style={{ opacity: 1 }}
+              className="text-white!uppercase text-[36px] md:text-[65px]"
+            >
               {bloc.text_titre}
             </h2>
           </AnimatedTitle>
         ) : (
           <AnimatedTitle>
-            <h1 style={titleStyle} className="text-white!">
+            <h1 className="text-white! text-white!uppercase text-[36px] md:text-[65px]">
               {bloc.text_titre}
             </h1>
           </AnimatedTitle>
