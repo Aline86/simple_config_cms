@@ -723,11 +723,11 @@ iframe {
 }
 .screen-section-full {
  
-transform: translateY(-45px);
+transform: translateY(-95px);
 
 }
 .front-client {
-  transform: translateY(45px);  
+  transform: translateY(95px);  
   padding-bottom: 0;
   display: flow-root; 
   
