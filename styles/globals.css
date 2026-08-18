@@ -735,8 +735,6 @@ iframe {
   }
   .front-client {
     transform: translateY(45px);
-    padding-bottom: 0;
-    display: flow-root;
   }
   section {
     padding: 0 15px 0 15px;
@@ -744,10 +742,10 @@ iframe {
   .screen-section-full {
     padding-bottom: 60px;
   }
-
-  .screen-full-section img {
-    transform: scale(1);
+  .screen-section-full img {
+    transform: scale(1)
   }
+
   .rotate_footer_first {
     display: none;
   }
