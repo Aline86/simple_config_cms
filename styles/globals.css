@@ -672,10 +672,10 @@ iframe {
 
 @keyframes parallax {
   from {
-    transform: scale(1.25) translateY(-8%);
+    transform: scale(1.25) translateY(-35%);
   }
   to {
-    transform: scale(1.25) translateY(8%);
+    transform: scale(1.25) translateY(35%);
   }
 }
 @supports (animation-timeline: view()) {
@@ -725,7 +725,7 @@ iframe {
 
   padding-bottom: 0;
 }
-/* Pour les écrans de plus de 768px */
+/* Pour les écrans de plus de 767px */
 @media (max-width: 767px) {
   section {
     padding: 0 15px 0 15px;
@@ -735,7 +735,9 @@ iframe {
     padding-bottom: 60px;
   }
  
-
+  .screen-full-section img {
+    transform: scale(1);
+  }
   .rotate_footer_first {
     display: none;
   }
