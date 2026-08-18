@@ -732,12 +732,12 @@ iframe {
     padding: 0 15px 0 15px;
   }
   .screen-section-full {
-    margin-top: -95px;
+
     padding-bottom: 60px;
   }
   .front-client {
     display: flow-root;
-    padding-top: 95px;
+  
   }
 
   .rotate_footer_first {
