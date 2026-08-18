@@ -722,11 +722,15 @@ iframe {
  
 }
 .screen-section-full {
-  margin-top: -95px;
+ 
+transform: translateY(-45px);
+
 }
 .front-client {
-  margin-top: 95px;
+  transform: translateY(45px);  
   padding-bottom: 0;
+  display: flow-root; 
+  
 }
 /* Pour les écrans de plus de 767px */
 @media (max-width: 767px) {
