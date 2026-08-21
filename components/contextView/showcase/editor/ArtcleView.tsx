@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import { JSONContent } from "@tiptap/core";
 import { output } from "../../../../lib/helpers/tiptapFunctions";
 import AnimatedTitle from "../../../ui/animations/AnimatedTitle";
-
+import { clean } from "../../../../lib/helpers/api/clean.html";
 
 interface BlocParams {
   index: number;
@@ -21,10 +21,11 @@ function ArticleView({ bloc }: BlocParams) {
   return (
     <section className="w-full mb-8">
       {blocks.map((block, index) => {
+        const text = clean(block.html);
         const content = (
           <div
             className="tiptap none"
-            dangerouslySetInnerHTML={{ __html: block.html }}
+            dangerouslySetInnerHTML={{ __html: text }}
           />
         );
 
