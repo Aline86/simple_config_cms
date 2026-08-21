@@ -1,8 +1,6 @@
 import { cacheTag, cacheLife } from "next/cache";
 import { prisma } from "../../prisma/prisma";
-import { CONFIGURATION_DEFAUT } from "./create.configuration";
 
-const CONFIGURATION_ID = 1;
 
 async function readConfiguration() {
   "use cache";
