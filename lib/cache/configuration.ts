@@ -1,5 +1,9 @@
 import { cacheTag, cacheLife } from "next/cache";
 import { prisma } from "../../prisma/prisma";
+import {
+  CONFIGURATION_ID,
+  CONFIGURATION_DEFAUT,
+} from "./configuration.constants";
 
 
 async function readConfiguration() {

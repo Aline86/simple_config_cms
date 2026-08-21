@@ -2,6 +2,10 @@
 
 import { revalidateTag } from "next/cache";
 import { prisma } from "../../prisma/prisma";
+import {
+  CONFIGURATION_ID,
+  CONFIGURATION_DEFAUT,
+} from "./configuration.constants";
 
 export async function saveConfiguration(data: {
   number_taille?: number | null;
