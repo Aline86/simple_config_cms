@@ -76,7 +76,8 @@ export default function NumberInput<T>({
         {...commonProps}
         type={params.type || "number"}
         onChange={handleChange}
-
+        min={params.min}
+        max={params.max}
         className="
       w-full
       rounded-md
