@@ -94,6 +94,7 @@ async function uploadToCloudinary(
       .upload_stream(
         {
           folder: CLOUDINARY_UPLOAD_FOLDER,
+          allowed_formats: ["jpg", "jpeg", "png", "webp", "pdf", "gif"],
           resource_type: "auto",
           overwrite: false,
           invalidate: true,

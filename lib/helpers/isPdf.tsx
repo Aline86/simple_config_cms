@@ -15,5 +15,5 @@ export const convertToFirstPage = (url: string) => {
 };
 
 export const getOriginalPdfUrl = (publicId: string) => {
-  return `https://res.cloudinary.com/${folder}/image/upload/${publicId}.pdf`;
+  return `https://res.cloudinary.com/${folder}/image/upload/v1788978036/cms/images/${publicId}.pdf`;
 };
