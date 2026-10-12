@@ -19,9 +19,10 @@ interface ViewProps {
 
 export default function FooterView({ bloc }: ViewProps) {
   const [isMounted, setIsMounted] = useState(false);
-  const is_white = isLight(bloc.color_background_color);
+  const [isWhite, setIsWhite] = useState(false);
   useEffect(() => {
     setIsMounted(true);
+    setIsWhite(isLight(bloc.color_background_color));
   }, []);
 
   if (!isMounted) {
@@ -55,7 +56,7 @@ export default function FooterView({ bloc }: ViewProps) {
           <AnimatedTitle>
             <h2
               className={
-                "space-y-4 font-bold text-2xl mb-4 " + is_white
+                "space-y-4 font-bold text-2xl mb-4 " + isWhite
                   ? "text-white!"
                   : "text-black!"
               }
@@ -64,15 +65,11 @@ export default function FooterView({ bloc }: ViewProps) {
             </h2>
           </AnimatedTitle>
 
-          <div
-            className={"space-y-4 " + is_white ? "text-white" : "text-black"}
-          >
+          <div className={"space-y-4 " + isWhite ? "text-white" : "text-black"}>
             {bloc.text_adresse_footer}
           </div>
           <div
-            className={
-              "space-y-4 mb-4" + is_white ? "text-white" : "text-black"
-            }
+            className={"space-y-4 mb-4" + isWhite ? "text-white" : "text-black"}
           >
             {bloc.text_code_postal}
           </div>
@@ -129,7 +126,7 @@ export default function FooterView({ bloc }: ViewProps) {
 
               <p
                 className={
-                  "text-2xl text-center md:text-right" + is_white
+                  "text-2xl text-center md:text-right" + isWhite
                     ? "text-white"
                     : "text-black"
                 }
