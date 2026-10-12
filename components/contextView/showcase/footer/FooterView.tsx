@@ -18,125 +18,118 @@ interface ViewProps {
 }
 
 export default function FooterView({ bloc }: ViewProps) {
-  const [isMounted, setIsMounted] = useState(false);
-  const [isWhite, setIsWhite] = useState(false);
-  useEffect(() => {
-    setIsMounted(true);
-    setIsWhite(isLight(bloc.color_background_color));
-  }, []);
+    const [isMounted, setIsMounted] = useState(false);
+    const is_white = isLight(bloc.color_background_color);
 
-  if (!isMounted) {
+    const h2 = is_white
+      ? "space-y-4 font-bold text-2xl mb-4 text-white!"
+      : "space-y-4 font-bold text-2xl mb-4 text-black!";
+    const text_adress = is_white
+      ? "space-y-4 text-white"
+      : "space-y-4text-black";
+    const postal_code = is_white
+      ? "space-y-4 mb-4 text-white"
+      : "space-y-4 mb-4 text-black";
+    const rights = is_white
+      ? "text-2xl text-center md:text-right text-white"
+      : "text-2xl text-center md:text-right text-black";
+
+    useEffect(() => {
+      setIsMounted(true);
+    }, []);
+
+    if (!isMounted) {
+      return (
+        <footer className="bg-white shadow">
+          <div className="max-w-7xl mx-auto px-4 h-16 flex items-center gap-4">
+            <span className="text-xl font-bold">
+              {bloc?.text_nom_site_adresse}
+            </span>
+            <div className="w-6 h-6" />
+          </div>
+        </footer>
+      );
+    }
+
     return (
-      <footer className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 h-16 flex items-center gap-4">
-          <span className="text-xl font-bold">
-            {bloc?.text_nom_site_adresse}
-          </span>
-          <div className="w-6 h-6" />
-        </div>
-      </footer>
-    );
-  }
-
-  return (
-    <>
-      <footer
-        className={
-          bloc.mode === "edition"
-            ? "relative left-0 p-8 w-full border-gray-800 overflow-hidden"
-            : "mt-24 absolute left-0 p-8 w-screen border-gray-800 "
-        }
-        style={{ backgroundColor: bloc.color_background_color ?? "#fff" }}
-      >
-        <div
-          className="rotate_footer_first overflow-hidden"
+      <>
+        <footer
+          className={
+            bloc.mode === "edition"
+              ? "relative left-0 p-8 w-full border-gray-800 overflow-hidden"
+              : "mt-24 absolute left-0 p-8 w-screen border-gray-800 "
+          }
           style={{ backgroundColor: bloc.color_background_color ?? "#fff" }}
-        ></div>
-        <div className="max-w-7xl mx-auto  ">
-          <AnimatedTitle>
-            <h2
-              className={
-                "space-y-4 font-bold text-2xl mb-4 " + isWhite
-                  ? "text-white!"
-                  : "text-black!"
-              }
-            >
-              {bloc.text_nom_site_adresse}
-            </h2>
-          </AnimatedTitle>
-
-          <div className={"space-y-4 " + isWhite ? "text-white" : "text-black"}>
-            {bloc.text_adresse_footer}
-          </div>
+        >
           <div
-            className={"space-y-4 mb-4" + isWhite ? "text-white" : "text-black"}
-          >
-            {bloc.text_code_postal}
-          </div>
-          <div className="pt-8 ">
-            <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-              <div className="flex flex-row justify-start">
-                {bloc.reseaux.map((social) => {
-                  const preview = isPdfUrl(social.image_url)
-                    ? convertToFirstPage(social.image_url)
-                    : social.image_url;
+            className="rotate_footer_first overflow-hidden"
+            style={{ backgroundColor: bloc.color_background_color ?? "#fff" }}
+          ></div>
+          <div className="max-w-7xl mx-auto  ">
+            <AnimatedTitle>
+              <h2 className={h2}>{bloc.text_nom_site_adresse}</h2>
+            </AnimatedTitle>
 
-                  let publicId;
-                  if (isPdfUrl(social.image_url)) {
-                    publicId = extractPublicId(social.image_url);
-                  }
+            <div className={text_adress}>{bloc.text_adresse_footer}</div>
+            <div className={postal_code}>{bloc.text_code_postal}</div>
+            <div className="pt-8 ">
+              <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                <div className="flex flex-row justify-start">
+                  {bloc.reseaux.map((social) => {
+                    const preview = isPdfUrl(social.image_url)
+                      ? convertToFirstPage(social.image_url)
+                      : social.image_url;
 
-                  return (
-                    <a
-                      key={social.id}
-                      href={
-                        isPdfUrl(social.image_url)
-                          ? getOriginalPdfUrl(publicId)
-                          : (social.text_image_lien ?? "#")
-                      }
-                      className={
-                        bloc.mode === "edition"
-                          ? "sm:scale-100 text-xl text-blue-500"
-                          : !isPdfUrl(social.image_url)
-                            ? "md:mr-4 scale-[0.6] sm:scale-100 w-20 h-20 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors"
-                            : "mr-4 scale-[0.6] sm:scale-100 text-xl text-blue-500 "
-                      }
-                      target="_blank"
-                    >
-                      {!isPdfUrl(social.image_url) ? (
-                        <Image
-                          src={preview}
-                          alt={social.text_titre ?? ""}
-                          width="10"
-                          height="10"
-                          className="object-cover w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors"
-                          sizes="
+                    let publicId;
+                    if (isPdfUrl(social.image_url)) {
+                      publicId = extractPublicId(social.image_url);
+                    }
+
+                    return (
+                      <a
+                        key={social.id}
+                        href={
+                          isPdfUrl(social.image_url)
+                            ? getOriginalPdfUrl(publicId)
+                            : (social.text_image_lien ?? "#")
+                        }
+                        className={
+                          bloc.mode === "edition"
+                            ? "sm:scale-100 text-xl text-blue-500"
+                            : !isPdfUrl(social.image_url)
+                              ? "md:mr-4 scale-[0.6] sm:scale-100 w-20 h-20 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors"
+                              : "mr-4 scale-[0.6] sm:scale-100 text-xl text-blue-500 "
+                        }
+                        target="_blank"
+                      >
+                        {!isPdfUrl(social.image_url) ? (
+                          <Image
+                            src={preview}
+                            alt={social.text_titre ?? ""}
+                            width="10"
+                            height="10"
+                            className="object-cover w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors"
+                            sizes="
                 (max-width: 640px) 100vw,
                 (max-width: 1024px) 80vw,
                 1440px
               "
-                        />
-                      ) : (
-                        social.text_titre
-                      )}
-                    </a>
-                  );
-                })}
-              </div>
+                          />
+                        ) : (
+                          social.text_titre
+                        )}
+                      </a>
+                    );
+                  })}
+                </div>
 
-              <p
-                className={
-                  "text-2xl text-center md:text-right" + isWhite
-                    ? "text-white"
-                    : "text-black"
-                }
-              >
-                © {bloc.text_nom_site_adresse}. Tous droits réservés.
-              </p>
+                <p className={rights}>
+                  © {bloc.text_nom_site_adresse}. Tous droits réservés.
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      </footer>
-    </>
-  );
+        </footer>
+      </>
+    );
 }
