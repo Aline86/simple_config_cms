@@ -56,8 +56,8 @@ export default function FooterView({ bloc }: ViewProps) {
             <h2
               className={
                 "space-y-4 font-bold text-2xl mb-4 " + is_white
-                  ? "text-white"
-                  : "text-black"
+                  ? "text-white!"
+                  : "text-black!"
               }
             >
               {bloc.text_nom_site_adresse}
