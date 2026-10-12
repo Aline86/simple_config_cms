@@ -49,6 +49,20 @@ export default function ScreenView({ bloc }: { bloc: BlocObject }) {
           <h2 className="text-white! text-xxl!">{bloc.text_description}</h2>
         </AnimatedTitle>
       </div>
+      <div className="absolute h-8 mt-[-45px] z-80 flex justify-center w-full animate-bounce opacity-70">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-10 h-10 text-white"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </div>
     </section>
   ) : (
     <section className="parallaxe relative z-0 w-full h-[400px] mt-20 mb-24 overflow-clip rounded">

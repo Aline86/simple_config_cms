@@ -11,13 +11,15 @@ import {
   isPdfUrl,
 } from "../../../../lib/helpers/isPdf";
 import AnimatedTitle from "../../../ui/animations/AnimatedTitle";
+import isLight from "./../../../../lib/helpers/color.detector";
+
 interface ViewProps {
   bloc: FooterObject;
 }
 
 export default function FooterView({ bloc }: ViewProps) {
   const [isMounted, setIsMounted] = useState(false);
-
+  const is_white = isLight(bloc.color_background_color);
   useEffect(() => {
     setIsMounted(true);
   }, []);
@@ -51,13 +53,29 @@ export default function FooterView({ bloc }: ViewProps) {
         ></div>
         <div className="max-w-7xl mx-auto  ">
           <AnimatedTitle>
-            <h2 className="space-y-4 font-bold text-2xl mb-4">
+            <h2
+              className={
+                "space-y-4 font-bold text-2xl mb-4 " + is_white
+                  ? "text-white"
+                  : "text-black"
+              }
+            >
               {bloc.text_nom_site_adresse}
             </h2>
           </AnimatedTitle>
 
-          <div className="space-y-4">{bloc.text_adresse_footer}</div>
-          <div className="space-y-4 mb-4">{bloc.text_code_postal}</div>
+          <div
+            className={"space-y-4 " + is_white ? "text-white" : "text-black"}
+          >
+            {bloc.text_adresse_footer}
+          </div>
+          <div
+            className={
+              "space-y-4 mb-4" + is_white ? "text-white" : "text-black"
+            }
+          >
+            {bloc.text_code_postal}
+          </div>
           <div className="pt-8 ">
             <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
               <div className="flex flex-row justify-start">
@@ -109,7 +127,13 @@ export default function FooterView({ bloc }: ViewProps) {
                 })}
               </div>
 
-              <p className="text-2xl text-center md:text-right">
+              <p
+                className={
+                  "text-2xl text-center md:text-right" + is_white
+                    ? "text-white"
+                    : "text-black"
+                }
+              >
                 © {bloc.text_nom_site_adresse}. Tous droits réservés.
               </p>
             </div>
