@@ -37,7 +37,7 @@ export default function NavBarView({
 
   const links = pages
     ? Object.entries(pages).map(([, page]) =>
-        stateBG !== "color" && isEdition != "" ? (
+        stateBG !== "color" && isEdition != "" && !isBurger ? (
           <a
             className="blurry relative "
             key={page.number_id}
