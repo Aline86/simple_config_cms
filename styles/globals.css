@@ -737,7 +737,10 @@ iframe {
   margin-bottom: 5px;;
   isolation: isolate;   
 }
-
+.blurry-burger{
+  background-color: rgba(0, 0, 0, 0.3);
+    
+}
 .blurr {
   position: absolute;
   inset: 0;            

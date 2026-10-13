@@ -101,11 +101,11 @@ export default function NavBarView({
 
             <nav
               ref={navRef}
-              className={`open-nav cursor-pointer flex space-x-8 whitespace-nowrap ${
+              className={`open-nav cursor-pointer flex space-x-8 whitespace-nowrap  ${
                 isBurger && isOpen
                   ? "nav-dynamique nav-dynamique--open "
                   : isBurger
-                    ? "absolute invisible"
+                    ? " absolute invisible "
                     : ""
               }`}
             >
@@ -119,8 +119,8 @@ export default function NavBarView({
               aria-expanded={isOpen}
               tabIndex={isBurger ? 0 : -1}
               onClick={() => setIsOpen(!isOpen)}
-              className={`burger relative z-50 w-6 h-6 flex-shrink-0 cursor-pointer ${
-                isBurger ? "mr-4" : "invisible pointer-events-none"
+              className={`burger relative z-50 w-6 h-6 flex-shrink-0 cursor-pointer blurry-burger ${
+                isBurger ? "mr-4 " : "invisible pointer-events-none"
               }`}
             >
               <svg
