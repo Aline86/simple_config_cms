@@ -36,11 +36,22 @@ export default function NavBarView({
     bloc.mode === "edition" ? "mx-auto px-4 w-[45vw] top-[40vh]" : "mx-auto ";
 
   const links = pages
-    ? Object.entries(pages).map(([, page]) => (
-        <a key={page.number_id} href={"/" + page.text_slug}>
-          {page.text_titre}
-        </a>
-      ))
+    ? Object.entries(pages).map(([, page]) =>
+        stateBG !== "color" && isEdition != "" ? (
+          <a
+            className="blurry relative "
+            key={page.number_id}
+            href={"/" + page.text_slug}
+          >
+            <div className="blurr"></div>
+            <span className="text-white!"> {page.text_titre}</span>
+          </a>
+        ) : (
+          <a key={page.number_id} href={"/" + page.text_slug}>
+            {page.text_titre}
+          </a>
+        ),
+      )
     : null;
 
   return (

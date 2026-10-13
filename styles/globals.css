@@ -729,6 +729,23 @@ iframe {
   padding-bottom: 95px;
   display: flow-root;
 }
+.blurry {
+  position: relative; 
+  display: inline-block;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-bottom: 5px;;
+  isolation: isolate;   
+}
+
+.blurr {
+  position: absolute;
+  inset: 0;            
+  z-index: -1;         
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.6);
+  filter: blur(15px);   
+}
 /* Pour les écrans de plus de 767px */
 @media (max-width: 767px) {
   section {
