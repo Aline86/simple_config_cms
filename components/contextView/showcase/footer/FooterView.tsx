@@ -21,16 +21,16 @@ export default function FooterView({ bloc }: ViewProps) {
     const [isMounted, setIsMounted] = useState(false);
     const is_white = isLight(bloc.color_background_color);
 
-    const h2 = is_white
+    const h2 = !is_white
       ? "space-y-4 font-bold text-2xl mb-4 text-white!"
       : "space-y-4 font-bold text-2xl mb-4 text-black!";
-    const text_adress = is_white
+    const text_adress = !is_white
       ? "space-y-4 text-white"
       : "space-y-4text-black";
-    const postal_code = is_white
+    const postal_code = !is_white
       ? "space-y-4 mb-4 text-white"
       : "space-y-4 mb-4 text-black";
-    const rights = is_white
+    const rights = !is_white
       ? "text-2xl text-center md:text-right text-white"
       : "text-2xl text-center md:text-right text-black";
 
