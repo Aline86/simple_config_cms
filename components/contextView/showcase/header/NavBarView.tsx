@@ -44,10 +44,14 @@ export default function NavBarView({
             href={"/" + page.text_slug}
           >
             <div className="blurr"></div>
-            <span className="text-white!"> {page.text_titre}</span>
+            <span className="text-white! text-xl"> {page.text_titre}</span>
           </a>
         ) : (
-          <a key={page.number_id} href={"/" + page.text_slug}>
+          <a
+            className="text-xl"
+            key={page.number_id}
+            href={"/" + page.text_slug}
+          >
             {page.text_titre}
           </a>
         ),

@@ -746,7 +746,7 @@ iframe {
   inset: 0;            
   z-index: -1;         
   border-radius: 50%;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.3);
   filter: blur(8px);   
 }
 /* Pour les écrans de plus de 767px */
