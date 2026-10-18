@@ -23,7 +23,7 @@ export default function CarouselSimple({
 }: CustomCarouselInfo) {
   if (!bloc.image_medias.length) return null;
   return (
-    <section className="p-8 relative max-w-[1650px] w-full mx-auto flex-col justify-center align-center m-auto overflow-hidden">
+    <section className="relative w-full mx-auto flex-col justify-center align-center m-auto overflow-hidden">
       <AnimatedTitle
         children={
           <h2 className="text-2xl text-center font-bold text-slate-800 mb-6">
@@ -31,7 +31,7 @@ export default function CarouselSimple({
           </h2>
         }
       ></AnimatedTitle>
-      <Carousel opts={{ align: "start" }} className="w-full ">
+      <Carousel opts={{ align: "start" }} className="w-[950px] ">
         <CarouselContent>
           {bloc.image_medias.map((media: MediaObject, index) => (
             <CarouselItem
