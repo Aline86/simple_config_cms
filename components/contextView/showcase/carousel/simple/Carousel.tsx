@@ -31,7 +31,7 @@ export default function CarouselSimple({
           </h2>
         }
       ></AnimatedTitle>
-      <Carousel opts={{ align: "start" }} className="w-[950px] ">
+      <Carousel opts={{ align: "start" }}>
         <CarouselContent>
           {bloc.image_medias.map((media: MediaObject, index) => (
             <CarouselItem
